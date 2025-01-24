@@ -7,22 +7,28 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:application",
+      "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/customer",
         "index": "apps/customer/src/index.html",
-        "browser": "apps/customer/src/main.ts",
+        "main": "apps/customer/src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "apps/customer/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           {
+            "input": "libs/shared/assets/src/assets",
             "glob": "**/*",
-            "input": "apps/customer/public"
+            "output": "assets"
+          },
+          {
+            "input": "libs/shared/assets/src/assets",
+            "glob": "**/*",
+            "output": "assets"
           }
         ],
-        "styles": ["apps/customer/src/styles.scss"],
+        "styles": ["themes/base/main.scss"],
         "scripts": []
       },
       "configurations": {
@@ -42,9 +48,12 @@
           "outputHashing": "all"
         },
         "development": {
+          "buildOptimizer": false,
           "optimization": false,
+          "vendorChunk": true,
           "extractLicenses": false,
-          "sourceMap": true
+          "sourceMap": true,
+          "namedChunks": true
         }
       },
       "defaultConfiguration": "production"
@@ -82,7 +91,6 @@
       "options": {
         "buildTarget": "customer:build",
         "port": 4200,
-        "staticFilePath": "dist/apps/customer/browser",
         "spa": true
       }
     }

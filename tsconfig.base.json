@@ -28,6 +28,12 @@
       "@insurance-clientBridge-shared-icon": [
         "libs/clientBridge/shared/ui/icon/src/index.ts"
       ],
+      "@insurance-customer-feature-auth": [
+        "libs/customer/feature/auth/src/index.ts"
+      ],
+      "@insurance-customer-feature-shell": [
+        "libs/customer/feature/shell/src/index.ts"
+      ],
       "@insurance-shared-ui-header-desktop": [
         "libs/shared/ui/header-desktop/src/index.ts"
       ],

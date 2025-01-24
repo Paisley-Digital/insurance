@@ -1,5 +1,5 @@
 {
-  "name": "auth",
+  "name": "clientBridge-auth",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/clientBridge/feature/auth/src",
   "prefix": "insurance",

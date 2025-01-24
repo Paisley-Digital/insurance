@@ -14,7 +14,40 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@./assets": ["libs/shared/assets/src/index.ts"],
+      "@insurance-clientBridge-feature-auth": [
+        "libs/clientBridge/feature/auth/src/index.ts"
+      ],
+      "@insurance-clientBridge-feature-products": [
+        "libs/clientBridge/feature/products/src/index.ts"
+      ],
+      "@insurance-clientBridge-feature-shell": [
+        "libs/clientBridge/feature/shell/src/index.ts"
+      ],
+      "@insurance-clientBridge-shared-icon": [
+        "libs/clientBridge/shared/ui/icon/src/index.ts"
+      ],
+      "@insurance-shared-ui-header-desktop": [
+        "libs/shared/ui/header-desktop/src/index.ts"
+      ],
+      "@insurance-shared-ui-input-validation-message": [
+        "libs/shared/ui/input-validation-message/src/index.ts"
+      ],
+      "@insurance-shared-util-app-core": [
+        "libs/shared/util/app-core/src/index.ts"
+      ],
+      "@insurance-shared-util-common": ["libs/shared/util/common/src/index.ts"],
+      "@insurance-shared-util-locales": [
+        "libs/shared/util/locales/src/index.ts"
+      ],
+      "@insurance-shared-util-tailwind-preset": [
+        "libs/shared/util/tailwind-preset/src/index.ts"
+      ],
+      "@insurance-shared-util-web-sdk": [
+        "libs/shared/util/web-sdk/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

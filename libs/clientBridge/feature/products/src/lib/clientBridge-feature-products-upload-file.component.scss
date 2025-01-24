@@ -1,0 +1,28 @@
+.upload-container {
+  border-color: blue;
+  @apply text-primary flex flex-col items-center justify-center rounded-xl border-2 border-dashed p-4;
+}
+
+.upload-area {
+  border: 2px dashed #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+
+  input[type='file'] {
+    display: none;
+  }
+}
+
+.image-preview {
+  position: relative;
+  @apply bg-foreground/20 rounded-lg;
+  img,
+  video {
+    width: 370px;
+    height: 196px;
+    object-fit: contain;
+    border-radius: 5px;
+  }
+}

@@ -1,0 +1,38 @@
+.card-container {
+  padding: 80px;
+  height: 100%;
+}
+
+.submit-container {
+  @apply flex justify-center gap-4;
+}
+
+.widget-card {
+  @apply max-sm:rounded-none w-full #{!important};
+
+  &.max-md-widget {
+    mat-card-content,
+    mat-card-actions {
+      @apply mx-auto w-full max-w-[460px];
+    }
+
+    mat-card-content {
+      @apply mt-6;
+    }
+
+    mat-card-actions {
+      @apply my-8 gap-4;
+    }
+
+    mat-card-actions > * {
+      @apply flex-1;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .card-container {
+    padding: 20px;
+    height: 100%;
+  }
+}

@@ -1,0 +1,45 @@
+<div
+  id="file-upload-preview"
+  class="upload-container cursor-pointer"
+  role="button"
+  (click)="fileInput.click()"
+>
+  @if (!filePreview) {
+    <button mat-ripple class="border-none">
+      <img
+        ngSrc="./assets/images/national-card-front.svg"
+        width="370"
+        height="196"
+        alt=""
+      />
+    </button>
+  }
+
+  <input
+    type="file"
+    class="hidden"
+    [accept]="fileType === 'video' ? 'video/*' : '.jpg, .jpeg, .png'"
+    (change)="onFileSelected($event)"
+    #fileInput
+  />
+  @if (filePreview) {
+    <div class="image-preview">
+      <button mat-ripple>
+        <img [src]="filePreview" alt="Image preview" />
+      </button>
+      <div
+        class="absolute bottom-0 flex h-11 w-full cursor-pointer items-center justify-center rounded-b-lg bg-black/60"
+        (click)="removeFile()"
+      >
+        <mat-icon svgIcon="trash" />
+      </div>
+    </div>
+  }
+</div>
+<div class="flex flex-col items-center justify-center mt-4">
+  <button mat-button color="primary" (click)="fileInput.click()">
+    National card scan
+    <mat-icon svgIcon="add-icon" color="primary" iconPositionEnd />
+  </button>
+  <p>Scan the front of national ID card.</p>
+</div>

@@ -1,0 +1,7 @@
+$path-to-fonts: '^./assets/fonts';
+@font-face {
+  font-family: IRANSansFaNum;
+  font-style: normal;
+  font-weight: normal;
+  src: url('#{$path-to-fonts}/poppins/Poppins-light.woff2') format('woff');
+}

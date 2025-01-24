@@ -18,11 +18,17 @@
         "inlineStyleLanguage": "scss",
         "assets": [
           {
+            "input": "libs/shared/assets/src/assets",
             "glob": "**/*",
-            "input": "apps/clientBridge/public"
+            "output": "assets"
+          },
+          {
+            "input": "libs/shared/assets/src/assets",
+            "glob": "**/*",
+            "output": "assets"
           }
         ],
-        "styles": ["apps/clientBridge/src/styles.scss"],
+        "styles": ["themes/base/main.scss"],
         "scripts": []
       },
       "configurations": {

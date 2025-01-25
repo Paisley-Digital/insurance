@@ -1,15 +1,20 @@
 .card-container {
-  padding: 80px;
-  height: 100%;
+  @apply flex justify-center;
+  padding: 40px;
+  @apply px-4;
 }
 
 .widget-card {
-  @apply max-sm:rounded-none #{!important};
+  @apply max-sm:rounded-none !important;
 
   &.max-md-widget {
+    @apply w-full max-w-[1200px] mx-auto;
+
+    mat-card-header,
     mat-card-content,
     mat-card-actions {
-      @apply mx-auto w-full max-w-[900px];
+      @apply px-4 !important;
+      margin: 0 !important;
     }
 
     mat-card-content {
@@ -26,10 +31,12 @@
   }
 }
 
+/* تنظیمات شبکه (Grid) برای نمایش کارت‌ها */
 .card-grid {
-  display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 16px !important;
+  @apply mt-4 !important;
+  @apply grid !important;
+  @apply grid-cols-3 !important;
+  @apply gap-4 !important;
 }
 
 .card-item {
@@ -37,6 +44,7 @@
 }
 
 .example-card {
+  /* اگر سه ستون با عرض 306px از 900px رد می‌شود، باید این مقدار را کم کنید */
   width: 306px;
   height: auto;
   border-radius: 8px;
@@ -47,6 +55,7 @@
   overflow: hidden;
 
   mat-card-header {
+    /* اگر می‌خواهید پدینگ اینجا کمتر یا بیشتر باشد، می‌توانید override کنید */
     padding: 16px;
     font-size: 16px;
     font-weight: bold;
@@ -87,63 +96,70 @@
   }
 }
 
+/* کلاس‌های دیگر... */
 .a {
-  @apply flex items-center h-12 w-full #{
-  !important
-  }
+  @apply flex items-center h-12 w-full !important;
 }
 
 .b {
-  @apply flex items-center mr-auto ml-2 gap-1 #{
-  !important
-  }
+  @apply flex items-center mr-auto ml-2 gap-1 !important;
 }
 
 .c {
-  @apply flex items-center justify-center bg-gray-100 w-5 h-5 rounded-lg p-2 #{
-  !important
-  }
+  @apply flex items-center justify-center bg-gray-100 w-5 h-5 rounded-lg p-2 !important;
 }
 
 .uploadButton {
-  @apply w-1/3 bg-blue-900 #{
-  !important
-  }
+  @apply w-1/3 bg-blue-900 !important;
 }
 
 .crossButton {
-  @apply text-blue-900 #{
-  !important
-  }
+  @apply text-blue-900 !important;
 }
-
-//.divButtonUpload {
-//  @apply flex flex-col gap-4 #{
-//  !important
-//  }
-//}
 
 .divButtonUpload {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-left: 42px;
 }
 
-
 .divButton {
-  @apply flex gap-2 mt-2 #{!important}
+  @apply flex gap-2 mt-2 !important;
 }
 
 .content {
-  display: grid !important;
-  grid-column: 3;
-  gap: 16px;
-  justify-items: center;
+  @apply grid !important;
+  @apply gap-4;
+  /* فاصله بین آیتم‌ها */
+  @apply justify-items-center;
   margin-right: auto;
   margin-left: auto;
 }
 
 .divImage {
-  @apply flex flex-col justify-center mx-auto my-2 gap-2
+  @apply flex flex-col justify-center mx-auto my-2 gap-2;
+}
+
+mat-dialog-actions {
+  @apply justify-start !important;
+  display: flex;
+  margin: 0;
+  padding: 8px;
+
+  button {
+    margin-right: 8px;
+  }
+}
+
+.backgroandButton {
+  @apply bg-blue-900 !important;
+}
+
+.textColorButton {
+  @apply text-blue-900 !important;
+
+}
+
+.textCard {
+  @apply text-xs font-medium !important;
 }

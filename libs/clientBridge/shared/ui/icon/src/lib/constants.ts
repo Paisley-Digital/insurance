@@ -17,6 +17,6 @@ export const svgIconNames = [
   'add-icon',
   'profile',
   'building',
-  'scan ',
+  'scan',
   'chevron-right',
 ] as const;

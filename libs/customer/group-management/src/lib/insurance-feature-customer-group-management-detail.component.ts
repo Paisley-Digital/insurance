@@ -1,5 +1,5 @@
-import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ElementRef, inject, TemplateRef, ViewChild } from '@angular/core';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import {
   MatCard,
   MatCardContent,
@@ -10,7 +10,8 @@ import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatCheckbox } from '@angular/material/checkbox';
-
+import { AnimationItem } from 'lottie-web';
+import lottie from 'lottie-web';
 @Component({
   selector: 'insurance-insurance-feature-customer-group-management-detail',
   imports: [
@@ -31,11 +32,17 @@ import { MatCheckbox } from '@angular/material/checkbox';
     './insurance-feature-customer-group-management-detail.component.scss',
 })
 export class InsuranceFeatureCustomerGroupManagementDetailComponent {
-  readonly dialog = inject(MatDialog);
+  private lottiesPath = './assets/lotties/loadingAnimation.json';
+  private dialog = inject(MatDialog);
+  private lottieAnimation: AnimationItem | undefined;
+  private document = inject(DOCUMENT);
 
-  @ViewChild('openDialogCrossDialog')
-  openDialogCrossDialog!: TemplateRef<unknown>;
+
+  @ViewChild('openDialogCrossDialog')  openDialogCrossDialog!: TemplateRef<unknown>;
+  @ViewChild('lottie') lottie?: ElementRef<HTMLDivElement>;
+
   uploadedFiles: { name: string; url: string; type: string }[] = [];
+
 
   onFilesSelected(event: any) {
     const files: FileList = event.target.files;
@@ -57,5 +64,24 @@ export class InsuranceFeatureCustomerGroupManagementDetailComponent {
 
   openDialog() {
     this.dialog.open(this.openDialogCrossDialog);
+    this.document.defaultView?.setTimeout(this.startLottie, 0);
+
   }
+
+  private startLottie = () => {
+    if (!this.lottie) {
+      return;
+    }
+    if (this.lottieAnimation) {
+      this.lottieAnimation.destroy();
+    }
+
+    this.lottieAnimation = lottie.loadAnimation({
+      container: this.lottie?.nativeElement as Element,
+      path: this.lottiesPath,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+    });
+  };
 }

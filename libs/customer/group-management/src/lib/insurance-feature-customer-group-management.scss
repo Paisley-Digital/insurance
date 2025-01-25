@@ -1,0 +1,27 @@
+.card-container {
+  padding: 80px;
+  height: 100%;
+}
+
+.widget-card {
+  @apply max-sm:rounded-none #{!important};
+
+  &.max-md-widget {
+    mat-card-content,
+    mat-card-actions {
+      @apply mx-auto w-full max-w-[900px];
+    }
+
+    mat-card-content {
+      @apply mt-6;
+    }
+
+    mat-card-actions {
+      @apply my-8 gap-4;
+    }
+
+    mat-card-actions > * {
+      @apply flex-1;
+    }
+  }
+}

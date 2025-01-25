@@ -31,6 +31,9 @@
       "@insurance-customer-feature-auth": [
         "libs/customer/feature/auth/src/index.ts"
       ],
+      "@insurance-customer-feature-group-management": [
+        "libs/customer/group-management/src/index.ts"
+      ],
       "@insurance-customer-feature-shell": [
         "libs/customer/feature/shell/src/index.ts"
       ],

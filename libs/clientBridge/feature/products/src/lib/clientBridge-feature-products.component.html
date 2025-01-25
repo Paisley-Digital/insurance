@@ -1,71 +1,53 @@
 <div class="card-container">
   <mat-card class="widget-card max-md-widget">
     <mat-card-content>
-      <form [formGroup]="uploadForm" class="flex flex-col h-full gap-3  !w-1/3">
-        <h1>Personal information</h1>
-        <mat-form-field hideRequiredMarker class="!w-full">
-          <mat-label>Inter your first name</mat-label>
-          <input matInput formControlName="name" />
-          <mat-error>
-            <insurance-error-message [input]="uploadForm.get('name')" />
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field class="!w-full">
-          <mat-label>Your birthday</mat-label>
-          <input
-            matInput
-            [matDatepicker]="picker"
-            [max]="today"
-            formControlName="birthDate"
-          />
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-          <mat-error>
-            <insurance-error-message [input]="uploadForm.get('birthDate')" />
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field hideRequiredMarker class="!w-full">
-          <mat-label>Your national code</mat-label>
-          <input
-            matInput
-            formControlName="nationalCode"
-            inputmode="numeric"
-            pattern="\d*"
-          />
-          <mat-error>
-            <insurance-error-message [input]="uploadForm.get('nationalCode')" />
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field hideRequiredMarker class="!w-full">
-          <mat-label>Your number</mat-label>
-          <input matInput formControlName="number" />
-          <mat-error>
-            <insurance-error-message [input]="uploadForm.get('number')" />
-          </mat-error>
-          <button type="button" mat-icon-button matSuffix>
-            <mat-icon svgIcon="phone" />
-          </button>
-        </mat-form-field>
-        <insurance-client-bridge-feature-products-upload-file />
-        <div class="submit-container">
-          <button class="!mt-5 w-full" mat-flat-button type="submit">
-            Continue
-          </button>
-          @if ((isHandsetScreen$ | async) === false){
-            <button
-              class="!mt-5 w-full"
-              mat-stroked-button
-              type="button"
-              color="primary"
-            >
-              Back
+      <table mat-table
+             [dataSource]="ELEMENT_DATA"
+             cdkDropList
+             cdkDropListOrientation="horizontal"
+             (cdkDropListDropped)="drop($event)">
+
+        <ng-container matColumnDef="customer">
+          <th mat-header-cell cdkDrag *matHeaderCellDef>Customer </th>
+          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="timeUpdate">
+          <th mat-header-cell cdkDrag *matHeaderCellDef> Last Update </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="number">
+          <th mat-header-cell cdkDrag *matHeaderCellDef> Number of forms </th>
+          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell cdkDrag *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element" (click)="navigateDetails(element)">
+            <button mat-icon-button>
+              <mat-icon svgIcon="chevron-right" (click)="navigateDetails(element)"></mat-icon>
             </button>
-          }
-        </div>
-      </form>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+      </table>
+
+      <div class="flex items-center justify-between mt-4">
+        <mat-paginator
+          #paginator
+          class="custom-paginator"
+          (page)="handlePageEvent($event)"
+          [length]="length"
+          [pageSize]="pageSize"
+          [disabled]="disabled"
+          [showFirstLastButtons]="showFirstLastButtons"
+          [hidePageSize]="true"
+          [pageIndex]="pageIndex">
+        </mat-paginator>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

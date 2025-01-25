@@ -1,21 +1,25 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject,  } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCalendarHeader } from '@angular/material/datepicker';
 import { MatCard, MatCardContent } from '@angular/material/card';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ErrorMessageComponent } from '@insurance-shared-ui-input-validation-message';
-import {
-  MatError,
-  MatFormField,
-  MatLabel,
-  MatSuffix,
-} from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
+import { ReactiveFormsModule,  } from '@angular/forms';
+
 import { MatIcon } from '@angular/material/icon';
-import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIconButton } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { ClientBridgeFeatureProductsUploadFileComponent } from './clientBridge-feature-products-upload-file.component';
-import { isHandsetScreen } from '@insurance-shared-util-common';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import {
+  MatCell,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderRow,
+  MatRow,
+  MatTable,
+  MatTableModule
+} from '@angular/material/table';
+import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Router } from '@angular/router';
+import { ELEMENT_DATA } from '../../../../../customer/data/group-management-data/src/lib/group-management.constant';
+import { PeriodicElement } from '../../../../../customer/data/group-management-data/src/lib/group-management.model';
 
 @Component({
   selector: 'insurance-client-bridge-feature-products',
@@ -24,86 +28,62 @@ import { isHandsetScreen } from '@insurance-shared-util-common';
     MatCard,
     MatCardContent,
     ReactiveFormsModule,
-    ErrorMessageComponent,
-    MatError,
-    MatFormField,
-    MatInput,
-    MatLabel,
     MatIcon,
     MatIconButton,
-    MatSuffix,
-    MatButton,
     MatDatepickerModule,
-    ClientBridgeFeatureProductsUploadFileComponent,
+    MatPaginator,
+    CdkDropList,
+    MatHeaderCell,
+    CdkDrag,
+    MatTableModule
   ],
   templateUrl: './clientBridge-feature-products.component.html',
   styleUrl: './clientBridge-feature-products.component.scss',
 })
 export class ClientBridgeFeatureProductsComponent {
-  private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
+  length = 50;
+  pageSize = 10;
+  pageIndex = 0;
+  pageSizeOptions = [5, 10, 25];
 
-  today = new Date();
-  uploadForm = this.formBuilder.group({
-    name: ['', [Validators.required]],
-    birthDate: ['', [Validators.required]],
-    nationalCode: ['', [Validators.required]],
-    number: ['', [Validators.required]],
-    file: [null as File | null, Validators.required],
-  });
+   ELEMENT_DATA = [
+    {position: 'Louis Vuitton', name: '5/30/14', weight: 119, symbol: 'H'},
+    {position: 'The Walt Disney Company', name: '11/7/16', weight: 120, symbol: 'He'},
+    {position: 'IBM', name: '3/4/16', weight: 570, symbol: 'Li'},
+    {position: 'Pizza Hut', name: '12/10/13', weight: 70, symbol: 'Be'},
+  ];
 
-  protected readonly MAX_FILE_SIZE = 50;
-  readonly MEGA_BYTE = 1048576; //1024*1024 Byte
-  readonly KILO_BYTE = 1024;
-  readonly MAX_FILE_SIZE_IN_MEGA_BYTE = this.MAX_FILE_SIZE * this.MEGA_BYTE;
 
-  isHandsetScreen$ = isHandsetScreen();
 
-  selectedFileSize = signal<string>('');
-  file = signal<File | null>(null);
+  columns: string[] = ['customer', 'timeUpdate', 'number', 'actions'];
 
-  handleFileChange(event: Event) {
-    this.uploadForm
-      .get('file')
-      ?.setErrors({ invalidFileSize: null, invalidFileType: null });
-    this.uploadForm.get('file')?.updateValueAndValidity();
-
-    if (
-      !(event.target instanceof HTMLInputElement) ||
-      !event.target.files?.length
-    ) {
-      return;
-    }
-
-    const file = event.target.files[0];
-    this.uploadForm.patchValue({ file });
-
-    this.file.set(file);
-    this.selectedFileSize.set(this.getSelectedFileSize(file.size));
-
-    const xlsType = 'application/vnd.ms-excel';
-    const xlsxType =
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-
-    if (file.size > this.MAX_FILE_SIZE_IN_MEGA_BYTE) {
-      this.uploadForm.get('file')?.setErrors({ invalidFileSize: true });
-    } else if (
-      file.type !== 'text/plain' &&
-      file.type !== xlsxType &&
-      file.type !== xlsType
-    ) {
-      this.uploadForm.get('file')?.setErrors({ invalidFileType: true });
-    }
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.columns, event.previousIndex, event.currentIndex);
   }
 
-  private getSelectedFileSize(fileSize: number) {
-    if (!fileSize) {
-      return '';
+  hidePageSize = false;
+  showPageSizeOptions = true;
+  showFirstLastButtons = true;
+  disabled = false;
+
+  pageEvent?: PageEvent;
+
+  handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.length = e.length;
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
+  }
+
+  setPageSizeOptions(setPageSizeOptionsInput: string) {
+    if (setPageSizeOptionsInput) {
+      this.pageSizeOptions = setPageSizeOptionsInput
+        .split(',')
+        .map((str) => +str);
     }
-    if (fileSize > this.MEGA_BYTE) {
-      return Math.round((fileSize / this.MEGA_BYTE) * 100) / 100 + 'MB';
-    } else if (fileSize > this.KILO_BYTE) {
-      return Math.round((fileSize / this.KILO_BYTE) * 100) / 100 + 'KB';
-    }
-    return Math.round(fileSize) + 'B';
+  }
+  navigateDetails(id: number) {
+    this.router.navigate(['/console/customer-management/details']);
   }
 }

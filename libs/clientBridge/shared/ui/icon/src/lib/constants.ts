@@ -19,4 +19,9 @@ export const svgIconNames = [
   'building',
   'scan',
   'chevron-right',
+  'management',
+  'report',
+  'cog',
+  'logout',
+  'excel'
 ] as const;

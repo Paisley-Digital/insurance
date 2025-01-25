@@ -1,28 +1,27 @@
-.upload-container {
-  border-color: blue;
-  @apply text-primary flex flex-col items-center justify-center rounded-xl border-2 border-dashed p-4;
+.card-container {
+  padding: 80px;
+  height: 100%;
 }
 
-.upload-area {
-  border: 2px dashed #ccc;
-  border-radius: 5px;
-  padding: 20px;
-  text-align: center;
-  cursor: pointer;
+.widget-card {
+  @apply max-sm:rounded-none #{!important};
 
-  input[type='file'] {
-    display: none;
-  }
-}
+  &.max-md-widget {
+    mat-card-content,
+    mat-card-actions {
+      @apply mx-auto w-full max-w-[900px];
+    }
 
-.image-preview {
-  position: relative;
-  @apply bg-foreground/20 rounded-lg;
-  img,
-  video {
-    width: 370px;
-    height: 196px;
-    object-fit: contain;
-    border-radius: 5px;
+    mat-card-content {
+      @apply mt-6;
+    }
+
+    mat-card-actions {
+      @apply my-8 gap-4;
+    }
+
+    mat-card-actions > * {
+      @apply flex-1;
+    }
   }
 }

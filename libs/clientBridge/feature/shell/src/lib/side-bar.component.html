@@ -1,14 +1,5 @@
-<div class="flex justify-center p-6 relative bottom-9">
-  <div class="mt-4 flex cursor-pointer items-center">
-    <div class="flex flex-col">
-      <img ngSrc="./assets/images/person.svg" width="72" height="72" class="mx-6 flex flex-col justify-center" />
-      <div class="mt-3">
-        <div class="text-center">Mariana  Robi</div>
-      </div>
-    </div>
-  </div>
-</div>
-<mat-accordion class="relative bottom-9">
+
+<mat-accordion >
   <div class="p-4">
     <mat-expansion-panel hideToggle="true">
       <mat-expansion-panel-header class="flex justify-center items-center gap-6">
@@ -21,19 +12,13 @@
     <div class="!text-[#d3d3d3] ms-5">Menu</div>
     <mat-expansion-panel hideToggle="true">
       <mat-expansion-panel-header class="flex justify-center items-center gap-6">
-        <mat-icon svgIcon="folder" />
-        <span class="!mt-1 ms-4">Products</span>
+        <mat-icon svgIcon="management" />
+        <span class="!mt-1 ms-4">Customer management</span>
       </mat-expansion-panel-header>
     </mat-expansion-panel>
     <mat-expansion-panel hideToggle="true">
       <mat-expansion-panel-header class="flex justify-center items-center gap-6">
-        <mat-icon svgIcon="bell" />
-        <span class="!mt-1 ms-4">Orders</span>
-      </mat-expansion-panel-header>
-    </mat-expansion-panel>
-    <mat-expansion-panel hideToggle="true">
-      <mat-expansion-panel-header class="flex justify-center items-center gap-6">
-        <mat-icon svgIcon="chart" />
+        <mat-icon svgIcon="report" />
         <span class="!mt-1 ms-4">Reports</span>
       </mat-expansion-panel-header>
     </mat-expansion-panel>
@@ -41,6 +26,18 @@
       <mat-expansion-panel-header class="flex justify-center items-center gap-6">
         <mat-icon svgIcon="payment" />
         <span class="!mt-1 ms-4">Payment</span>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+    <mat-expansion-panel hideToggle="true">
+      <mat-expansion-panel-header class="flex justify-center items-center gap-6">
+        <mat-icon svgIcon="cog" />
+        <span class="!mt-1 ms-4">Settings</span>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+    <mat-expansion-panel hideToggle="true" (click)="logout()">
+      <mat-expansion-panel-header class="flex justify-center items-center gap-6">
+        <mat-icon svgIcon="logout" />
+        <span class="!mt-1 ms-4">Logout</span>
       </mat-expansion-panel-header>
     </mat-expansion-panel>
   </div>

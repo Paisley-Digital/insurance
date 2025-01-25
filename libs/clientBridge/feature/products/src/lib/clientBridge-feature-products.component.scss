@@ -3,17 +3,13 @@
   height: 100%;
 }
 
-.submit-container {
-  @apply flex justify-center gap-4;
-}
-
 .widget-card {
-  @apply max-sm:rounded-none w-full #{!important};
+  @apply max-sm:rounded-none #{!important};
 
   &.max-md-widget {
     mat-card-content,
     mat-card-actions {
-      @apply mx-auto w-full max-w-[460px];
+      @apply mx-auto w-full max-w-[900px];
     }
 
     mat-card-content {
@@ -27,12 +23,5 @@
     mat-card-actions > * {
       @apply flex-1;
     }
-  }
-}
-
-@media (max-width: 768px) {
-  .card-container {
-    padding: 20px;
-    height: 100%;
   }
 }

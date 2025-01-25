@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
@@ -18,4 +18,9 @@ import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.scss',
 })
-export class SideBarComponent {}
+export class SideBarComponent {
+  private router = inject(Router)
+  logout(){
+    this.router.navigate(['/auth/login']);
+  }
+}

@@ -11,10 +11,10 @@ export const shellRoutes: Route[] = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'products',
+        redirectTo: 'customer-management',
       },
       {
-        path: 'products',
+        path: 'customer-management',
         loadChildren: () =>
           import('@insurance-clientBridge-feature-products').then(
             (m) => m.productsRoutes

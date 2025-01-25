@@ -14,10 +14,8 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
   imports: [
     CommonModule,
     MatIcon,
-    RouterLink,
     NgOptimizedImage,
     MatAccordion,
-    RouterLinkActive,
     MatExpansionModule,
   ],
   templateUrl: './side-bar.component.html',

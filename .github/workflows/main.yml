@@ -1,33 +1,45 @@
-name: CI
+name: Deploy clientBridge Application
+
 on:
   push:
     branches:
-      # Change this if your primary branch is not main
-      - main
-  pull_request:
-
-# Needed for nx-set-shas when run on the main branch
-permissions:
-  actions: read
-  contents: read
+      - main   # Trigger workflow on pushes to the main branch
+    paths:
+      - 'apps/clientBridge/**'   # Trigger only if files in clientBridge are modified
+      - 'libs/**'                # Include library changes if shared libraries are used
+      - 'nx.json'                # Include Nx configuration changes
+      - 'package.json'           # Include dependency changes
 
 jobs:
-  main:
+  deploy-clientBridge:
+    name: Build and Deploy clientBridge
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-          cache: 'npm'
-      # This line enables distribution
-      # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "e2e-ci" targets have been requested
-      # - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e-ci"
-      - run: npm ci
+      # 1. Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-      - uses: nrwl/nx-set-shas@v4
+      # 2. Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20 # Ensure this matches your project requirements
 
-      - run: npx nx-cloud record -- nx format:check
-      - run: npx nx affected -t lint test build e2e-ci
+      # 3. Install dependencies
+      - name: Install Dependencies
+        run: npm install
+
+      # 4. Build the clientBridge application
+      - name: Build clientBridge Application
+        run: npx nx build clientBridge
+
+      # 5. Deploy the application
+      - name: Deploy Application
+        env:
+          # Add any required secrets or environment variables for deployment
+          DEPLOY_ENV: production
+        run: |
+          echo "Deploying clientBridge to production"
+          # Replace with your actual deployment command
+          # Example: npx some-deployment-tool deploy dist/apps/clientBridge

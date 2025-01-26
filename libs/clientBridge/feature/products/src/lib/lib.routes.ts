@@ -3,9 +3,10 @@ import { ClientBridgeFeatureProductsComponent } from './clientBridge-feature-pro
 import { ClientBridgeFeatureProductsUploadFileComponent } from './clientBridge-feature-products-upload-file.component';
 
 export const productsRoutes: Route[] = [
-  { path: '', component: ClientBridgeFeatureProductsComponent },
-  {
-    path: 'details',
-    component: ClientBridgeFeatureProductsUploadFileComponent,
+  { path: '', pathMatch: 'prefix', children:
+      [
+      {path: '', component: ClientBridgeFeatureProductsComponent},
+        {path: 'details', component:ClientBridgeFeatureProductsUploadFileComponent}
+    ]
   },
 ];

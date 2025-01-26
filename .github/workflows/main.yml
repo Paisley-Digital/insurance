@@ -8,7 +8,6 @@ on:
       - 'apps/clientBridge/**'   # Trigger only if files in clientBridge are modified
       - 'libs/**'                # Include library changes if shared libraries are used
       - 'nx.json'                # Include Nx configuration changes
-      - 'workspace.json'         # Include workspace configuration changes
       - 'package.json'           # Include dependency changes
 
 jobs:

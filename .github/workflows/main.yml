@@ -1,0 +1,45 @@
+name: Deploy clientBridge Application
+
+on:
+  push:
+    branches:
+      - main   # Trigger workflow on pushes to the main branch
+    paths:
+      - 'apps/clientBridge/**'   # Trigger only if files in clientBridge are modified
+      - 'libs/**'                # Include library changes if shared libraries are used
+      - 'nx.json'                # Include Nx configuration changes
+      - 'package.json'           # Include dependency changes
+
+jobs:
+  deploy-clientBridge:
+    name: Build and Deploy clientBridge
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # 2. Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20 # Ensure this matches your project requirements
+
+      # 3. Install dependencies
+      - name: Install Dependencies
+        run: npm install
+
+      # 4. Build the clientBridge application
+      - name: Build clientBridge Application
+        run: npx nx build clientBridge
+
+      # 5. Deploy the application
+      - name: Deploy Application
+        env:
+          # Add any required secrets or environment variables for deployment
+          DEPLOY_ENV: production
+        run: |
+          echo "Deploying clientBridge to production"
+          # Replace with your actual deployment command
+          # Example: npx some-deployment-tool deploy dist/apps/clientBridge

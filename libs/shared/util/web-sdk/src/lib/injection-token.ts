@@ -10,6 +10,8 @@ export const IMAGES_PATH = new InjectionToken<string>('Images Path');
 
 export const API_ROOT = new InjectionToken<string>('API Root');
 
+export const AI_KEY = new InjectionToken<string>('AI Key');
+
 export const TRANSLATIONS = new InjectionToken<string>('Translations');
 
 export const DEFAULT_API_ERROR_MESSAGE = new InjectionToken<string>(

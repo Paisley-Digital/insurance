@@ -25,8 +25,11 @@ import {
 } from '@angular/material/list';
 import { MatDivider } from '@angular/material/divider';
 import {
+  AiPayload,
   BrokerResponse,
   BrokerService,
+  message,
+  NormalizedContent,
 } from '@insurance-clientBridge-data-broker';
 import { finalize } from 'rxjs';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
@@ -38,7 +41,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { isHandsetScreen } from '@insurance-shared-util-common';
+import { isHandsetScreen, normalizeKeys } from '@insurance-shared-util-common';
 import {
   CdkDrag,
   CdkDragDrop,
@@ -48,6 +51,8 @@ import {
 import { MatTableModule } from '@angular/material/table';
 import { ELEMENT_DATA } from '../../../../../customer/data/group-management-data/src/lib/group-management.constant';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { OverlaySpinnerDirective } from '@./overlay-spinner';
+import { AlertService } from '@./alert';
 
 type View = 'tabs' | 'aiCheck' | 'aiTable';
 
@@ -82,12 +87,14 @@ type View = 'tabs' | 'aiCheck' | 'aiTable';
     MatTableModule,
     MatPaginator,
     MatIconButton,
+    OverlaySpinnerDirective,
   ],
   templateUrl: './clientBridge-feature-products-upload-file.component.html',
   styleUrl: './clientBridge-feature-products-upload-file.component.scss',
 })
 export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
   private service = inject(BrokerService);
+  private alert = inject(AlertService);
   protected readonly ELEMENT_DATA = ELEMENT_DATA;
 
   baseUrl = 'http://93.127.180.228';
@@ -105,6 +112,11 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
   fetchingError = signal(false);
   docsResponse = signal(<BrokerResponse[]>[]);
   view = signal<View>('tabs');
+  sendingToAi = signal(false);
+  selectedCards = signal<BrokerResponse[]>([]);
+
+  parsedContent: NormalizedContent | null = null;
+  normalizedContent: any;
 
   columns: string[] = [
     'surname',
@@ -120,8 +132,61 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
     this.fetchAll();
   }
 
-  openDialog() {
-    this.view.set('aiTable');
+  callAiService() {
+    this.sendingToAi.set(true);
+
+    const instruction = {
+      type: 'text',
+      text: message,
+    };
+
+    const imageUrls = this.selectedCards().map((card) => ({
+      type: 'image_url',
+      image_url: {
+        url: `${this.baseUrl}${card.downloadUrl}`,
+      },
+    }));
+
+    const content = [instruction, ...imageUrls];
+
+    const payload: AiPayload = {
+      model: 'gpt-4o-mini',
+      messages: [
+        {
+          role: 'user',
+          content,
+        },
+      ],
+      max_tokens: 300,
+    };
+
+    this.service
+      .postAiService(payload)
+      .pipe(finalize(() => this.sendingToAi.set(false)))
+      .subscribe({
+        next: (result) => {
+          const rawContent = result.choices[0]?.message.content;
+          if (rawContent) {
+            try {
+              const sanitizedContent = rawContent
+                .replace(/^```json/, '')
+                .replace(/```$/, '')
+                .trim();
+
+              this.parsedContent = JSON.parse(sanitizedContent);
+
+              this.normalizedContent = normalizeKeys(this.parsedContent);
+              this.normalizedContent = new Array(this.normalizedContent);
+              this.view.set('aiTable');
+            } catch (error) {
+              console.error('Failed to parse content as JSON', error);
+            }
+          }
+        },
+        error: () => {
+          this.alert.open('Something went wrong. Please try again');
+        },
+      });
   }
 
   fetchAll() {
@@ -151,5 +216,21 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
     this.length = e.length;
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
+  }
+
+  onCheckboxChange(file: BrokerResponse) {
+    if (file) {
+      this.selectedCards.update((current) => [
+        ...current,
+        {
+          fileType: file.fileType,
+          fileName: file.fileName,
+          downloadUrl: file.downloadUrl,
+          companyId: file.companyId,
+        },
+      ]);
+    } else {
+      this.selectedCards().filter((card) => card !== file);
+    }
   }
 }

@@ -4,12 +4,14 @@ import {
   Environment,
   IMAGES_PATH,
   DEFAULT_API_ERROR_MESSAGE,
+  AI_KEY,
 } from '@insurance-shared-util-web-sdk';
 import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
 
 export function provideSharedUtilAppCore({
   imagesPath,
   apiRoot,
+  aiKey,
   ...config
 }: Environment): EnvironmentProviders {
   return makeEnvironmentProviders([
@@ -24,6 +26,10 @@ export function provideSharedUtilAppCore({
     {
       provide: API_ROOT,
       useValue: apiRoot,
+    },
+    {
+      provide: AI_KEY,
+      useValue: aiKey,
     },
     {
       provide: DEFAULT_API_ERROR_MESSAGE,

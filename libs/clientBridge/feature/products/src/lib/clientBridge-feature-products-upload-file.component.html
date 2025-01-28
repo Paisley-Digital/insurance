@@ -1,5 +1,6 @@
 <div class="card-container">
   <mat-card class="widget-card max-md-widget">
+    @switch(view()) { @case('tabs'){
     <mat-card-header>
       <div class="relative top-3 left-20 text-2xl">
         <mat-icon svgIcon="circle" class="relative top-1" />
@@ -16,11 +17,18 @@
         <mat-tab label="Customer images">
           <ng-container [ngTemplateOutlet]="imageTemplate" />
         </mat-tab>
-        <mat-tab label="Extracted data">
+        <mat-tab label="Extracted data" disabled="true">
           <ng-container [ngTemplateOutlet]="excelTemplate" />
         </mat-tab>
       </mat-tab-group>
     </mat-card-content>
+    } @case('aiCheck'){
+    <ng-container [ngTemplateOutlet]="aiCheckTemplate" />
+    } @case ('aiTable'){
+    <mat-card-content>
+      <ng-container [ngTemplateOutlet]="aiDetailTemplate" />
+    </mat-card-content>
+    } }
   </mat-card>
 </div>
 
@@ -202,5 +210,121 @@
       </mat-card>
     </div>
     }
+  </div>
+</ng-template>
+
+<ng-template #aiCheckTemplate>
+  <mat-card-header>
+    <div class="relative top-3 left-20 text-2xl">
+      <mat-icon svgIcon="circle" class="relative top-1" />
+      Cross Checking List
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <h3>Extraction AI</h3>
+    <div class="ai-grid">
+      <div class="!border-dashed !border-[#d3d3d3] p-2">
+        <dl class="!w-full !h-full flex flex-col gap-3">
+          <div class="flex justify-between">
+            <dt class="text-[#23273099]">Surname</dt>
+            <dd>Moradi</dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="text-[#23273099]">Arya</dt>
+            <dd>First name</dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="text-[#23273099]">20/11/1971</dt>
+            <dd>Date of Birth (D/M/Y)</dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="text-[#23273099]">53</dt>
+            <dd>Age at (31-Dec-24)</dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="text-[#23273099]">Sex</dt>
+            <dd>M</dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="text-[#23273099]">Pakistan</dt>
+            <dd>Nationality</dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="text-[#23273099]">Emirate of visa Issue</dt>
+            <dd>Dubai</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </mat-card-content>
+</ng-template>
+
+<ng-template #aiDetailTemplate>
+  <table
+    mat-table
+    [dataSource]="ELEMENT_DATA"
+    cdkDropList
+    cdkDropListOrientation="horizontal"
+    (cdkDropListDropped)="drop($event)"
+  >
+    <ng-container matColumnDef="surname">
+      <th mat-header-cell cdkDrag *matHeaderCellDef>Surname</th>
+      <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastname">
+      <th mat-header-cell cdkDrag *matHeaderCellDef>Last name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell cdkDrag *matHeaderCellDef>Date of Birth (D/M/Y)</th>
+      <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="sex">
+      <th mat-header-cell cdkDrag *matHeaderCellDef>Sex</th>
+      <td mat-cell *matCellDef="let element">M</td>
+    </ng-container>
+
+    <ng-container matColumnDef="age">
+      <th mat-header-cell cdkDrag *matHeaderCellDef>Age at31-Dec-24</th>
+      <td mat-cell *matCellDef="let element">53</td>
+    </ng-container>
+
+    <ng-container matColumnDef="nationality">
+      <th mat-header-cell cdkDrag *matHeaderCellDef>Nationality</th>
+      <td mat-cell *matCellDef="let element">Pakistan</td>
+    </ng-container>
+
+    <ng-container matColumnDef="issue">
+      <th mat-header-cell cdkDrag *matHeaderCellDef>Emirate of issue</th>
+      <td mat-cell *matCellDef="let element">Dubai</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell cdkDrag *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button>
+          <mat-icon svgIcon="chevron-right"></mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns"></tr>
+  </table>
+
+  <div class="flex items-center justify-between mt-4">
+    <mat-paginator
+      #paginator
+      class="custom-paginator"
+      (page)="handlePageEvent($event)"
+      [length]="length"
+      [pageSize]="pageSize"
+      [hidePageSize]="true"
+      [pageIndex]="pageIndex"
+    >
+    </mat-paginator>
   </div>
 </ng-template>

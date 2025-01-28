@@ -7,10 +7,10 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { CommonModule, DOCUMENT, NgOptimizedImage } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatRipple } from '@angular/material/core';
-import { MatAnchor, MatButton } from '@angular/material/button';
+import { MatAnchor, MatButton, MatIconButton } from '@angular/material/button';
 import {
   MatCard,
   MatCardContent,
@@ -32,16 +32,25 @@ import { finalize } from 'rxjs';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { MatCheckbox } from '@angular/material/checkbox';
 import {
-  MatDialog,
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { AnimationItem } from 'lottie-web';
-import lottie from 'lottie-web';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { isHandsetScreen } from '@insurance-shared-util-common';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
+import { MatTableModule } from '@angular/material/table';
+import { ELEMENT_DATA } from '../../../../../customer/data/group-management-data/src/lib/group-management.constant';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+
+type View = 'tabs' | 'aiCheck' | 'aiTable';
+
 @Component({
   selector: 'insurance-client-bridge-feature-products-upload-file',
   imports: [
@@ -68,19 +77,25 @@ import { isHandsetScreen } from '@insurance-shared-util-common';
     MatDialogClose,
     MatCardModule,
     MatProgressSpinner,
+    CdkDrag,
+    CdkDropList,
+    MatTableModule,
+    MatPaginator,
+    MatIconButton,
   ],
   templateUrl: './clientBridge-feature-products-upload-file.component.html',
   styleUrl: './clientBridge-feature-products-upload-file.component.scss',
 })
 export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
   private service = inject(BrokerService);
-  private lottiesPath = './assets/lotties/loadingAnimation.json';
-  private dialog = inject(MatDialog);
-  private lottieAnimation: AnimationItem | undefined;
-  private document = inject(DOCUMENT);
+  protected readonly ELEMENT_DATA = ELEMENT_DATA;
 
   baseUrl = 'http://93.127.180.228';
   isHandsetScreen$ = isHandsetScreen();
+  length = 50;
+  pageSize = 10;
+  pageIndex = 0;
+  pageEvent?: PageEvent;
 
   @ViewChild('openDialogCrossDialog')
   openDialogCrossDialog!: TemplateRef<unknown>;
@@ -89,14 +104,24 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
   fetching = signal(true);
   fetchingError = signal(false);
   docsResponse = signal(<BrokerResponse[]>[]);
+  view = signal<View>('tabs');
+
+  columns: string[] = [
+    'surname',
+    'lastname',
+    'date',
+    'sex',
+    'age',
+    'nationality',
+    'issue',
+  ];
 
   ngOnInit() {
     this.fetchAll();
   }
 
   openDialog() {
-    this.dialog.open(this.openDialogCrossDialog);
-    this.document.defaultView?.setTimeout(this.startLottie, 0);
+    this.view.set('aiTable');
   }
 
   fetchAll() {
@@ -117,20 +142,14 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
       });
   }
 
-  private startLottie = () => {
-    if (!this.lottie) {
-      return;
-    }
-    if (this.lottieAnimation) {
-      this.lottieAnimation.destroy();
-    }
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.columns, event.previousIndex, event.currentIndex);
+  }
 
-    this.lottieAnimation = lottie.loadAnimation({
-      container: this.lottie?.nativeElement as Element,
-      path: this.lottiesPath,
-      renderer: 'svg',
-      loop: true,
-      autoplay: true,
-    });
-  };
+  handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.length = e.length;
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
+  }
 }

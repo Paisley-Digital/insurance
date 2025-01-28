@@ -1,5 +1,6 @@
-export interface BrokerResponse{
+export interface BrokerResponse {
   companyId: string;
   fileName: string;
-  fileType: string
- }
+  fileType: string;
+  downloadUrl: string;
+}

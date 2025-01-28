@@ -1,19 +1,20 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCard, MatCardContent } from '@angular/material/card';
-import { ReactiveFormsModule,  } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatHeaderCell, MatTableModule } from '@angular/material/table';
 import {
-  MatHeaderCell,
-  MatTableModule
-} from '@angular/material/table';
-import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
 import { Router } from '@angular/router';
-import { BrokerService } from '@insurance-clientBridge-data-broker';
 
 @Component({
   selector: 'insurance-client-bridge-feature-products',
@@ -64,7 +65,7 @@ export class ClientBridgeFeatureProductsComponent {
   showFirstLastButtons = true;
   disabled = false;
 
-   pageEvent?: PageEvent;
+  pageEvent?: PageEvent;
 
   handlePageEvent(e: PageEvent) {
     this.pageEvent = e;

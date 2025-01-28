@@ -68,13 +68,12 @@
     align-items: center;
     justify-content: center;
 
-    img {
-      height: auto;
-      border-radius: 4px;
-      display: flex;
-      justify-content: center;
-      margin: auto;
-    }
+    //img {
+    //  border-radius: 4px;
+    //  display: flex;
+    //  justify-content: center;
+    //  margin: auto;
+    //}
 
     div:last-child {
       font-size: 14px;
@@ -106,9 +105,6 @@
   gap: 16px;
 }
 
-.divButton {
-  @apply flex gap-2 mt-2 !important;
-}
 
 .content {
   @apply grid !important;
@@ -146,3 +142,16 @@ mat-dialog-actions {
   @apply text-xs font-medium !important;
 }
 
+mat-tab-group {
+  &.mat-tab-group-bottom-border {
+    .mat-mdc-tab-label-container {
+      border-bottom: 1px solid #d3d3d3 !important;
+    }
+  }
+
+  &.header-shadow {
+    mat-tab-header {
+      @apply shadow-sm;
+    }
+  }
+}

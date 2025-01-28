@@ -1,7 +1,11 @@
 import {
-  Component, ElementRef,
+  Component,
+  ElementRef,
   inject,
-  OnInit, signal, TemplateRef, ViewChild
+  OnInit,
+  signal,
+  TemplateRef,
+  ViewChild,
 } from '@angular/core';
 import { CommonModule, DOCUMENT, NgOptimizedImage } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
@@ -11,11 +15,19 @@ import {
   MatCard,
   MatCardContent,
   MatCardImage,
-  MatCardModule
+  MatCardModule,
 } from '@angular/material/card';
-import { MatList, MatListItem, MatListItemIcon, MatListItemTitle } from '@angular/material/list';
+import {
+  MatList,
+  MatListItem,
+  MatListItemIcon,
+  MatListItemTitle,
+} from '@angular/material/list';
 import { MatDivider } from '@angular/material/divider';
-import { BrokerResponse, BrokerService } from '@insurance-clientBridge-data-broker';
+import {
+  BrokerResponse,
+  BrokerService,
+} from '@insurance-clientBridge-data-broker';
 import { finalize } from 'rxjs';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -24,11 +36,12 @@ import {
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
-  MatDialogTitle
+  MatDialogTitle,
 } from '@angular/material/dialog';
 import { AnimationItem } from 'lottie-web';
 import lottie from 'lottie-web';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { isHandsetScreen } from '@insurance-shared-util-common';
 @Component({
   selector: 'insurance-client-bridge-feature-products-upload-file',
   imports: [
@@ -65,10 +78,12 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
   private dialog = inject(MatDialog);
   private lottieAnimation: AnimationItem | undefined;
   private document = inject(DOCUMENT);
+
   baseUrl = 'http://93.127.180.228';
+  isHandsetScreen$ = isHandsetScreen();
 
-
-  @ViewChild('openDialogCrossDialog') openDialogCrossDialog!: TemplateRef<unknown>;
+  @ViewChild('openDialogCrossDialog')
+  openDialogCrossDialog!: TemplateRef<unknown>;
   @ViewChild('lottie') lottie?: ElementRef<HTMLDivElement>;
 
   fetching = signal(true);
@@ -84,7 +99,7 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
     this.document.defaultView?.setTimeout(this.startLottie, 0);
   }
 
-   fetchAll() {
+  fetchAll() {
     this.fetching.set(true);
     this.fetchingError.set(false);
     this.service
@@ -92,7 +107,7 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
       .pipe(finalize(() => this.fetching.set(false)))
       .subscribe({
         next: (res) => {
-          const filtredData = res.filter(docs => docs.fileType !== 'java')
+          const filtredData = res.filter((docs) => docs.fileType !== 'java');
           this.docsResponse.set(filtredData);
           this.fetchingError.set(false);
         },

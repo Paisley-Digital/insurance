@@ -1,4 +1,4 @@
-import { Component, inject,  } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { ReactiveFormsModule,  } from '@angular/forms';
@@ -8,18 +8,12 @@ import { MatIconButton } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import {
-  MatCell,
-  MatColumnDef,
   MatHeaderCell,
-  MatHeaderRow,
-  MatRow,
-  MatTable,
   MatTableModule
 } from '@angular/material/table';
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Router } from '@angular/router';
-import { ELEMENT_DATA } from '../../../../../customer/data/group-management-data/src/lib/group-management.constant';
-import { PeriodicElement } from '../../../../../customer/data/group-management-data/src/lib/group-management.model';
+import { BrokerService } from '@insurance-clientBridge-data-broker';
 
 @Component({
   selector: 'insurance-client-bridge-feature-products',
@@ -35,7 +29,7 @@ import { PeriodicElement } from '../../../../../customer/data/group-management-d
     CdkDropList,
     MatHeaderCell,
     CdkDrag,
-    MatTableModule
+    MatTableModule,
   ],
   templateUrl: './clientBridge-feature-products.component.html',
   styleUrl: './clientBridge-feature-products.component.scss',
@@ -47,14 +41,17 @@ export class ClientBridgeFeatureProductsComponent {
   pageIndex = 0;
   pageSizeOptions = [5, 10, 25];
 
-   ELEMENT_DATA = [
-    {position: 'Louis Vuitton', name: '5/30/14', weight: 119, symbol: 'H'},
-    {position: 'The Walt Disney Company', name: '11/7/16', weight: 120, symbol: 'He'},
-    {position: 'IBM', name: '3/4/16', weight: 570, symbol: 'Li'},
-    {position: 'Pizza Hut', name: '12/10/13', weight: 70, symbol: 'Be'},
+  ELEMENT_DATA = [
+    { position: 'Louis Vuitton', name: '5/30/14', weight: 119, symbol: 'H' },
+    {
+      position: 'The Walt Disney Company',
+      name: '11/7/16',
+      weight: 120,
+      symbol: 'He',
+    },
+    { position: 'IBM', name: '3/4/16', weight: 570, symbol: 'Li' },
+    { position: 'Pizza Hut', name: '12/10/13', weight: 70, symbol: 'Be' },
   ];
-
-
 
   columns: string[] = ['customer', 'timeUpdate', 'number', 'actions'];
 
@@ -67,7 +64,7 @@ export class ClientBridgeFeatureProductsComponent {
   showFirstLastButtons = true;
   disabled = false;
 
-  pageEvent?: PageEvent;
+   pageEvent?: PageEvent;
 
   handlePageEvent(e: PageEvent) {
     this.pageEvent = e;

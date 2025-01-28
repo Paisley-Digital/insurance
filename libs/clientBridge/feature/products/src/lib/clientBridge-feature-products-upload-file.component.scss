@@ -25,3 +25,126 @@
     }
   }
 }
+
+
+.card-grid {
+  @apply mt-4 grid gap-4 grid-cols-3;
+}
+
+.card-item {
+  @apply m-0;
+}
+
+.example-card {
+  width: 100%;
+  height: 247px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  mat-card-header {
+    padding: 16px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background-color: #ddd;
+    margin: 8px 0;
+  }
+
+  .content-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      max-width: 189px;
+      height: auto;
+      object-fit: cover;
+      border-radius: 4px;
+      display: flex;
+      justify-content: center;
+      margin: auto;
+    }
+
+    div:last-child {
+      font-size: 14px;
+      color: #555;
+      text-align: center;
+    }
+  }
+}
+
+.a {
+  @apply flex items-center h-12 w-full !important;
+}
+
+.b {
+  @apply flex items-center mr-auto ml-2 gap-1 !important;
+}
+
+.c {
+  @apply flex items-center justify-center bg-gray-100 w-5 h-5 rounded-lg p-2 !important;
+}
+
+.crossButton {
+  @apply text-blue-900 !important;
+}
+
+.divButtonUpload {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.divButton {
+  @apply flex gap-2 mt-2 !important;
+}
+
+.content {
+  @apply grid !important;
+  @apply gap-4;
+  @apply justify-items-center;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.divImage {
+  @apply flex flex-col justify-center mx-auto my-2 gap-2;
+}
+
+mat-dialog-actions {
+  @apply justify-start !important;
+  display: flex;
+  margin: 0;
+  padding: 8px;
+
+  button {
+    margin-right: 8px;
+  }
+}
+
+.backgroandButton {
+  @apply bg-blue-900 !important;
+}
+
+.textColorButton {
+  @apply text-blue-900 !important;
+
+}
+
+.textCard {
+  @apply text-xs font-medium !important;
+}
+

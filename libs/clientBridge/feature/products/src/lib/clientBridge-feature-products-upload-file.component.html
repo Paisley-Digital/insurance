@@ -1,29 +1,109 @@
 <div class="card-container">
 <mat-card class="widget-card max-md-widget">
 <mat-card-content>
-  <h3>Insurances List</h3>
-  <mat-list>
-    <a mat-list-item href="./assets/images/example2.xlsx"
-       download class="my-4 !cursor-pointer" matRipple>
-      <div matListItemTitle>Louis Vuitton Co</div>
-      <div matListItemLine class="text-[#23273099]">Uploaded - 10.jpg Jan 23,2024</div>
-      <mat-icon matListItemIcon svgIcon="excel"/>
-    </a>
-      <mat-divider />
-    <a mat-list-item href="./assets/images/example2.xlsx"
-       download class="my-4 !cursor-pointer" matRipple>
-      <div matListItemTitle>Louis Vuitton Co</div>
-      <div matListItemLine class="text-[#23273099]">Uploaded - 10.jpg Jan 23,2024</div>
-      <mat-icon matListItemIcon svgIcon="excel"/>
-    </a>
-      <mat-divider />
-    <a mat-list-item href="./assets/images/example2.xlsx"
-                   download class="my-4 !cursor-pointer" matRipple>
-      <div matListItemTitle>Louis Vuitton Co</div>
-      <div matListItemLine class="text-[#23273099]">Uploaded - 10.jpg Jan 23,2024</div>
-      <mat-icon matListItemIcon svgIcon="excel"/>
-    </a>
-  </mat-list>
+  <mat-tab-group dynamicHeight>
+    <mat-tab label="Image">
+       <ng-container [ngTemplateOutlet]="imageTemplate"/>
+    </mat-tab>
+    <mat-tab label=Excel>
+      <ng-container [ngTemplateOutlet]="excelTemplate"/>
+    </mat-tab>
+  </mat-tab-group>
 </mat-card-content>
 </mat-card>
 </div>
+
+<ng-template #excelTemplate>
+  <h3 class="relative top-3">Insurances List</h3>
+  <mat-list class="mt-8">
+      <a mat-list-item href="./assets/images/example2.xlsx"
+         download class="my-4 !cursor-pointer" matRipple>
+        <div matListItemTitle>Louis Vuitton Co</div>
+        <div matListItemLine class="text-[#23273099]">Uploaded - 10.jpg Jan 23,2024</div>
+        <button matListItemMeta mat-button class="!text-primary">Extract</button>
+        <mat-icon matListItemIcon svgIcon="excel"/>
+      </a>
+      <mat-divider />
+    <a mat-list-item href="./assets/images/example2.xlsx"
+       download class="my-4 !cursor-pointer" matRipple>
+      <div matListItemTitle>Louis Vuitton Co</div>
+      <div matListItemLine class="text-[#23273099]">Uploaded - 10.jpg Jan 23,2024</div>
+      <button matListItemMeta mat-button class="!text-primary">Extract</button>
+      <mat-icon matListItemIcon svgIcon="excel"/>
+    </a>
+    <mat-divider />
+    <a mat-list-item href="./assets/images/example2.xlsx"
+       download class="my-4 !cursor-pointer" matRipple>
+      <div matListItemTitle>Louis Vuitton Co</div>
+      <div matListItemLine class="text-[#23273099]">Uploaded - 10.jpg Jan 23,2024</div>
+      <button matListItemMeta mat-button class="!text-primary">Extract</button>
+      <mat-icon matListItemIcon svgIcon="excel"/>
+    </a>
+    <mat-divider />
+    <a mat-list-item href="./assets/images/example2.xlsx"
+       download class="my-4 !cursor-pointer" matRipple>
+      <div matListItemTitle>Louis Vuitton Co</div>
+      <div matListItemLine class="text-[#23273099]">Uploaded - 10.jpg Jan 23,2024</div>
+      <button matListItemMeta mat-button class="!text-primary">Extract</button>
+
+      <mat-icon matListItemIcon svgIcon="excel"/>
+    </a>
+  </mat-list>
+</ng-template>
+
+<ng-template #imageTemplate>
+  <div class="divButtonUpload mt-8">
+    <div class="flex flex-col gap-2">
+      <div class="divButton">
+        <button mat-stroked-button class="!text-blue-900" (click)="openDialog()">
+          Extract detail
+          <mat-icon svgIcon="scan" color="primary"/>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card-grid">
+    @for (file of docs(); track file) {
+      <div class="card-item">
+        <mat-card class="example-card " appearance="outlined">
+          <div class="flex items-center h-12 w-full">
+            <div class="flex items-center mr-auto ml-2 gap-1">
+              <div class="flex items-center justify-center bg-gray-100 w-5 h-5 rounded-lg p-2">
+                <mat-icon svgIcon="buliding"></mat-icon>
+              </div>
+              <div class="text-xs font-medium ">
+                Employee insurance form
+              </div>
+            </div>
+            <div class="flex items-center ml-auto ">
+              <section>
+                <mat-checkbox color="primary"/>
+              </section>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="content-list">
+            <div class="flex flex-col justify-center  mx-auto my-2 gap-2 ">
+              <img mat-card-image [src]="baseUrl + '/files/api/v1/files' + '/' + file.companyId + '/' + file.fileType +'/' + file.fileName" alt="file"/>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    }
+  </div>
+</ng-template>
+
+<ng-template #openDialogCrossDialog>
+  <h4 mat-dialog-title>Cross Checking</h4>
+  <mat-dialog-content class="mat-typography">
+    <div class="flex items-center justify-center">
+        <div #lottie></div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <a mat-flat-button
+       href="./assets/images/Book1.xlsx"
+       download class="my-4 !cursor-pointer backgroandButton" matRipple>Open Excel</a>
+    <button mat-stroked-button mat-dialog-close class="textColorButton">Cancel</button>
+  </mat-dialog-actions>
+</ng-template>

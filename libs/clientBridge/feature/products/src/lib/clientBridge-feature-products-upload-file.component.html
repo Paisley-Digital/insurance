@@ -52,6 +52,40 @@
 </ng-template>
 
 <ng-template #imageTemplate>
+  @if (fetching()){
+     <div class="py-20 flex justify-center items-center">
+       <mat-spinner />
+     </div>
+  } @else if (fetchingError()){
+    <ng-container [ngTemplateOutlet]="errorState"/>
+  } @else {
+    <ng-container [ngTemplateOutlet]="docs"/>
+  }
+</ng-template>
+
+<ng-template #openDialogCrossDialog>
+  <h4 mat-dialog-title>Cross Checking</h4>
+  <mat-dialog-content class="mat-typography">
+    <div class="flex items-center justify-center">
+        <div #lottie></div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <a mat-flat-button
+       href="./assets/images/Book1.xlsx"
+       download class="my-4 !cursor-pointer backgroandButton" matRipple>Open Excel</a>
+    <button mat-stroked-button mat-dialog-close class="textColorButton">Cancel</button>
+  </mat-dialog-actions>
+</ng-template>
+
+<ng-template #errorState>
+  <div class="py-20 flex flex-col justify-center items-center">
+    <img [ngSrc]="'assets/images/errorState.svg'" width="300" height="300" alt="" />
+    <button mat-stroked-button color="primary" (click)="fetchAll()">Try again</button>
+  </div>
+</ng-template>
+
+<ng-template #docs>
   <div class="divButtonUpload mt-8">
     <div class="flex flex-col gap-2">
       <div class="divButton">
@@ -63,11 +97,11 @@
     </div>
   </div>
   <div class="card-grid">
-    @for (file of docs(); track file) {
+    @for (file of docsResponse(); track file) {
       <div class="card-item">
         <mat-card class="example-card " appearance="outlined">
-          <div class="flex items-center h-12 w-full">
-            <div class="flex items-center mr-auto ml-2 gap-1">
+          <div class="flex items-center justify-center h-12 !w-full relative top-1">
+            <div class="!flex !items-center !justify-center mr-auto ml-2 gap-1">
               <div class="flex items-center justify-center bg-gray-100 w-5 h-5 rounded-lg p-2">
                 <mat-icon svgIcon="buliding"></mat-icon>
               </div>
@@ -84,26 +118,11 @@
           <div class="divider"></div>
           <div class="content-list">
             <div class="flex flex-col justify-center  mx-auto my-2 gap-2 ">
-              <img mat-card-image [src]="baseUrl + '/files/api/v1/files' + '/' + file.companyId + '/' + file.fileType +'/' + file.fileName" alt="file"/>
+              <img mat-card-image [src]="baseUrl + '/files/api/v1/files' + '/' + file.companyId + '/' + file.fileType +'/' + file.fileName" alt="file" class="!h-[150px]"/>
             </div>
           </div>
         </mat-card>
       </div>
     }
   </div>
-</ng-template>
-
-<ng-template #openDialogCrossDialog>
-  <h4 mat-dialog-title>Cross Checking</h4>
-  <mat-dialog-content class="mat-typography">
-    <div class="flex items-center justify-center">
-        <div #lottie></div>
-    </div>
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <a mat-flat-button
-       href="./assets/images/Book1.xlsx"
-       download class="my-4 !cursor-pointer backgroandButton" matRipple>Open Excel</a>
-    <button mat-stroked-button mat-dialog-close class="textColorButton">Cancel</button>
-  </mat-dialog-actions>
 </ng-template>

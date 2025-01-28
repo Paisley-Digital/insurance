@@ -1,16 +1,18 @@
 import {
   Component, ElementRef,
-  EventEmitter,
   inject,
-  Input,
-  OnInit,
-  Output, signal, TemplateRef, ViewChild
+  OnInit, signal, TemplateRef, ViewChild
 } from '@angular/core';
 import { CommonModule, DOCUMENT, NgOptimizedImage } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatRipple } from '@angular/material/core';
 import { MatAnchor, MatButton } from '@angular/material/button';
-import { MatCard, MatCardContent, MatCardHeader, MatCardImage } from '@angular/material/card';
+import {
+  MatCard,
+  MatCardContent,
+  MatCardImage,
+  MatCardModule
+} from '@angular/material/card';
 import { MatList, MatListItem, MatListItemIcon, MatListItemTitle } from '@angular/material/list';
 import { MatDivider } from '@angular/material/divider';
 import { BrokerResponse, BrokerService } from '@insurance-clientBridge-data-broker';
@@ -26,6 +28,7 @@ import {
 } from '@angular/material/dialog';
 import { AnimationItem } from 'lottie-web';
 import lottie from 'lottie-web';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 @Component({
   selector: 'insurance-client-bridge-feature-products-upload-file',
   imports: [
@@ -50,6 +53,8 @@ import lottie from 'lottie-web';
     MatDialogActions,
     MatAnchor,
     MatDialogClose,
+    MatCardModule,
+    MatProgressSpinner,
   ],
   templateUrl: './clientBridge-feature-products-upload-file.component.html',
   styleUrl: './clientBridge-feature-products-upload-file.component.scss',
@@ -60,49 +65,41 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
   private dialog = inject(MatDialog);
   private lottieAnimation: AnimationItem | undefined;
   private document = inject(DOCUMENT);
-   baseUrl = 'http://93.127.180.228'
+  baseUrl = 'http://93.127.180.228';
 
-  uploadedFiles: { name: string; url: string; type: string }[] = [];
 
-  @ViewChild('openDialogCrossDialog')  openDialogCrossDialog!: TemplateRef<unknown>;
+  @ViewChild('openDialogCrossDialog') openDialogCrossDialog!: TemplateRef<unknown>;
   @ViewChild('lottie') lottie?: ElementRef<HTMLDivElement>;
 
   fetching = signal(true);
-  docs = signal(<BrokerResponse[]>[]);
+  fetchingError = signal(false);
+  docsResponse = signal(<BrokerResponse[]>[]);
 
   ngOnInit() {
-    this.service
-      .fetchAll()
-      .pipe(finalize(() => this.fetching.set(false)))
-      .subscribe({
-        next: (res) => {
-          this.docs.set(res);
-        },
-      });
-  }
-
-  onFilesSelected(event: any) {
-    const files: FileList = event.target.files;
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      if (file.type.startsWith('image/')) {
-        const fileUrl = URL.createObjectURL(file);
-        this.uploadedFiles.push({
-          name: file.name,
-          url: fileUrl,
-          type: file.type,
-        });
-      } else {
-        alert('فقط فایل‌های تصویری مجاز هستند!');
-      }
-    }
-    event.target.value = '';
+    this.fetchAll();
   }
 
   openDialog() {
     this.dialog.open(this.openDialogCrossDialog);
     this.document.defaultView?.setTimeout(this.startLottie, 0);
+  }
 
+   fetchAll() {
+    this.fetching.set(true);
+    this.fetchingError.set(false);
+    this.service
+      .fetchAll()
+      .pipe(finalize(() => this.fetching.set(false)))
+      .subscribe({
+        next: (res) => {
+          const filtredData = res.filter(docs => docs.fileType !== 'java')
+          this.docsResponse.set(filtredData);
+          this.fetchingError.set(false);
+        },
+        error: () => {
+          this.fetchingError.set(true);
+        },
+      });
   }
 
   private startLottie = () => {

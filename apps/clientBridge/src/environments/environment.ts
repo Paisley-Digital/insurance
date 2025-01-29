@@ -9,8 +9,6 @@ export const environment: Environment = {
   trackWebsiteTraffic: false,
   production: false,
   apiRoot: '/api',
-  aiKey:
-    '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',
   imagesPath: './assets/images',
   userIdle: {
     idle: 60 * 60,

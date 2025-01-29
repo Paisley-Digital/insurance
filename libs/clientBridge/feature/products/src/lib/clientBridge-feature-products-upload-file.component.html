@@ -169,11 +169,7 @@
     <div class="flex flex-col gap-2">
       @if (selectedCards().length){
       <div class="divButton">
-        <button
-          mat-flat-button
-          (click)="callAiService()"
-          [insuranceOverlaySpinner]="sendingToAi()"
-        >
+        <button mat-flat-button [insuranceOverlaySpinner]="sendingToAi()">
           Extract Data
           <mat-icon svgIcon="doc" color="primary" />
         </button>

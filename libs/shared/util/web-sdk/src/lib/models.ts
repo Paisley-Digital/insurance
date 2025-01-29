@@ -3,7 +3,6 @@ export interface Environment<TWidgetId extends string = string> {
   trackWebsiteTraffic: boolean;
   production: boolean;
   apiRoot: string;
-  aiKey: string;
   imagesPath: string;
   userIdle: { idle: number; timeout: number };
   keys?: Record<string, string>;

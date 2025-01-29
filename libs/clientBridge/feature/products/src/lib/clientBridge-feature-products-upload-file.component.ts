@@ -25,10 +25,8 @@ import {
 } from '@angular/material/list';
 import { MatDivider } from '@angular/material/divider';
 import {
-  AiPayload,
   BrokerResponse,
   BrokerService,
-  message,
   NormalizedContent,
 } from '@insurance-clientBridge-data-broker';
 import { finalize } from 'rxjs';
@@ -41,7 +39,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { isHandsetScreen, normalizeKeys } from '@insurance-shared-util-common';
+import { isHandsetScreen } from '@insurance-shared-util-common';
 import {
   CdkDrag,
   CdkDragDrop,
@@ -53,8 +51,7 @@ import { ELEMENT_DATA } from '../../../../../customer/data/group-management-data
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { OverlaySpinnerDirective } from '@./overlay-spinner';
 import { AlertService } from '@./alert';
-import { injectStylesBeforeElement } from 'cypress/mount-utils';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 type View = 'tabs' | 'aiCheck' | 'aiTable';
 
@@ -143,63 +140,6 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
       this.router.snapshot.queryParamMap.get('company') ?? ''
     );
     this.fetchAll();
-  }
-
-  callAiService() {
-    this.sendingToAi.set(true);
-
-    const instruction = {
-      type: 'text',
-      text: message,
-    };
-
-    const imageUrls = this.selectedCards().map((card) => ({
-      type: 'image_url',
-      image_url: {
-        url: `${this.baseUrl}${card.downloadUrl}`,
-      },
-    }));
-
-    const content = [instruction, ...imageUrls];
-
-    const payload: AiPayload = {
-      model: 'gpt-4o-mini',
-      messages: [
-        {
-          role: 'user',
-          content,
-        },
-      ],
-      max_tokens: 300,
-    };
-
-    this.service
-      .postAiService(payload)
-      .pipe(finalize(() => this.sendingToAi.set(false)))
-      .subscribe({
-        next: (result) => {
-          const rawContent = result.choices[0]?.message.content;
-          if (rawContent) {
-            try {
-              const sanitizedContent = rawContent
-                .replace(/^```json/, '')
-                .replace(/```$/, '')
-                .trim();
-
-              this.parsedContent = JSON.parse(sanitizedContent);
-
-              this.normalizedContent = normalizeKeys(this.parsedContent);
-              this.normalizedContent = new Array(this.normalizedContent);
-              this.view.set('aiTable');
-            } catch (error) {
-              console.error('Failed to parse content as JSON', error);
-            }
-          }
-        },
-        error: () => {
-          this.alert.open('Something went wrong. Please try again');
-        },
-      });
   }
 
   fetchAll() {

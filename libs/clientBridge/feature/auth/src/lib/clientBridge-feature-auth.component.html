@@ -2,9 +2,9 @@
   <mat-drawer-content class="!flex flex-col">
     <div class="relative flex flex-1 flex-wrap">
       @if ((isHandsetScreen$ | async) === false) {
-        <div class="w-1/2">
-          <div class="cover-image"></div>
-        </div>
+      <div class="w-1/2">
+        <div class="cover-image"></div>
+      </div>
       }
       <div
         class="w-full max-sm:mt-8 md:flex md:w-1/2 md:items-center md:justify-center"
@@ -21,8 +21,10 @@
 
 <ng-template #login>
   <div class="flex flex-col items-center max-sm:h-full max-sm:pb-8 w-full">
-    <h1 class="!flex !justify-start !w-full">Welcome</h1>
-    <h1 class="!flex !justify-start !w-full relative bottom-7">Insurance Broker Portal</h1>
+    <h1 class="!flex !justify-start !w-full">Welcome To</h1>
+    <h1 class="!flex !justify-start !w-full relative bottom-7">
+      Insurance Broker Portal
+    </h1>
     <div class="mt-10 w-full flex-1 relative bottom-12">
       <ng-container [ngTemplateOutlet]="loginTemplate" />
     </div>
@@ -34,8 +36,12 @@
     <div class="flex flex-1 flex-col">
       <div class="!mt-3 flex flex-col gap-3">
         <mat-form-field hideRequiredMarker class="!rounded-lg">
-          <mat-label>Your name</mat-label>
-          <input matInput formControlName="userName" />
+          <mat-label>UserName</mat-label>
+          <input
+            matInput
+            placeholder="john.doe@example.com"
+            formControlName="userName"
+          />
           <mat-error>
             <insurance-error-message [input]="loginForm.get('userName')" />
           </mat-error>
@@ -43,10 +49,11 @@
       </div>
       <div class="!mt-3 flex flex-col gap-3">
         <mat-form-field hideRequiredMarker>
-          <mat-label>Your Password</mat-label>
+          <mat-label>Password</mat-label>
           <input
             matInput
             type="password"
+            placeholder="Enter your password"
             [type]="showPassword() ? 'text' : 'password'"
             formControlName="password"
           />
@@ -64,14 +71,14 @@
           </button>
         </mat-form-field>
       </div>
-      <div class="mt-3 flex items-start justify-between">
-        <mat-checkbox class="example-margin" color="primary"
-        >Remember me</mat-checkbox
-        >
-        <a mat-button color="primary"> Forgot password? </a>
+      <div class="mt-3 flex items-start justify-between gap-20">
+        <mat-checkbox class="example-margin text-sm !w-full" color="primary"
+          >Keep me logged in on this device
+        </mat-checkbox>
+        <a mat-button color="primary"> Forgot your password? </a>
       </div>
       <button mat-flat-button class="mt-8" (click)="navigateToProduct()">
-        Log in
+        Sign in
       </button>
     </div>
   </form>

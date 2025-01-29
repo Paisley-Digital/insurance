@@ -2,9 +2,9 @@
   <mat-card class="widget-card max-md-widget">
     @switch(view()) { @case('tabs'){
     <mat-card-header>
-      <div class="relative top-3 left-20 text-2xl">
+      <div class="text-2xl">
         <mat-icon svgIcon="circle" class="relative top-1" />
-        Insurances List
+        {{ companyName() }} Insurance List
       </div>
     </mat-card-header>
     <mat-card-content>
@@ -14,10 +14,10 @@
         [mat-stretch-tabs]="isHandsetScreen$ | async"
         class="mat-tab-group-bottom-border"
       >
-        <mat-tab label="Customer images">
+        <mat-tab label="Uploaded Documents">
           <ng-container [ngTemplateOutlet]="imageTemplate" />
         </mat-tab>
-        <mat-tab label="Extracted data" disabled="true">
+        <mat-tab label="Extracted Data" disabled="true">
           <ng-container [ngTemplateOutlet]="excelTemplate" />
         </mat-tab>
       </mat-tab-group>
@@ -174,7 +174,7 @@
           (click)="callAiService()"
           [insuranceOverlaySpinner]="sendingToAi()"
         >
-          Extract detail
+          Extract Data
           <mat-icon svgIcon="doc" color="primary" />
         </button>
       </div>
@@ -194,7 +194,7 @@
             >
               <mat-icon svgIcon="building-outline"></mat-icon>
             </div>
-            <div class="text-xs font-medium">Employee insurance form</div>
+            <div class="text-xs font-medium">Employee Insurance Form</div>
           </div>
           <div class="flex items-center ml-auto">
             <section>
@@ -268,7 +268,7 @@
 <ng-template #aiDetailTemplate>
   <div class="text-2xl mb-8">
     <mat-icon svgIcon="circle" class="relative top-1" />
-    Insurances Details
+    Insurance Details
   </div>
   <table
     mat-table
@@ -333,6 +333,7 @@
       class="custom-paginator"
       (page)="handlePageEvent($event)"
       [length]="length"
+      [disabled]="true"
       [pageSize]="pageSize"
       [hidePageSize]="true"
       [pageIndex]="pageIndex"

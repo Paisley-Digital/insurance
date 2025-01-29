@@ -53,6 +53,8 @@ import { ELEMENT_DATA } from '../../../../../customer/data/group-management-data
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { OverlaySpinnerDirective } from '@./overlay-spinner';
 import { AlertService } from '@./alert';
+import { injectStylesBeforeElement } from 'cypress/mount-utils';
+import { ActivatedRoute, Router } from '@angular/router';
 
 type View = 'tabs' | 'aiCheck' | 'aiTable';
 
@@ -95,6 +97,7 @@ type View = 'tabs' | 'aiCheck' | 'aiTable';
 export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
   private service = inject(BrokerService);
   private alert = inject(AlertService);
+  private router = inject(ActivatedRoute);
   protected readonly ELEMENT_DATA = ELEMENT_DATA;
 
   baseUrl = 'https://insurancebase.paisley.monster';
@@ -114,6 +117,7 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
   view = signal<View>('tabs');
   sendingToAi = signal(false);
   selectedCards = signal<BrokerResponse[]>([]);
+  companyName = signal('');
 
   parsedContent: NormalizedContent | null = null;
   normalizedContent: any;
@@ -129,6 +133,9 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
   ];
 
   ngOnInit() {
+    this.companyName.set(
+      this.router.snapshot.queryParamMap.get('company') ?? ''
+    );
     this.fetchAll();
   }
 
@@ -202,6 +209,7 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
           this.fetchingError.set(false);
         },
         error: () => {
+          this.alert.open('Something went wrong. Please try again');
           this.fetchingError.set(true);
         },
       });

@@ -45,6 +45,12 @@ export class ClientBridgeFeatureProductsComponent {
   ELEMENT_DATA = [
     { position: 'Louis Vuitton', name: '5/30/14', weight: 119, symbol: 'H' },
     {
+      position: 'Abu Dhabi National Insurance Company (ADNIC)',
+      name: '5/30/14',
+      weight: 220,
+      symbol: 'H',
+    },
+    {
       position: 'The Walt Disney Company',
       name: '11/7/16',
       weight: 120,
@@ -81,7 +87,9 @@ export class ClientBridgeFeatureProductsComponent {
         .map((str) => +str);
     }
   }
-  navigateDetails(id: number) {
-    this.router.navigate(['/console/customer-management/details']);
+  navigateDetails(selectedCompany: any) {
+    this.router.navigate(['/console/customer-management/details'], {
+      queryParams: { company: selectedCompany.position },
+    });
   }
 }

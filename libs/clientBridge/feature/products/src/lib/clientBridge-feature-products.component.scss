@@ -9,11 +9,11 @@
   &.max-md-widget {
     mat-card-content,
     mat-card-actions {
-      @apply mx-auto w-full max-w-[900px];
+      @apply mx-auto;
     }
 
     mat-card-content {
-      @apply mt-6;
+      @apply mt-6 w-full;
     }
 
     mat-card-actions {
@@ -24,4 +24,8 @@
       @apply flex-1;
     }
   }
+}
+
+.mat-mdc-card{
+  flex-direction: row;
 }

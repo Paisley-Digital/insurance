@@ -9,7 +9,7 @@
   &.max-md-widget {
     mat-card-content,
     mat-card-actions {
-      @apply mx-auto w-full max-w-[900px];
+      @apply mx-auto;
     }
 
     mat-card-content {
@@ -158,4 +158,8 @@ mat-tab-group {
       @apply shadow-sm;
     }
   }
+}
+
+.mat-mdc-card{
+  flex-direction: column;
 }

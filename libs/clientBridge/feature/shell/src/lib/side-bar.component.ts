@@ -3,7 +3,11 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
-import { MatListItem, MatListItemIcon, MatNavList } from '@angular/material/list';
+import {
+  MatListItem,
+  MatListItemIcon,
+  MatNavList,
+} from '@angular/material/list';
 
 @Component({
   selector: 'insurance-side-bar',

@@ -8,7 +8,7 @@ import { AI_KEY } from '@insurance-shared-util-web-sdk';
 })
 export class BrokerService {
   private http = inject(HttpClient);
-  private baseUrl = 'http://93.127.180.228';
+  private baseUrl = 'https://insurancebase.paisley.monster';
   private aiKey = inject(AI_KEY);
 
   fetchAll() {

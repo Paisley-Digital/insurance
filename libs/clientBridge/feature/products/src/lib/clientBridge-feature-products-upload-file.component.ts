@@ -97,7 +97,7 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
   private alert = inject(AlertService);
   protected readonly ELEMENT_DATA = ELEMENT_DATA;
 
-  baseUrl = 'http://93.127.180.228';
+  baseUrl = 'https://insurancebase.paisley.monster';
   isHandsetScreen$ = isHandsetScreen();
   length = 50;
   pageSize = 10;
@@ -197,8 +197,8 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
       .pipe(finalize(() => this.fetching.set(false)))
       .subscribe({
         next: (res) => {
-          const filtredData = res.filter((docs) => docs.fileType !== 'java');
-          this.docsResponse.set(filtredData);
+          const filteredData = res.filter((docs) => docs.fileType !== 'java');
+          this.docsResponse.set(filteredData);
           this.fetchingError.set(false);
         },
         error: () => {

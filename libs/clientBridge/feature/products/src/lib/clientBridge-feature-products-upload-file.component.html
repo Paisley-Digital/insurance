@@ -289,17 +289,31 @@
 
     <ng-container matColumnDef="date">
       <th mat-header-cell cdkDrag *matHeaderCellDef>Date of Birth (D/M/Y)</th>
-      <td mat-cell *matCellDef="let element">{{ element.Date_of_Birth }}</td>
+      <td mat-cell *matCellDef="let element">
+        {{
+          element.Date_of_Birth === 'Not Found' ? '-' : element.Date_of_Birth
+        }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="sex">
       <th mat-header-cell cdkDrag *matHeaderCellDef>Sex</th>
-      <td mat-cell *matCellDef="let element">{{ element.Sex }}</td>
+      <td mat-cell *matCellDef="let element">
+        {{ element.Sex === 'Not Found' ? '-' : element.Sex }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="age">
-      <th mat-header-cell cdkDrag *matHeaderCellDef>Age at31-Dec-24</th>
-      <td mat-cell *matCellDef="let element">{{ element.Age_at_31_Dec_24 }}</td>
+      <th mat-header-cell cdkDrag *matHeaderCellDef>
+        Age at{{ currentDate() }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{
+          element.Age_at_31_Dec_24 === 'Not Found'
+            ? '-'
+            : element.Age_at_31_Dec_24
+        }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="nationality">
@@ -310,7 +324,11 @@
     <ng-container matColumnDef="issue">
       <th mat-header-cell cdkDrag *matHeaderCellDef>Emirate of issue</th>
       <td mat-cell *matCellDef="let element">
-        {{ element.Emirate_of_Visa_Issue }}
+        {{
+          element.Emirate_of_Visa_Issue === 'Not Found'
+            ? '-'
+            : element.Emirate_of_Visa_Issue
+        }}
       </td>
     </ng-container>
 

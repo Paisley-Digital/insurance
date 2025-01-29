@@ -118,6 +118,7 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
   sendingToAi = signal(false);
   selectedCards = signal<BrokerResponse[]>([]);
   companyName = signal('');
+  currentDate = signal('');
 
   parsedContent: NormalizedContent | null = null;
   normalizedContent: any;
@@ -133,6 +134,11 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
   ];
 
   ngOnInit() {
+    const today = new Date();
+    const day = today.getDate().toString().padStart(2, '0');
+    const month = today.toLocaleString('en-US', { month: 'short' });
+    const year = today.getFullYear().toString().slice(-2);
+    this.currentDate.set(`${day}-${month}-${year}`);
     this.companyName.set(
       this.router.snapshot.queryParamMap.get('company') ?? ''
     );

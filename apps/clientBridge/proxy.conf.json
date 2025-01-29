@@ -2,9 +2,6 @@
   "/files/api": {
     "target": "http://93.127.180.228",
     "secure": false,
-    "changeOrigin": true,
-    "pathRewrite": {
-      "/files/api": ""
-    }
+    "changeOrigin": true
   }
 }

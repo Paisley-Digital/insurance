@@ -17,6 +17,7 @@
         "tsConfig": "apps/clientBridge/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
+          "apps/clientBridge/src/_redirects",
           {
             "input": "libs/shared/assets/src/assets",
             "glob": "**/*",

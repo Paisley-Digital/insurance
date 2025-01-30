@@ -13,7 +13,6 @@
     "build:customer": "nx build customer",
     "test:customer": "nx test customer",
     "extract-i18n:customer": "ng extract-i18n customer --output-path apps/customer/src/locale && xliffmerge --profile apps/customer/xliffmerge.json",
-    "prepare": "husky install",
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write ."
   },

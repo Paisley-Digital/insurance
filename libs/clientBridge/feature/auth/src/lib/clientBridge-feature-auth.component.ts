@@ -46,12 +46,22 @@ export class ClientBridgeFeatureAuthComponent {
     password: ['', Validators.required],
   });
 
+  get errorMessage() {
+    if (this.loginForm.get('password')?.hasError('notValid')) {
+      return 'The username or password is incorrect.';
+    }
+    return '';
+  }
+
   isShowPassword() {
     this.showPassword.update((current) => !current);
   }
 
   navigateToProduct() {
-    if (this.loginForm.invalid) {
+    const userName = this.loginForm.getRawValue().userName;
+    const password = this.loginForm.getRawValue().password;
+    if (userName !== 'bbgroup' && password !== '123') {
+      this.loginForm.get('password')?.setErrors({ notValid: true });
       return;
     }
     this.router.navigate(['/console']);

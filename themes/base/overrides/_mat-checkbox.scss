@@ -1,0 +1,16 @@
+@use '@angular/material' as mat;
+
+// Customize the entire app. Change :root to your selector if you want to scope the styles.
+:root {
+  @include mat.checkbox-overrides((
+    selected-icon-color: #287A6E,
+    selected-hover-icon-color: #287A6E,
+    selected-focus-icon-color: #287A6E,
+    unselected-focus-icon-color: #287A6E,
+    unselected-hover-icon-color: #287A6E,
+    unselected-icon-color: #287A6E,
+    selected-focus-state-layer-color: #287A6E,
+    selected-hover-state-layer-color: #287A6E,
+    selected-pressed-state-layer-color: #287A6E,
+  ));
+}

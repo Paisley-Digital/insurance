@@ -45,7 +45,7 @@ export class ClientBridgeFeatureProductsComponent {
   ELEMENT_DATA = [
     { position: 'Louis Vuitton', name: '5/30/14', weight: 119, symbol: 'H' },
     {
-      position: 'Abu Dhabi National Insurance Company (ADNIC)',
+      position: 'BB Group',
       name: '5/30/14',
       weight: 220,
       symbol: 'H',

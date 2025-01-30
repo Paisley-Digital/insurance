@@ -10,7 +10,7 @@
         class="w-full max-sm:mt-8 md:flex md:w-1/2 md:items-center md:justify-center"
       >
         <div class="flex w-full justify-center max-sm:h-full">
-          <div class="w-3/4 sm:w-1/2 md:mt-12 md:w-2/3 lg:w-1/1">
+          <div class="w-3/4 sm:w-1/2 md:mt-12 md:w-2/3 lg:w-full p-20">
             <ng-container [ngTemplateOutlet]="login" />
           </div>
         </div>
@@ -58,7 +58,12 @@
             formControlName="password"
           />
           <mat-error>
+            @if (loginForm.get('password')?.hasError('notValid')){
+            {{ errorMessage }}
+            } @else {
+
             <insurance-error-message [input]="loginForm.get('password')" />
+            }
           </mat-error>
           <button
             type="button"
@@ -71,11 +76,13 @@
           </button>
         </mat-form-field>
       </div>
-      <div class="mt-3 flex items-start justify-between gap-20">
-        <mat-checkbox class="example-margin text-sm !w-full" color="primary"
+      <div class="mt-3 flex items-start justify-between">
+        <mat-checkbox class="example-margin text-sm !w-full"
           >Keep me logged in on this device
         </mat-checkbox>
-        <a mat-button color="primary" class="w-full"> Forgot your password? </a>
+        <a mat-button color="primary" class="w-full relative left-[60px]">
+          Forgot your password?
+        </a>
       </div>
       <button mat-flat-button class="mt-8" (click)="navigateToProduct()">
         Sign in

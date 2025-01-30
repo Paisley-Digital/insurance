@@ -25,9 +25,9 @@ import {
 } from '@angular/material/list';
 import { MatDivider } from '@angular/material/divider';
 import {
+  AiPayload,
   BrokerResponse,
   BrokerService,
-  NormalizedContent,
 } from '@insurance-clientBridge-data-broker';
 import { finalize } from 'rxjs';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
@@ -39,7 +39,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { isHandsetScreen } from '@insurance-shared-util-common';
+import { isHandsetScreen, normalizeKeys } from '@insurance-shared-util-common';
 import {
   CdkDrag,
   CdkDragDrop,
@@ -117,7 +117,6 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
   companyName = signal('');
   currentDate = signal('');
 
-  parsedContent: NormalizedContent | null = null;
   normalizedContent: any;
 
   columns: string[] = [
@@ -186,5 +185,55 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
     } else {
       this.selectedCards().filter((card) => card !== file);
     }
+  }
+
+  callAiService() {
+    this.sendingToAi.set(true);
+
+    const imageUrls = this.selectedCards().map((card) => ({
+      extraction_type: 'image_url',
+      image_url: `${this.baseUrl}${card.downloadUrl}`,
+    }));
+
+    const payload: AiPayload = {
+      contents: imageUrls,
+    };
+
+    this.service
+      .postAiService(payload)
+      .pipe(finalize(() => this.sendingToAi.set(false)))
+      .subscribe({
+        next: (result) => {
+          try {
+            const rawContent = result.results.result;
+            if (rawContent) {
+              const sanitizedContent = rawContent
+                .replace(/^```json/, '')
+                .replace(/```$/, '')
+                .trim();
+
+              const parsedResults = JSON.parse(sanitizedContent);
+
+              if (!Array.isArray(parsedResults.results)) {
+                parsedResults.results = [parsedResults.results];
+              }
+
+              const additionalResults = this.selectedCards().map((card) => ({
+                result: `Extra data for card: ${card}`,
+              }));
+
+              parsedResults.results.push(...additionalResults);
+
+              this.normalizedContent = normalizeKeys(parsedResults);
+              this.view.set('aiTable');
+            }
+          } catch (error) {
+            console.error('Failed to parse content as JSON', error);
+          }
+        },
+        error: () => {
+          this.alert.open('Something went wrong, Please try again');
+        },
+      });
   }
 }

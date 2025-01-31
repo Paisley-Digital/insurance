@@ -7,10 +7,6 @@
   @apply max-sm:rounded-none #{!important};
 
   &.max-md-widget {
-    mat-card-content,
-    mat-card-actions {
-      @apply mx-auto;
-    }
 
     mat-card-content {
       @apply mt-6 ;

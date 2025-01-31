@@ -3,7 +3,11 @@
     @switch(view()) { @case('tabs'){
     <mat-card-header>
       <div class="text-2xl">
-        <mat-icon svgIcon="circle" class="relative top-1" />
+        <mat-icon
+          svgIcon="circle"
+          class="relative top-1 cursor-pointer"
+          (click)="backToTable()"
+        />
         {{ companyName() }} Insurance List
       </div>
     </mat-card-header>
@@ -128,27 +132,27 @@
   }
 </ng-template>
 
-<ng-template #openDialogCrossDialog>
-  <h4 mat-dialog-title>Cross Checking</h4>
-  <mat-dialog-content class="mat-typography">
-    <div class="flex items-center justify-center">
-      <div #lottie></div>
-    </div>
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <a
-      mat-flat-button
-      href="./assets/images/Book1.xlsx"
-      download
-      class="my-4 !cursor-pointer backgroandButton"
-      matRipple
-      >Open Excel</a
-    >
-    <button mat-stroked-button mat-dialog-close class="textColorButton">
-      Cancel
-    </button>
-  </mat-dialog-actions>
-</ng-template>
+<!--<ng-template #openDialogCrossDialog>-->
+<!--  <h4 mat-dialog-title>Cross Checking</h4>-->
+<!--  <mat-dialog-content class="mat-typography">-->
+<!--    <div class="flex items-center justify-center">-->
+<!--      <div #lottie></div>-->
+<!--    </div>-->
+<!--  </mat-dialog-content>-->
+<!--  <mat-dialog-actions align="end">-->
+<!--    <a-->
+<!--      mat-flat-button-->
+<!--      href="./assets/images/Book1.xlsx"-->
+<!--      download-->
+<!--      class="my-4 !cursor-pointer backgroandButton"-->
+<!--      matRipple-->
+<!--      >Open Excel</a-->
+<!--    >-->
+<!--    <button mat-stroked-button mat-dialog-close class="textColorButton">-->
+<!--      Cancel-->
+<!--    </button>-->
+<!--  </mat-dialog-actions>-->
+<!--</ng-template>-->
 
 <ng-template #errorState>
   <div class="py-20 flex flex-col justify-center items-center">
@@ -169,11 +173,7 @@
     <div class="flex flex-col gap-2">
       @if (selectedCards().length){
       <div class="divButton">
-        <button
-          mat-flat-button
-          [insuranceOverlaySpinner]="sendingToAi()"
-          (click)="callAiService()"
-        >
+        <button mat-flat-button (click)="callAiService()">
           Extract Data
           <mat-icon svgIcon="doc" color="primary" />
         </button>
@@ -222,7 +222,11 @@
 <ng-template #aiCheckTemplate>
   <mat-card-header>
     <div class="relative top-3 left-20 text-2xl">
-      <mat-icon svgIcon="circle" class="relative top-1" />
+      <mat-icon
+        svgIcon="circle"
+        class="relative top-1 cursor-pointer"
+        (click)="backToImages()"
+      />
       Cross Checking List
     </div>
   </mat-card-header>
@@ -358,4 +362,19 @@
     >
     </mat-paginator>
   </div>
+</ng-template>
+
+<ng-template #openDialogCrossDialog>
+  <h4 mat-dialog-title>Extracting Data</h4>
+
+  <mat-dialog-content class="mat-typography">
+    <div class="flex items-center justify-center">
+      <div #lottie></div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close class="textColorButton">
+      Cancel
+    </button>
+  </mat-dialog-actions>
 </ng-template>

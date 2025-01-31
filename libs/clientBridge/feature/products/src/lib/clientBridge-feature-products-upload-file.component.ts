@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   inject,
@@ -7,7 +8,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule, DOCUMENT, NgOptimizedImage } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatRipple } from '@angular/material/core';
 import { MatAnchor, MatButton, MatIconButton } from '@angular/material/button';
@@ -34,9 +35,11 @@ import { finalize } from 'rxjs';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { MatCheckbox } from '@angular/material/checkbox';
 import {
+  MatDialog,
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
+  MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
@@ -52,7 +55,9 @@ import { ELEMENT_DATA } from '../../../../../customer/data/group-management-data
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { OverlaySpinnerDirective } from '@./overlay-spinner';
 import { AlertService } from '@./alert';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AnimationItem } from 'lottie-web';
+import lottie from 'lottie-web';
 
 type View = 'tabs' | 'aiCheck' | 'aiTable';
 
@@ -92,11 +97,18 @@ type View = 'tabs' | 'aiCheck' | 'aiTable';
   templateUrl: './clientBridge-feature-products-upload-file.component.html',
   styleUrl: './clientBridge-feature-products-upload-file.component.scss',
 })
-export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
+export class ClientBridgeFeatureProductsUploadFileComponent
+  implements OnInit, AfterViewInit
+{
   private service = inject(BrokerService);
   private alert = inject(AlertService);
   private router = inject(ActivatedRoute);
   protected readonly ELEMENT_DATA = ELEMENT_DATA;
+  private lottieAnimation: AnimationItem | undefined;
+  private lottiesPath = './assets/images/loadingAnimation.json';
+  private document = inject(DOCUMENT);
+  private dialog = inject(MatDialog);
+  private route = inject(Router);
 
   baseUrl = 'https://insurancebase.paisley.monster';
   isHandsetScreen$ = isHandsetScreen();
@@ -108,6 +120,7 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
   @ViewChild('openDialogCrossDialog')
   openDialogCrossDialog!: TemplateRef<unknown>;
   @ViewChild('lottie') lottie?: ElementRef<HTMLDivElement>;
+  private DialogRef?: MatDialogRef<unknown>;
 
   fetching = signal(true);
   fetchingError = signal(false);
@@ -141,6 +154,10 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
       this.router.snapshot.queryParamMap.get('company') ?? ''
     );
     this.fetchAll();
+  }
+
+  ngAfterViewInit() {
+    this.document.defaultView?.setTimeout(this.startLottie, 0);
   }
 
   fetchAll() {
@@ -190,7 +207,9 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
   }
 
   callAiService() {
-    this.sendingToAi.set(true);
+    this.document.defaultView?.setTimeout(this.startLottie, 0);
+
+    this.DialogRef = this.dialog.open(this.openDialogCrossDialog);
 
     const imageUrls = this.selectedCards().map((card) => ({
       image_url: `${this.baseUrl}${card.downloadUrl}`,
@@ -208,7 +227,11 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
 
     this.service
       .postAiService(payload)
-      .pipe(finalize(() => this.sendingToAi.set(false)))
+      .pipe(
+        finalize(() => {
+          this.DialogRef?.close();
+        })
+      )
       .subscribe({
         next: (result) => {
           const serviceResult = result.results[0].json_result;
@@ -222,4 +245,28 @@ export class ClientBridgeFeatureProductsUploadFileComponent implements OnInit {
         },
       });
   }
+
+  backToTable() {
+    this.route.navigate(['/console/customer-management']);
+  }
+
+  backToImages() {
+    this.view.set('tabs');
+  }
+
+  private startLottie = () => {
+    if (!this.lottie) {
+      return;
+    }
+    if (this.lottieAnimation) {
+      this.lottieAnimation.destroy();
+    }
+    this.lottieAnimation = lottie.loadAnimation({
+      container: this.lottie?.nativeElement as Element,
+      path: this.lottiesPath,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+    });
+  };
 }

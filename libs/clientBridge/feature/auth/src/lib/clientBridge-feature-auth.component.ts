@@ -15,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ErrorMessageComponent } from '@insurance-shared-ui-input-validation-message';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Router } from '@angular/router';
+import { OverlaySpinnerDirective } from '@./overlay-spinner';
 @Component({
   selector: 'insurance-client-bridge-feature-auth',
   imports: [
@@ -29,6 +30,7 @@ import { Router } from '@angular/router';
     MatButtonModule,
     ErrorMessageComponent,
     MatCheckboxModule,
+    OverlaySpinnerDirective,
   ],
   templateUrl: './clientBridge-feature-auth.component.html',
   styleUrl: './clientBridge-feature-auth.component.scss',
@@ -40,6 +42,7 @@ export class ClientBridgeFeatureAuthComponent {
   isHandsetScreen$ = isHandsetScreen();
 
   showPassword = signal(false);
+  loading = signal(false);
 
   loginForm = this.formBuilder.group({
     userName: ['', Validators.required],
@@ -64,6 +67,7 @@ export class ClientBridgeFeatureAuthComponent {
       this.loginForm.get('password')?.setErrors({ notValid: true });
       return;
     }
+    this.loading.set(true);
     this.router.navigate(['/console']);
   }
 }

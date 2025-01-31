@@ -61,7 +61,6 @@
             @if (loginForm.get('password')?.hasError('notValid')){
             {{ errorMessage }}
             } @else {
-
             <insurance-error-message [input]="loginForm.get('password')" />
             }
           </mat-error>
@@ -84,7 +83,12 @@
           Forgot your password?
         </a>
       </div>
-      <button mat-flat-button class="mt-8" (click)="navigateToProduct()">
+      <button
+        mat-flat-button
+        class="mt-8"
+        (click)="navigateToProduct()"
+        [insuranceOverlaySpinner]="loading()"
+      >
         Sign in
       </button>
     </div>

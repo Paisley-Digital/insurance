@@ -27,7 +27,9 @@
       </mat-tab-group>
     </mat-card-content>
     } @case('aiCheck'){
-    <ng-container [ngTemplateOutlet]="aiCheckTemplate" />
+    <mat-card-content>
+      <ng-container [ngTemplateOutlet]="aiCheckTemplate" />
+    </mat-card-content>
     } @case ('aiTable'){
     <mat-card-content>
       <ng-container [ngTemplateOutlet]="aiDetailTemplate" />
@@ -221,7 +223,7 @@
 
 <ng-template #aiCheckTemplate>
   <mat-card-header>
-    <div class="relative top-3 left-20 text-2xl">
+    <div class="text-2xl relative right-4">
       <mat-icon
         svgIcon="circle"
         class="relative top-1 cursor-pointer"
@@ -230,124 +232,216 @@
       Cross Checking List
     </div>
   </mat-card-header>
-  <mat-card-content>
-    <h3>Extraction AI</h3>
-    <div class="ai-grid">
-      <div class="!border-dashed !border-[#d3d3d3] p-2">
-        <dl class="!w-full !h-full flex flex-col gap-3">
-          <div class="flex justify-between">
-            <dt class="text-[#23273099]">Surname</dt>
-            <dd>Moradi</dd>
-          </div>
-          <div class="flex justify-between">
-            <dt class="text-[#23273099]">Arya</dt>
-            <dd>First name</dd>
-          </div>
-          <div class="flex justify-between">
-            <dt class="text-[#23273099]">20/11/1971</dt>
-            <dd>Date of Birth (D/M/Y)</dd>
-          </div>
-          <div class="flex justify-between">
-            <dt class="text-[#23273099]">53</dt>
-            <dd>Age at (31-Dec-24)</dd>
-          </div>
-          <div class="flex justify-between">
-            <dt class="text-[#23273099]">Sex</dt>
-            <dd>M</dd>
-          </div>
-          <div class="flex justify-between">
-            <dt class="text-[#23273099]">Pakistan</dt>
-            <dd>Nationality</dd>
-          </div>
-          <div class="flex justify-between">
-            <dt class="text-[#23273099]">Emirate of visa Issue</dt>
-            <dd>Dubai</dd>
-          </div>
-        </dl>
-      </div>
+  <h3>Extraction AI</h3>
+  <div class="ai-grid">
+    <div class="!border-dashed !border-[#d3d3d3] !w-[496px] p-2">
+      <dl class="!w-full !h-full flex flex-col gap-3">
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">Surname</dt>
+          <dd>Williams</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">John</dt>
+          <dd>First name</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">20/11/1971</dt>
+          <dd>Date of Birth (D/M/Y)</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">53</dt>
+          <dd>Age at (31-Dec-24)</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">Sex</dt>
+          <dd>M</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">Pakistan</dt>
+          <dd>Nationality</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">Emirate of visa Issue</dt>
+          <dd>Dubai</dd>
+        </div>
+      </dl>
     </div>
-  </mat-card-content>
+    <div class="!border-dashed !border-[#d3d3d3] !w-[496px] p-2">
+      <dl class="!w-full !h-full flex flex-col gap-3">
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">Surname</dt>
+          <dd>Williams</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">John</dt>
+          <dd>First name</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">20/11/1971</dt>
+          <dd>Date of Birth (D/M/Y)</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">53</dt>
+          <dd>Age at (31-Dec-24)</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">Sex</dt>
+          <dd>M</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">Pakistan</dt>
+          <dd>Nationality</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">Emirate of visa Issue</dt>
+          <dd>Dubai</dd>
+        </div>
+      </dl>
+    </div>
+    <div class="!border-dashed !border-[#d3d3d3] !w-[496px] p-2">
+      <dl class="!w-full !h-full flex flex-col gap-3">
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">Surname</dt>
+          <dd>KathrynMurphy</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">Murphy</dt>
+          <dd>First name</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">16/08/2013</dt>
+          <dd>Date of Birth (D/M/Y)</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">53</dt>
+          <dd>Age at (31-Dec-24)</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">Sex</dt>
+          <dd>F</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">Türkiye</dt>
+          <dd>Nationality</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">Emirate of visa Issue</dt>
+          <dd>Dubai</dd>
+        </div>
+      </dl>
+    </div>
+    <div class="!border-dashed !border-[#d3d3d3] !w-[496px] p-2">
+      <dl class="!w-full !h-full flex flex-col gap-3">
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">Surname</dt>
+          <dd>KathrynMurphy</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">Murphy</dt>
+          <dd>First name</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">16/08/2013</dt>
+          <dd>Date of Birth (D/M/Y)</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">53</dt>
+          <dd>Age at (31-Dec-24)</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">Sex</dt>
+          <dd>F</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">Türkiye</dt>
+          <dd>Nationality</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt class="text-[#23273099]">Emirate of visa Issue</dt>
+          <dd>Dubai</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
 </ng-template>
 
 <ng-template #aiDetailTemplate>
   <div class="text-2xl mb-8">
-    <mat-icon svgIcon="circle" class="relative top-1" />
+    <mat-icon
+      svgIcon="circle"
+      class="relative top-1"
+      (click)="backToImages()"
+    />
     Insurance Details
   </div>
-  <table
-    mat-table
-    [dataSource]="normalizedContent"
-    cdkDropList
-    cdkDropListOrientation="horizontal"
-    (cdkDropListDropped)="drop($event)"
-  >
-    <ng-container matColumnDef="surname">
-      <th mat-header-cell cdkDrag *matHeaderCellDef>Surname</th>
-      <td mat-cell *matCellDef="let element">{{ element.Surname }}</td>
-    </ng-container>
+  <button mat-flat-button (click)="changeViewToAi()">Cross Matching</button>
+  <div class="!w-full flex flex-row mt-4">
+    <table
+      mat-table
+      [dataSource]="normalizedContent"
+      cdkDropList
+      cdkDropListOrientation="horizontal"
+      (cdkDropListDropped)="drop($event)"
+      class="!w-full"
+    >
+      <ng-container matColumnDef="surname">
+        <th mat-header-cell cdkDrag *matHeaderCellDef>Surname</th>
+        <td mat-cell *matCellDef="let element">{{ element.Surname }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="lastname">
-      <th mat-header-cell cdkDrag *matHeaderCellDef>Last name</th>
-      <td mat-cell *matCellDef="let element">{{ element.First_Name }}</td>
-    </ng-container>
+      <ng-container matColumnDef="lastname">
+        <th mat-header-cell cdkDrag *matHeaderCellDef>Last name</th>
+        <td mat-cell *matCellDef="let element">{{ element.First_Name }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="date">
-      <th mat-header-cell cdkDrag *matHeaderCellDef>Date of Birth (D/M/Y)</th>
-      <td mat-cell *matCellDef="let element">
-        {{
-          element.Date_of_Birth === 'Not Found' ? '-' : element.Date_of_Birth
-        }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="date">
+        <th mat-header-cell cdkDrag *matHeaderCellDef>Date of Birth (D/M/Y)</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.Date_of_Birth }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="sex">
-      <th mat-header-cell cdkDrag *matHeaderCellDef>Sex</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.Sex === 'Not Found' ? '-' : element.Sex }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="sex">
+        <th mat-header-cell cdkDrag *matHeaderCellDef>Sex</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.Sex }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="age">
-      <th mat-header-cell cdkDrag *matHeaderCellDef>
-        Age at{{ currentDate() }}
-      </th>
-      <td mat-cell *matCellDef="let element">
-        {{
-          element.Age_at_31_Dec_24 === 'Not Found'
-            ? '-'
-            : element.Age_at_31_Dec_24
-        }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="age">
+        <th mat-header-cell cdkDrag *matHeaderCellDef>
+          Age at{{ currentDate() }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.Age_at_31_Dec_24 }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="nationality">
-      <th mat-header-cell cdkDrag *matHeaderCellDef>Nationality</th>
-      <td mat-cell *matCellDef="let element">{{ element.Nationality }}</td>
-    </ng-container>
+      <ng-container matColumnDef="nationality">
+        <th mat-header-cell cdkDrag *matHeaderCellDef>Nationality</th>
+        <td mat-cell *matCellDef="let element">{{ element.Nationality }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="issue">
-      <th mat-header-cell cdkDrag *matHeaderCellDef>Emirate of issue</th>
-      <td mat-cell *matCellDef="let element">
-        {{
-          element.Emirate_of_Visa_Issue === 'Not Found'
-            ? '-'
-            : element.Emirate_of_Visa_Issue
-        }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="issue">
+        <th mat-header-cell cdkDrag *matHeaderCellDef>Emirate of issue</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.Emirate_of_Visa_Issue }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell cdkDrag *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-icon-button>
-          <mat-icon svgIcon="chevron-right"></mat-icon>
-        </button>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell cdkDrag *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button>
+            <mat-icon svgIcon="chevron-right"></mat-icon>
+          </button>
+        </td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="columns"></tr>
-    <tr mat-row *matRowDef="let row; columns: columns"></tr>
-  </table>
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    </table>
+  </div>
 
   <div class="flex items-center justify-between mt-4">
     <mat-paginator
@@ -372,9 +466,4 @@
       <div #lottie></div>
     </div>
   </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button mat-stroked-button mat-dialog-close class="textColorButton">
-      Cancel
-    </button>
-  </mat-dialog-actions>
 </ng-template>

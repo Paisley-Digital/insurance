@@ -215,7 +215,7 @@ export class ClientBridgeFeatureProductsUploadFileComponent
       image_url: `${this.baseUrl}${card.downloadUrl}`,
     }));
 
-    const imageArray = [];
+    let imageArray = [];
 
     for (const item of imageUrls) {
       imageArray.push(item.image_url);
@@ -237,8 +237,9 @@ export class ClientBridgeFeatureProductsUploadFileComponent
           const serviceResult = result.results[0].json_result;
           this.normalizedContent = Array.isArray(serviceResult)
             ? serviceResult.map((item) => normalizeKeys(item))
-            : normalizeKeys(serviceResult);
+            : [normalizeKeys(serviceResult)];
           this.view.set('aiTable');
+          imageArray = [];
         },
         error: () => {
           this.alert.open('Something went wrong. Please try again');
@@ -252,6 +253,10 @@ export class ClientBridgeFeatureProductsUploadFileComponent
 
   backToImages() {
     this.view.set('tabs');
+  }
+
+  changeViewToAi() {
+    this.view.set('aiCheck');
   }
 
   private startLottie = () => {

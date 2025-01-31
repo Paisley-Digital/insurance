@@ -21,7 +21,7 @@
         <mat-tab label="Uploaded Documents">
           <ng-container [ngTemplateOutlet]="imageTemplate" />
         </mat-tab>
-        <mat-tab label="Extracted Data" disabled="true">
+        <mat-tab label="Extracted Data">
           <ng-container [ngTemplateOutlet]="excelTemplate" />
         </mat-tab>
       </mat-tab-group>
@@ -39,87 +39,90 @@
 </div>
 
 <ng-template #excelTemplate>
-  <mat-list class="mt-8">
-    <a
-      mat-list-item
-      href="./assets/images/example2.xlsx"
-      download
-      class="my-4 !cursor-pointer"
-      matRipple
+  <button mat-flat-button (click)="changeViewToAi()" class="mt-5">
+    Cross Matching
+  </button>
+  <div class="!w-full flex flex-row mt-4">
+    <table
+      mat-table
+      [dataSource]="docResponse()"
+      cdkDropList
+      cdkDropListOrientation="horizontal"
+      (cdkDropListDropped)="drop($event)"
+      class="!w-full"
     >
-      <div matListItemTitle>Louis Vuitton Co</div>
-      <div matListItemLine class="text-[#23273099]">
-        Uploaded - 10.jpg Jan 23,2024
-      </div>
-      <button matListItemMeta mat-button class="!text-primary relative left-6">
-        <mat-icon svgIcon="check" />
-      </button>
-      <button matListItemMeta mat-button class="!text-primary">
-        <mat-icon svgIcon="chevron" />
-      </button>
-      <mat-icon matListItemIcon svgIcon="excel" />
-    </a>
-    <mat-divider />
-    <a
-      mat-list-item
-      href="./assets/images/example2.xlsx"
-      download
-      class="my-4 !cursor-pointer"
-      matRipple
+      <ng-container matColumnDef="surname">
+        <th mat-header-cell cdkDrag *matHeaderCellDef>Surname</th>
+        <td mat-cell *matCellDef="let element">{{ element.surname }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastname">
+        <th mat-header-cell cdkDrag *matHeaderCellDef>Last name</th>
+        <td mat-cell *matCellDef="let element">{{ element.firstName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="date">
+        <th mat-header-cell cdkDrag *matHeaderCellDef>Date of Birth (D/M/Y)</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.dateOfBirth }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="sex">
+        <th mat-header-cell cdkDrag *matHeaderCellDef>Sex</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.sex }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="age">
+        <th mat-header-cell cdkDrag *matHeaderCellDef>
+          Age at {{ currentDate() }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.age }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nationality">
+        <th mat-header-cell cdkDrag *matHeaderCellDef>Nationality</th>
+        <td mat-cell *matCellDef="let element">{{ element.nationality }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="issue">
+        <th mat-header-cell cdkDrag *matHeaderCellDef>Emirate of issue</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.emirateOfVisaIssue }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell cdkDrag *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button>
+            <mat-icon svgIcon="chevron-right"></mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    </table>
+  </div>
+
+  <div class="flex items-center justify-between mt-4">
+    <mat-paginator
+      #paginator
+      class="custom-paginator"
+      (page)="handlePageEvent($event)"
+      [length]="length"
+      [disabled]="true"
+      [pageSize]="pageSize"
+      [hidePageSize]="true"
+      [pageIndex]="pageIndex"
     >
-      <div matListItemTitle>Louis Vuitton Co</div>
-      <div matListItemLine class="text-[#23273099]">
-        Uploaded - 10.jpg Jan 23,2024
-      </div>
-      <button matListItemMeta mat-button class="!text-primary relative left-6">
-        <mat-icon svgIcon="check" />
-      </button>
-      <button matListItemMeta mat-button class="!text-primary">
-        <mat-icon svgIcon="chevron" />
-      </button>
-      <mat-icon matListItemIcon svgIcon="excel" />
-    </a>
-    <mat-divider />
-    <a
-      mat-list-item
-      href="./assets/images/example2.xlsx"
-      download
-      class="my-4 !cursor-pointer"
-      matRipple
-    >
-      <div matListItemTitle>Louis Vuitton Co</div>
-      <div matListItemLine class="text-[#23273099]">
-        Uploaded - 10.jpg Jan 23,2024
-      </div>
-      <button matListItemMeta mat-button class="!text-primary relative left-6">
-        <mat-icon svgIcon="check" />
-      </button>
-      <button matListItemMeta mat-button class="!text-primary">
-        <mat-icon svgIcon="chevron" />
-      </button>
-      <mat-icon matListItemIcon svgIcon="excel" />
-    </a>
-    <mat-divider />
-    <a
-      mat-list-item
-      href="./assets/images/example2.xlsx"
-      download
-      class="my-4 !cursor-pointer"
-      matRipple
-    >
-      <div matListItemTitle>Louis Vuitton Co</div>
-      <div matListItemLine class="text-[#23273099]">
-        Uploaded - 10.jpg Jan 23,2024
-      </div>
-      <button matListItemMeta mat-button class="!text-primary relative left-6">
-        <mat-icon svgIcon="check" />
-      </button>
-      <button matListItemMeta mat-button class="!text-primary">
-        <mat-icon svgIcon="chevron" />
-      </button>
-      <mat-icon matListItemIcon svgIcon="excel" />
-    </a>
-  </mat-list>
+    </mat-paginator>
+  </div>
 </ng-template>
 
 <ng-template #imageTemplate>

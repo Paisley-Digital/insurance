@@ -29,6 +29,7 @@ import {
   AiPayload,
   BrokerResponse,
   BrokerService,
+  DocumentResponse,
   JsonResult,
 } from '@insurance-clientBridge-data-broker';
 import { finalize } from 'rxjs';
@@ -130,6 +131,8 @@ export class ClientBridgeFeatureProductsUploadFileComponent
   selectedCards = signal<BrokerResponse[]>([]);
   companyName = signal('');
   currentDate = signal('');
+  fetchingDocument = signal(false);
+  docResponse = signal<DocumentResponse[]>([]);
   aiResponse = signal<JsonResult[]>([]);
 
   normalizedContent: any;
@@ -154,6 +157,7 @@ export class ClientBridgeFeatureProductsUploadFileComponent
       this.router.snapshot.queryParamMap.get('company') ?? ''
     );
     this.fetchAll();
+    this.fetchAllDoc();
   }
 
   ngAfterViewInit() {
@@ -240,6 +244,28 @@ export class ClientBridgeFeatureProductsUploadFileComponent
             : [normalizeKeys(serviceResult)];
           this.view.set('aiTable');
           imageArray = [];
+        },
+        error: () => {
+          this.alert.open('Something went wrong. Please try again');
+        },
+      });
+  }
+
+  fetchAllDoc() {
+    this.fetchingDocument.set(true);
+    this.service
+      .fetchAllDocument()
+      .pipe(finalize(() => this.fetchingDocument.set(false)))
+      .subscribe({
+        next: (res) => {
+          this.docResponse.set(res);
+          this.docResponse().map((items) => {
+            const timeDiff = Math.abs(
+              Date.now() - new Date(items.dateOfBirth).getTime()
+            );
+            const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
+            items.age = age;
+          });
         },
         error: () => {
           this.alert.open('Something went wrong. Please try again');

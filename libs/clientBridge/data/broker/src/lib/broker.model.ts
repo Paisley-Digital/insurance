@@ -32,3 +32,24 @@ export interface JsonResult {
   Nationality: string;
   Emirate_of_Visa_Issue: string;
 }
+
+export interface DocumentResponse {
+  id: number;
+  firstName: string;
+  surname: string;
+  dateOfBirth: string;
+  sex: string;
+  nationality: string;
+  emirateOfVisaIssue: string;
+  nationalCode: string;
+  contactNumber: string;
+  fileInformation: [];
+  companyInformation: {
+    id: number;
+    companyName: string;
+    companyContactNumber: string;
+    companyAddress: string;
+    companyRegistrationNumber: string;
+  };
+  age: number;
+}

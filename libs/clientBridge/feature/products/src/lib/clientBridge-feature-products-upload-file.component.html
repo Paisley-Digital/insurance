@@ -109,20 +109,6 @@
       <tr mat-row *matRowDef="let row; columns: columns"></tr>
     </table>
   </div>
-
-  <div class="flex items-center justify-between mt-4">
-    <mat-paginator
-      #paginator
-      class="custom-paginator"
-      (page)="handlePageEvent($event)"
-      [length]="length"
-      [disabled]="true"
-      [pageSize]="pageSize"
-      [hidePageSize]="true"
-      [pageIndex]="pageIndex"
-    >
-    </mat-paginator>
-  </div>
 </ng-template>
 
 <ng-template #imageTemplate>
@@ -232,13 +218,16 @@
         class="relative top-1 cursor-pointer"
         (click)="backToImages()"
       />
-      Cross Checking List
+      Cross-Check List
     </div>
   </mat-card-header>
-  <h3>Extraction AI</h3>
+  <div class="flex justify-items-center relative top-2">
+    <h3>Extracted Data</h3>
+    <h3 class="relative left-[38%]">Insurance Data</h3>
+  </div>
   <div class="ai-grid">
     <div class="!border-dashed !border-[#d3d3d3] !w-[496px] p-2">
-      <dl class="!w-full !h-full flex flex-col gap-3">
+      <dl class="!w-full !h-full flex flex-col gap-6">
         <div class="flex justify-between">
           <dt class="text-[#23273099]">Surname</dt>
           <dd>Williams</dd>
@@ -270,7 +259,7 @@
       </dl>
     </div>
     <div class="!border-dashed !border-[#d3d3d3] !w-[496px] p-2">
-      <dl class="!w-full !h-full flex flex-col gap-3">
+      <dl class="!w-full !h-full flex flex-col gap-6">
         <div class="flex justify-between">
           <dt class="text-[#23273099]">Surname</dt>
           <dd>Williams</dd>
@@ -302,7 +291,7 @@
       </dl>
     </div>
     <div class="!border-dashed !border-[#d3d3d3] !w-[496px] p-2">
-      <dl class="!w-full !h-full flex flex-col gap-3">
+      <dl class="!w-full !h-full flex flex-col gap-6">
         <div class="flex justify-between">
           <dt class="text-[#23273099]">Surname</dt>
           <dd>KathrynMurphy</dd>
@@ -334,7 +323,7 @@
       </dl>
     </div>
     <div class="!border-dashed !border-[#d3d3d3] !w-[496px] p-2">
-      <dl class="!w-full !h-full flex flex-col gap-3">
+      <dl class="!w-full !h-full flex flex-col gap-6">
         <div class="flex justify-between">
           <dt class="text-[#23273099]">Surname</dt>
           <dd>KathrynMurphy</dd>

@@ -35,4 +35,6 @@ export const svgIconNames = [
   'logout',
   'excel',
   'mail-green',
+  'group',
+  'trailing',
 ] as const;

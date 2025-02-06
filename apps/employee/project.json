@@ -18,11 +18,17 @@
         "inlineStyleLanguage": "scss",
         "assets": [
           {
+            "input": "libs/shared/assets/src/assets",
             "glob": "**/*",
-            "input": "apps/employee/public"
+            "output": "assets"
+          },
+          {
+            "input": "libs/shared/assets/src/assets",
+            "glob": "**/*",
+            "output": "assets"
           }
         ],
-        "styles": ["apps/employee/src/styles.scss"],
+        "styles": ["themes/base/main.scss"],
         "scripts": []
       },
       "configurations": {

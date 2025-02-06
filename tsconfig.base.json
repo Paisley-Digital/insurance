@@ -14,7 +14,17 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@./assets": ["libs/shared/assets/src/index.ts"],
+      "@shared-util-web-sdk": ["libs/shared/util/web-sdk/src/index.ts"],
+      "@insurance-employee-feature-auth": [
+        "libs/employee/feature/auth/src/index.ts"
+      ],
+      "@shared-ui-input-validator": [
+        "libs/shared/ui/input-validation-message/src/index.ts"
+      ],
+      "@shared-util-common": ["libs/shared/util/common/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

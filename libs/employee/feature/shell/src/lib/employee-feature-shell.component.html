@@ -1,1 +1,22 @@
-<p>employee-feature-shell works!</p>
+<div class="flex h-full flex-col">
+  @if ((isHandsetScreen$ | async) === false) {
+  <insurance-header-desktop />
+  }
+  <mat-sidenav-container class="h-full max-sm:!overflow-visible">
+    @if ((isHandsetScreen$ | async) === false) {
+    <mat-sidenav
+      [mode]="'side'"
+      [fixedInViewport]="true"
+      [opened]="true"
+      class="!w-[280px] pt-[70px] sidenav-position"
+    >
+      <insurance-side-bar />
+    </mat-sidenav>
+    }
+    <mat-sidenav-content class="max-sm:!overflow-visible">
+      <div class="background-container">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

@@ -1,10 +1,10 @@
 <mat-drawer-container class="!bg-card !h-full" autosize>
   <mat-drawer-content class="!flex flex-col">
     <div class="relative flex flex-1 flex-wrap">
-        @if ((isHandsetScreen$ | async) === false) {
-        <div class="w-1/2">
-          <div class="cover-image"></div>
-        </div>
+      @if ((isHandsetScreen$ | async) === false) {
+      <div class="w-1/2">
+        <div class="cover-image"></div>
+      </div>
       }
       <div
         class="w-full max-sm:mt-8 md:flex md:w-1/2 md:items-center md:justify-center"
@@ -22,7 +22,7 @@
 <ng-template #login>
   <div class="flex flex-col items-center max-sm:h-full max-sm:pb-8 w-full">
     <h1 class="!flex !justify-start !w-full">
-      Emaar Employee Insurance Portal   
+      Emaar Employee Insurance Portal
     </h1>
     <div class="mt-6 w-full flex-1">
       <ng-container [ngTemplateOutlet]="loginTemplate" />
@@ -34,11 +34,11 @@
   <form class="flex h-full flex-col" [formGroup]="loginForm">
     <div class="flex flex-1 flex-col">
       <div class="!mt-3 flex flex-col gap-3">
-        <mat-form-field  hideRequiredMarker class="!rounded-lg">
+        <mat-form-field hideRequiredMarker class="!rounded-lg">
           <mat-label>Username</mat-label>
           <input matInput formControlName="userName" />
           <mat-error>
-            <insurance-error-message [input]="loginForm.get('userName')"/>
+            <insurance-error-message [input]="loginForm.get('userName')" />
           </mat-error>
         </mat-form-field>
       </div>
@@ -49,38 +49,43 @@
             matInput
             type="password"
             [type]="showPassword() ? 'text' : 'password'"
-            formControlName="password" />
+            formControlName="password"
+          />
           <mat-error>
-            <insurance-error-message [input]="loginForm.get('password')"/>
+            <insurance-error-message [input]="loginForm.get('password')" />
           </mat-error>
           <button
             type="button"
             mat-icon-button
             matSuffix
             (click)="isShowPassword()"
-            [attr.aria-pressed]="showPassword()">
+            [attr.aria-pressed]="showPassword()"
+          >
             <mat-icon [svgIcon]="showPassword() ? 'eye' : 'eye-slash'" />
           </button>
         </mat-form-field>
       </div>
       <div class="mt-3 flex items-start justify-between">
-        <mat-checkbox class="example-margin" color="primary">stay signed in on this device</mat-checkbox>
-        <a
-          mat-button color="primary">
-          Forgot password?
-        </a>
+        <mat-checkbox class="example-margin" color="primary"
+          >stay signed in on this device</mat-checkbox
+        >
+        <a mat-button color="primary"> Forgot password? </a>
       </div>
       <div class="flex flex-col gap-6">
-      <button
-        color="primary"
-        mat-flat-button class="mt-8" (click)="navigateToProduct()">
-        Sign in
-      </button>
-<div class="flex gap-6 w-full">
-      <button mat-stroked-button color="primary" class="w-1/2 !rounded-lg">Continue with UAE PASS</button>
-      <button mat-stroked-button color="primary" class="w-1/2 !rounded-lg" >Continue with Google</button>
-</div>
-</div>
-</div>
+        <button mat-flat-button class="mt-8" (click)="navigateToProduct()">
+          Sign in
+        </button>
+        <div class="flex gap-6 w-full">
+          <button mat-stroked-button color="primary" class="w-1/2 !rounded-lg">
+            Continue with UAE PASS
+            <mat-icon svgIcon="finger-prints" />
+          </button>
+          <button mat-stroked-button color="primary" class="w-1/2 !rounded-lg">
+            Continue with Google
+            <mat-icon svgIcon="google-login" />
+          </button>
+        </div>
+      </div>
+    </div>
   </form>
 </ng-template>

@@ -1,0 +1,18 @@
+$path-to-images: '^./assets/images';
+.cover-image {
+  @apply flex h-full w-full items-center justify-center bg-cover bg-no-repeat;
+  background-image: url(#{$path-to-images}/broker-login.jpg);
+
+  svg {
+    @apply h-auto w-auto #{!important};
+  }
+}
+
+.add-to-home-screen-panel-class {
+  @apply h-full;
+
+  mat-bottom-sheet-container {
+    max-height: none;
+    border-radius: 0 !important;
+  }
+}

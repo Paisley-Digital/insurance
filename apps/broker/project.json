@@ -28,7 +28,7 @@
             "output": "assets"
           }
         ],
-        "styles": ["apps/broker/src/styles.scss"],
+        "styles": ["themes/base/main.scss"],
         "scripts": []
       },
       "configurations": {

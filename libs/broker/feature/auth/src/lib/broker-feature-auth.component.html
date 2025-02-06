@@ -1,0 +1,94 @@
+<mat-drawer-container class="!bg-card !h-full" autosize>
+  <mat-drawer-content class="!flex flex-col">
+    <div class="relative flex flex-1 flex-wrap">
+      <div class="w-1/2">
+        <div class="cover-image"></div>
+      </div>
+      <div
+        class="w-full max-sm:mt-8 md:flex md:w-1/2 md:items-center md:justify-center"
+      >
+        <div class="flex w-full justify-center max-sm:h-full">
+          <div class="w-3/4 sm:w-1/2 md:mt-12 md:w-2/3 lg:w-full p-20">
+            <ng-container [ngTemplateOutlet]="login" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+<ng-template #login>
+  <div class="flex flex-col items-center max-sm:h-full max-sm:pb-8 w-full">
+    <h1 class="!flex !justify-start !w-full">Welcome To</h1>
+    <h1 class="!flex !justify-start !w-full relative bottom-7">
+      Insurance Broker Portal
+    </h1>
+    <div class="mt-10 w-full flex-1 relative bottom-12">
+      <ng-container [ngTemplateOutlet]="loginTemplate" />
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #loginTemplate>
+  <form class="flex h-full flex-col" [formGroup]="loginForm">
+    <div class="flex flex-1 flex-col">
+      <div class="!mt-3 flex flex-col gap-3">
+        <mat-form-field hideRequiredMarker class="!rounded-lg">
+          <mat-label>UserName</mat-label>
+          <input
+            matInput
+            placeholder="john.doe@example.com"
+            formControlName="userName"
+          />
+          <mat-error>
+            <insurance-error-message [input]="loginForm.get('userName')" />
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="!mt-3 flex flex-col gap-3">
+        <mat-form-field hideRequiredMarker>
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            type="password"
+            placeholder="Enter your password"
+            [type]="showPassword() ? 'text' : 'password'"
+            formControlName="password"
+          />
+          <mat-error>
+            @if (loginForm.get('password')?.hasError('notValid')){
+              {{ errorMessage }}
+            } @else {
+              <insurance-error-message [input]="loginForm.get('password')" />
+            }
+          </mat-error>
+          <button
+            type="button"
+            mat-icon-button
+            matSuffix
+            (click)="isShowPassword()"
+            [attr.aria-pressed]="showPassword()"
+          >
+            <mat-icon [svgIcon]="showPassword() ? 'eye' : 'eye-slash'" />
+          </button>
+        </mat-form-field>
+      </div>
+      <div class="mt-3 flex items-start justify-between">
+        <mat-checkbox class="example-margin text-sm !w-full"
+        >Keep me logged in on this device
+        </mat-checkbox>
+        <a mat-button color="primary" class="w-full relative left-[60px]">
+          Forgot your password?
+        </a>
+      </div>
+      <button
+        mat-flat-button
+        class="mt-8"
+        (click)="navigateToProduct()"
+        [insuranceOverlaySpinner]="loading()"
+      >
+        Sign in
+      </button>
+    </div>
+  </form>
+</ng-template>

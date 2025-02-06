@@ -1,15 +1,20 @@
-import {Component, inject, signal} from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {MatIcon, MatIconModule} from "@angular/material/icon";
-import {MatFormField, MatSuffix} from "@angular/material/form-field";
-import {MatDrawerContainer, MatSidenavModule} from "@angular/material/sidenav";
-import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {MatCheckbox, MatCheckboxModule} from "@angular/material/checkbox";
-import {MatAnchor, MatButton, MatButtonModule, MatIconButton} from "@angular/material/button";
-import {MatInput, MatInputModule} from "@angular/material/input";
-import {ErrorMessageComponent} from "@shared-ui-input-validator";
-import {Router} from "@angular/router";
-import {isHandsetScreen} from "@shared-util-common";
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormField } from '@angular/material/form-field';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import {
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatAnchor, MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { ErrorMessageComponent } from '@shared-ui-input-validator';
+import { Router } from '@angular/router';
+import { isHandsetScreen } from '@shared-util-common';
 
 @Component({
   selector: 'insurance-employee-feature-auth',

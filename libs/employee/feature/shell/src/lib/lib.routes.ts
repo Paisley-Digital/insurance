@@ -1,4 +1,6 @@
 import { Route } from '@angular/router';
-import { ShellComponent } from './shell/shell.component';
+import {EmployeeFeatureShellComponent} from "./employee-feature-shell.component";
 
-export const shellRoutes: Route[] = [{ path: '', component: ShellComponent }];
+export const shellRoutes: Route[] = [
+  { path: '', component: EmployeeFeatureShellComponent }
+];

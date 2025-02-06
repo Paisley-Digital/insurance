@@ -15,14 +15,19 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@insurance-shared-app-core": ["libs/shared/util/appp-core/src/index.ts"],
       "@./assets": ["libs/shared/assets/src/index.ts"],
-      "@insurance-shared-ui-overlay-spinner": ["libs/shared/ui/overlay-spinner/src/index.ts"],
+      "@./locales": ["libs/shared/util/locales/src/index.ts"],
       "@insurance-broker-feature-auth": [
         "libs/broker/feature/auth/src/index.ts"
       ],
       "@insurance-employee-feature-auth": [
         "libs/employee/feature/auth/src/index.ts"
       ],
+      "@insurance-shared-ui-overlay-spinner": [
+        "libs/shared/ui/overlay-spinner/src/index.ts"
+      ],
+      "@shared-ui-icon": ["libs/employee/shared/ui/icon/src/index.ts"],
       "@shared-ui-input-validator": [
         "libs/shared/ui/input-validation-message/src/index.ts"
       ],

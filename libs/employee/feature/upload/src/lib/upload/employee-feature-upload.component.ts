@@ -71,12 +71,6 @@ export class EmployeeFeatureUploadComponent {
     }
   }
 
-  formatFileSize(bytes: number): string {
-    if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
-  }
-
   onFileSelectedPassport(event: Event) {
     const input = event.target as HTMLInputElement;
 
@@ -158,5 +152,11 @@ export class EmployeeFeatureUploadComponent {
   removeFileId() {
     this.filePreviewEmiratesId = null;
     this.fileEmiratesId.set(null);
+  }
+
+  private formatFileSize(bytes: number) {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
   }
 }

@@ -26,10 +26,11 @@ import {OverlaySpinnerDirective} from "@insurance-shared-ui-overlay-spinner";
     MatButtonModule,
     ErrorMessageComponent,
     MatCheckboxModule,
-    OverlaySpinnerDirective,
+    OverlaySpinnerDirective
   ],
   templateUrl: './broker-feature-auth.component.html',
   styleUrl: './broker-feature-auth.component.scss',
+  standalone: true
 })
 export class BrokerFeatureAuthComponent {
   private formBuilder = inject(FormBuilder);

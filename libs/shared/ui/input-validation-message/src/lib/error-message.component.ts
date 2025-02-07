@@ -8,6 +8,7 @@ import {CustomValidators} from "./validator";
   imports: [CommonModule],
   templateUrl: './error-message.component.html',
   styleUrl: './error-message.component.scss',
+  standalone: true
 })
 export class ErrorMessageComponent {
   @Input() input: AbstractControl | undefined | null;

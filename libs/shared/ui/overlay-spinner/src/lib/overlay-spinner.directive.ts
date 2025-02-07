@@ -2,6 +2,7 @@ import {Directive, ElementRef, HostBinding, Input} from '@angular/core';
 
 @Directive({
   selector: '[insuranceOverlaySpinner]',
+  standalone: true
 })
 export class OverlaySpinnerDirective {
   readonly cssClasses = ['overlay-spinner', '!cursor-progress'];

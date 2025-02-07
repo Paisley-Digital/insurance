@@ -1,12 +1,15 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButton, MatButtonModule } from '@angular/material/button';
-import { MatDrawerContainer, MatDrawerContent } from '@angular/material/sidenav';
+import {
+  MatDrawerContainer,
+  MatDrawerContent,
+} from '@angular/material/sidenav';
 import { MatIcon } from '@angular/material/icon';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { isHandsetScreen } from '@shared-util-common';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'lib-upload',
@@ -18,19 +21,18 @@ import {MatCardModule} from '@angular/material/card';
     MatIcon,
     ReactiveFormsModule,
     MatButtonModule,
-    MatCardModule,  
+    MatCardModule,
   ],
-  templateUrl: './upload.component.html',
-  styleUrl: './upload.component.css',
+  templateUrl: './employee-feature-upload.component.html',
+  styleUrl: './employee-feature-upload.component.scss',
 })
-export class UploadComponent {
-
+export class EmployeeFeatureUploadComponent {
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
 
   isHandsetScreen$ = isHandsetScreen();
 
   uploadFile() {
-    return alert('hesaamm is ')
+    return alert('hesaamm is ');
   }
 }

@@ -1,9 +1,9 @@
 import { Route } from '@angular/router';
-import { UploadComponent } from './upload/upload.component';
+import { EmployeeFeatureUploadComponent } from './upload/employee-feature-upload.component';
 
 export const uploadRoutes: Route[] = [
-    {
-        path: '',
-        component: UploadComponent,
-    },
+  {
+    path: '',
+    component: EmployeeFeatureUploadComponent,
+  },
 ];

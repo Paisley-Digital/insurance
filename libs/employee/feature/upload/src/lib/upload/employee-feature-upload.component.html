@@ -1,7 +1,7 @@
-<div class="p-[72px]">
+<div class="p-[20px] sm:p-[20px] lg:p-[72px] md:p-[60px]">
   <mat-card appearance="outlined">
     <div class="flex w-full justify-center max-sm:h-full">
-      <div class="w-3/4 sm:w-1/2 md:w-2/3 p-20">
+      <div class="w-full sm:w-1/2 md:w-2/3 lg:w-1/2 p-5">
         <div class="!flex !justify-center font-semibold text-2xl !w-full mb-6">
           Upload Required Documents
         </div>
@@ -10,6 +10,7 @@
     </div>
   </mat-card>
 </div>
+
 <ng-template #uploadWrapper>
   <div class="flex flex-col items-center max-sm:h-full max-sm:pb-8 w-full">
     <div class="w-full flex flex-col gap-8">
@@ -75,7 +76,7 @@
       } } @else {
       <div class="flex flex-col justify-center items-center gap-3">
         <span class="!font-semibold">Residency Visa</span>
-        <span class="font-light">
+        <span class="font-light text-center">
           Please upload a clear, high-quality image of your Residency
           Visa.</span
         >
@@ -169,7 +170,7 @@
       } } @else {
       <div class="flex flex-col justify-center items-center gap-3">
         <span class="!font-semibold">Passport</span>
-        <span class="font-light">
+        <span class="font-light text-center">
           Please upload a clear, high-quality image of your Residency
           Visa.</span
         >
@@ -255,7 +256,7 @@
       } } @else {
       <div class="flex flex-col justify-center items-center gap-3">
         <span class="!font-semibold">Emirates ID</span>
-        <span class="font-light">
+        <span class="font-light text-center">
           Please upload clear images of both the front and back of your Emirates
           ID.</span
         >

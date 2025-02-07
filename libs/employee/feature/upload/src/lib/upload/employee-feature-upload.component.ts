@@ -22,11 +22,13 @@ import { AlertService } from '@shared-ui-alert';
 })
 export class EmployeeFeatureUploadComponent {
   private alert = inject(AlertService);
+
   filePreview: string | ArrayBuffer | null = null;
   passportFilePreview: string | ArrayBuffer | null = null;
   filePreviewEmiratesId: string | ArrayBuffer | null = null;
+
   isImage: boolean = false;
-  fileType: 'image' | 'video' = 'image';
+
   fileSize = signal('');
   fileSizePassport = signal('');
   fileSizeId = signal('');

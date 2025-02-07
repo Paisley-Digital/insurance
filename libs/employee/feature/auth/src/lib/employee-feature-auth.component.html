@@ -52,7 +52,11 @@
             formControlName="password"
           />
           <mat-error>
+            @if (loginForm.get('password')?.hasError('notValid')){
+            {{ errorMessage }}
+            } @else {
             <insurance-error-message [input]="loginForm.get('password')" />
+            }
           </mat-error>
           <button
             type="button"
@@ -72,7 +76,12 @@
         <a mat-button color="primary"> Forgot password? </a>
       </div>
       <div class="flex flex-col gap-6">
-        <button mat-flat-button class="mt-8" (click)="navigateToProduct()">
+        <button
+          mat-flat-button
+          class="mt-8"
+          (click)="navigateToProduct()"
+          [insuranceOverlaySpinner]="loading()"
+        >
           Sign in
           <mat-icon svgIcon="signup" />
         </button>

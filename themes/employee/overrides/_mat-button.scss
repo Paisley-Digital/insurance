@@ -1,0 +1,11 @@
+@use '@angular/material' as mat;
+
+:root {
+  @include mat.button-overrides(
+      (
+        filled-container-color: #7f56d9,
+        filled-label-text-color: white,
+        filled-container-shape: 8px,
+      )
+  );
+}

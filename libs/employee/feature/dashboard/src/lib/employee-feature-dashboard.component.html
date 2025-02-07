@@ -1,0 +1,52 @@
+<div class="p-3">
+  <div class="flex justify-start items-center ms-4">
+    <span class="text-lg font-bold text-gray-800">Hey Mariana-</span>
+    <span class="text-gray-600"
+      >Explore and manage your insurance options today</span
+    >
+  </div>
+
+  <div class="text-center relative top-6">
+    <h1 class="text-3xl font-bold text-gray-800 mb-4">Meet our team</h1>
+    <p class="text-gray-600 max-w-3xl mx-auto mb-8">
+      The insurance site allows users to easily perform insurance services such
+      as registration, managing insurance policies, viewing payments, and
+      tracking claims. Also, it provides complete information about insurance
+      plans and special offers.
+    </p>
+
+    <div class="flex justify-center space-x-4">
+      <button mat-raised-button class="!py-2 !px-6 !rounded-lg !text-[#7f56d9]">
+        <mat-icon svgIcon="group" />
+        My History
+      </button>
+
+      <button mat-flat-button class="!py-2 !px-6 !rounded-lg">
+        <mat-icon svgIcon="trailing" />
+
+        Upload Documents
+      </button>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6 mt-8">
+    @for (item of dashboardMock; track item.title) {
+    <mat-card>
+      <mat-card-content>
+        <img
+          [src]="item.image"
+          alt="Medical Insurance"
+          class="w-full h-48 object-cover"
+        />
+        <div class="p-4">
+          <h3 class="text-xl font-bold text-gray-800">{{ item.title }}</h3>
+          <p class="text-gray-600 text-sm">
+            {{ item.description }}
+          </p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    }
+  </div>
+</div>

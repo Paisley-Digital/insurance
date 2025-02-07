@@ -11,4 +11,9 @@ export const appRoutes: Route[] = [
     loadChildren: () =>
       import('@insurance-employee-feature-auth').then((m) => m.authRoutes),
   },
+  {
+    path: 'console',
+    loadChildren: () =>
+      import('@insurance-employee-feature-shell').then((m) => m.shellRoutes),
+  },
 ];

@@ -1,18 +1,16 @@
 {
-  "name": "feature-dashboard",
+  "name": "data-dashboards",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/employee/feature/dashboard/src",
-  "prefix": "insurance",
+  "sourceRoot": "libs/employee/data/data-dashboards/src",
+  "prefix": "lib",
   "projectType": "library",
   "tags": [],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/{projectRoot}"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/employee/feature/dashboard/jest.config.ts"
+        "jestConfig": "libs/employee/data/data-dashboards/jest.config.ts"
       }
     },
     "lint": {

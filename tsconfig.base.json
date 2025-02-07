@@ -59,7 +59,7 @@
       ],
       "@shared-util-web-sdk": [
         "libs/shared/util/web-sdk/src/index.ts"
-      ]
+      ],
       "@shared-util-common": ["libs/shared/util/common/src/index.ts"],
       "@shared-util-web-sdk": ["libs/shared/util/web-sdk/src/index.ts"],
       "shared-charts-components": [

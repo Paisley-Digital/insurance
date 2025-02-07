@@ -28,9 +28,11 @@ import { MatCardModule } from '@angular/material/card';
 })
 export class EmployeeFeatureUploadComponent {
   filePreview: string | ArrayBuffer | null = null;
+  passportFilePreview: string | ArrayBuffer | null = null;
   isImage: boolean = false;
   fileType: 'image' | 'video' = 'image';
   fileSize = signal('');
+  fileSizePassport = signal('');
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -74,5 +76,43 @@ export class EmployeeFeatureUploadComponent {
 
   removeFile() {
     this.filePreview = null;
+  }
+
+  onFileSelectedPassport(event: Event) {
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files) {
+      return;
+    }
+
+    const file = input.files[0];
+    if (!file) {
+      console.warn('No file selected.');
+      return;
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+      alert('File size exceeds 2MB!');
+      return;
+    }
+
+    const fileType = file.type;
+    this.isImage = fileType.startsWith('image/');
+    this.fileSizePassport.set(this.formatFileSize(file.size));
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.passportFilePreview = reader.result;
+    };
+
+    if (this.isImage) {
+      reader.readAsDataURL(file);
+    } else {
+      this.passportFilePreview = null;
+    }
+  }
+
+  removeFilePassport() {
+    this.passportFilePreview = null;
   }
 }

@@ -89,6 +89,36 @@
     <div
       class="flex flex-1 flex-col border-dashed p-6 border-[#D0D5DD] rounded-lg"
     >
+      @if (passportFilePreview){
+      <div class="flex flex-col !justify-center !items-center mt-4">
+        <span class="!font-semibold">Passport</span>
+        <img
+          [src]="passportFilePreview"
+          class="!w-[200px] !h-[120px] !object-cover rounded-md mt-3"
+          alt="File preview"
+        />
+        <p>Image size: {{ fileSizePassport() }}</p>
+        <div class="flex justify-center">
+          <button mat-icon-button type="button" (click)="removeFilePassport()">
+            <mat-icon svgIcon="trash-warn" />
+          </button>
+          <input
+            type="file"
+            #fileInputPassport
+            (change)="onFileSelectedPassport($event)"
+            accept="image/png, image/jpeg, application/pdf"
+            hidden
+          />
+          <button
+            mat-icon-button
+            (click)="fileInputPassport.click()"
+            type="button"
+          >
+            <mat-icon svgIcon="refresh" />
+          </button>
+        </div>
+      </div>
+      } @else {
       <div class="flex flex-col justify-center items-center gap-3">
         <span class="!font-semibold">Passport</span>
         <span class="font-light">
@@ -99,11 +129,24 @@
         <span class="font-light"> Max file size: 2MB.</span>
       </div>
       <div class="flex flex-col gap-6 justify-center items-center">
-        <button mat-flat-button class="mt-4">
+        <input
+          type="file"
+          #fileInputPassport
+          (change)="onFileSelectedPassport($event)"
+          accept="image/png, image/jpeg, application/pdf"
+          hidden
+        />
+        <button
+          mat-flat-button
+          class="mt-4"
+          (click)="fileInputPassport.click()"
+          type="button"
+        >
           Choose File
           <mat-icon svgIcon="add" />
         </button>
       </div>
+      }
     </div>
   </form>
 </ng-template>

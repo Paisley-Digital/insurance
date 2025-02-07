@@ -10,6 +10,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { isHandsetScreen } from '@shared-util-common';
 import { MatCardModule } from '@angular/material/card';
+import { AlertService } from '@shared-ui-alert';
 
 @Component({
   selector: 'lib-upload',
@@ -28,6 +29,7 @@ import { MatCardModule } from '@angular/material/card';
   styleUrl: './employee-feature-upload.component.scss',
 })
 export class EmployeeFeatureUploadComponent {
+  private alert = inject(AlertService);
   filePreview: string | ArrayBuffer | null = null;
   passportFilePreview: string | ArrayBuffer | null = null;
   filePreviewEmiratesId: string | ArrayBuffer | null = null;
@@ -55,7 +57,7 @@ export class EmployeeFeatureUploadComponent {
     }
 
     if (file.size > 2 * 1024 * 1024) {
-      alert('File size exceeds 2MB!');
+      this.alert.open('File size exceeds 2MB!');
       return;
     }
 
@@ -95,6 +97,7 @@ export class EmployeeFeatureUploadComponent {
     }
 
     if (file.size > 2 * 1024 * 1024) {
+      this.alert.open('File size exceeds 2MB!');
       return;
     }
 
@@ -128,7 +131,7 @@ export class EmployeeFeatureUploadComponent {
     }
 
     if (file.size > 2 * 1024 * 1024) {
-      alert('File size exceeds 2MB!');
+      this.alert.open('File size exceeds 2MB!');
       return;
     }
 

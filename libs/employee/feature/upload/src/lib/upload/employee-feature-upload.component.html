@@ -53,6 +53,7 @@
       </div>
       } @else {
       <div class="flex flex-col justify-center items-center gap-3">
+        <span class="!font-semibold">Residency Visa</span>
         <span class="font-light">
           Please upload a clear, high-quality image of your Residency
           Visa.</span
@@ -156,21 +157,60 @@
     <div
       class="flex flex-1 flex-col border-dashed p-6 border-[#D0D5DD] rounded-lg"
     >
+      @if (filePreviewEmiratesId){
+      <div class="flex flex-col !justify-center !items-center mt-4">
+        <span class="!font-semibold">Emirates ID</span>
+        <img
+          [src]="filePreviewEmiratesId"
+          class="!w-[200px] !h-[120px] !object-cover rounded-md mt-3"
+          alt="File preview"
+        />
+        <p>Image size: {{ fileSizeId() }}</p>
+        <div class="flex justify-center">
+          <button mat-icon-button type="button" (click)="removeFileId()">
+            <mat-icon svgIcon="trash-warn" />
+          </button>
+          <input
+            type="file"
+            #fileInputId
+            (change)="onFileSelectedId($event)"
+            accept="image/png, image/jpeg, application/pdf"
+            hidden
+          />
+          <button mat-icon-button (click)="fileInputId.click()" type="button">
+            <mat-icon svgIcon="refresh" />
+          </button>
+        </div>
+      </div>
+      } @else {
       <div class="flex flex-col justify-center items-center gap-3">
         <span class="!font-semibold">Emirates ID</span>
         <span class="font-light">
-          Please upload a clear, high-quality image of your Residency
-          Visa.</span
+          Please upload clear images of both the front and back of your Emirates
+          ID.</span
         >
         <span class="font-light"> Supported formats: JPG, PNG, PDF.</span>
         <span class="font-light"> Max file size: 2MB.</span>
       </div>
       <div class="flex flex-col gap-6 justify-center items-center">
-        <button mat-flat-button class="mt-4">
+        <input
+          type="file"
+          #fileInputId
+          (change)="onFileSelectedId($event)"
+          accept="image/png, image/jpeg, application/pdf"
+          hidden
+        />
+        <button
+          mat-flat-button
+          class="mt-4"
+          (click)="fileInputId.click()"
+          type="button"
+        >
           Choose File
           <mat-icon svgIcon="add" />
         </button>
       </div>
+      }
     </div>
   </form>
 </ng-template>

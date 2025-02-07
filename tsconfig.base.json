@@ -24,6 +24,8 @@
       "@insurance-employee-data-dashboards": [
         "libs/employee/data/data-dashboards/src/index.ts"
       ],
+      "@./charts": ["libs/shared/components/charts-component/src/index.ts"],
+      "@./pieChart": ["libs/shared/components/shared-charts/src/index.ts"],
       "@insurance-broker-feature-auth": [
         "libs/broker/feature/auth/src/index.ts"
       ],
@@ -46,6 +48,9 @@
       "@shared-ui-icon": [
         "libs/employee/shared/ui/icon/src/index.ts"
       ],
+      "@insurance-shared-ui-overlay-spinner": [
+        "libs/shared/ui/overlay-spinner/src/index.ts"
+      ],
       "@shared-ui-input-validator": [
         "libs/shared/ui/input-validation-message/src/index.ts"
       ],
@@ -54,6 +59,11 @@
       ],
       "@shared-util-web-sdk": [
         "libs/shared/util/web-sdk/src/index.ts"
+      ],
+      "@shared-util-common": ["libs/shared/util/common/src/index.ts"],
+      "@shared-util-web-sdk": ["libs/shared/util/web-sdk/src/index.ts"],
+      "shared-charts-components": [
+        "libs/shared/components/shared-charts-components/src/index.ts"
       ]
     }
   },

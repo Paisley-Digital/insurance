@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import {
@@ -27,12 +27,52 @@ import { MatCardModule } from '@angular/material/card';
   styleUrl: './employee-feature-upload.component.scss',
 })
 export class EmployeeFeatureUploadComponent {
-  private formBuilder = inject(FormBuilder);
-  private router = inject(Router);
+  filePreview: string | ArrayBuffer | null = null;
+  isImage: boolean = false;
+  fileType: 'image' | 'video' = 'image';
+  fileSize = signal('');
 
-  isHandsetScreen$ = isHandsetScreen();
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
 
-  uploadFile() {
-    return alert('hesaamm is ');
+    if (!input.files) {
+      return;
+    }
+
+    const file = input.files[0];
+    if (!file) {
+      console.warn('No file selected.');
+      return;
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+      alert('File size exceeds 2MB!');
+      return;
+    }
+
+    const fileType = file.type;
+    this.isImage = fileType.startsWith('image/');
+    this.fileSize.set(this.formatFileSize(file.size));
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.filePreview = reader.result;
+    };
+
+    if (this.isImage) {
+      reader.readAsDataURL(file);
+    } else {
+      this.filePreview = null;
+    }
+  }
+
+  formatFileSize(bytes: number): string {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+  }
+
+  removeFile() {
+    this.filePreview = null;
   }
 }

@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { dashboardMock } from '@insurance-employee-data-dashboards';
 import { MatCard, MatCardContent } from '@angular/material/card';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'insurance-dashboard',
@@ -13,6 +14,7 @@ import { MatCard, MatCardContent } from '@angular/material/card';
     MatIconModule,
     MatCard,
     MatCardContent,
+    RouterLink,
   ],
   templateUrl: './employee-feature-dashboard.component.html',
   styleUrl: './employee-feature-dashboard.component.scss',

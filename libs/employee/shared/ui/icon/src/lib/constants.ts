@@ -18,6 +18,8 @@ export const svgIconNames = [
   'chevron',
   'mail-employee',
   'signup',
+  'trash-warn',
+  'refresh',
   'check',
   'location',
   'trash',

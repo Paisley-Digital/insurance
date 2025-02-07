@@ -1,6 +1,6 @@
-import { InsuranceTypes } from './dashboard.model';
+import { InsuranceTypes } from './employee-data-dashboard.model';
 
-export const dashboardMock: InsuranceTypes[] = [
+export const employeeDataDashboardMock: InsuranceTypes[] = [
   {
     image: '/assets/images/medical.jpg',
     title: 'Medical Insurance',

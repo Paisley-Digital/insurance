@@ -2,7 +2,7 @@
   "name": "upload",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/employee/feature/upload/src",
-  "prefix": "lib",
+  "prefix": "insurance",
   "projectType": "library",
   "tags": [],
   "targets": {

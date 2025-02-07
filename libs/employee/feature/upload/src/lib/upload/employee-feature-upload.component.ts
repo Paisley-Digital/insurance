@@ -1,24 +1,16 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { MatButton, MatButtonModule } from '@angular/material/button';
-import {
-  MatDrawerContainer,
-  MatDrawerContent,
-} from '@angular/material/sidenav';
 import { MatIcon } from '@angular/material/icon';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { isHandsetScreen } from '@shared-util-common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { AlertService } from '@shared-ui-alert';
 
 @Component({
-  selector: 'lib-upload',
+  selector: 'insurance-employee-feature-upload',
   imports: [
     CommonModule,
     MatButton,
-    MatDrawerContainer,
-    MatDrawerContent,
     MatIcon,
     ReactiveFormsModule,
     MatButtonModule,
@@ -30,11 +22,13 @@ import { AlertService } from '@shared-ui-alert';
 })
 export class EmployeeFeatureUploadComponent {
   private alert = inject(AlertService);
+
   filePreview: string | ArrayBuffer | null = null;
   passportFilePreview: string | ArrayBuffer | null = null;
   filePreviewEmiratesId: string | ArrayBuffer | null = null;
+
   isImage: boolean = false;
-  fileType: 'image' | 'video' = 'image';
+
   fileSize = signal('');
   fileSizePassport = signal('');
   fileSizeId = signal('');
@@ -50,7 +44,6 @@ export class EmployeeFeatureUploadComponent {
     }
 
     const file = input.files[0];
-    this.file.set(file);
     if (!file) {
       console.warn('No file selected.');
       return;
@@ -60,6 +53,7 @@ export class EmployeeFeatureUploadComponent {
       this.alert.open('File size exceeds 2MB!');
       return;
     }
+    this.file.set(file);
 
     const fileType = file.type;
     this.isImage = fileType.startsWith('image/');
@@ -91,7 +85,6 @@ export class EmployeeFeatureUploadComponent {
     }
 
     const file = input.files[0];
-    this.filePassport.set(file);
     if (!file) {
       return;
     }
@@ -100,6 +93,7 @@ export class EmployeeFeatureUploadComponent {
       this.alert.open('File size exceeds 2MB!');
       return;
     }
+    this.filePassport.set(file);
 
     const fileType = file.type;
     this.isImage = fileType.startsWith('image/');
@@ -125,7 +119,6 @@ export class EmployeeFeatureUploadComponent {
     }
 
     const file = input.files[0];
-    this.fileEmiratesId.set(file);
     if (!file) {
       return;
     }
@@ -134,6 +127,7 @@ export class EmployeeFeatureUploadComponent {
       this.alert.open('File size exceeds 2MB!');
       return;
     }
+    this.fileEmiratesId.set(file);
 
     const fileType = file.type;
     this.isImage = fileType.startsWith('image/');

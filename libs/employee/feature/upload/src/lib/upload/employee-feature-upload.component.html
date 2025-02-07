@@ -1,7 +1,7 @@
 <div class="p-[72px]">
   <mat-card appearance="outlined">
     <div class="flex w-full justify-center max-sm:h-full">
-      <div class="w-3/4 sm:w-1/2 md:mt-12 md:w-2/3 p-20">
+      <div class="w-3/4 sm:w-1/2 md:w-2/3 p-20">
         <div class="!flex !justify-center font-semibold text-2xl !w-full mb-6">
           Upload Required Documents
         </div>
@@ -26,7 +26,28 @@
     <div
       class="flex flex-1 flex-col border-dashed p-6 border-[#D0D5DD] rounded-lg"
     >
-      @if (filePreview){
+      @if (file()) { @if (file()?.type === 'application/pdf') {
+      <div class="flex flex-col !justify-center !items-center mt-4">
+        <span class="!font-semibold">Residency Visa</span>
+        <img ngSrc="./assets/icons/pdf.svg" alt="" width="100" height="100" />
+        <p>Image size: {{ fileSize() }}</p>
+        <div class="flex justify-center">
+          <button mat-icon-button type="button" (click)="removeFile()">
+            <mat-icon svgIcon="trash-warn" />
+          </button>
+          <input
+            type="file"
+            #fileInput
+            (change)="onFileSelected($event)"
+            accept="image/png, image/jpeg, application/pdf"
+            hidden
+          />
+          <button mat-icon-button (click)="fileInput.click()" type="button">
+            <mat-icon svgIcon="refresh" />
+          </button>
+        </div>
+      </div>
+      } @else {
       <div class="flex flex-col !justify-center !items-center mt-4">
         <span class="!font-semibold">Residency Visa</span>
         <img
@@ -51,7 +72,7 @@
           </button>
         </div>
       </div>
-      } @else {
+      } } @else {
       <div class="flex flex-col justify-center items-center gap-3">
         <span class="!font-semibold">Residency Visa</span>
         <span class="font-light">
@@ -90,7 +111,33 @@
     <div
       class="flex flex-1 flex-col border-dashed p-6 border-[#D0D5DD] rounded-lg"
     >
-      @if (passportFilePreview){
+      @if (filePassport()) { @if (filePassport()?.type === 'application/pdf'){
+      <div class="flex flex-col !justify-center !items-center mt-4">
+        <span class="!font-semibold">Residency Visa</span>
+        <img ngSrc="./assets/icons/pdf.svg" alt="" width="100" height="100" />
+        <p>Image size: {{ fileSizePassport() }}</p>
+        <div class="flex justify-center">
+          <button mat-icon-button type="button" (click)="removeFilePassport()">
+            <mat-icon svgIcon="trash-warn" />
+          </button>
+          <input
+            type="file"
+            #fileInputPassport
+            (change)="onFileSelectedPassport($event)"
+            accept="image/png, image/jpeg, application/pdf"
+            hidden
+          />
+          <button
+            mat-icon-button
+            (click)="fileInputPassport.click()"
+            type="button"
+          >
+            <mat-icon svgIcon="refresh" />
+          </button>
+        </div>
+      </div>
+      } @else {
+
       <div class="flex flex-col !justify-center !items-center mt-4">
         <span class="!font-semibold">Passport</span>
         <img
@@ -119,7 +166,7 @@
           </button>
         </div>
       </div>
-      } @else {
+      } } @else {
       <div class="flex flex-col justify-center items-center gap-3">
         <span class="!font-semibold">Passport</span>
         <span class="font-light">
@@ -157,7 +204,30 @@
     <div
       class="flex flex-1 flex-col border-dashed p-6 border-[#D0D5DD] rounded-lg"
     >
-      @if (filePreviewEmiratesId){
+      @if (fileEmiratesId()) { @if (fileEmiratesId()?.type ===
+      'application/pdf'){
+      <div class="flex flex-col !justify-center !items-center mt-4">
+        <span class="!font-semibold">Emirates ID</span>
+        <img ngSrc="./assets/icons/pdf.svg" alt="" width="100" height="100" />
+        <p>Image size: {{ fileSizeId() }}</p>
+        <div class="flex justify-center">
+          <button mat-icon-button type="button" (click)="removeFileId()">
+            <mat-icon svgIcon="trash-warn" />
+          </button>
+          <input
+            type="file"
+            #fileInputId
+            (change)="onFileSelectedId($event)"
+            accept="image/png, image/jpeg, application/pdf"
+            hidden
+          />
+          <button mat-icon-button (click)="fileInputId.click()" type="button">
+            <mat-icon svgIcon="refresh" />
+          </button>
+        </div>
+      </div>
+      } @else {
+
       <div class="flex flex-col !justify-center !items-center mt-4">
         <span class="!font-semibold">Emirates ID</span>
         <img
@@ -182,7 +252,7 @@
           </button>
         </div>
       </div>
-      } @else {
+      } } @else {
       <div class="flex flex-col justify-center items-center gap-3">
         <span class="!font-semibold">Emirates ID</span>
         <span class="font-light">

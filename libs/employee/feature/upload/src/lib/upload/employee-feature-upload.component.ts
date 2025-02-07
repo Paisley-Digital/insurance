@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import {
   MatDrawerContainer,
@@ -22,6 +22,7 @@ import { MatCardModule } from '@angular/material/card';
     ReactiveFormsModule,
     MatButtonModule,
     MatCardModule,
+    NgOptimizedImage,
   ],
   templateUrl: './employee-feature-upload.component.html',
   styleUrl: './employee-feature-upload.component.scss',
@@ -35,6 +36,9 @@ export class EmployeeFeatureUploadComponent {
   fileSize = signal('');
   fileSizePassport = signal('');
   fileSizeId = signal('');
+  file = signal<File | null>(null);
+  filePassport = signal<File | null>(null);
+  fileEmiratesId = signal<File | null>(null);
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -44,6 +48,7 @@ export class EmployeeFeatureUploadComponent {
     }
 
     const file = input.files[0];
+    this.file.set(file);
     if (!file) {
       console.warn('No file selected.');
       return;
@@ -84,6 +89,7 @@ export class EmployeeFeatureUploadComponent {
     }
 
     const file = input.files[0];
+    this.filePassport.set(file);
     if (!file) {
       return;
     }
@@ -116,6 +122,7 @@ export class EmployeeFeatureUploadComponent {
     }
 
     const file = input.files[0];
+    this.fileEmiratesId.set(file);
     if (!file) {
       return;
     }
@@ -143,13 +150,16 @@ export class EmployeeFeatureUploadComponent {
 
   removeFile() {
     this.filePreview = null;
+    this.file.set(null);
   }
 
   removeFilePassport() {
     this.passportFilePreview = null;
+    this.filePassport.set(null);
   }
 
   removeFileId() {
     this.filePreviewEmiratesId = null;
+    this.fileEmiratesId.set(null);
   }
 }

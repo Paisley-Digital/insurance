@@ -17,16 +17,19 @@
     "paths": {
       "@./assets": ["libs/shared/assets/src/index.ts"],
       "@./locales": ["libs/shared/util/locales/src/index.ts"],
+      "@./upload": ["libs/employee/feature/upload/src/index.ts"],
       "@insurance-broker-feature-auth": [
         "libs/broker/feature/auth/src/index.ts"
       ],
       "@insurance-employee-feature-auth": [
         "libs/employee/feature/auth/src/index.ts"
       ],
+      "@insurance-employee-feature-dashboard": [
+        "libs/employee/feature/dashboard/src/index.ts"
+      ],
       "@insurance-employee-feature-shell": [
         "libs/employee/feature/shell/src/index.ts"
       ],
-      "@insurance-employee-feature-dashboard": ["libs/employee/feature/dashboard/src/index.ts"],
       "@insurance-shared-app-core": ["libs/shared/util/appp-core/src/index.ts"],
       "@insurance-shared-ui-overlay-spinner": [
         "libs/shared/ui/overlay-spinner/src/index.ts"

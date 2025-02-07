@@ -1,0 +1,80 @@
+    
+       <div class="p-[72px]">
+       <mat-card appearance="outlined">
+       <div class="flex w-full justify-center max-sm:h-full">
+          <div class="w-3/4 sm:w-1/2 md:mt-12 md:w-2/3 p-20">
+            <div class="!flex !justify-center font-semibold text-2xl !w-full mb-6">
+              Upload Required Documents
+            </div>
+            <ng-container [ngTemplateOutlet]="uploadWrapper" />
+          </div>
+        </div>
+       </mat-card>
+</div>
+<ng-template #uploadWrapper>
+  <div class="flex w-1/2 flex-col items-center max-sm:h-full max-sm:pb-8 w-full ">
+    <div class="w-full flex flex-col gap-8">
+      <ng-container [ngTemplateOutlet]="residencyVisa" />
+      <ng-container [ngTemplateOutlet]="passport" />
+      <ng-container [ngTemplateOutlet]="emiratesId" />
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #residencyVisa>
+  <form class="flex h-full flex-col" >
+    <div class="flex flex-1 flex-col border-dashed p-6 border-[#D0D5DD] rounded-lg">
+      <div class=" flex flex-col justify-center items-center gap-3">
+        <span class="!font-semibold">Residency Visa</span>
+        <span class="font-light"> Please upload a clear, high-quality image of your Residency Visa.</span>
+        <span class="font-light"> Supported formats: JPG, PNG, PDF.</span>
+        <span class="font-light"> Max file size: 2MB.</span>
+      </div>
+      <div class="flex flex-col gap-6 justify-center items-center">
+        <button mat-flat-button class="mt-4" (click)="uploadFile()">
+          Choose File
+          <mat-icon svgIcon="add" />
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #passport>
+  <form class="flex h-full flex-col" >
+    <div class="flex flex-1 flex-col border-dashed p-6 border-[#D0D5DD] rounded-lg">
+      <div class="flex flex-col justify-center items-center gap-3">
+        <span class="!font-semibold">Passport</span>
+        <span class="font-light"> Please upload a clear, high-quality image of your Residency Visa.</span>
+        <span class="font-light"> Supported formats: JPG, PNG, PDF.</span>
+        <span class="font-light"> Max file size: 2MB.</span>
+      </div>
+      <div class="flex flex-col gap-6 justify-center items-center">
+        <button mat-flat-button class="mt-4" (click)="uploadFile()">
+          Choose File
+          <mat-icon svgIcon="add" />
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #emiratesId>
+  <form class="flex h-full flex-col" >
+    <div class="flex flex-1 flex-col border-dashed p-6 border-[#D0D5DD] rounded-lg">
+      <div class=" flex flex-col justify-center items-center gap-3">
+        <span class="!font-semibold">Emirates ID</span>
+        <span class="font-light"> Please upload a clear, high-quality image of your Residency Visa.</span>
+        <span class="font-light"> Supported formats: JPG, PNG, PDF.</span>
+        <span class="font-light"> Max file size: 2MB.</span>
+      </div>
+      <div class="flex flex-col gap-6 justify-center items-center">
+        <button mat-flat-button class="mt-4" (click)="uploadFile()">
+          Choose File
+          <mat-icon svgIcon="add" />
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>

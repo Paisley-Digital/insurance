@@ -18,6 +18,10 @@ export const shellRoutes: Route[] = [
             (m) => m.dashboardRoutes
           ),
       },
+      {
+        path:'upload',
+        loadChildren: () => import('@insurance-employee-feature-upload').then(m => m.uploadRoutes)
+      }
     ],
   },
 ];

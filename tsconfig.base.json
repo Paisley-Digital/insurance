@@ -20,7 +20,7 @@
     "paths": {
       "@./assets": ["libs/shared/assets/src/index.ts"],
       "@./locales": ["libs/shared/util/locales/src/index.ts"],
-      "@./upload": ["libs/employee/feature/upload/src/index.ts"],
+      "@insurance-employee-feature-upload": ["libs/employee/feature/upload/src/index.ts"],
       "@./assets": [
         "libs/shared/assets/src/index.ts"
       ],

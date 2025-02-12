@@ -5,6 +5,17 @@ import { MatIcon } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { AlertService } from '@shared-ui-alert';
+import { MatTableModule } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+
+type View = 'upload' | 'table';
 
 @Component({
   selector: 'insurance-employee-feature-upload',
@@ -16,9 +27,21 @@ import { AlertService } from '@shared-ui-alert';
     MatButtonModule,
     MatCardModule,
     NgOptimizedImage,
+    MatTableModule,
+    MatSort,
   ],
   templateUrl: './employee-feature-upload.component.html',
   styleUrl: './employee-feature-upload.component.scss',
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      ),
+    ]),
+  ],
 })
 export class EmployeeFeatureUploadComponent {
   private alert = inject(AlertService);
@@ -28,6 +51,28 @@ export class EmployeeFeatureUploadComponent {
   filePreviewEmiratesId: string | ArrayBuffer | null = null;
 
   isImage: boolean = false;
+  selectedTransactionId: number | null = null;
+  columns: string[] = [
+    'name',
+    'date',
+    'nationality',
+    'gender',
+    'enrolled',
+    'renewal',
+    'expand',
+  ];
+
+  mockData = [
+    {
+      id: 1,
+      name: 'Borzo Barardari',
+      date: '10/01/1982',
+      nationality: 'Luxembourg',
+      gender: 'M',
+      enrolled: '18/05/2020',
+      renewal: '18/05/2025',
+    },
+  ];
 
   fileSize = signal('');
   fileSizePassport = signal('');
@@ -35,6 +80,7 @@ export class EmployeeFeatureUploadComponent {
   file = signal<File | null>(null);
   filePassport = signal<File | null>(null);
   fileEmiratesId = signal<File | null>(null);
+  _view = signal<View>('upload');
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -152,6 +198,14 @@ export class EmployeeFeatureUploadComponent {
   removeFileId() {
     this.filePreviewEmiratesId = null;
     this.fileEmiratesId.set(null);
+  }
+
+  changeViewToTable() {
+    this._view.set('table');
+  }
+
+  setSelectedTransaction(id: number) {
+    this.selectedTransactionId = this.selectedTransactionId !== id ? id : null;
   }
 
   private formatFileSize(bytes: number) {

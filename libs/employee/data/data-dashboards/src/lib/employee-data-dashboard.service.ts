@@ -26,11 +26,6 @@ export class EmployeeDataDashboardService {
 
     return this.http.post<FileResponse[]>(this.apiUrl, formData, { headers });
   }
-
-  private apiUrlGpt = 'https://api.openai.com/v1/chat/completions';
-  private apiKey =
-    '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';
-
   createDocument(
     companyId: string,
     documentData: {

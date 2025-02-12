@@ -4,6 +4,7 @@ import { appRoutes } from './app.routes';
 import {MAT_DEFAULT_OPTIONS_OVERRIDES} from "@shared-util-web-sdk";
 import {employeeSharedUiIconRegister} from "@shared-ui-icon";
 import {overrideLocaleData} from "@./locales";
+import { provideHttpClient } from '@angular/common/http';
 
 function initializeEnvironment() {
   const localeId = inject(LOCALE_ID);
@@ -15,6 +16,7 @@ function initializeEnvironment() {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
+    provideHttpClient(),
     provideRouter(appRoutes),
     {
       provide: ENVIRONMENT_INITIALIZER,

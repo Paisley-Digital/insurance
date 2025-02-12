@@ -5,9 +5,13 @@ import { MatIcon } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { AlertService } from '@shared-ui-alert';
+import { UploadImage } from '@insurance-employee-data-dashboards';
+import { forkJoin } from 'rxjs';
+import { FileUploadService } from '../../../../../data/data-dashboards/src/lib/employee.data.service';
 
 @Component({
   selector: 'insurance-employee-feature-upload',
+  standalone: true,
   imports: [
     CommonModule,
     MatButton,
@@ -18,16 +22,16 @@ import { AlertService } from '@shared-ui-alert';
     NgOptimizedImage,
   ],
   templateUrl: './employee-feature-upload.component.html',
-  styleUrl: './employee-feature-upload.component.scss',
+  styleUrls: ['./employee-feature-upload.component.scss'],
 })
 export class EmployeeFeatureUploadComponent {
   private alert = inject(AlertService);
+  private service = inject(FileUploadService);
 
   filePreview: string | ArrayBuffer | null = null;
   passportFilePreview: string | ArrayBuffer | null = null;
   filePreviewEmiratesId: string | ArrayBuffer | null = null;
-
-  isImage: boolean = false;
+  selectedFiles: UploadImage[] = [];
 
   fileSize = signal('');
   fileSizePassport = signal('');
@@ -38,105 +42,55 @@ export class EmployeeFeatureUploadComponent {
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
-
-    if (!input.files) {
-      return;
-    }
-
+    if (!input.files) return;
     const file = input.files[0];
-    if (!file) {
-      console.warn('No file selected.');
-      return;
-    }
-
-    if (file.size > 2 * 1024 * 1024) {
-      this.alert.open('File size exceeds 2MB!');
-      return;
-    }
-    this.file.set(file);
-
-    const fileType = file.type;
-    this.isImage = fileType.startsWith('image/');
-    this.fileSize.set(this.formatFileSize(file.size));
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.filePreview = reader.result;
-    };
-
-    if (this.isImage) {
-      reader.readAsDataURL(file);
+    if (file && file.size <= 2 * 1024 * 1024) {
+      this.file.set(file);
+      this.selectedFiles.push({ source: file });
+      this.updateFilePreview(file, 'residency');
     } else {
-      this.filePreview = null;
+      this.alert.open('File size exceeds 2MB!');
     }
   }
 
   onFileSelectedPassport(event: Event) {
     const input = event.target as HTMLInputElement;
-
-    if (!input.files) {
-      return;
-    }
-
+    if (!input.files) return;
     const file = input.files[0];
-    if (!file) {
-      return;
-    }
-
-    if (file.size > 2 * 1024 * 1024) {
-      this.alert.open('File size exceeds 2MB!');
-      return;
-    }
-    this.filePassport.set(file);
-
-    const fileType = file.type;
-    this.isImage = fileType.startsWith('image/');
-    this.fileSizePassport.set(this.formatFileSize(file.size));
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.passportFilePreview = reader.result;
-    };
-
-    if (this.isImage) {
-      reader.readAsDataURL(file);
+    if (file && file.size <= 2 * 1024 * 1024) {
+      this.filePassport.set(file);
+      this.selectedFiles.push({ source: file });
+      this.updateFilePreview(file, 'passport');
     } else {
-      this.passportFilePreview = null;
+      this.alert.open('File size exceeds 2MB!');
     }
   }
 
   onFileSelectedId(event: Event) {
     const input = event.target as HTMLInputElement;
-
-    if (!input.files) {
-      return;
-    }
-
+    if (!input.files) return;
     const file = input.files[0];
-    if (!file) {
-      return;
-    }
-
-    if (file.size > 2 * 1024 * 1024) {
+    if (file && file.size <= 2 * 1024 * 1024) {
+      this.fileEmiratesId.set(file);
+      this.selectedFiles.push({ source: file });
+      this.updateFilePreview(file, 'emiratesId');
+    } else {
       this.alert.open('File size exceeds 2MB!');
-      return;
     }
-    this.fileEmiratesId.set(file);
+  }
 
-    const fileType = file.type;
-    this.isImage = fileType.startsWith('image/');
-    this.fileSizeId.set(this.formatFileSize(file.size));
-
+  updateFilePreview(file: File, type: string) {
     const reader = new FileReader();
     reader.onload = () => {
-      this.filePreviewEmiratesId = reader.result;
+      if (type === 'residency') {
+        this.filePreview = reader.result;
+      } else if (type === 'passport') {
+        this.passportFilePreview = reader.result;
+      } else if (type === 'emiratesId') {
+        this.filePreviewEmiratesId = reader.result;
+      }
     };
-
-    if (this.isImage) {
-      reader.readAsDataURL(file);
-    } else {
-      this.filePreviewEmiratesId = null;
-    }
+    reader.readAsDataURL(file);
   }
 
   removeFile() {
@@ -154,9 +108,57 @@ export class EmployeeFeatureUploadComponent {
     this.fileEmiratesId.set(null);
   }
 
-  private formatFileSize(bytes: number) {
-    if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+  uploadFiles() {
+    if (!this.selectedFiles.length) {
+      console.warn('No file selected!');
+      return;
+    }
+
+    const uploadObservables = this.selectedFiles.map((fileData) =>
+      this.service.uploadFile(fileData.source)
+    );
+    forkJoin(uploadObservables).subscribe({
+      next: (responses) => {
+        console.log('All files uploaded:', responses);
+
+        const uploadedFileUrls = responses.map((res: any) => {
+          return `https://insurancebase.paisley.monster${res[0].downloadUrl}`;
+        });
+
+        console.log('Uploaded file URLs:', uploadedFileUrls);
+
+        this.callAiService(uploadedFileUrls);
+      },
+      error: (err) => {
+        console.error('Error uploading files:', err);
+      }
+    });
   }
+
+  callAiService(uploadedFileUrls: string[]) {
+    if (!uploadedFileUrls.length) {
+      console.error('No files uploaded successfully to call AI service.');
+      return;
+    }
+
+    const payload: any = {
+      contents: [
+        {
+          extraction_type: 'BASIC_INFO',
+          image_urls: uploadedFileUrls,
+        },
+      ],
+    };
+
+    console.log('AI Payload:', payload);
+    this.service.postAiService(payload).subscribe({
+      next: (aiResponse) => {
+        console.log('AI Service response:', aiResponse);
+      },
+      error: (err) => {
+        console.error('Error calling AI service:', err);
+      },
+    });
+  }
+
 }

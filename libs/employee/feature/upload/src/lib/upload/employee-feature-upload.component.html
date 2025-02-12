@@ -25,7 +25,12 @@
       <ng-container [ngTemplateOutlet]="emiratesId" />
     </div>
   </div>
-  <button mat-flat-button class="w-full mt-8" (click)="changeViewToTable()">
+  <button
+    mat-flat-button
+    class="w-full mt-8"
+    (click)="uploadFiles()"
+    [insuranceOverlaySpinner]="_loading()"
+  >
     Submit
   </button>
 </ng-template>
@@ -297,7 +302,7 @@
 <ng-template #table>
   <table
     class="statement-table mt-3 w-full"
-    [dataSource]="mockData"
+    [dataSource]="normalizedContent"
     multiTemplateDataRows
     mat-table
     matSort
@@ -305,30 +310,36 @@
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Full Name</th>
       <td mat-cell *matCellDef="let transaction">
-        <div>{{ transaction.name }}</div>
+        <div>{{ transaction.First_Name }}</div>
       </td>
     </ng-container>
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
-      <td mat-cell *matCellDef="let transaction">{{ transaction.date }}</td>
+      <td mat-cell *matCellDef="let transaction">
+        {{ transaction.Date_of_Birth }}
+      </td>
     </ng-container>
     <ng-container matColumnDef="nationality">
       <th mat-header-cell *matHeaderCellDef>Nationality</th>
       <td mat-cell *matCellDef="let transaction">
-        {{ transaction.nationality }}
+        {{ transaction.Nationality }}
       </td>
     </ng-container>
     <ng-container matColumnDef="gender">
       <th mat-header-cell *matHeaderCellDef>Gender</th>
-      <td mat-cell *matCellDef="let transaction">{{ transaction.gender }}</td>
+      <td mat-cell *matCellDef="let transaction">{{ transaction.Sex }}</td>
     </ng-container>
     <ng-container matColumnDef="enrolled">
       <th mat-header-cell *matHeaderCellDef>Enrolled Since</th>
-      <td mat-cell *matCellDef="let transaction">{{ transaction.enrolled }}</td>
+      <td mat-cell *matCellDef="let transaction">
+        {{ transaction.Date_of_Birth }}
+      </td>
     </ng-container>
     <ng-container matColumnDef="renewal">
       <th mat-header-cell *matHeaderCellDef>Renewal Date</th>
-      <td mat-cell *matCellDef="let transaction">{{ transaction.renewal }}</td>
+      <td mat-cell *matCellDef="let transaction">
+        {{ transaction.Date_of_Birth }}
+      </td>
     </ng-container>
     <ng-container matColumnDef="expand">
       <th class="!w-10" mat-header-cell *matHeaderCellDef></th>
@@ -366,11 +377,7 @@
           <div class="pb-2 pt-4">
             <dl class="statement-key-value-grid">
               <div class="flex gap-4">
-                <img
-                  ngSrc="./assets/images/national-card.jpg"
-                  width="122"
-                  height="70"
-                />
+                <img [src]="filePreview" class="w-[122px] h-[70px]" />
                 <div class="flex relative left-[40px] flex-col">
                   <div class="flex">
                     <p class="!text-[#232730]">Document Type:</p>
@@ -401,6 +408,7 @@
                 </div>
               </div>
             </dl>
+            <mat-divider />
           </div>
         </div>
       </td>

@@ -5,20 +5,22 @@ import { MatIcon } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { AlertService } from '@shared-ui-alert';
+import {
+  EmployeeDataDashboardService,
+  UploadImage,
+} from '@insurance-employee-data-dashboards';
+import { forkJoin } from 'rxjs';
 import { MatTableModule } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
+import { OverlaySpinnerDirective } from '@insurance-shared-ui-overlay-spinner';
+import { normalizeKeys } from '@shared-util-common';
+import { MatDivider } from '@angular/material/divider';
 
 type View = 'upload' | 'table';
 
 @Component({
   selector: 'insurance-employee-feature-upload',
+  standalone: true,
   imports: [
     CommonModule,
     MatButton,
@@ -29,29 +31,22 @@ type View = 'upload' | 'table';
     NgOptimizedImage,
     MatTableModule,
     MatSort,
+    OverlaySpinnerDirective,
+    MatDivider,
   ],
   templateUrl: './employee-feature-upload.component.html',
-  styleUrl: './employee-feature-upload.component.scss',
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition(
-        'expanded <=> collapsed',
-        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
-      ),
-    ]),
-  ],
+  styleUrls: ['./employee-feature-upload.component.scss'],
 })
 export class EmployeeFeatureUploadComponent {
   private alert = inject(AlertService);
+  private service = inject(EmployeeDataDashboardService);
 
   filePreview: string | ArrayBuffer | null = null;
   passportFilePreview: string | ArrayBuffer | null = null;
   filePreviewEmiratesId: string | ArrayBuffer | null = null;
-
-  isImage: boolean = false;
+  selectedFiles: UploadImage[] = [];
   selectedTransactionId: number | null = null;
+  normalizedContent: any;
   columns: string[] = [
     'name',
     'date',
@@ -62,18 +57,6 @@ export class EmployeeFeatureUploadComponent {
     'expand',
   ];
 
-  mockData = [
-    {
-      id: 1,
-      name: 'Borzo Barardari',
-      date: '10/01/1982',
-      nationality: 'Luxembourg',
-      gender: 'M',
-      enrolled: '18/05/2020',
-      renewal: '18/05/2025',
-    },
-  ];
-
   fileSize = signal('');
   fileSizePassport = signal('');
   fileSizeId = signal('');
@@ -81,108 +64,59 @@ export class EmployeeFeatureUploadComponent {
   filePassport = signal<File | null>(null);
   fileEmiratesId = signal<File | null>(null);
   _view = signal<View>('upload');
+  _loading = signal(false);
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
-
-    if (!input.files) {
-      return;
-    }
-
+    if (!input.files) return;
     const file = input.files[0];
-    if (!file) {
-      console.warn('No file selected.');
-      return;
-    }
-
-    if (file.size > 2 * 1024 * 1024) {
-      this.alert.open('File size exceeds 2MB!');
-      return;
-    }
-    this.file.set(file);
-
-    const fileType = file.type;
-    this.isImage = fileType.startsWith('image/');
-    this.fileSize.set(this.formatFileSize(file.size));
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.filePreview = reader.result;
-    };
-
-    if (this.isImage) {
-      reader.readAsDataURL(file);
+    if (file && file.size <= 2 * 1024 * 1024) {
+      this.file.set(file);
+      this.selectedFiles.push({ source: file });
+      this.updateFilePreview(file, 'residency');
     } else {
-      this.filePreview = null;
+      this.alert.open('File size exceeds 2MB!');
     }
   }
 
   onFileSelectedPassport(event: Event) {
     const input = event.target as HTMLInputElement;
-
-    if (!input.files) {
-      return;
-    }
-
+    if (!input.files) return;
     const file = input.files[0];
-    if (!file) {
-      return;
-    }
-
-    if (file.size > 2 * 1024 * 1024) {
-      this.alert.open('File size exceeds 2MB!');
-      return;
-    }
-    this.filePassport.set(file);
-
-    const fileType = file.type;
-    this.isImage = fileType.startsWith('image/');
-    this.fileSizePassport.set(this.formatFileSize(file.size));
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.passportFilePreview = reader.result;
-    };
-
-    if (this.isImage) {
-      reader.readAsDataURL(file);
+    if (file && file.size <= 2 * 1024 * 1024) {
+      this.filePassport.set(file);
+      this.selectedFiles.push({ source: file });
+      this.updateFilePreview(file, 'passport');
     } else {
-      this.passportFilePreview = null;
+      this.alert.open('File size exceeds 2MB!');
     }
   }
 
   onFileSelectedId(event: Event) {
     const input = event.target as HTMLInputElement;
-
-    if (!input.files) {
-      return;
-    }
-
+    if (!input.files) return;
     const file = input.files[0];
-    if (!file) {
-      return;
-    }
-
-    if (file.size > 2 * 1024 * 1024) {
+    if (file && file.size <= 2 * 1024 * 1024) {
+      this.fileEmiratesId.set(file);
+      this.selectedFiles.push({ source: file });
+      this.updateFilePreview(file, 'emiratesId');
+    } else {
       this.alert.open('File size exceeds 2MB!');
-      return;
     }
-    this.fileEmiratesId.set(file);
+  }
 
-    const fileType = file.type;
-    this.isImage = fileType.startsWith('image/');
-    this.fileSizeId.set(this.formatFileSize(file.size));
-
+  updateFilePreview(file: File, type: string) {
     const reader = new FileReader();
     reader.onload = () => {
-      this.filePreviewEmiratesId = reader.result;
+      if (type === 'residency') {
+        this.filePreview = reader.result;
+      } else if (type === 'passport') {
+        this.passportFilePreview = reader.result;
+      } else if (type === 'emiratesId') {
+        this.filePreviewEmiratesId = reader.result;
+      }
     };
-
-    if (this.isImage) {
-      reader.readAsDataURL(file);
-    } else {
-      this.filePreviewEmiratesId = null;
-    }
+    reader.readAsDataURL(file);
   }
 
   removeFile() {
@@ -200,17 +134,61 @@ export class EmployeeFeatureUploadComponent {
     this.fileEmiratesId.set(null);
   }
 
-  changeViewToTable() {
-    this._view.set('table');
+  uploadFiles() {
+    if (!this.selectedFiles.length) {
+      console.warn('No file selected!');
+      return;
+    }
+    this._loading.set(true);
+
+    const uploadObservables = this.selectedFiles.map((fileData) =>
+      this.service.uploadFile(fileData.source)
+    );
+    forkJoin(uploadObservables).subscribe({
+      next: (responses) => {
+        const uploadedFileUrls = responses.map((res: any) => {
+          return `https://insurancebase.paisley.monster${res[0].downloadUrl}`;
+        });
+        this.callAiService(uploadedFileUrls);
+      },
+      error: (err) => {
+        console.error('Error uploading files:', err);
+        this._loading.set(false);
+      },
+    });
+  }
+
+  callAiService(uploadedFileUrls: string[]) {
+    if (!uploadedFileUrls.length) {
+      console.error('No files uploaded successfully to call AI service.');
+      return;
+    }
+
+    const payload: any = {
+      contents: [
+        {
+          extraction_type: 'BASIC_INFO',
+          image_urls: uploadedFileUrls,
+        },
+      ],
+    };
+
+    this.service.postAiService(payload).subscribe({
+      next: (result) => {
+        this._view.set('table');
+        const serviceResult = result.results[0].json_result;
+        this.normalizedContent = Array.isArray(serviceResult)
+          ? serviceResult.map((item) => normalizeKeys(item))
+          : [normalizeKeys(serviceResult)];
+        this._loading.set(false);
+      },
+      error: (err) => {
+        console.error('Error calling AI service:', err);
+      },
+    });
   }
 
   setSelectedTransaction(id: number) {
     this.selectedTransactionId = this.selectedTransactionId !== id ? id : null;
-  }
-
-  private formatFileSize(bytes: number) {
-    if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
   }
 }

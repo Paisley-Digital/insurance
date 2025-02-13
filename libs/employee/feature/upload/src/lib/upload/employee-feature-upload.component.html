@@ -1,5 +1,6 @@
 <div class="p-[20px] sm:p-[20px] lg:p-[72px] md:p-[60px]">
   <mat-card appearance="outlined">
+    @if (_view() === 'upload'){
     <div class="flex w-full justify-center max-sm:h-full">
       <div class="w-full sm:w-1/2 md:w-2/3 lg:w-1/2 p-5">
         <div class="!flex !justify-center font-semibold text-2xl !w-full mb-6">
@@ -8,6 +9,11 @@
         <ng-container [ngTemplateOutlet]="uploadWrapper" />
       </div>
     </div>
+    } @else {
+    <div class="p-4">
+      <ng-container [ngTemplateOutlet]="table" />
+    </div>
+    }
   </mat-card>
 </div>
 
@@ -19,7 +25,14 @@
       <ng-container [ngTemplateOutlet]="emiratesId" />
     </div>
   </div>
-  <button mat-flat-button class="w-full mt-8">Submit</button>
+  <button
+    mat-flat-button
+    class="w-full mt-8"
+    (click)="uploadFiles()"
+    [insuranceOverlaySpinner]="_loading()"
+  >
+    Submit
+  </button>
 </ng-template>
 
 <ng-template #residencyVisa>
@@ -284,4 +297,195 @@
       }
     </div>
   </form>
+</ng-template>
+
+<ng-template #table>
+  <table
+    class="statement-table mt-3 w-full"
+    [dataSource]="normalizedContent"
+    multiTemplateDataRows
+    mat-table
+    matSort
+  >
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Full Name</th>
+      <td mat-cell *matCellDef="let transaction">
+        <div>{{ transaction.First_Name }}</div>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
+      <td mat-cell *matCellDef="let transaction">
+        {{ transaction.Date_of_Birth }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="nationality">
+      <th mat-header-cell *matHeaderCellDef>Nationality</th>
+      <td mat-cell *matCellDef="let transaction">
+        {{ transaction.Nationality }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="gender">
+      <th mat-header-cell *matHeaderCellDef>Gender</th>
+      <td mat-cell *matCellDef="let transaction">{{ transaction.Sex }}</td>
+    </ng-container>
+    <ng-container matColumnDef="enrolled">
+      <th mat-header-cell *matHeaderCellDef>Enrolled Since</th>
+      <td mat-cell *matCellDef="let transaction">
+        {{ transaction.Date_of_Birth }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="renewal">
+      <th mat-header-cell *matHeaderCellDef>Renewal Date</th>
+      <td mat-cell *matCellDef="let transaction">
+        {{ transaction.Date_of_Birth }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="expand">
+      <th class="!w-10" mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let transaction">
+        <button
+          mat-icon-button
+          (click)="$event.stopPropagation(); setSelectedTransaction(1)"
+        >
+          <mat-icon
+            class="transition-transform duration-150"
+            [class.rotate-180]="selectedTransactionId === 1"
+            [svgIcon]="'chevron-down'"
+          />
+        </button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="expandedDetail">
+      <td
+        mat-cell
+        *matCellDef="let transaction"
+        [attr.colspan]="columns.length"
+      >
+        <div
+          [@detailExpand]="
+            selectedTransactionId === transaction?.statementId
+              ? 'expanded'
+              : 'collapsed'
+          "
+        >
+          <div class="pb-2 pt-4">
+            <dl class="statement-key-value-grid">
+              <div class="flex gap-4">
+                <img [src]="filePreview" class="w-[122px] h-[70px]" />
+                <div class="flex relative left-[40px] flex-col">
+                  <div class="flex gap-2">
+                    <p class="!text-[#232730]">Document Type:</p>
+                    <p>Passport</p>
+                  </div>
+                  <div class="flex gap-2">
+                    <p class="!text-[#232730]">Issuing Country:</p>
+                    <p>{{ expandData[0].Nationality }}</p>
+                  </div>
+                  <div class="flex">
+                    <p class="!text-[#232730]">Expiry Date:</p>
+                    <p>{{ expandData[0].Date_of_Birth }}</p>
+                  </div>
+                </div>
+                <div class="flex relative left-[100px] flex-col">
+                  <div class="flex gap-2">
+                    <p class="!text-[#232730]">ID Number:</p>
+                    <p>KCN5C3T9</p>
+                  </div>
+                  <div class="flex gap-2">
+                    <p class="!text-[#232730]">Place of Birth:</p>
+                    <p>Shiraz</p>
+                  </div>
+                  <div class="flex gap-2">
+                    <p class="!text-[#232730]">Holders Signature:</p>
+                    <p>Present</p>
+                  </div>
+                </div>
+              </div>
+            </dl>
+            @if (passportFilePreview){
+            <mat-divider />
+            <dl class="statement-key-value-grid">
+              <div class="flex gap-4">
+                <img [src]="passportFilePreview" class="w-[122px] h-[70px]" />
+                <div class="flex relative left-[40px] flex-col">
+                  <div class="flex gap-2">
+                    <p class="!text-[#232730]">Document Type:</p>
+                    <p>Passport</p>
+                  </div>
+                  <div class="flex gap-2">
+                    <p class="!text-[#232730]">Passport Number:</p>
+                    <p>KCN5C3T9</p>
+                  </div>
+                  <div class="flex gap-2">
+                    <p class="!text-[#232730]">Expiry Date:</p>
+                    <p>18/05/2026</p>
+                  </div>
+                </div>
+                <div class="flex relative left-[100px] flex-col">
+                  <div class="flex gap-2">
+                    <p class="!text-[#232730]">ID Number:</p>
+                    <p>784-1982-2605365-4</p>
+                  </div>
+                  <div class="flex gap-2">
+                    <p class="!text-[#232730]">Occupation:</p>
+                    <p>Vice President</p>
+                  </div>
+                  <div class="flex gap-2">
+                    <p class="!text-[#232730]">Sponsor/Employer:</p>
+                    <p>Investors,Entrepreneurs, Specialized</p>
+                  </div>
+                </div>
+              </div>
+            </dl>
+            } @if (filePreviewEmiratesId){
+            <mat-divider />
+            <dl class="statement-key-value-grid">
+              <div class="flex gap-4">
+                <img [src]="filePreviewEmiratesId" class="w-[122px] h-[70px]" />
+                <div class="flex relative left-[40px] flex-col">
+                  <div class="flex gap-2">
+                    <p class="!text-[#232730]">Document Type:</p>
+                    <p>Emirates ID</p>
+                  </div>
+                  <div class="flex gap-2">
+                    <p class="!text-[#232730]">Issuing Place:</p>
+                    <p>Not specified</p>
+                  </div>
+                  <div class="flex gap-2">
+                    <p class="!text-[#232730]">Expiry Date:</p>
+                    <p>18/05/2026</p>
+                  </div>
+                </div>
+                <div class="flex relative left-[100px] flex-col">
+                  <div class="flex gap-2">
+                    <p class="!text-[#232730]">ID Number:</p>
+                    <p>784-1982-2605365-4</p>
+                  </div>
+                  <div class="flex gap-2">
+                    <p class="!text-[#232730]">Occupation</p>
+                    <p>Vice President</p>
+                  </div>
+                </div>
+              </div>
+            </dl>
+            }
+          </div>
+        </div>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let transaction; columns: columns"
+      class="transaction-row"
+      [class.transaction-expanded-row]="selectedTransactionId === 1"
+      (click)="setSelectedTransaction(1)"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: ['expandedDetail']"
+      class="transaction-detail-row"
+    ></tr>
+  </table>
 </ng-template>

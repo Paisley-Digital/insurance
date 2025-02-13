@@ -364,29 +364,65 @@
                 <div class="flex relative left-[40px] flex-col">
                   <div class="flex gap-2">
                     <p class="!text-[#232730]">Document Type:</p>
-                    <p>{{ expandData()[0].document_type }}</p>
+                    <p>
+                      {{
+                        expandData()[0].document_type
+                          ? expandData()[0].document_type
+                          : '-'
+                      }}
+                    </p>
                   </div>
                   <div class="flex gap-2">
                     <p class="!text-[#232730]">Issuing Country:</p>
-                    <p>{{ expandData()[0].issuing_country }}</p>
+                    <p>
+                      {{
+                        expandData()[0].issuing_country
+                          ? expandData()[0].issuing_country
+                          : '-'
+                      }}
+                    </p>
                   </div>
                   <div class="flex gap-2">
                     <p class="!text-[#232730]">Expiry Date:</p>
-                    <p>{{ expandData()[0].expiry_date }}</p>
+                    <p>
+                      {{
+                        expandData()[0].expiry_date
+                          ? expandData()[0].expiry_date
+                          : '-'
+                      }}
+                    </p>
                   </div>
                 </div>
                 <div class="flex relative left-[100px] flex-col">
                   <div class="flex gap-2">
                     <p class="!text-[#232730]">ID Number:</p>
-                    <p>{{ expandData()[0]!.Id_number }}</p>
+                    <p>
+                      {{
+                        expandData()[0]!.Id_number
+                          ? expandData()[0]!.Id_number
+                          : '-'
+                      }}
+                    </p>
                   </div>
                   <div class="flex gap-2">
                     <p class="!text-[#232730]">Place of Birth:</p>
-                    <p>{{ expandData()[0].place_of_birth }}</p>
+                    <p>
+                      {{
+                        expandData()[0].place_of_birth
+                          ? expandData()[0].place_of_birth
+                          : '-'
+                      }}
+                    </p>
                   </div>
                   <div class="flex gap-2">
                     <p class="!text-[#232730]">Holders Signature:</p>
-                    <p>{{ expandData()[0].holders_signature }}</p>
+                    <p>
+                      {{
+                        expandData()[0].holders_signature
+                          ? expandData()[0].holders_signature
+                          : '-'
+                      }}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -407,25 +443,55 @@
                 <div class="flex relative left-[40px] flex-col">
                   <div class="flex gap-2">
                     <p class="!text-[#232730]">Document Type:</p>
-                    <p>{{ expandData()[1].document_type }}</p>
+                    <p>
+                      {{
+                        expandData()[1].document_type
+                          ? expandData()[1].document_type
+                          : '-'
+                      }}
+                    </p>
                   </div>
                   <div class="flex gap-2">
                     <p class="!text-[#232730]">Passport Number:</p>
-                    <p>{{ expandData()[1].Id_number }}</p>
+                    <p>
+                      {{
+                        expandData()[1].Id_number
+                          ? expandData()[1].Id_number
+                          : '-'
+                      }}
+                    </p>
                   </div>
                   <div class="flex gap-2">
                     <p class="!text-[#232730]">Expiry Date:</p>
-                    <p>{{ expandData()[1].expiry_date }}</p>
+                    <p>
+                      {{
+                        expandData()[1].expiry_date
+                          ? expandData()[1].expiry_date
+                          : '-'
+                      }}
+                    </p>
                   </div>
                 </div>
                 <div class="flex relative left-[100px] flex-col">
                   <div class="flex gap-2">
                     <p class="!text-[#232730]">Occupation:</p>
-                    <p>{{ expandData()[1].Occupation }}</p>
+                    <p>
+                      {{
+                        expandData()[1].Occupation
+                          ? expandData()[1].Occupation
+                          : '-'
+                      }}
+                    </p>
                   </div>
                   <div class="flex gap-2">
                     <p class="!text-[#232730]">Sponsor/Employer:</p>
-                    <p>{{ expandData()[1].Sponsor_Employer }}</p>
+                    <p>
+                      {{
+                        expandData()[1].Sponsor_Employer
+                          ? expandData()[1].Sponsor_Employer
+                          : '-'
+                      }}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -446,26 +512,56 @@
                 <div class="flex relative left-[40px] flex-col">
                   <div class="flex gap-2">
                     <p class="!text-[#232730]">Document Type:</p>
-                    <p>{{ expandData()[2].document_type }}</p>
+                    <p>
+                      {{
+                        expandData()[2].document_type
+                          ? expandData()[2].document_type
+                          : '-'
+                      }}
+                    </p>
                   </div>
 
                   <div class="flex gap-2">
                     <p class="!text-[#232730]">Issuing Place:</p>
-                    <p>{{ expandData()[2].issuing_country }}</p>
+                    <p>
+                      {{
+                        expandData()[2].issuing_country
+                          ? expandData()[2].issuing_country
+                          : '-'
+                      }}
+                    </p>
                   </div>
                   <div class="flex gap-2">
                     <p class="!text-[#232730]">Expiry Date:</p>
-                    <p>{{ expandData()[2].expiry_date }}</p>
+                    <p>
+                      {{
+                        expandData()[2].expiry_date
+                          ? expandData()[2].expiry_date
+                          : '-'
+                      }}
+                    </p>
                   </div>
                 </div>
                 <div class="flex relative left-[100px] flex-col">
                   <div class="flex gap-2">
                     <p class="!text-[#232730]">ID Number:</p>
-                    <p>{{ expandData()[2].Id_number }}</p>
+                    <p>
+                      {{
+                        expandData()[2].Id_number
+                          ? expandData()[2].Id_number
+                          : '-'
+                      }}
+                    </p>
                   </div>
                   <div class="flex gap-2">
                     <p class="!text-[#232730]">Occupation:</p>
-                    <p>{{ expandData()[1].Occupation }}</p>
+                    <p>
+                      {{
+                        expandData()[1].Occupation
+                          ? expandData()[1].Occupation
+                          : '-'
+                      }}
+                    </p>
                   </div>
                 </div>
               </div>

@@ -357,14 +357,9 @@
             <dl class="statement-key-value-grid">
               <div class="flex gap-4">
                 @if (filePreview){
-                <img [src]="filePreview" class="w-[122px] h-[70px]" />
+                <img [src]="filePreview" alt="" class="w-[122px] h-[70px]" />
                 } @else {
-                <img
-                  ngSrc="./assets/icons/pdf.svg"
-                  alt=""
-                  width="122"
-                  height="70"
-                />
+                <img [src]="images()[0]" alt="" class="w-[122px] h-[70px]" />
                 }
                 <div class="flex relative left-[40px] flex-col">
                   <div class="flex gap-2">
@@ -401,14 +396,13 @@
             <dl class="statement-key-value-grid">
               <div class="flex gap-4">
                 @if (passportFilePreview){
-                <img [src]="passportFilePreview" class="w-[122px] h-[70px]" />
-                } @else {
                 <img
-                  ngSrc="./assets/icons/pdf.svg"
+                  [src]="passportFilePreview"
                   alt=""
-                  width="122"
-                  height="70"
+                  class="w-[122px] h-[70px]"
                 />
+                } @else {
+                <img [src]="images()[1]" alt="" class="w-[122px] h-[70px]" />
                 }
                 <div class="flex relative left-[40px] flex-col">
                   <div class="flex gap-2">
@@ -441,14 +435,13 @@
             <dl class="statement-key-value-grid">
               <div class="flex gap-4">
                 @if (filePreviewEmiratesId){
-                <img [src]="filePreviewEmiratesId" class="w-[122px] h-[70px]" />
-                } @else {
                 <img
-                  ngSrc="./assets/icons/pdf.svg"
+                  [src]="filePreviewEmiratesId"
                   alt=""
-                  width="122"
-                  height="70"
+                  class="w-[122px] h-[70px]"
                 />
+                } @else {
+                <img [src]="images()[2]" alt="" class="w-[122px] h-[70px]" />
                 }
                 <div class="flex relative left-[40px] flex-col">
                   <div class="flex gap-2">

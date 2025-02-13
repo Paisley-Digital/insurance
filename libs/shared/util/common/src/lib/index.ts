@@ -17,3 +17,11 @@ export function normalizeKeys(obj: any): any {
     {}
   );
 }
+
+export function replaceKeys(obj: any, oldChar: string, newChar: string) {
+  return Object.keys(obj).reduce((acc, key) => {
+    const newKey = key.replace(new RegExp(oldChar, 'g'), newChar);
+    acc[newKey] = obj[key];
+    return acc;
+  }, {} as any);
+}

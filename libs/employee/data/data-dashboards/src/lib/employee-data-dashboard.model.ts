@@ -35,13 +35,18 @@ export interface AiResponse {
 }
 
 export interface JsonResult {
-  Surname: string;
-  First_Name: string;
-  Date_of_Birth: string;
-  Age_at_31_Dec_24: string;
-  Sex: string;
+  document_type: string;
+  Id_number: string;
+  Occupation: string;
+  Sponsor_Employer: string;
+  place_of_birth: string;
+  holders_signature: string;
+  expiry_date: string;
+  issuing_country: string;
+  name: string;
+  last_name: string;
   Nationality: string;
-  Emirate_of_Visa_Issue: string;
+  Gender: string;
 }
 
 export interface UploadImage {

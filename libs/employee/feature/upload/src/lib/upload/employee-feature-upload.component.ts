@@ -6,10 +6,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { AlertService } from '@shared-ui-alert';
 import {
+  AiPayload,
   EmployeeDataDashboardService,
   UploadImage,
 } from '@insurance-employee-data-dashboards';
-import { forkJoin } from 'rxjs';
+import { finalize, forkJoin, switchMap } from 'rxjs';
 import { MatTableModule } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { OverlaySpinnerDirective } from '@insurance-shared-ui-overlay-spinner';
@@ -48,6 +49,7 @@ export class EmployeeFeatureUploadComponent {
   selectedTransactionId: number | null = null;
   normalizedContent: any;
   expandData: any;
+  baseUrl = 'https://insurancebase.paisley.monster';
   columns: string[] = [
     'name',
     'date',
@@ -137,60 +139,48 @@ export class EmployeeFeatureUploadComponent {
 
   uploadFiles() {
     if (!this.selectedFiles.length) {
-      console.warn('No file selected!');
       return;
     }
     this._loading.set(true);
 
-    const uploadObservables = this.selectedFiles.map((fileData) =>
-      this.service.uploadFile(fileData.source)
-    );
-    forkJoin(uploadObservables).subscribe({
-      next: (responses) => {
-        const uploadedFileUrls = responses.map((res: any) => {
-          return `https://insurancebase.paisley.monster${res[0].downloadUrl}`;
-        });
-        this.callAiService(uploadedFileUrls);
-      },
-      error: (err) => {
-        console.error('Error uploading files:', err);
-        this._loading.set(false);
-      },
-    });
-  }
+    let imageArray = [];
 
-  callAiService(uploadedFileUrls: string[]) {
-    if (!uploadedFileUrls.length) {
-      console.error('No files uploaded successfully to call AI service.');
-      return;
+    for (const item of this.selectedFiles) {
+      imageArray.push(item.source);
     }
 
-    const payload: any = {
-      contents: [
-        {
-          extraction_type: 'BASIC_INFO',
-          image_urls: uploadedFileUrls,
+    this.service
+      .uploadFile(imageArray)
+      .pipe(
+        switchMap((response) => {
+          const uploadedFileUrls = response.map((res) => {
+            return `${this.baseUrl}${res.downloadUrl}`;
+          });
+          const payload: AiPayload = {
+            contents: [
+              { extraction_type: 'BASIC_INFO', image_urls: uploadedFileUrls },
+            ],
+          };
+          return this.service.postAiService(payload);
+        }),
+        finalize(() => this._loading.set(false))
+      )
+      .subscribe({
+        next: (result) => {
+          this._view.set('table');
+          const serviceResult = result.results[0].json_result[0];
+          const expandResult = result.results[0].json_result;
+          this.normalizedContent = Array.isArray(serviceResult)
+            ? serviceResult.map((item) => normalizeKeys(item))
+            : [normalizeKeys(serviceResult)];
+          this.expandData = Array.isArray(expandResult)
+            ? expandResult.map((item) => normalizeKeys(item))
+            : [normalizeKeys(expandResult)];
         },
-      ],
-    };
-
-    this.service.postAiService(payload).subscribe({
-      next: (result) => {
-        this._view.set('table');
-        const serviceResult = result.results[0].json_result[0];
-        const expandResult = result.results[0].json_result;
-        this.normalizedContent = Array.isArray(serviceResult)
-          ? serviceResult.map((item) => normalizeKeys(item))
-          : [normalizeKeys(serviceResult)];
-        this.expandData = Array.isArray(expandResult)
-          ? expandResult.map((item) => normalizeKeys(item))
-          : [normalizeKeys(expandResult)];
-        this._loading.set(false);
-      },
-      error: (err) => {
-        console.error('Error calling AI service:', err);
-      },
-    });
+        error: () => {
+          this.alert.open('An error occurred. Please try again later.');
+        },
+      });
   }
 
   setSelectedTransaction(id: number) {

@@ -15,16 +15,20 @@ export class EmployeeDataDashboardService {
   private apiUrl =
     'https://insurancebase.paisley.monster/files/api/v1/files/1/upload';
 
-  uploadFile(file: File) {
+  uploadFile(files: File[]) {
     const headers = new HttpHeaders({
       Accept: 'application/json',
     });
 
     const formData = new FormData();
-    formData.append('files', file);
+
+    files.forEach((file) => {
+      formData.append('files', file);
+    });
 
     return this.http.post<FileResponse[]>(this.apiUrl, formData, { headers });
   }
+
   createDocument(
     companyId: string,
     documentData: {

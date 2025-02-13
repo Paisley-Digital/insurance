@@ -21,7 +21,7 @@
 }
 
 .statement-key-value-grid {
-  @apply grid sm:grid-cols-2 sm:gap-y-4;
+  @apply sm:gap-y-4;
 
   > div {
     @apply flex items-center;

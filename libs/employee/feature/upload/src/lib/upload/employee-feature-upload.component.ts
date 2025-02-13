@@ -78,6 +78,7 @@ export class EmployeeFeatureUploadComponent {
   _isExpanded = signal(true);
   normalizedContent = signal<JsonResult[]>([]);
   expandData = signal<JsonResult[]>([]);
+  images = signal<string[]>([]);
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -163,6 +164,7 @@ export class EmployeeFeatureUploadComponent {
           const uploadedFileUrls = response.map((res) => {
             return `${this.apiRoot}${res.downloadUrl}`;
           });
+          this.images.set(uploadedFileUrls);
           const payload: AiPayload = {
             contents: [
               { extraction_type: 'BASIC_INFO', image_urls: uploadedFileUrls },

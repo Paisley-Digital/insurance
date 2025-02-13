@@ -9,16 +9,21 @@ import {
   AiPayload,
   EmployeeDataDashboardService,
   JsonResult,
-  UploadImage,
 } from '@insurance-employee-data-dashboards';
-import { finalize, forkJoin, switchMap } from 'rxjs';
+import { finalize, switchMap } from 'rxjs';
 import { MatTableModule } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { OverlaySpinnerDirective } from '@insurance-shared-ui-overlay-spinner';
 import { normalizeKeys, replaceKeys } from '@shared-util-common';
 import { MatDivider } from '@angular/material/divider';
 import { API_ROOT } from '@shared-util-web-sdk';
-import { analyticsPackageSafelist } from '@angular/cli/src/analytics/analytics';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 type View = 'upload' | 'table';
 
@@ -40,6 +45,16 @@ type View = 'upload' | 'table';
   ],
   templateUrl: './employee-feature-upload.component.html',
   styleUrls: ['./employee-feature-upload.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      ),
+    ]),
+  ],
 })
 export class EmployeeFeatureUploadComponent {
   private alert = inject(AlertService);
@@ -60,6 +75,7 @@ export class EmployeeFeatureUploadComponent {
   fileEmiratesId = signal<File | null>(null);
   _view = signal<View>('upload');
   _loading = signal(false);
+  _isExpanded = signal(true);
   normalizedContent = signal<JsonResult[]>([]);
   expandData = signal<JsonResult[]>([]);
 
@@ -178,8 +194,8 @@ export class EmployeeFeatureUploadComponent {
       });
   }
 
-  setSelectedTransaction(id: number) {
-    this.selectedTransactionId = this.selectedTransactionId !== id ? id : null;
+  setExpandValue() {
+    this._isExpanded.update((current) => !current);
   }
 
   private formatFileSize(bytes: number): string {

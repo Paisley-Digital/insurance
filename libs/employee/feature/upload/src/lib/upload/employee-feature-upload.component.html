@@ -336,11 +336,11 @@
       <td mat-cell *matCellDef="let transaction">
         <button
           mat-icon-button
-          (click)="$event.stopPropagation(); setSelectedTransaction(1)"
+          (click)="$event.stopPropagation(); setExpandValue()"
         >
           <mat-icon
             class="transition-transform duration-150"
-            [class.rotate-180]="selectedTransactionId === 1"
+            [class.rotate-180]="_isExpanded()"
             [svgIcon]="'chevron-down'"
           />
         </button>
@@ -352,13 +352,7 @@
         *matCellDef="let transaction"
         [attr.colspan]="columns.length"
       >
-        <div
-          [@detailExpand]="
-            selectedTransactionId === transaction?.statementId
-              ? 'expanded'
-              : 'collapsed'
-          "
-        >
+        <div [@detailExpand]="_isExpanded() ? 'expanded' : 'collapsed'">
           <div class="pb-2 pt-4">
             <dl class="statement-key-value-grid">
               <div class="flex gap-4">
@@ -493,8 +487,8 @@
       mat-row
       *matRowDef="let transaction; columns: columns"
       class="transaction-row"
-      [class.transaction-expanded-row]="selectedTransactionId === 1"
-      (click)="setSelectedTransaction(1)"
+      [class.transaction-expanded-row]="_isExpanded()"
+      (click)="setExpandValue()"
     ></tr>
     <tr
       mat-row

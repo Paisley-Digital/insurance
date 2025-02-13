@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   AiPayload,
   AiResponse,
@@ -11,10 +11,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class EmployeeDataDashboardService {
+  private http = inject(HttpClient);
   private apiUrl =
     'https://insurancebase.paisley.monster/files/api/v1/files/1/upload';
-
-  constructor(private http: HttpClient) {}
 
   uploadFile(file: File) {
     const headers = new HttpHeaders({

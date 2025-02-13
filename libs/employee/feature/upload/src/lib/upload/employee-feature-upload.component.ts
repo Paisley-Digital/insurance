@@ -47,6 +47,7 @@ export class EmployeeFeatureUploadComponent {
   selectedFiles: UploadImage[] = [];
   selectedTransactionId: number | null = null;
   normalizedContent: any;
+  expandData: any;
   columns: string[] = [
     'name',
     'date',
@@ -176,10 +177,14 @@ export class EmployeeFeatureUploadComponent {
     this.service.postAiService(payload).subscribe({
       next: (result) => {
         this._view.set('table');
-        const serviceResult = result.results[0].json_result;
+        const serviceResult = result.results[0].json_result[0];
+        const expandResult = result.results[0].json_result;
         this.normalizedContent = Array.isArray(serviceResult)
           ? serviceResult.map((item) => normalizeKeys(item))
           : [normalizeKeys(serviceResult)];
+        this.expandData = Array.isArray(expandResult)
+          ? expandResult.map((item) => normalizeKeys(item))
+          : [normalizeKeys(expandResult)];
         this._loading.set(false);
       },
       error: (err) => {

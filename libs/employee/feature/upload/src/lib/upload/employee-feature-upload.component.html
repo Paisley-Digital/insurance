@@ -379,17 +379,17 @@
               <div class="flex gap-4">
                 <img [src]="filePreview" class="w-[122px] h-[70px]" />
                 <div class="flex relative left-[40px] flex-col">
-                  <div class="flex">
+                  <div class="flex gap-2">
                     <p class="!text-[#232730]">Document Type:</p>
                     <p>Passport</p>
                   </div>
-                  <div class="flex">
+                  <div class="flex gap-2">
                     <p class="!text-[#232730]">Issuing Country:</p>
-                    <p>Luxembourg</p>
+                    <p>{{ expandData[0].Nationality }}</p>
                   </div>
                   <div class="flex">
                     <p class="!text-[#232730]">Expiry Date:</p>
-                    <p>18/05/2026</p>
+                    <p>{{ expandData[0].Date_of_Birth }}</p>
                   </div>
                 </div>
                 <div class="flex relative left-[100px] flex-col">
@@ -408,7 +408,73 @@
                 </div>
               </div>
             </dl>
+            @if (passportFilePreview){
             <mat-divider />
+            <dl class="statement-key-value-grid">
+              <div class="flex gap-4">
+                <img [src]="passportFilePreview" class="w-[122px] h-[70px]" />
+                <div class="flex relative left-[40px] flex-col">
+                  <div class="flex">
+                    <p class="!text-[#232730]">Document Type:</p>
+                    <p>Passport</p>
+                  </div>
+                  <div class="flex">
+                    <p class="!text-[#232730]">Passport Number:</p>
+                    <p>KCN5C3T9</p>
+                  </div>
+                  <div class="flex">
+                    <p class="!text-[#232730]">Expiry Date:</p>
+                    <p>18/05/2026</p>
+                  </div>
+                </div>
+                <div class="flex relative left-[100px] flex-col">
+                  <div class="flex gap-2">
+                    <p class="!text-[#232730]">ID Number:</p>
+                    <p>784-1982-2605365-4</p>
+                  </div>
+                  <div class="flex gap-2">
+                    <p class="!text-[#232730]">Occupation:</p>
+                    <p>Vice President</p>
+                  </div>
+                  <div class="flex gap-2">
+                    <p class="!text-[#232730]">Sponsor/Employer:</p>
+                    <p>Investors,Entrepreneurs, Specialized</p>
+                  </div>
+                </div>
+              </div>
+            </dl>
+            } @if (filePreviewEmiratesId){
+            <mat-divider />
+            <dl class="statement-key-value-grid">
+              <div class="flex gap-4">
+                <img [src]="filePreviewEmiratesId" class="w-[122px] h-[70px]" />
+                <div class="flex relative left-[40px] flex-col">
+                  <div class="flex">
+                    <p class="!text-[#232730]">Document Type:</p>
+                    <p>Emirates ID</p>
+                  </div>
+                  <div class="flex">
+                    <p class="!text-[#232730]">Issuing Place:</p>
+                    <p>Not specified</p>
+                  </div>
+                  <div class="flex">
+                    <p class="!text-[#232730]">Expiry Date:</p>
+                    <p>18/05/2026</p>
+                  </div>
+                </div>
+                <div class="flex relative left-[100px] flex-col">
+                  <div class="flex gap-2">
+                    <p class="!text-[#232730]">ID Number:</p>
+                    <p>784-1982-2605365-4</p>
+                  </div>
+                  <div class="flex gap-2">
+                    <p class="!text-[#232730]">Occupation</p>
+                    <p>Vice President</p>
+                  </div>
+                </div>
+              </div>
+            </dl>
+            }
           </div>
         </div>
       </td>

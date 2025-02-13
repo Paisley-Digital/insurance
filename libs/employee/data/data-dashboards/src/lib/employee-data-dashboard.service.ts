@@ -6,14 +6,14 @@ import {
 } from '@insurance-employee-data-dashboards';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_ROOT } from '@shared-util-web-sdk';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeeDataDashboardService {
   private http = inject(HttpClient);
-  private apiUrl =
-    'https://insurancebase.paisley.monster/files/api/v1/files/1/upload';
+  private apiRoot = inject(API_ROOT);
 
   uploadFile(files: File[]) {
     const headers = new HttpHeaders({
@@ -26,7 +26,11 @@ export class EmployeeDataDashboardService {
       formData.append('files', file);
     });
 
-    return this.http.post<FileResponse[]>(this.apiUrl, formData, { headers });
+    return this.http.post<FileResponse[]>(
+      `${this.apiRoot}/files/api/v1/files/1/upload`,
+      formData,
+      { headers }
+    );
   }
 
   createDocument(
@@ -42,7 +46,7 @@ export class EmployeeDataDashboardService {
       contactNumber: string;
     }
   ): Observable<any> {
-    const apiUrl = `https://insurancebase.paisley.monster/documents/api/v1/companies/${companyId}/documents`;
+    const apiUrl = `${this.apiRoot}/documents/api/v1/companies/${companyId}/documents`;
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -53,7 +57,7 @@ export class EmployeeDataDashboardService {
 
   postAiService(payload: AiPayload) {
     return this.http.post<AiResponse>(
-      'https://insurancebase.paisley.monster/api/ai_service/ocr',
+      `${this.apiRoot}/api/ai_service/ocr`,
       payload
     );
   }

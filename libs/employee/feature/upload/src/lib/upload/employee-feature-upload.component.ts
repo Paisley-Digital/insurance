@@ -17,6 +17,7 @@ import { MatSort } from '@angular/material/sort';
 import { OverlaySpinnerDirective } from '@insurance-shared-ui-overlay-spinner';
 import { normalizeKeys, replaceKeys } from '@shared-util-common';
 import { MatDivider } from '@angular/material/divider';
+import { API_ROOT } from '@shared-util-web-sdk';
 
 type View = 'upload' | 'table';
 
@@ -42,12 +43,12 @@ type View = 'upload' | 'table';
 export class EmployeeFeatureUploadComponent {
   private alert = inject(AlertService);
   private service = inject(EmployeeDataDashboardService);
+  private apiRoot = inject(API_ROOT);
 
   filePreview: string | ArrayBuffer | null = null;
   passportFilePreview: string | ArrayBuffer | null = null;
   filePreviewEmiratesId: string | ArrayBuffer | null = null;
   selectedTransactionId: number | null = null;
-  baseUrl = 'https://insurancebase.paisley.monster';
   columns: string[] = [
     'name',
     'date',
@@ -151,7 +152,7 @@ export class EmployeeFeatureUploadComponent {
       .pipe(
         switchMap((response) => {
           const uploadedFileUrls = response.map((res) => {
-            return `${this.baseUrl}${res.downloadUrl}`;
+            return `${this.apiRoot}${res.downloadUrl}`;
           });
           const payload: AiPayload = {
             contents: [

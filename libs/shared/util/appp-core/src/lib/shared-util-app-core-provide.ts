@@ -9,7 +9,6 @@ import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
 
 export function provideSharedUtilAppCore({
   imagesPath,
-  apiRoot,
   ...config
 }: Environment): EnvironmentProviders {
   return makeEnvironmentProviders([
@@ -23,7 +22,7 @@ export function provideSharedUtilAppCore({
     },
     {
       provide: API_ROOT,
-      useValue: apiRoot,
+      useValue: 'https://insurancebase.paisley.monster',
     },
     {
       provide: DEFAULT_API_ERROR_MESSAGE,

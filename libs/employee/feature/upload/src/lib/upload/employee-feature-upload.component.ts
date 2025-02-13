@@ -8,13 +8,14 @@ import { AlertService } from '@shared-ui-alert';
 import {
   AiPayload,
   EmployeeDataDashboardService,
+  JsonResult,
   UploadImage,
 } from '@insurance-employee-data-dashboards';
 import { finalize, forkJoin, switchMap } from 'rxjs';
 import { MatTableModule } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { OverlaySpinnerDirective } from '@insurance-shared-ui-overlay-spinner';
-import { normalizeKeys } from '@shared-util-common';
+import { normalizeKeys, replaceKeys } from '@shared-util-common';
 import { MatDivider } from '@angular/material/divider';
 
 type View = 'upload' | 'table';
@@ -45,10 +46,7 @@ export class EmployeeFeatureUploadComponent {
   filePreview: string | ArrayBuffer | null = null;
   passportFilePreview: string | ArrayBuffer | null = null;
   filePreviewEmiratesId: string | ArrayBuffer | null = null;
-  selectedFiles: UploadImage[] = [];
   selectedTransactionId: number | null = null;
-  normalizedContent: any;
-  expandData: any;
   baseUrl = 'https://insurancebase.paisley.monster';
   columns: string[] = [
     'name',
@@ -68,6 +66,8 @@ export class EmployeeFeatureUploadComponent {
   fileEmiratesId = signal<File | null>(null);
   _view = signal<View>('upload');
   _loading = signal(false);
+  normalizedContent = signal<JsonResult[]>([]);
+  expandData = signal<JsonResult[]>([]);
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -75,7 +75,7 @@ export class EmployeeFeatureUploadComponent {
     const file = input.files[0];
     if (file && file.size <= 2 * 1024 * 1024) {
       this.file.set(file);
-      this.selectedFiles.push({ source: file });
+      this.fileSize.set(this.formatFileSize(file.size));
       this.updateFilePreview(file, 'residency');
     } else {
       this.alert.open('File size exceeds 2MB!');
@@ -88,7 +88,7 @@ export class EmployeeFeatureUploadComponent {
     const file = input.files[0];
     if (file && file.size <= 2 * 1024 * 1024) {
       this.filePassport.set(file);
-      this.selectedFiles.push({ source: file });
+      this.fileSizePassport.set(this.formatFileSize(file.size));
       this.updateFilePreview(file, 'passport');
     } else {
       this.alert.open('File size exceeds 2MB!');
@@ -101,7 +101,7 @@ export class EmployeeFeatureUploadComponent {
     const file = input.files[0];
     if (file && file.size <= 2 * 1024 * 1024) {
       this.fileEmiratesId.set(file);
-      this.selectedFiles.push({ source: file });
+      this.fileSizeId.set(this.formatFileSize(file.size));
       this.updateFilePreview(file, 'emiratesId');
     } else {
       this.alert.open('File size exceeds 2MB!');
@@ -138,16 +138,13 @@ export class EmployeeFeatureUploadComponent {
   }
 
   uploadFiles() {
-    if (!this.selectedFiles.length) {
-      return;
-    }
     this._loading.set(true);
 
-    let imageArray = [];
-
-    for (const item of this.selectedFiles) {
-      imageArray.push(item.source);
-    }
+    let imageArray = [
+      this.file()!,
+      this.filePassport()!,
+      this.fileEmiratesId()!,
+    ];
 
     this.service
       .uploadFile(imageArray)
@@ -170,12 +167,16 @@ export class EmployeeFeatureUploadComponent {
           this._view.set('table');
           const serviceResult = result.results[0].json_result[0];
           const expandResult = result.results[0].json_result;
-          this.normalizedContent = Array.isArray(serviceResult)
-            ? serviceResult.map((item) => normalizeKeys(item))
-            : [normalizeKeys(serviceResult)];
-          this.expandData = Array.isArray(expandResult)
-            ? expandResult.map((item) => normalizeKeys(item))
-            : [normalizeKeys(expandResult)];
+          this.normalizedContent.set(
+            Array.isArray(serviceResult)
+              ? serviceResult.map((item) => normalizeKeys(item))
+              : [normalizeKeys(serviceResult)]
+          );
+          this.expandData.set(
+            Array.isArray(expandResult)
+              ? expandResult.map((item) => replaceKeys(item, '/', '_'))
+              : [replaceKeys(expandResult, '/', '_')]
+          );
         },
         error: () => {
           this.alert.open('An error occurred. Please try again later.');
@@ -185,5 +186,11 @@ export class EmployeeFeatureUploadComponent {
 
   setSelectedTransaction(id: number) {
     this.selectedTransactionId = this.selectedTransactionId !== id ? id : null;
+  }
+
+  private formatFileSize(bytes: number): string {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
   }
 }

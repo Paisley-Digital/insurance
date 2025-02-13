@@ -18,6 +18,7 @@ import { OverlaySpinnerDirective } from '@insurance-shared-ui-overlay-spinner';
 import { normalizeKeys, replaceKeys } from '@shared-util-common';
 import { MatDivider } from '@angular/material/divider';
 import { API_ROOT } from '@shared-util-web-sdk';
+import { analyticsPackageSafelist } from '@angular/cli/src/analytics/analytics';
 
 type View = 'upload' | 'table';
 
@@ -49,15 +50,7 @@ export class EmployeeFeatureUploadComponent {
   passportFilePreview: string | ArrayBuffer | null = null;
   filePreviewEmiratesId: string | ArrayBuffer | null = null;
   selectedTransactionId: number | null = null;
-  columns: string[] = [
-    'name',
-    'date',
-    'nationality',
-    'gender',
-    'enrolled',
-    'renewal',
-    'expand',
-  ];
+  columns: string[] = ['name', 'date', 'nationality', 'gender', 'expand'];
 
   fileSize = signal('');
   fileSizePassport = signal('');

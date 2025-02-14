@@ -63,6 +63,7 @@ export class EmployeeFeatureUploadComponent {
 
   filePreview: string | ArrayBuffer | null = null;
   passportFilePreview: string | ArrayBuffer | null = null;
+  visaFilePreview: string | ArrayBuffer | null = null;
   filePreviewEmiratesId: string | ArrayBuffer | null = null;
   selectedTransactionId: number | null = null;
   columns: string[] = ['name', 'date', 'nationality', 'gender', 'expand'];
@@ -177,17 +178,27 @@ export class EmployeeFeatureUploadComponent {
       .subscribe({
         next: (result) => {
           this._view.set('table');
-          const serviceResult = result.results[0].json_result[0];
-          const expandResult = result.results[0].json_result;
+          const serviceResult = result.results[0].json_result;
+
+          const orderPriority: { [key: string]: number } = {
+            'Visa': 1,
+            'Passport': 2,
+            'Emirates ID': 3,
+          };
+
+          const sortedResults = Array.isArray(serviceResult)
+            ? serviceResult.sort((a, b) => {
+              const aPriority = orderPriority[a.document_type] || 0;
+              const bPriority = orderPriority[b.document_type] || 0;
+              return aPriority - bPriority;
+            })
+            : [serviceResult];
+
           this.normalizedContent.set(
-            Array.isArray(serviceResult)
-              ? serviceResult.map((item) => normalizeKeys(item))
-              : [normalizeKeys(serviceResult)]
+            sortedResults.map((item) => normalizeKeys(item))
           );
           this.expandData.set(
-            Array.isArray(expandResult)
-              ? expandResult.map((item) => replaceKeys(item, '/', '_'))
-              : [replaceKeys(expandResult, '/', '_')]
+            sortedResults.map((item) => replaceKeys(item, '/', '_'))
           );
         },
         error: () => {

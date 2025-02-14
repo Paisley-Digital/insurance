@@ -21,17 +21,9 @@
 }
 
 .statement-key-value-grid {
-  @apply sm:gap-y-4;
+  @apply grid grid-cols-2 gap-x-8 gap-y-2;
+}
 
-  > div {
-    @apply flex items-center;
-
-    dt {
-      @apply text-[#232730] w-[35%];
-    }
-
-    dd {
-      @apply text-[#232730] font-medium;
-    }
-  }
+.statement-key-value-grid > div {
+  @apply flex gap-2 items-start;
 }

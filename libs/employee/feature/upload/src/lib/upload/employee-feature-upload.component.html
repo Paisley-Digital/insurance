@@ -347,122 +347,102 @@
       </td>
     </ng-container>
     <ng-container matColumnDef="expandedDetail">
-      <td
-        mat-cell
-        *matCellDef="let transaction"
-        [attr.colspan]="columns.length"
-      >
+      <td mat-cell *matCellDef="let transaction" [attr.colspan]="columns.length">
         <div [@detailExpand]="_isExpanded() ? 'expanded' : 'collapsed'">
           <div class="pb-2 pt-4 space-y-6">
-            <div class="flex items-center gap-4">
-              <img
-                [src]="images()[0]"
-                alt="Residency Visa"
-                class="w-[122px] h-[70px]"
-              />
-              <div class="grid grid-cols-2 gap-x-8 gap-y-2">
-                <div class="flex gap-2">
-                  <p class="text-[#232730] font-medium">Document Type:</p>
-                  <p>{{ expandData()[0]?.document_type ?? '-' }}</p>
-                </div>
-                <div class="flex gap-2">
-                  <p class="text-[#232730] font-medium">Issuing Country:</p>
-                  <p>{{ expandData()[0]?.issuing_country ?? '-' }}</p>
-                </div>
-                <div class="flex gap-2">
-                  <p class="text-[#232730] font-medium">Expiry Date:</p>
-                  <p>{{ expandData()[0]?.expiry_date ?? '-' }}</p>
-                </div>
-                <div class="flex gap-2">
-                  <p class="text-[#232730] font-medium">ID Number:</p>
-                  <p>{{ expandData()[0]?.Id_number ?? '-' }}</p>
-                </div>
-                <div class="flex gap-2">
-                  <p class="text-[#232730] font-medium">Place of Birth:</p>
-                  <p>{{ expandData()[0]?.place_of_birth ?? '-' }}</p>
-                </div>
-                <div class="flex gap-2">
-                  <p class="text-[#232730] font-medium">Holders Signature:</p>
-                  <p>{{ expandData()[0]?.holders_signature ?? '-' }}</p>
-                </div>
-                <div class="flex gap-2">
-                  <p class="text-[#232730] font-medium">Sponsor/Employer:</p>
-                  <p>{{ expandData()[0]?.Sponsor_Employer ?? '-' }}</p>
-                </div>
-                <div class="flex gap-2">
-                  <p class="text-[#232730] font-medium">Occupation:</p>
-                  <p>{{ expandData()[0]?.Occupation ?? '-' }}</p>
-                </div>
+            <!-- اطلاعات سند اول -->
+            <div class="grid grid-cols-2 gap-x-8 gap-y-2">
+              <div *ngIf="expandData()[0]?.document_type" class="flex items-center">
+                <p class="text-[#232730] font-medium mr-2">Document Type:</p>
+                <p>{{ expandData()[0]?.document_type }}</p>
+              </div>
+              <div *ngIf="expandData()[0]?.issuing_country" class="flex items-center">
+                <p class="text-[#232730] font-medium mr-2">Issuing Country:</p>
+                <p>{{ expandData()[0]?.issuing_country }}</p>
+              </div>
+              <div *ngIf="expandData()[0]?.expiry_date" class="flex items-center">
+                <p class="text-[#232730] font-medium mr-2">Expiry Date:</p>
+                <p>{{ expandData()[0]?.expiry_date }}</p>
+              </div>
+              <div *ngIf="expandData()[0]?.Id_number" class="flex items-center">
+                <p class="text-[#232730] font-medium mr-2">ID Number:</p>
+                <p>{{ expandData()[0]?.Id_number }}</p>
+              </div>
+              <div *ngIf="expandData()[0]?.place_of_birth" class="flex items-center">
+                <p class="text-[#232730] font-medium mr-2">Place of Birth:</p>
+                <p>{{ expandData()[0]?.place_of_birth }}</p>
+              </div>
+              <div *ngIf="expandData()[0]?.holders_signature" class="flex items-center">
+                <p class="text-[#232730] font-medium mr-2">Holder's Signature:</p>
+                <p>{{ expandData()[0]?.holders_signature }}</p>
+              </div>
+              <div *ngIf="expandData()[0]?.Sponsor_Employer" class="flex items-center">
+                <p class="text-[#232730] font-medium mr-2">Sponsor/Employer:</p>
+                <p>{{ expandData()[0]?.Sponsor_Employer }}</p>
+              </div>
+              <div *ngIf="expandData()[0]?.Occupation" class="flex items-center">
+                <p class="text-[#232730] font-medium mr-2">Occupation:</p>
+                <p>{{ expandData()[0]?.Occupation }}</p>
               </div>
             </div>
 
-            @if (passportFilePreview) {
-            <mat-divider></mat-divider>
-            <div class="flex items-center gap-4">
-              <img
-                [src]="passportFilePreview"
-                alt="Passport"
-                class="w-[122px] h-[70px]"
-              />
+            <!-- سند دوم: Passport (در صورتی که فایل وجود داشته باشد) -->
+            <ng-container *ngIf="passportFilePreview">
+              <mat-divider></mat-divider>
               <div class="grid grid-cols-2 gap-x-8 gap-y-2">
-                <div class="flex gap-2">
-                  <p class="text-[#232730] font-medium">Document Type:</p>
-                  <p>{{ expandData()[1]?.document_type ?? '-' }}</p>
+                <div *ngIf="expandData()[1]?.document_type" class="flex items-center">
+                  <p class="text-[#232730] font-medium mr-2">Document Type:</p>
+                  <p>{{ expandData()[1]?.document_type }}</p>
                 </div>
-                <div class="flex gap-2">
-                  <p class="text-[#232730] font-medium">Passport Number:</p>
-                  <p>{{ expandData()[1]?.Id_number ?? '-' }}</p>
+                <div *ngIf="expandData()[1]?.Id_number" class="flex items-center">
+                  <p class="text-[#232730] font-medium mr-2">Passport Number:</p>
+                  <p>{{ expandData()[1]?.Id_number }}</p>
                 </div>
-                <div class="flex gap-2">
-                  <p class="text-[#232730] font-medium">Expiry Date:</p>
-                  <p>{{ expandData()[1]?.expiry_date ?? '-' }}</p>
+                <div *ngIf="expandData()[1]?.expiry_date" class="flex items-center">
+                  <p class="text-[#232730] font-medium mr-2">Expiry Date:</p>
+                  <p>{{ expandData()[1]?.expiry_date }}</p>
                 </div>
-                <div class="flex gap-2">
-                  <p class="text-[#232730] font-medium">holders_signature:</p>
-                  <p>{{ expandData()[1]?.holders_signature ?? '-' }}</p>
+                <div *ngIf="expandData()[1]?.holders_signature" class="flex items-center">
+                  <p class="text-[#232730] font-medium mr-2">Holder's Signature:</p>
+                  <p>{{ expandData()[1]?.holders_signature }}</p>
                 </div>
-                <div class="flex gap-2">
-                  <p class="text-[#232730] font-medium">place_of_birth:</p>
-                  <p>{{ expandData()[1]?.place_of_birth ?? '-' }}</p>
+                <div *ngIf="expandData()[1]?.place_of_birth" class="flex items-center">
+                  <p class="text-[#232730] font-medium mr-2">Place of Birth:</p>
+                  <p>{{ expandData()[1]?.place_of_birth }}</p>
                 </div>
-                <div class="flex gap-2">
-                  <p class="text-[#232730] font-medium">issuing_country:</p>
-                  <p>{{ expandData()[1]?.issuing_country ?? '-' }}</p>
+                <div *ngIf="expandData()[1]?.issuing_country" class="flex items-center">
+                  <p class="text-[#232730] font-medium mr-2">Issuing Country:</p>
+                  <p>{{ expandData()[1]?.issuing_country }}</p>
                 </div>
               </div>
-            </div>
-            } @if (filePreviewEmiratesId) {
-            <mat-divider></mat-divider>
-            <div class="flex items-center gap-4">
-              <img
-                [src]="filePreviewEmiratesId"
-                alt="Emirates ID"
-                class="w-[122px] h-[70px]"
-              />
+            </ng-container>
+
+            <!-- سند سوم: Emirates ID (در صورتی که فایل وجود داشته باشد) -->
+            <ng-container *ngIf="filePreviewEmiratesId">
+              <mat-divider></mat-divider>
               <div class="grid grid-cols-2 gap-x-8 gap-y-2">
-                <div class="flex gap-2">
-                  <p class="text-[#232730] font-medium">Document Type:</p>
-                  <p>{{ expandData()[2]?.document_type ?? '-' }}</p>
+                <div *ngIf="expandData()[2]?.document_type" class="flex items-center">
+                  <p class="text-[#232730] font-medium mr-2">Document Type:</p>
+                  <p>{{ expandData()[2]?.document_type }}</p>
                 </div>
-                <div class="flex gap-2">
-                  <p class="text-[#232730] font-medium">Issuing Place:</p>
-                  <p>{{ expandData()[2]?.issuing_country ?? '-' }}</p>
+                <div *ngIf="expandData()[2]?.issuing_country" class="flex items-center">
+                  <p class="text-[#232730] font-medium mr-2">Issuing Place:</p>
+                  <p>{{ expandData()[2]?.issuing_country }}</p>
                 </div>
-                <div class="flex gap-2">
-                  <p class="text-[#232730] font-medium">Expiry Date:</p>
-                  <p>{{ expandData()[2]?.expiry_date ?? '-' }}</p>
+                <div *ngIf="expandData()[2]?.expiry_date" class="flex items-center">
+                  <p class="text-[#232730] font-medium mr-2">Expiry Date:</p>
+                  <p>{{ expandData()[2]?.expiry_date }}</p>
                 </div>
-                <div class="flex gap-2">
-                  <p class="text-[#232730] font-medium">ID Number:</p>
-                  <p>{{ expandData()[2]?.Id_number ?? '-' }}</p>
+                <div *ngIf="expandData()[2]?.Id_number" class="flex items-center">
+                  <p class="text-[#232730] font-medium mr-2">ID Number:</p>
+                  <p>{{ expandData()[2]?.Id_number }}</p>
                 </div>
-                <div class="flex gap-2">
-                  <p class="text-[#232730] font-medium">Occupation:</p>
-                  <p>{{ expandData()[2]?.Occupation ?? '-' }}</p>
+                <div *ngIf="expandData()[2]?.Occupation" class="flex items-center">
+                  <p class="text-[#232730] font-medium mr-2">Occupation:</p>
+                  <p>{{ expandData()[2]?.Occupation }}</p>
                 </div>
               </div>
-            </div>
-            }
+            </ng-container>
           </div>
         </div>
       </td>

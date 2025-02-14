@@ -1,0 +1,29 @@
+.statement-table {
+  tr.transaction-detail-row {
+    height: 0;
+  }
+
+  tr.transaction-row:hover {
+    @apply bg-[inherit] #{!important};
+  }
+
+  tr.transaction-row:not(.transaction-expanded-row):hover {
+    @apply bg-[#F2F4F7] #{!important};
+  }
+
+  tr.transaction-detail-row {
+    @apply bg-[#F2F4F7] #{!important};
+  }
+
+  .transaction-row td {
+    border-bottom-width: 0;
+  }
+}
+
+.statement-key-value-grid {
+  @apply grid grid-cols-2 gap-x-8 gap-y-2;
+}
+
+.statement-key-value-grid > div {
+  @apply flex gap-2 items-start;
+}

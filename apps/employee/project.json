@@ -17,6 +17,7 @@
         "tsConfig": "apps/employee/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
+          "apps/employee/src/_redirects",
           {
             "input": "libs/shared/assets/src/assets",
             "glob": "**/*",
@@ -28,7 +29,7 @@
             "output": "assets"
           }
         ],
-        "styles": ["themes/base/main.scss"],
+        "styles": ["themes/employee/main.scss"],
         "scripts": []
       },
       "configurations": {

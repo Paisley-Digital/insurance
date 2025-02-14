@@ -30,6 +30,7 @@
     "@angular/platform-browser-dynamic": "~19.1.0",
     "@angular/router": "~19.1.0",
     "file-saver": "^2.0.5",
+    "lottie-web": "^5.12.2",
     "rxjs": "~7.8.0",
     "xlsx": "^0.18.5",
     "xlsx-js-style": "^1.2.0",

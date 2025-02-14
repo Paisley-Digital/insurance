@@ -33,6 +33,12 @@ export class ExcelService {
         },
       };
     }
+
+    ws['!cols'] = columns.map(() => ({ wch: 20 }));
+
+    const totalRows = range.e.r + 1;
+    ws['!rows'] = Array(totalRows).fill({ hpt: 24 });
+
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 

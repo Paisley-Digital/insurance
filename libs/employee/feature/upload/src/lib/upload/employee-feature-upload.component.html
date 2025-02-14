@@ -1,0 +1,642 @@
+<div class="p-[20px] sm:p-[20px] lg:p-[72px] md:p-[60px]">
+  <mat-card appearance="outlined">
+    @if (_view() === 'upload') {
+    <div class="flex w-full justify-center max-sm:h-full">
+      <div class="w-full sm:w-1/2 md:w-2/3 lg:w-1/2 p-5">
+        <div class="!flex !justify-center font-semibold text-2xl !w-full mb-6">
+          Upload Required Documents
+        </div>
+        <ng-container [ngTemplateOutlet]="uploadWrapper" />
+      </div>
+    </div>
+    } @else {
+    <div class="p-4">
+      <ng-container [ngTemplateOutlet]="table" />
+    </div>
+    }
+  </mat-card>
+</div>
+
+<ng-template #uploadWrapper>
+  <div class="flex flex-col items-center max-sm:h-full max-sm:pb-8 w-full">
+    <div class="w-full flex flex-col gap-8">
+      <ng-container [ngTemplateOutlet]="residencyVisa" />
+      <ng-container [ngTemplateOutlet]="passport" />
+      <ng-container [ngTemplateOutlet]="emiratesId" />
+    </div>
+  </div>
+  <button
+    mat-flat-button
+    class="w-full mt-8"
+    (click)="openDialog()"
+    [insuranceOverlaySpinner]="_loading()"
+  >
+    Submit
+  </button>
+</ng-template>
+
+<ng-template #residencyVisa>
+  <form class="flex h-full flex-col">
+    <div
+      class="flex flex-1 flex-col border-dashed p-6 border-[#D0D5DD] rounded-lg"
+    >
+      @if (file()) { @if (file()?.type === 'application/pdf') {
+      <div class="flex flex-col !justify-center !items-center mt-4">
+        <span class="!font-semibold">Residency Visa</span>
+        <img ngSrc="./assets/icons/pdf.svg" alt="" width="100" height="100" />
+        <p>Image size: {{ fileSize() }}</p>
+        <div class="flex justify-center">
+          <button mat-icon-button type="button" (click)="removeFile()">
+            <mat-icon svgIcon="trash-warn" />
+          </button>
+          <input
+            type="file"
+            #fileInput
+            (change)="onFileSelected($event)"
+            accept="image/png, image/jpeg, application/pdf"
+            hidden
+          />
+          <button mat-icon-button (click)="fileInput.click()" type="button">
+            <mat-icon svgIcon="refresh" />
+          </button>
+        </div>
+      </div>
+      } @else {
+      <div class="flex flex-col !justify-center !items-center mt-4">
+        <span class="!font-semibold">Residency Visa</span>
+        <img
+          [src]="filePreview"
+          class="!w-[200px] !h-[120px] !object-cover rounded-md mt-3"
+          alt="File preview"
+        />
+        <p>Image size: {{ fileSize() }}</p>
+        <div class="flex justify-center">
+          <button mat-icon-button type="button" (click)="removeFile()">
+            <mat-icon svgIcon="trash-warn" />
+          </button>
+          <input
+            type="file"
+            #fileInput
+            (change)="onFileSelected($event)"
+            accept="image/png, image/jpeg, application/pdf"
+            hidden
+          />
+          <button mat-icon-button (click)="fileInput.click()" type="button">
+            <mat-icon svgIcon="refresh" />
+          </button>
+        </div>
+      </div>
+      } } @else {
+      <div class="flex flex-col justify-center items-center gap-3">
+        <span class="!font-semibold">Residency Visa</span>
+        <span class="font-light text-center">
+          Please upload a clear, high-quality image of your Residency
+          Visa.</span
+        >
+        <span class="font-light"> Supported formats: JPG, PNG, PDF.</span>
+        <span class="font-light"> Max file size: 5MB.</span>
+      </div>
+
+      <div class="flex flex-col gap-6 justify-center items-center">
+        <input
+          type="file"
+          #fileInput
+          (change)="onFileSelected($event)"
+          accept="image/png, image/jpeg, application/pdf"
+          hidden
+        />
+        <button
+          mat-flat-button
+          class="mt-4"
+          (click)="fileInput.click()"
+          type="button"
+        >
+          Choose File
+          <mat-icon svgIcon="add" />
+        </button>
+      </div>
+      }
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #passport>
+  <form class="flex h-full flex-col">
+    <div
+      class="flex flex-1 flex-col border-dashed p-6 border-[#D0D5DD] rounded-lg"
+    >
+      @if (filePassport()) { @if (filePassport()?.type === 'application/pdf') {
+      <div class="flex flex-col !justify-center !items-center mt-4">
+        <span class="!font-semibold">Residency Visa</span>
+        <img ngSrc="./assets/icons/pdf.svg" alt="" width="100" height="100" />
+        <p>Image size: {{ fileSizePassport() }}</p>
+        <div class="flex justify-center">
+          <button mat-icon-button type="button" (click)="removeFilePassport()">
+            <mat-icon svgIcon="trash-warn" />
+          </button>
+          <input
+            type="file"
+            #fileInputPassport
+            (change)="onFileSelectedPassport($event)"
+            accept="image/png, image/jpeg, application/pdf"
+            hidden
+          />
+          <button
+            mat-icon-button
+            (click)="fileInputPassport.click()"
+            type="button"
+          >
+            <mat-icon svgIcon="refresh" />
+          </button>
+        </div>
+      </div>
+      } @else {
+
+      <div class="flex flex-col !justify-center !items-center mt-4">
+        <span class="!font-semibold">Passport</span>
+        <img
+          [src]="passportFilePreview"
+          class="!w-[200px] !h-[120px] !object-cover rounded-md mt-3"
+          alt="File preview"
+        />
+        <p>Image size: {{ fileSizePassport() }}</p>
+        <div class="flex justify-center">
+          <button mat-icon-button type="button" (click)="removeFilePassport()">
+            <mat-icon svgIcon="trash-warn" />
+          </button>
+          <input
+            type="file"
+            #fileInputPassport
+            (change)="onFileSelectedPassport($event)"
+            accept="image/png, image/jpeg, application/pdf"
+            hidden
+          />
+          <button
+            mat-icon-button
+            (click)="fileInputPassport.click()"
+            type="button"
+          >
+            <mat-icon svgIcon="refresh" />
+          </button>
+        </div>
+      </div>
+      } } @else {
+      <div class="flex flex-col justify-center items-center gap-3">
+        <span class="!font-semibold">Passport</span>
+        <span class="font-light text-center">
+          Please upload a clear, high-quality image of your Passport.</span
+        >
+        <span class="font-light"> Supported formats: JPG, PNG, PDF.</span>
+        <span class="font-light"> Max file size: 5MB.</span>
+      </div>
+      <div class="flex flex-col gap-6 justify-center items-center">
+        <input
+          type="file"
+          #fileInputPassport
+          (change)="onFileSelectedPassport($event)"
+          accept="image/png, image/jpeg, application/pdf"
+          hidden
+        />
+        <button
+          mat-flat-button
+          class="mt-4"
+          (click)="fileInputPassport.click()"
+          type="button"
+        >
+          Choose File
+          <mat-icon svgIcon="add" />
+        </button>
+      </div>
+      }
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #emiratesId>
+  <form class="flex h-full flex-col">
+    <div
+      class="flex flex-1 flex-col border-dashed p-6 border-[#D0D5DD] rounded-lg"
+    >
+      @if (fileEmiratesId()) { @if (fileEmiratesId()?.type ===
+      'application/pdf') {
+      <div class="flex flex-col !justify-center !items-center mt-4">
+        <span class="!font-semibold">Emirates ID</span>
+        <img ngSrc="./assets/icons/pdf.svg" alt="" width="100" height="100" />
+        <p>Image size: {{ fileSizeId() }}</p>
+        <div class="flex justify-center">
+          <button mat-icon-button type="button" (click)="removeFileId()">
+            <mat-icon svgIcon="trash-warn" />
+          </button>
+          <input
+            type="file"
+            #fileInputId
+            (change)="onFileSelectedId($event)"
+            accept="image/png, image/jpeg, application/pdf"
+            hidden
+          />
+          <button mat-icon-button (click)="fileInputId.click()" type="button">
+            <mat-icon svgIcon="refresh" />
+          </button>
+        </div>
+      </div>
+      } @else {
+
+      <div class="flex flex-col !justify-center !items-center mt-4">
+        <span class="!font-semibold">Emirates ID</span>
+        <img
+          [src]="filePreviewEmiratesId"
+          class="!w-[200px] !h-[120px] !object-cover rounded-md mt-3"
+          alt="File preview"
+        />
+        <p>Image size: {{ fileSizeId() }}</p>
+        <div class="flex justify-center">
+          <button mat-icon-button type="button" (click)="removeFileId()">
+            <mat-icon svgIcon="trash-warn" />
+          </button>
+          <input
+            type="file"
+            #fileInputId
+            (change)="onFileSelectedId($event)"
+            accept="image/png, image/jpeg, application/pdf"
+            hidden
+          />
+          <button mat-icon-button (click)="fileInputId.click()" type="button">
+            <mat-icon svgIcon="refresh" />
+          </button>
+        </div>
+      </div>
+      } } @else {
+      <div class="flex flex-col justify-center items-center gap-3">
+        <span class="!font-semibold">Emirates ID</span>
+        <span class="font-light text-center">
+          Please upload clear images of both the front and back of your Emirates
+          ID.</span
+        >
+        <span class="font-light"> Supported formats: JPG, PNG, PDF.</span>
+        <span class="font-light"> Max file size: 5MB.</span>
+      </div>
+      <div class="flex flex-col gap-6 justify-center items-center">
+        <input
+          type="file"
+          #fileInputId
+          (change)="onFileSelectedId($event)"
+          accept="image/png, image/jpeg, application/pdf"
+          hidden
+        />
+        <button
+          mat-flat-button
+          class="mt-4"
+          (click)="fileInputId.click()"
+          type="button"
+        >
+          Choose File
+          <mat-icon svgIcon="add" />
+        </button>
+      </div>
+      }
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #table>
+  <div class="flex justify-end">
+  <button mat-flat-button (click)="downloadExcel()">
+    Download Excel
+  </button>
+  </div>
+  <table
+    class="statement-table mt-3 w-full"
+    [dataSource]="normalizedContent()"
+    multiTemplateDataRows
+    mat-table
+    matSort
+  >
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Full Name</th>
+      <td mat-cell *matCellDef="let transaction">
+        <div>{{ transaction.name }} {{ transaction.last_name }}</div>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
+      <td mat-cell *matCellDef="let transaction">
+        {{ expandData()[0]?.birthday ? transaction.birthday : 'Not found' }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="nationality">
+      <th mat-header-cell *matHeaderCellDef>Nationality</th>
+      <td mat-cell *matCellDef="let transaction">
+        {{ transaction.Nationality }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="gender">
+      <th mat-header-cell *matHeaderCellDef>Gender</th>
+      <td mat-cell *matCellDef="let transaction">{{ transaction.Gender }}</td>
+    </ng-container>
+    <ng-container matColumnDef="expand">
+      <th class="!w-10" mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let transaction">
+        <button
+          mat-icon-button
+          (click)="$event.stopPropagation(); setExpandValue()"
+        >
+          <mat-icon
+            class="transition-transform duration-150"
+            [class.rotate-180]="_isExpanded()"
+            [svgIcon]="'chevron-down'"
+          />
+        </button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="expandedDetail">
+      <td
+        mat-cell
+        *matCellDef="let transaction"
+        [attr.colspan]="columns.length"
+      >
+        <div [@detailExpand]="_isExpanded() ? 'expanded' : 'collapsed'">
+          <div class="pb-2 pt-4 space-y-6">
+            <div class="grid grid-cols-2 gap-x-8 gap-y-2">
+              <div
+                *ngIf="
+                  expandData()[0]?.document_type &&
+                  expandData()[0]?.document_type !== 'N/A'
+                "
+                class="flex items-center"
+              >
+                <p class="text-[#232730] font-medium mr-2">Document Type:</p>
+                <p class="text-[#232730] font-bold">
+                  {{ expandData()[0]?.document_type }}
+                </p>
+              </div>
+              <div
+                *ngIf="
+                  expandData()[0]?.issuing_country &&
+                  expandData()[0]?.issuing_country !== 'N/A'
+                "
+                class="flex items-center"
+              >
+                <p class="text-[#232730] font-medium mr-2">Issuing Country:</p>
+                <p class="text-[#232730] font-bold">
+                  {{ expandData()[0]?.issuing_country }}
+                </p>
+              </div>
+              <div
+                *ngIf="
+                  expandData()[0]?.expiry_date &&
+                  expandData()[0]?.expiry_date !== 'N/A'
+                "
+                class="flex items-center"
+              >
+                <p class="text-[#232730] font-medium mr-2">Expiry Date:</p>
+                <p class="text-[#232730] font-bold">
+                  {{ expandData()[0]?.expiry_date }}
+                </p>
+              </div>
+              <div
+                *ngIf="
+                  expandData()[0]?.Id_number &&
+                  expandData()[0]?.Id_number !== 'N/A'
+                "
+                class="flex items-center"
+              >
+                <p class="text-[#232730] font-medium mr-2">ID Number:</p>
+                <p class="text-[#232730] font-bold">
+                  {{ expandData()[0]?.Id_number }}
+                </p>
+              </div>
+              <div
+                *ngIf="
+                  expandData()[0]?.place_of_birth &&
+                  expandData()[0]?.place_of_birth !== 'N/A'
+                "
+                class="flex items-center"
+              >
+                <p class="text-[#232730] font-medium mr-2">Place of Birth:</p>
+                <p class="text-[#232730] font-bold">
+                  {{ expandData()[0]?.place_of_birth }}
+                </p>
+              </div>
+              <div
+                *ngIf="
+                  expandData()[0]?.holders_signature &&
+                  expandData()[0]?.holders_signature !== 'N/A'
+                "
+                class="flex items-center"
+              >
+                <p class="text-[#232730] font-medium mr-2">
+                  Holder's Signature:
+                </p>
+                <p class="text-[#232730] font-bold">
+                  {{ expandData()[0]?.holders_signature }}
+                </p>
+              </div>
+              <div
+                *ngIf="
+                  expandData()[0]?.Sponsor_Employer &&
+                  expandData()[0]?.Sponsor_Employer !== 'N/A'
+                "
+                class="flex items-center"
+              >
+                <p class="text-[#232730] font-medium mr-2">Sponsor/Employer:</p>
+                <p class="text-[#232730] font-bold">
+                  {{ expandData()[0]?.Sponsor_Employer }}
+                </p>
+              </div>
+              <div
+                *ngIf="
+                  expandData()[0]?.Occupation &&
+                  expandData()[0]?.Occupation !== 'N/A'
+                "
+                class="flex items-center"
+              >
+                <p class="text-[#232730] font-medium mr-2">Occupation:</p>
+                <p class="text-[#232730] font-bold">
+                  {{ expandData()[0]?.Occupation }}
+                </p>
+              </div>
+            </div>
+
+            <ng-container *ngIf="passportFilePreview">
+              <mat-divider></mat-divider>
+              <div class="grid grid-cols-2 gap-x-8 gap-y-2">
+                <div
+                  *ngIf="
+                    expandData()[1]?.document_type &&
+                    expandData()[1]?.document_type !== 'N/A'
+                  "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">Document Type:</p>
+                  <p class="text-[#232730] font-bold">
+                    {{ expandData()[1]?.document_type }}
+                  </p>
+                </div>
+                <div
+                  *ngIf="
+                    expandData()[1]?.Id_number &&
+                    expandData()[1]?.Id_number !== 'N/A'
+                  "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">
+                    Passport Number:
+                  </p>
+                  <p class="text-[#232730] font-bold">
+                    {{ expandData()[1]?.Id_number }}
+                  </p>
+                </div>
+                <div
+                  *ngIf="
+                    expandData()[1]?.expiry_date &&
+                    expandData()[1]?.expiry_date !== 'N/A'
+                  "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">Expiry Date:</p>
+                  <p class="text-[#232730] font-bold">
+                    {{ expandData()[1]?.expiry_date }}
+                  </p>
+                </div>
+                <div
+                  *ngIf="
+                    expandData()[1]?.holders_signature &&
+                    expandData()[1]?.holders_signature !== 'N/A'
+                  "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">
+                    Holder's Signature:
+                  </p>
+                  <p class="text-[#232730] font-bold">
+                    {{ expandData()[1]?.holders_signature }}
+                  </p>
+                </div>
+                <div
+                  *ngIf="
+                    expandData()[1]?.place_of_birth &&
+                    expandData()[1]?.place_of_birth !== 'N/A'
+                  "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">Place of Birth:</p>
+                  <p class="text-[#232730] font-bold">
+                    {{ expandData()[1]?.place_of_birth }}
+                  </p>
+                </div>
+                <div
+                  *ngIf="
+                    expandData()[1]?.issuing_country &&
+                    expandData()[1]?.issuing_country !== 'N/A'
+                  "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">
+                    Issuing Country:
+                  </p>
+                  <p class="text-[#232730] font-bold">
+                    {{ expandData()[1]?.issuing_country }}
+                  </p>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="filePreviewEmiratesId">
+              <mat-divider></mat-divider>
+              <div class="grid grid-cols-2 gap-x-8 gap-y-2">
+                <div
+                  *ngIf="
+                    expandData()[2]?.document_type &&
+                    expandData()[2]?.document_type !== 'N/A'
+                  "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">Document Type:</p>
+                  <p class="text-[#232730] font-bold">
+                    {{ expandData()[2]?.document_type }}
+                  </p>
+                </div>
+                <div
+                  *ngIf="
+                    expandData()[2]?.issuing_country &&
+                    expandData()[2]?.issuing_country !== 'N/A'
+                  "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">Issuing Place:</p>
+                  <p class="text-[#232730] font-bold">
+                    {{ expandData()[2]?.issuing_country }}
+                  </p>
+                </div>
+                <div
+                  *ngIf="
+                    expandData()[2]?.expiry_date &&
+                    expandData()[2]?.expiry_date !== 'N/A'
+                  "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">Expiry Date:</p>
+                  <p class="text-[#232730] font-bold">
+                    {{ expandData()[2]?.expiry_date }}
+                  </p>
+                </div>
+                <div
+                  *ngIf="
+                    expandData()[2]?.Id_number &&
+                    expandData()[2]?.Id_number !== 'N/A'
+                  "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">ID Number:</p>
+                  <p class="text-[#232730] font-bold">
+                    {{ expandData()[2]?.Id_number }}
+                  </p>
+                </div>
+                <div
+                  *ngIf="
+                    expandData()[2]?.Occupation &&
+                    expandData()[2]?.Occupation !== 'N/A'
+                  "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">Occupation:</p>
+                  <p class="text-[#232730] font-bold">
+                    {{ expandData()[2]?.Occupation }}
+                  </p>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let transaction; columns: columns"
+      class="transaction-row"
+      [class.transaction-expanded-row]="_isExpanded()"
+      (click)="setExpandValue()"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: ['expandedDetail']"
+      class="transaction-detail-row"
+    ></tr>
+  </table>
+</ng-template>
+<ng-template #openDialogCrossDialog>
+  <h4 class="flex justify-center text-center" mat-dialog-title>
+    Extracting Your Document Data Using AI
+  </h4>
+
+  <mat-dialog-content class="mat-typography">
+    <div class="flex items-center justify-center flex-col">
+      <div class="pt-2 !px-8">
+        Scanning all documents and retrieving your information using the AI
+        engine
+      </div>
+      <div #lottie></div>
+    </div>
+  </mat-dialog-content>
+</ng-template>

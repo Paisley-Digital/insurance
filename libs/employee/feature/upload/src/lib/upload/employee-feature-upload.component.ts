@@ -1,5 +1,5 @@
-import { Component, inject, signal } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, inject, signal, TemplateRef, ViewChild } from '@angular/core';
+import { CommonModule, DOCUMENT, NgOptimizedImage } from '@angular/common';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -12,6 +12,7 @@ import {
 } from '@insurance-employee-data-dashboards';
 import { finalize, switchMap } from 'rxjs';
 import { MatTableModule } from '@angular/material/table';
+import lottie, { AnimationItem } from 'lottie-web';
 import { MatSort } from '@angular/material/sort';
 import { OverlaySpinnerDirective } from '@insurance-shared-ui-overlay-spinner';
 import { normalizeKeys, replaceKeys } from '@shared-util-common';
@@ -24,6 +25,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { MatDialog, MatDialogContent, MatDialogRef } from '@angular/material/dialog';
 
 type View = 'upload' | 'table';
 
@@ -42,6 +44,7 @@ type View = 'upload' | 'table';
     MatSort,
     OverlaySpinnerDirective,
     MatDivider,
+    MatDialogContent,
   ],
   templateUrl: './employee-feature-upload.component.html',
   styleUrls: ['./employee-feature-upload.component.scss'],
@@ -56,15 +59,25 @@ type View = 'upload' | 'table';
     ]),
   ],
 })
-export class EmployeeFeatureUploadComponent {
+export class EmployeeFeatureUploadComponent implements AfterViewInit {
   private alert = inject(AlertService);
   private service = inject(EmployeeDataDashboardService);
   private apiRoot = inject(API_ROOT);
+  private lottiesPath = './assets/images/loadingAnimation.json';
+  private dialog = inject(MatDialog);
+  private lottieAnimation: AnimationItem | undefined;
+  private document = inject(DOCUMENT);
+  private DialogRef?: MatDialogRef<unknown>;
+
+  @ViewChild('lottie') lottie?: ElementRef<HTMLDivElement>;
+  @ViewChild('openDialogCrossDialog')
+  openDialogCrossDialog!: TemplateRef<unknown>;
 
   filePreview: string | ArrayBuffer | null = null;
   passportFilePreview: string | ArrayBuffer | null = null;
   filePreviewEmiratesId: string | ArrayBuffer | null = null;
   selectedTransactionId: number | null = null;
+  showLottie = true;
   columns: string[] = ['name', 'date', 'nationality', 'gender', 'expand'];
 
   fileSize = signal('');
@@ -80,11 +93,15 @@ export class EmployeeFeatureUploadComponent {
   expandData = signal<JsonResult[]>([]);
   images = signal<string[]>([]);
 
+  ngAfterViewInit() {
+    this.document.defaultView?.setTimeout(this.startLottie, 0);
+  }
+
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (!input.files) return;
     const file = input.files[0];
-    if (file && file.size <= 2 * 1024 * 1024) {
+    if (file && file.size <= 5 * 1024 * 1024) {
       this.file.set(file);
       this.fileSize.set(this.formatFileSize(file.size));
       this.updateFilePreview(file, 'residency');
@@ -97,7 +114,7 @@ export class EmployeeFeatureUploadComponent {
     const input = event.target as HTMLInputElement;
     if (!input.files) return;
     const file = input.files[0];
-    if (file && file.size <= 2 * 1024 * 1024) {
+    if (file && file.size <= 5 * 1024 * 1024) {
       this.filePassport.set(file);
       this.fileSizePassport.set(this.formatFileSize(file.size));
       this.updateFilePreview(file, 'passport');
@@ -110,7 +127,7 @@ export class EmployeeFeatureUploadComponent {
     const input = event.target as HTMLInputElement;
     if (!input.files) return;
     const file = input.files[0];
-    if (file && file.size <= 2 * 1024 * 1024) {
+    if (file && file.size <= 5 * 1024 * 1024) {
       this.fileEmiratesId.set(file);
       this.fileSizeId.set(this.formatFileSize(file.size));
       this.updateFilePreview(file, 'emiratesId');
@@ -148,6 +165,13 @@ export class EmployeeFeatureUploadComponent {
     this.fileEmiratesId.set(null);
   }
 
+  openDialog() {
+    this.document.defaultView?.setTimeout(this.startLottie, 0);
+    this.DialogRef = this.dialog.open(this.openDialogCrossDialog);
+    this.uploadFiles();
+    this.showLottie = true;
+  }
+
   uploadFiles() {
     this._loading.set(true);
 
@@ -176,6 +200,7 @@ export class EmployeeFeatureUploadComponent {
       )
       .subscribe({
         next: (result) => {
+          this.DialogRef?.close()
           this._view.set('table');
           const serviceResult = result.results[0].json_result[0];
           const expandResult = result.results[0].json_result;
@@ -191,6 +216,7 @@ export class EmployeeFeatureUploadComponent {
           );
         },
         error: () => {
+          this.DialogRef?.close()
           this.alert.open('An error occurred. Please try again later.');
         },
       });
@@ -205,4 +231,19 @@ export class EmployeeFeatureUploadComponent {
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
     return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
   }
+  private startLottie = () => {
+    if (!this.lottie) {
+      return;
+    }
+    if (this.lottieAnimation) {
+      this.lottieAnimation.destroy();
+    }
+    this.lottieAnimation = lottie.loadAnimation({
+      container: this.lottie?.nativeElement as Element,
+      path: this.lottiesPath,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+    });
+  };
 }

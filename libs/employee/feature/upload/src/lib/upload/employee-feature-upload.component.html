@@ -94,7 +94,7 @@
           Visa.</span
         >
         <span class="font-light"> Supported formats: JPG, PNG, PDF.</span>
-        <span class="font-light"> Max file size: 2MB.</span>
+        <span class="font-light"> Max file size: 5MB.</span>
       </div>
 
       <div class="flex flex-col gap-6 justify-center items-center">
@@ -188,7 +188,7 @@
           Visa.</span
         >
         <span class="font-light"> Supported formats: JPG, PNG, PDF.</span>
-        <span class="font-light"> Max file size: 2MB.</span>
+        <span class="font-light"> Max file size: 5MB.</span>
       </div>
       <div class="flex flex-col gap-6 justify-center items-center">
         <input
@@ -274,7 +274,7 @@
           ID.</span
         >
         <span class="font-light"> Supported formats: JPG, PNG, PDF.</span>
-        <span class="font-light"> Max file size: 2MB.</span>
+        <span class="font-light"> Max file size: 5MB.</span>
       </div>
       <div class="flex flex-col gap-6 justify-center items-center">
         <input
@@ -622,8 +622,16 @@
   </table>
 </ng-template>
 <ng-template #openDialogCrossDialog>
+  <h4 class="flex justify-center text-center" mat-dialog-title>
+    Extracting Your Document Data Using AI
+  </h4>
+
   <mat-dialog-content class="mat-typography">
-    <div class="flex items-center justify-center">
+    <div class="flex items-center justify-center flex-col">
+      <div class="pt-2 !px-8">
+        Scanning all documents and retrieving your information using the AI
+        engine
+      </div>
       <div #lottie></div>
     </div>
   </mat-dialog-content>

@@ -25,7 +25,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { MatDialog, MatDialogContent, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 
 type View = 'upload' | 'table';
 
@@ -45,6 +45,7 @@ type View = 'upload' | 'table';
     OverlaySpinnerDirective,
     MatDivider,
     MatDialogContent,
+    MatDialogTitle,
   ],
   templateUrl: './employee-feature-upload.component.html',
   styleUrls: ['./employee-feature-upload.component.scss'],
@@ -200,7 +201,7 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
       )
       .subscribe({
         next: (result) => {
-          this.DialogRef?.close()
+          this.DialogRef?.close();
           this._view.set('table');
           const serviceResult = result.results[0].json_result[0];
           const expandResult = result.results[0].json_result;
@@ -216,7 +217,7 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
           );
         },
         error: () => {
-          this.DialogRef?.close()
+          this.DialogRef?.close();
           this.alert.open('An error occurred. Please try again later.');
         },
       });

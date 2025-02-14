@@ -299,6 +299,11 @@
 </ng-template>
 
 <ng-template #table>
+  <div class="flex justify-end">
+  <button mat-flat-button (click)="downloadExcel()">
+    Download Excel
+  </button>
+  </div>
   <table
     class="statement-table mt-3 w-full"
     [dataSource]="normalizedContent()"

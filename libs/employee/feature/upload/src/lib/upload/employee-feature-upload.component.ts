@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, ElementRef, inject, signal, TemplateRef, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  inject,
+  signal,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule, DOCUMENT, NgOptimizedImage } from '@angular/common';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -25,7 +33,13 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { MatDialog, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { ExcelService } from '../../../../../../shared/ui/excel-service/src/lib/download-excel.service';
 
 type View = 'upload' | 'table';
 
@@ -69,6 +83,7 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
   private lottieAnimation: AnimationItem | undefined;
   private document = inject(DOCUMENT);
   private DialogRef?: MatDialogRef<unknown>;
+  private excelService = inject(ExcelService);
 
   @ViewChild('lottie') lottie?: ElementRef<HTMLDivElement>;
   @ViewChild('openDialogCrossDialog')
@@ -167,6 +182,10 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
   }
 
   openDialog() {
+    if (!this.file() && !this.filePassport() && !this.fileEmiratesId()) {
+      this.alert.open('Please upload at least one image.');
+      return;
+    }
     this.document.defaultView?.setTimeout(this.startLottie, 0);
     this.DialogRef = this.dialog.open(this.openDialogCrossDialog);
     this.uploadFiles();
@@ -223,6 +242,13 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
       });
   }
 
+  downloadExcel() {
+    this.excelService.exportExcel(
+      this.expandData(),
+      this.normalizedContent()[0].name
+    );
+  }
+
   setExpandValue() {
     this._isExpanded.update((current) => !current);
   }
@@ -232,6 +258,7 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
     return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
   }
+
   private startLottie = () => {
     if (!this.lottie) {
       return;

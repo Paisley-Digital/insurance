@@ -5,9 +5,27 @@ import { MatIcon } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { AlertService } from '@shared-ui-alert';
-import { UploadImage } from '@insurance-employee-data-dashboards';
-import { forkJoin } from 'rxjs';
-import { FileUploadService } from '../../../../../data/data-dashboards/src/lib/employee.data.service';
+import {
+  AiPayload,
+  EmployeeDataDashboardService,
+  JsonResult,
+} from '@insurance-employee-data-dashboards';
+import { finalize, switchMap } from 'rxjs';
+import { MatTableModule } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { OverlaySpinnerDirective } from '@insurance-shared-ui-overlay-spinner';
+import { normalizeKeys, replaceKeys } from '@shared-util-common';
+import { MatDivider } from '@angular/material/divider';
+import { API_ROOT } from '@shared-util-web-sdk';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+
+type View = 'upload' | 'table';
 
 @Component({
   selector: 'insurance-employee-feature-upload',
@@ -20,18 +38,34 @@ import { FileUploadService } from '../../../../../data/data-dashboards/src/lib/e
     MatButtonModule,
     MatCardModule,
     NgOptimizedImage,
+    MatTableModule,
+    MatSort,
+    OverlaySpinnerDirective,
+    MatDivider,
   ],
   templateUrl: './employee-feature-upload.component.html',
   styleUrls: ['./employee-feature-upload.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      ),
+    ]),
+  ],
 })
 export class EmployeeFeatureUploadComponent {
   private alert = inject(AlertService);
-  private service = inject(FileUploadService);
+  private service = inject(EmployeeDataDashboardService);
+  private apiRoot = inject(API_ROOT);
 
   filePreview: string | ArrayBuffer | null = null;
   passportFilePreview: string | ArrayBuffer | null = null;
   filePreviewEmiratesId: string | ArrayBuffer | null = null;
-  selectedFiles: UploadImage[] = [];
+  selectedTransactionId: number | null = null;
+  columns: string[] = ['name', 'date', 'nationality', 'gender', 'expand'];
 
   fileSize = signal('');
   fileSizePassport = signal('');
@@ -39,6 +73,12 @@ export class EmployeeFeatureUploadComponent {
   file = signal<File | null>(null);
   filePassport = signal<File | null>(null);
   fileEmiratesId = signal<File | null>(null);
+  _view = signal<View>('upload');
+  _loading = signal(false);
+  _isExpanded = signal(true);
+  normalizedContent = signal<JsonResult[]>([]);
+  expandData = signal<JsonResult[]>([]);
+  images = signal<string[]>([]);
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -46,7 +86,7 @@ export class EmployeeFeatureUploadComponent {
     const file = input.files[0];
     if (file && file.size <= 2 * 1024 * 1024) {
       this.file.set(file);
-      this.selectedFiles.push({ source: file });
+      this.fileSize.set(this.formatFileSize(file.size));
       this.updateFilePreview(file, 'residency');
     } else {
       this.alert.open('File size exceeds 2MB!');
@@ -59,7 +99,7 @@ export class EmployeeFeatureUploadComponent {
     const file = input.files[0];
     if (file && file.size <= 2 * 1024 * 1024) {
       this.filePassport.set(file);
-      this.selectedFiles.push({ source: file });
+      this.fileSizePassport.set(this.formatFileSize(file.size));
       this.updateFilePreview(file, 'passport');
     } else {
       this.alert.open('File size exceeds 2MB!');
@@ -72,7 +112,7 @@ export class EmployeeFeatureUploadComponent {
     const file = input.files[0];
     if (file && file.size <= 2 * 1024 * 1024) {
       this.fileEmiratesId.set(file);
-      this.selectedFiles.push({ source: file });
+      this.fileSizeId.set(this.formatFileSize(file.size));
       this.updateFilePreview(file, 'emiratesId');
     } else {
       this.alert.open('File size exceeds 2MB!');
@@ -109,56 +149,60 @@ export class EmployeeFeatureUploadComponent {
   }
 
   uploadFiles() {
-    if (!this.selectedFiles.length) {
-      console.warn('No file selected!');
-      return;
-    }
+    this._loading.set(true);
 
-    const uploadObservables = this.selectedFiles.map((fileData) =>
-      this.service.uploadFile(fileData.source)
-    );
-    forkJoin(uploadObservables).subscribe({
-      next: (responses) => {
-        console.log('All files uploaded:', responses);
+    let imageArray = [
+      this.file()!,
+      this.filePassport()!,
+      this.fileEmiratesId()!,
+    ];
 
-        const uploadedFileUrls = responses.map((res: any) => {
-          return `https://insurancebase.paisley.monster${res[0].downloadUrl}`;
-        });
-
-        console.log('Uploaded file URLs:', uploadedFileUrls);
-
-        this.callAiService(uploadedFileUrls);
-      },
-      error: (err) => {
-        console.error('Error uploading files:', err);
-      }
-    });
-  }
-
-  callAiService(uploadedFileUrls: string[]) {
-    if (!uploadedFileUrls.length) {
-      console.error('No files uploaded successfully to call AI service.');
-      return;
-    }
-
-    const payload: any = {
-      contents: [
-        {
-          extraction_type: 'BASIC_INFO',
-          image_urls: uploadedFileUrls,
+    this.service
+      .uploadFile(imageArray)
+      .pipe(
+        switchMap((response) => {
+          const uploadedFileUrls = response.map((res) => {
+            return `${this.apiRoot}${res.downloadUrl}`;
+          });
+          this.images.set(uploadedFileUrls);
+          const payload: AiPayload = {
+            contents: [
+              { extraction_type: 'BASIC_INFO', image_urls: uploadedFileUrls },
+            ],
+          };
+          return this.service.postAiService(payload);
+        }),
+        finalize(() => this._loading.set(false))
+      )
+      .subscribe({
+        next: (result) => {
+          this._view.set('table');
+          const serviceResult = result.results[0].json_result[0];
+          const expandResult = result.results[0].json_result;
+          this.normalizedContent.set(
+            Array.isArray(serviceResult)
+              ? serviceResult.map((item) => normalizeKeys(item))
+              : [normalizeKeys(serviceResult)]
+          );
+          this.expandData.set(
+            Array.isArray(expandResult)
+              ? expandResult.map((item) => replaceKeys(item, '/', '_'))
+              : [replaceKeys(expandResult, '/', '_')]
+          );
         },
-      ],
-    };
-
-    console.log('AI Payload:', payload);
-    this.service.postAiService(payload).subscribe({
-      next: (aiResponse) => {
-        console.log('AI Service response:', aiResponse);
-      },
-      error: (err) => {
-        console.error('Error calling AI service:', err);
-      },
-    });
+        error: () => {
+          this.alert.open('An error occurred. Please try again later.');
+        },
+      });
   }
 
+  setExpandValue() {
+    this._isExpanded.update((current) => !current);
+  }
+
+  private formatFileSize(bytes: number): string {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+  }
 }

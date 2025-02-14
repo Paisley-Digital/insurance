@@ -3,6 +3,11 @@ export interface InsuranceTypes {
   description: string;
   image: string;
 }
+export interface InsuranceTypes {
+  title: string;
+  description: string;
+  image: string;
+}
 
 export interface FileResponse {
   companyId: string;
@@ -21,9 +26,27 @@ export interface ContentPayload {
 }
 
 export interface AiResponse {
-  results: {
-    result: string;
-  };
+  results: [
+    {
+      result: string;
+      json_result: JsonResult[];
+    }
+  ];
+}
+
+export interface JsonResult {
+  document_type: string;
+  Id_number: string;
+  Occupation: string;
+  Sponsor_Employer: string;
+  place_of_birth: string;
+  holders_signature: string;
+  expiry_date: string;
+  issuing_country: string;
+  name: string;
+  last_name: string;
+  Nationality: string;
+  Gender: string;
 }
 
 export interface UploadImage {

@@ -40,6 +40,7 @@ export interface JsonResult {
   Occupation: string;
   Sponsor_Employer: string;
   place_of_birth: string;
+  birthday:string
   holders_signature: string;
   expiry_date: string;
   issuing_country: string;

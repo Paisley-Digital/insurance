@@ -350,7 +350,6 @@
       <td mat-cell *matCellDef="let transaction" [attr.colspan]="columns.length">
         <div [@detailExpand]="_isExpanded() ? 'expanded' : 'collapsed'">
           <div class="pb-2 pt-4 space-y-6">
-            <!-- اطلاعات سند اول -->
             <div class="grid grid-cols-2 gap-x-8 gap-y-2">
               <div *ngIf="expandData()[0]?.document_type" class="flex items-center">
                 <p class="text-[#232730] font-medium mr-2">Document Type:</p>
@@ -386,7 +385,6 @@
               </div>
             </div>
 
-            <!-- سند دوم: Passport (در صورتی که فایل وجود داشته باشد) -->
             <ng-container *ngIf="passportFilePreview">
               <mat-divider></mat-divider>
               <div class="grid grid-cols-2 gap-x-8 gap-y-2">
@@ -417,7 +415,6 @@
               </div>
             </ng-container>
 
-            <!-- سند سوم: Emirates ID (در صورتی که فایل وجود داشته باشد) -->
             <ng-container *ngIf="filePreviewEmiratesId">
               <mat-divider></mat-divider>
               <div class="grid grid-cols-2 gap-x-8 gap-y-2">

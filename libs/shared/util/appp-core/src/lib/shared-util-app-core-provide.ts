@@ -22,7 +22,7 @@ export function provideSharedUtilAppCore({
     },
     {
       provide: API_ROOT,
-      useValue: 'http://167.71.30.230:8080',
+      useValue: 'https://api.paisley.codes',
     },
     {
       provide: DEFAULT_API_ERROR_MESSAGE,

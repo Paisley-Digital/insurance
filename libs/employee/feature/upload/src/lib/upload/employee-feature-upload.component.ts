@@ -120,11 +120,6 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
     this.file.set(file);
     this.updateFilePreview(file, 'residency');
 
-    if (file && file.size <= 5 * 1024 * 1024) {
-      this.alert.open('File size exceeds 5MB!');
-      return;
-    }
-
     if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -206,11 +201,8 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
     const input = event.target as HTMLInputElement;
     if (!input.files) return;
     const file = input.files[0];
-
-    if (file && file.size <= 5 * 1024 * 1024) {
-      this.alert.open('File size exceeds 5MB!');
-      return;
-    }
+    this.filePassport.set(file);
+    this.updateFilePreview(file, 'passport');
 
     if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
@@ -297,6 +289,8 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
     const input = event.target as HTMLInputElement;
     if (!input.files) return;
     const file = input.files[0];
+    this.fileEmiratesId.set(file);
+    this.updateFilePreview(file, 'emiratesId');
 
     if (file && file.size <= 5 * 1024 * 1024) {
       this.alert.open('File size exceeds 5MB!');

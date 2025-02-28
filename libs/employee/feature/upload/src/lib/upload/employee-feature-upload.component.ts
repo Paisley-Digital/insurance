@@ -23,7 +23,12 @@ import { MatTableModule } from '@angular/material/table';
 import lottie, { AnimationItem } from 'lottie-web';
 import { MatSort } from '@angular/material/sort';
 import { OverlaySpinnerDirective } from '@insurance-shared-ui-overlay-spinner';
-import { normalizeKeys, replaceKeys } from '@shared-util-common';
+import {
+  compressFile,
+  extractImage,
+  normalizeKeys,
+  replaceKeys,
+} from '@shared-util-common';
 import { MatDivider } from '@angular/material/divider';
 import { API_ROOT } from '@shared-util-web-sdk';
 import {
@@ -42,6 +47,7 @@ import {
 import { ExcelService } from '../../../../../../shared/ui/excel-service/src/lib/download-excel.service';
 
 type View = 'upload' | 'table';
+type FileType = 'passport' | 'emiratesId' | 'residency';
 
 @Component({
   selector: 'insurance-employee-feature-upload',
@@ -121,53 +127,7 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
     this.updateFilePreview(file, 'residency');
 
     if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-
-      reader.onload = (event: any) => {
-        const img = new Image();
-        img.src = event.target.result;
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d');
-
-          const maxWidth = 800;
-          const maxHeight = 800;
-          let width = img.width;
-          let height = img.height;
-
-          if (width > height) {
-            if (width > maxWidth) {
-              height *= maxWidth / width;
-              width = maxWidth;
-            }
-          } else {
-            if (height > maxHeight) {
-              width *= maxHeight / height;
-              height = maxHeight;
-            }
-          }
-
-          canvas.width = width;
-          canvas.height = height;
-          ctx!.drawImage(img, 0, 0, width, height);
-
-          canvas.toBlob(
-            (blob) => {
-              if (blob) {
-                this.file.set(
-                  new File([blob], file.name, {
-                    type: file.type,
-                  })
-                );
-                this.fileSize.set(this.formatFileSize(this.file()!.size));
-              }
-            },
-            'image/jpeg',
-            0.7
-          );
-        };
-      };
+      this.extractUploadedFile(file, 'residency');
     } else {
       const reader = new FileReader();
       reader.readAsArrayBuffer(file);
@@ -205,55 +165,7 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
     this.updateFilePreview(file, 'passport');
 
     if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-
-      reader.onload = (event: any) => {
-        const img = new Image();
-        img.src = event.target.result;
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d');
-
-          const maxWidth = 800;
-          const maxHeight = 800;
-          let width = img.width;
-          let height = img.height;
-
-          if (width > height) {
-            if (width > maxWidth) {
-              height *= maxWidth / width;
-              width = maxWidth;
-            }
-          } else {
-            if (height > maxHeight) {
-              width *= maxHeight / height;
-              height = maxHeight;
-            }
-          }
-
-          canvas.width = width;
-          canvas.height = height;
-          ctx!.drawImage(img, 0, 0, width, height);
-
-          canvas.toBlob(
-            (blob) => {
-              if (blob) {
-                this.filePassport.set(
-                  new File([blob], file.name, {
-                    type: file.type,
-                  })
-                );
-                this.fileSizePassport.set(
-                  this.formatFileSize(this.filePassport()!.size)
-                );
-              }
-            },
-            'image/jpeg',
-            0.7
-          );
-        };
-      };
+      this.extractUploadedFile(file, 'passport');
     } else {
       const reader = new FileReader();
       reader.readAsArrayBuffer(file);
@@ -292,61 +204,8 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
     this.fileEmiratesId.set(file);
     this.updateFilePreview(file, 'emiratesId');
 
-    if (file && file.size <= 5 * 1024 * 1024) {
-      this.alert.open('File size exceeds 5MB!');
-      return;
-    }
-
     if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-
-      reader.onload = (event: any) => {
-        const img = new Image();
-        img.src = event.target.result;
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d');
-
-          const maxWidth = 800;
-          const maxHeight = 800;
-          let width = img.width;
-          let height = img.height;
-
-          if (width > height) {
-            if (width > maxWidth) {
-              height *= maxWidth / width;
-              width = maxWidth;
-            }
-          } else {
-            if (height > maxHeight) {
-              width *= maxHeight / height;
-              height = maxHeight;
-            }
-          }
-
-          canvas.width = width;
-          canvas.height = height;
-          ctx!.drawImage(img, 0, 0, width, height);
-
-          canvas.toBlob(
-            (blob) => {
-              if (blob) {
-                this.fileEmiratesId.set(
-                  new File([blob], file.name, {
-                    type: file.type,
-                  })
-                );
-                this.fileSizeId.set(
-                  this.formatFileSize(this.fileEmiratesId()!.size)
-                );
-              }
-            },
-            'image/jpeg',
-            0.7
-          );
-        };
-      };
+      this.extractUploadedFile(file, 'emiratesId');
     } else {
       const reader = new FileReader();
       reader.readAsArrayBuffer(file);
@@ -498,4 +357,38 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
       autoplay: true,
     });
   };
+
+  private extractUploadedFile(file: File, type: FileType) {
+    switch (type) {
+      case 'emiratesId':
+        extractImage(file).subscribe({
+          next: (resizedFile) => {
+            this.fileEmiratesId.set(resizedFile);
+            this.fileSizeId.set(this.formatFileSize(resizedFile.size));
+          },
+          error: (error) => console.error('Error processing image:', error),
+        });
+        break;
+      case 'passport':
+        extractImage(file).subscribe({
+          next: (resizedFile) => {
+            this.filePassport.set(resizedFile);
+            this.fileSizePassport.set(this.formatFileSize(resizedFile.size));
+          },
+          error: (error) => console.error('Error processing image:', error),
+        });
+        break;
+      case 'residency':
+        extractImage(file).subscribe({
+          next: (resizedFile) => {
+            this.file.set(resizedFile);
+            this.fileSize.set(this.formatFileSize(resizedFile.size));
+          },
+          error: (error) => console.error('Error processing image:', error),
+        });
+        break;
+      default:
+        return;
+    }
+  }
 }

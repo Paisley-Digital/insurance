@@ -22,7 +22,7 @@ export function provideSharedUtilAppCore({
     },
     {
       provide: API_ROOT,
-      useValue: 'https://insurancebase.paisley.monster',
+      useValue: 'https://api.paisley.codes',
     },
     {
       provide: DEFAULT_API_ERROR_MESSAGE,

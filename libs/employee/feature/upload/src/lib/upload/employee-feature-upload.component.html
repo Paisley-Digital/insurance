@@ -28,7 +28,7 @@
   <button
     mat-flat-button
     class="w-full mt-8"
-    (click)="uploadFiles()"
+    (click)="openDialog()"
     [insuranceOverlaySpinner]="_loading()"
   >
     Submit
@@ -94,7 +94,7 @@
           Visa.</span
         >
         <span class="font-light"> Supported formats: JPG, PNG, PDF.</span>
-        <span class="font-light"> Max file size: 2MB.</span>
+        <span class="font-light"> Max file size: 5MB.</span>
       </div>
 
       <div class="flex flex-col gap-6 justify-center items-center">
@@ -184,11 +184,10 @@
       <div class="flex flex-col justify-center items-center gap-3">
         <span class="!font-semibold">Passport</span>
         <span class="font-light text-center">
-          Please upload a clear, high-quality image of your Residency
-          Visa.</span
+          Please upload a clear, high-quality image of your Passport.</span
         >
         <span class="font-light"> Supported formats: JPG, PNG, PDF.</span>
-        <span class="font-light"> Max file size: 2MB.</span>
+        <span class="font-light"> Max file size: 5MB.</span>
       </div>
       <div class="flex flex-col gap-6 justify-center items-center">
         <input
@@ -274,7 +273,7 @@
           ID.</span
         >
         <span class="font-light"> Supported formats: JPG, PNG, PDF.</span>
-        <span class="font-light"> Max file size: 2MB.</span>
+        <span class="font-light"> Max file size: 5MB.</span>
       </div>
       <div class="flex flex-col gap-6 justify-center items-center">
         <input
@@ -300,6 +299,11 @@
 </ng-template>
 
 <ng-template #table>
+  <div class="flex justify-end">
+  <button mat-flat-button (click)="downloadExcel()">
+    Download Excel
+  </button>
+  </div>
   <table
     class="statement-table mt-3 w-full"
     [dataSource]="normalizedContent()"
@@ -316,9 +320,7 @@
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
       <td mat-cell *matCellDef="let transaction">
-        {{
-          normalizedContent()[0]?.birthday ? transaction.birthday : 'Not found'
-        }}
+        {{ expandData()[0]?.birthday ? transaction.birthday : 'Not found' }}
       </td>
     </ng-container>
     <ng-container matColumnDef="nationality">
@@ -354,117 +356,253 @@
       >
         <div [@detailExpand]="_isExpanded() ? 'expanded' : 'collapsed'">
           <div class="pb-2 pt-4 space-y-6">
-            <!-- Residency Visa Details -->
-            <div class="flex items-center gap-4">
-              <img
-                [src]="images()[0]"
-                alt="Residency Visa"
-                class="w-[122px] h-[70px]"
-              />
-              <div class="grid grid-cols-2 gap-x-8 gap-y-2">
-                <div class="flex gap-2 items-center">
-                  <p class="text-[#232730] font-medium text-left">Document Type:</p>
-                  <p class="text-left">{{ normalizedContent()[0]?.document_type ?? '-' }}</p>
-                </div>
-                <div class="flex gap-2 items-center">
-                  <p class="text-[#232730] font-medium text-left">Issuing Country:</p>
-                  <p class="text-left">{{ normalizedContent()[0]?.issuing_country ?? '-' }}</p>
-                </div>
-                <div class="flex gap-2 items-center">
-                  <p class="text-[#232730] font-medium text-left">Expiry Date:</p>
-                  <p class="text-left">{{ normalizedContent()[0]?.expiry_date ?? '-' }}</p>
-                </div>
-                <div class="flex gap-2 items-center">
-                  <p class="text-[#232730] font-medium text-left">ID Number:</p>
-                  <p class="text-left">{{ normalizedContent()[0]?.Id_number ?? '-' }}</p>
-                </div>
-                <div class="flex gap-2 items-center">
-                  <p class="text-[#232730] font-medium text-left">Place of Birth:</p>
-                  <p class="text-left">{{ normalizedContent()[0]?.place_of_birth ?? '-' }}</p>
-                </div>
-                <div class="flex gap-2 items-center">
-                  <p class="text-[#232730] font-medium text-left">Holders Signature:</p>
-                  <p class="text-left">{{ normalizedContent()[0]?.holders_signature ?? '-' }}</p>
-                </div>
-                <div class="flex gap-2 items-center">
-                  <p class="text-[#232730] font-medium text-left">Sponsor/Employer:</p>
-                  <p class="text-left">{{ normalizedContent()[0]?.Sponsor_Employer ?? '-' }}</p>
-                </div>
-                <div class="flex gap-2 items-center">
-                  <p class="text-[#232730] font-medium text-left">Occupation:</p>
-                  <p class="text-left">{{ normalizedContent()[0]?.Occupation ?? '-' }}</p>
-                </div>
+            <div class="grid grid-cols-2 gap-x-8 gap-y-2">
+              <div
+                *ngIf="
+                  expandData()[0]?.document_type &&
+                  expandData()[0]?.document_type !== 'N/A'
+                "
+                class="flex items-center"
+              >
+                <p class="text-[#232730] font-medium mr-2">Document Type:</p>
+                <p class="text-[#232730] font-bold">
+                  {{ expandData()[0]?.document_type }}
+                </p>
+              </div>
+              <div
+                *ngIf="
+                  expandData()[0]?.issuing_country &&
+                  expandData()[0]?.issuing_country !== 'N/A'
+                "
+                class="flex items-center"
+              >
+                <p class="text-[#232730] font-medium mr-2">Issuing Country:</p>
+                <p class="text-[#232730] font-bold">
+                  {{ expandData()[0]?.issuing_country }}
+                </p>
+              </div>
+              <div
+                *ngIf="
+                  expandData()[0]?.expiry_date &&
+                  expandData()[0]?.expiry_date !== 'N/A'
+                "
+                class="flex items-center"
+              >
+                <p class="text-[#232730] font-medium mr-2">Expiry Date:</p>
+                <p class="text-[#232730] font-bold">
+                  {{ expandData()[0]?.expiry_date }}
+                </p>
+              </div>
+              <div
+                *ngIf="
+                  expandData()[0]?.Id_number &&
+                  expandData()[0]?.Id_number !== 'N/A'
+                "
+                class="flex items-center"
+              >
+                <p class="text-[#232730] font-medium mr-2">ID Number:</p>
+                <p class="text-[#232730] font-bold">
+                  {{ expandData()[0]?.Id_number }}
+                </p>
+              </div>
+              <div
+                *ngIf="
+                  expandData()[0]?.place_of_birth &&
+                  expandData()[0]?.place_of_birth !== 'N/A'
+                "
+                class="flex items-center"
+              >
+                <p class="text-[#232730] font-medium mr-2">Place of Birth:</p>
+                <p class="text-[#232730] font-bold">
+                  {{ expandData()[0]?.place_of_birth }}
+                </p>
+              </div>
+              <div
+                *ngIf="
+                  expandData()[0]?.holders_signature &&
+                  expandData()[0]?.holders_signature !== 'N/A'
+                "
+                class="flex items-center"
+              >
+                <p class="text-[#232730] font-medium mr-2">
+                  Holder's Signature:
+                </p>
+                <p class="text-[#232730] font-bold">
+                  {{ expandData()[0]?.holders_signature }}
+                </p>
+              </div>
+              <div
+                *ngIf="
+                  expandData()[0]?.Sponsor_Employer &&
+                  expandData()[0]?.Sponsor_Employer !== 'N/A'
+                "
+                class="flex items-center"
+              >
+                <p class="text-[#232730] font-medium mr-2">Sponsor/Employer:</p>
+                <p class="text-[#232730] font-bold">
+                  {{ expandData()[0]?.Sponsor_Employer }}
+                </p>
+              </div>
+              <div
+                *ngIf="
+                  expandData()[0]?.Occupation &&
+                  expandData()[0]?.Occupation !== 'N/A'
+                "
+                class="flex items-center"
+              >
+                <p class="text-[#232730] font-medium mr-2">Occupation:</p>
+                <p class="text-[#232730] font-bold">
+                  {{ expandData()[0]?.Occupation }}
+                </p>
               </div>
             </div>
 
-            <!-- Passport Details -->
             <ng-container *ngIf="passportFilePreview">
               <mat-divider></mat-divider>
-              <div class="flex items-center gap-4">
-                <img
-                  [src]="images()[1]"
-                  alt="Passport"
-                  class="w-[122px] h-[70px]"
-                />
-                <div class="grid grid-cols-2 gap-x-8 gap-y-2">
-                  <div class="flex gap-2 items-center">
-                    <p class="text-[#232730] font-medium text-left">Document Type:</p>
-                    <p class="text-left">{{ normalizedContent()[1]?.document_type ?? '-' }}</p>
-                  </div>
-                  <div class="flex gap-2 items-center">
-                    <p class="text-[#232730] font-medium text-left">Passport Number:</p>
-                    <p class="text-left">{{ normalizedContent()[1]?.Id_number ?? '-' }}</p>
-                  </div>
-                  <div class="flex gap-2 items-center">
-                    <p class="text-[#232730] font-medium text-left">Expiry Date:</p>
-                    <p class="text-left">{{ normalizedContent()[1]?.expiry_date ?? '-' }}</p>
-                  </div>
-                  <div class="flex gap-2 items-center">
-                    <p class="text-[#232730] font-medium text-left">Holder's Signature:</p>
-                    <p class="text-left">{{ normalizedContent()[1]?.holders_signature ?? '-' }}</p>
-                  </div>
-                  <div class="flex gap-2 items-center">
-                    <p class="text-[#232730] font-medium text-left">Place of Birth:</p>
-                    <p class="text-left">{{ normalizedContent()[1]?.place_of_birth ?? '-' }}</p>
-                  </div>
-                  <div class="flex gap-2 items-center">
-                    <p class="text-[#232730] font-medium text-left">Issuing Country:</p>
-                    <p class="text-left">{{ normalizedContent()[1]?.issuing_country ?? '-' }}</p>
-                  </div>
+              <div class="grid grid-cols-2 gap-x-8 gap-y-2">
+                <div
+                  *ngIf="
+                    expandData()[1]?.document_type &&
+                    expandData()[1]?.document_type !== 'N/A'
+                  "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">Document Type:</p>
+                  <p class="text-[#232730] font-bold">
+                    {{ expandData()[1]?.document_type }}
+                  </p>
+                </div>
+                <div
+                  *ngIf="
+                    expandData()[1]?.Id_number &&
+                    expandData()[1]?.Id_number !== 'N/A'
+                  "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">
+                    Passport Number:
+                  </p>
+                  <p class="text-[#232730] font-bold">
+                    {{ expandData()[1]?.Id_number }}
+                  </p>
+                </div>
+                <div
+                  *ngIf="
+                    expandData()[1]?.expiry_date &&
+                    expandData()[1]?.expiry_date !== 'N/A'
+                  "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">Expiry Date:</p>
+                  <p class="text-[#232730] font-bold">
+                    {{ expandData()[1]?.expiry_date }}
+                  </p>
+                </div>
+                <div
+                  *ngIf="
+                    expandData()[1]?.holders_signature &&
+                    expandData()[1]?.holders_signature !== 'N/A'
+                  "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">
+                    Holder's Signature:
+                  </p>
+                  <p class="text-[#232730] font-bold">
+                    {{ expandData()[1]?.holders_signature }}
+                  </p>
+                </div>
+                <div
+                  *ngIf="
+                    expandData()[1]?.place_of_birth &&
+                    expandData()[1]?.place_of_birth !== 'N/A'
+                  "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">Place of Birth:</p>
+                  <p class="text-[#232730] font-bold">
+                    {{ expandData()[1]?.place_of_birth }}
+                  </p>
+                </div>
+                <div
+                  *ngIf="
+                    expandData()[1]?.issuing_country &&
+                    expandData()[1]?.issuing_country !== 'N/A'
+                  "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">
+                    Issuing Country:
+                  </p>
+                  <p class="text-[#232730] font-bold">
+                    {{ expandData()[1]?.issuing_country }}
+                  </p>
                 </div>
               </div>
             </ng-container>
 
-            <!-- Emirates ID Details -->
             <ng-container *ngIf="filePreviewEmiratesId">
               <mat-divider></mat-divider>
-              <div class="flex items-center gap-4">
-                <img
-                  [src]="images()[2]"
-                  alt="Emirates ID"
-                  class="w-[122px] h-[70px]"
-                />
-                <div class="grid grid-cols-2 gap-x-8 gap-y-2">
-                  <div class="flex gap-2 items-center">
-                    <p class="text-[#232730] font-medium text-left">Document Type:</p>
-                    <p class="text-left">{{ normalizedContent()[2]?.document_type ?? '-' }}</p>
-                  </div>
-                  <div class="flex gap-2 items-center">
-                    <p class="text-[#232730] font-medium text-left">Issuing Place:</p>
-                    <p class="text-left">{{ normalizedContent()[2]?.issuing_country ?? '-' }}</p>
-                  </div>
-                  <div class="flex gap-2 items-center">
-                    <p class="text-[#232730] font-medium text-left">Expiry Date:</p>
-                    <p class="text-left">{{ normalizedContent()[2]?.expiry_date ?? '-' }}</p>
-                  </div>
-                  <div class="flex gap-2 items-center">
-                    <p class="text-[#232730] font-medium text-left">ID Number:</p>
-                    <p class="text-left">{{ normalizedContent()[2]?.Id_number ?? '-' }}</p>
-                  </div>
-                  <div class="flex gap-2 items-center">
-                    <p class="text-[#232730] font-medium text-left">Occupation:</p>
-                    <p class="text-left">{{ normalizedContent()[2]?.Occupation ?? '-' }}</p>
-                  </div>
+              <div class="grid grid-cols-2 gap-x-8 gap-y-2">
+                <div
+                  *ngIf="
+                    expandData()[2]?.document_type &&
+                    expandData()[2]?.document_type !== 'N/A'
+                  "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">Document Type:</p>
+                  <p class="text-[#232730] font-bold">
+                    {{ expandData()[2]?.document_type }}
+                  </p>
+                </div>
+                <div
+                  *ngIf="
+                    expandData()[2]?.issuing_country &&
+                    expandData()[2]?.issuing_country !== 'N/A'
+                  "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">Issuing Place:</p>
+                  <p class="text-[#232730] font-bold">
+                    {{ expandData()[2]?.issuing_country }}
+                  </p>
+                </div>
+                <div
+                  *ngIf="
+                    expandData()[2]?.expiry_date &&
+                    expandData()[2]?.expiry_date !== 'N/A'
+                  "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">Expiry Date:</p>
+                  <p class="text-[#232730] font-bold">
+                    {{ expandData()[2]?.expiry_date }}
+                  </p>
+                </div>
+                <div
+                  *ngIf="
+                    expandData()[2]?.Id_number &&
+                    expandData()[2]?.Id_number !== 'N/A'
+                  "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">ID Number:</p>
+                  <p class="text-[#232730] font-bold">
+                    {{ expandData()[2]?.Id_number }}
+                  </p>
+                </div>
+                <div
+                  *ngIf="
+                    expandData()[2]?.Occupation &&
+                    expandData()[2]?.Occupation !== 'N/A'
+                  "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">Occupation:</p>
+                  <p class="text-[#232730] font-bold">
+                    {{ expandData()[2]?.Occupation }}
+                  </p>
                 </div>
               </div>
             </ng-container>
@@ -486,4 +624,19 @@
       class="transaction-detail-row"
     ></tr>
   </table>
+</ng-template>
+<ng-template #openDialogCrossDialog>
+  <h4 class="flex justify-center text-center" mat-dialog-title>
+    Extracting Your Document Data Using AI
+  </h4>
+
+  <mat-dialog-content class="mat-typography">
+    <div class="flex items-center justify-center flex-col">
+      <div class="pt-2 !px-8">
+        Scanning all documents and retrieving your information using the AI
+        engine
+      </div>
+      <div #lottie></div>
+    </div>
+  </mat-dialog-content>
 </ng-template>

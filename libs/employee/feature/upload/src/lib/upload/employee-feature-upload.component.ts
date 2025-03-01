@@ -10,7 +10,7 @@ import {
 import { CommonModule, DOCUMENT, NgOptimizedImage } from '@angular/common';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { AlertService } from '@shared-ui-alert';
 import {
@@ -46,7 +46,7 @@ import {
 } from '@angular/material/dialog';
 import { ExcelService } from '../../../../../../shared/ui/excel-service/src/lib/download-excel.service';
 
-type View = 'upload' | 'table';
+type View = 'upload' | 'table' | 'preview';
 type FileType = 'passport' | 'emiratesId' | 'residency';
 
 @Component({
@@ -66,6 +66,7 @@ type FileType = 'passport' | 'emiratesId' | 'residency';
     MatDivider,
     MatDialogContent,
     MatDialogTitle,
+    FormsModule
   ],
   templateUrl: './employee-feature-upload.component.html',
   styleUrls: ['./employee-feature-upload.component.scss'],
@@ -97,10 +98,12 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
 
   filePreview: string | ArrayBuffer | null = null;
   passportFilePreview: string | ArrayBuffer | null = null;
+  visaFilePreview: string | ArrayBuffer | null = null;
   filePreviewEmiratesId: string | ArrayBuffer | null = null;
   selectedTransactionId: number | null = null;
   showLottie = true;
   columns: string[] = ['name', 'date', 'nationality', 'gender', 'expand'];
+
 
   fileSize = signal('');
   fileSizePassport = signal('');
@@ -114,6 +117,8 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
   normalizedContent = signal<JsonResult[]>([]);
   expandData = signal<JsonResult[]>([]);
   images = signal<string[]>([]);
+  isEditing : boolean = true; //if we want to have edit button we must set this to false
+  expandedTransactions: JsonResult[] = [];
 
   ngAfterViewInit() {
     this.document.defaultView?.setTimeout(this.startLottie, 0);
@@ -274,7 +279,6 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
     this.uploadFiles();
     this.showLottie = true;
   }
-
   uploadFiles() {
     this._loading.set(true);
 
@@ -304,18 +308,29 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
       .subscribe({
         next: (result) => {
           this.DialogRef?.close();
-          this._view.set('table');
-          const serviceResult = result.results[0].json_result[0];
-          const expandResult = result.results[0].json_result;
+          // this._view.set('table');
+          this._view.set('preview');
+          const serviceResult = result.results[0].json_result;
+
+          const orderPriority: { [key: string]: number } = {
+            'Visa': 1,
+            'Passport': 2,
+            'Emirates ID': 3,
+          };
+
+          const sortedResults = Array.isArray(serviceResult)
+            ? serviceResult.sort((a, b) => {
+              const aPriority = orderPriority[a.document_type] || 0;
+              const bPriority = orderPriority[b.document_type] || 0;
+              return aPriority - bPriority;
+            })
+            : [serviceResult];
+
           this.normalizedContent.set(
-            Array.isArray(serviceResult)
-              ? serviceResult.map((item) => normalizeKeys(item))
-              : [normalizeKeys(serviceResult)]
+            sortedResults.map((item) => normalizeKeys(item))
           );
           this.expandData.set(
-            Array.isArray(expandResult)
-              ? expandResult.map((item) => replaceKeys(item, '/', '_'))
-              : [replaceKeys(expandResult, '/', '_')]
+            sortedResults.map((item) => replaceKeys(item, '/', '_'))
           );
         },
         error: () => {
@@ -325,12 +340,23 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
       });
   }
 
+
   downloadExcel() {
     this.excelService.exportExcel(
       this.expandData(),
       this.normalizedContent()[0].name
     );
   }
+
+  editData() {
+    this.isEditing=true;
+  }
+
+  confirmData() {
+    this._view.set('table');
+
+  }
+  
 
   setExpandValue() {
     this._isExpanded.update((current) => !current);

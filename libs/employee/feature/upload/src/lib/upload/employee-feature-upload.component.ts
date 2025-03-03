@@ -110,7 +110,6 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
   filePreview: string | ArrayBuffer | null = null;
   passportFilePreview: string | ArrayBuffer | null = null;
   filePreviewEmiratesId: string | ArrayBuffer | null = null;
-  selectedTransactionId: number | null = null;
   showLottie = true;
   columns: string[] = ['name', 'date', 'nationality', 'gender', 'expand'];
 
@@ -168,8 +167,6 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
   _view = signal<View>('upload');
   _loading = signal(false);
   _isExpanded = signal(true);
-  normalizedContent = signal<JsonResult[]>([]);
-  expandData = signal<JsonResult[]>([]);
   images = signal<string[]>([]);
   emiratesId = signal<JsonResult | undefined>(undefined);
   passport = signal<JsonResult | undefined>(undefined);

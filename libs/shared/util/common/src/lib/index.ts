@@ -26,7 +26,13 @@ export function replaceKeys(obj: any, oldChar: string, newChar: string) {
   }, {} as any);
 }
 
-export function extractImage(file: File): Observable<File> {
+export function formatFileSize(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+}
+
+export function extractImage(file: File) {
   return new Observable<File>((observer) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -91,7 +97,7 @@ export function extractImage(file: File): Observable<File> {
   });
 }
 
-export function compressFile(file: File): Observable<File> {
+export function compressFile(file: File) {
   return new Observable<File>((observer) => {
     const reader = new FileReader();
     reader.readAsArrayBuffer(file);

@@ -6,6 +6,7 @@ import {
   signal,
   TemplateRef,
   ViewChild,
+  WritableSignal,
 } from '@angular/core';
 import { CommonModule, DOCUMENT, NgOptimizedImage } from '@angular/common';
 import { MatButton, MatButtonModule } from '@angular/material/button';
@@ -26,6 +27,7 @@ import { OverlaySpinnerDirective } from '@insurance-shared-ui-overlay-spinner';
 import {
   compressFile,
   extractImage,
+  formatFileSize,
   normalizeKeys,
   replaceKeys,
 } from '@shared-util-common';
@@ -152,7 +154,7 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
             type: file.type,
           })
         );
-        this.fileSize.set(this.formatFileSize(this.file()!.size));
+        this.fileSize.set(formatFileSize(this.file()!.size));
       };
     }
   }
@@ -190,9 +192,7 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
             type: file.type,
           })
         );
-        this.fileSizePassport.set(
-          this.formatFileSize(this.filePassport()!.size)
-        );
+        this.fileSizePassport.set(formatFileSize(this.filePassport()!.size));
       };
     }
   }
@@ -230,7 +230,7 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
             type: file.type,
           })
         );
-        this.fileSizeId.set(this.formatFileSize(this.fileEmiratesId()!.size));
+        this.fileSizeId.set(formatFileSize(this.fileEmiratesId()!.size));
       };
     }
   }
@@ -336,12 +336,6 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
     this._isExpanded.update((current) => !current);
   }
 
-  private formatFileSize(bytes: number): string {
-    if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
-  }
-
   private startLottie = () => {
     if (!this.lottie) {
       return;
@@ -359,36 +353,36 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
   };
 
   private extractUploadedFile(file: File, type: FileType) {
-    switch (type) {
-      case 'emiratesId':
-        extractImage(file).subscribe({
-          next: (resizedFile) => {
-            this.fileEmiratesId.set(resizedFile);
-            this.fileSizeId.set(this.formatFileSize(resizedFile.size));
-          },
-          error: (error) => console.error('Error processing image:', error),
-        });
-        break;
-      case 'passport':
-        extractImage(file).subscribe({
-          next: (resizedFile) => {
-            this.filePassport.set(resizedFile);
-            this.fileSizePassport.set(this.formatFileSize(resizedFile.size));
-          },
-          error: (error) => console.error('Error processing image:', error),
-        });
-        break;
-      case 'residency':
-        extractImage(file).subscribe({
-          next: (resizedFile) => {
-            this.file.set(resizedFile);
-            this.fileSize.set(this.formatFileSize(resizedFile.size));
-          },
-          error: (error) => console.error('Error processing image:', error),
-        });
-        break;
-      default:
-        return;
-    }
+    const fileMapping = {
+      emiratesId: {
+        fileSetter: this.fileEmiratesId,
+        sizeSetter: this.fileSizeId,
+      },
+      passport: {
+        fileSetter: this.filePassport,
+        sizeSetter: this.fileSizePassport,
+      },
+      residency: { fileSetter: this.file, sizeSetter: this.fileSize },
+    };
+
+    const mapping = fileMapping[type];
+
+    if (!mapping) return;
+
+    this.processFile(file, mapping.fileSetter, mapping.sizeSetter);
+  }
+
+  private processFile(
+    file: File,
+    fileSetter: WritableSignal<File | null>,
+    sizeSetter: WritableSignal<string>
+  ) {
+    extractImage(file).subscribe({
+      next: (resizedFile) => {
+        fileSetter.set(resizedFile);
+        sizeSetter.set(formatFileSize(resizedFile.size));
+      },
+      error: (error) => console.error('Error processing image:', error),
+    });
   }
 }

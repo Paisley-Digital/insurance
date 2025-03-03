@@ -11,7 +11,7 @@ import {
 import { CommonModule, DOCUMENT, NgOptimizedImage } from '@angular/common';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { AlertService } from '@shared-ui-alert';
 import {
@@ -47,8 +47,11 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { ExcelService } from '../../../../../../shared/ui/excel-service/src/lib/download-excel.service';
+import { ErrorMessageComponent } from '@shared-ui-input-validator';
+import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 
-type View = 'upload' | 'table';
+type View = 'upload' | 'review' | 'table';
 type FileType = 'passport' | 'emiratesId' | 'residency';
 
 @Component({
@@ -68,6 +71,11 @@ type FileType = 'passport' | 'emiratesId' | 'residency';
     MatDivider,
     MatDialogContent,
     MatDialogTitle,
+    ErrorMessageComponent,
+    MatError,
+    MatFormField,
+    MatInput,
+    MatLabel,
   ],
   templateUrl: './employee-feature-upload.component.html',
   styleUrls: ['./employee-feature-upload.component.scss'],
@@ -85,6 +93,7 @@ type FileType = 'passport' | 'emiratesId' | 'residency';
 export class EmployeeFeatureUploadComponent implements AfterViewInit {
   private alert = inject(AlertService);
   private service = inject(EmployeeDataDashboardService);
+  private formBuilder = inject(FormBuilder);
   private apiRoot = inject(API_ROOT);
   private lottiesPath = './assets/images/loadingAnimation.json';
   private dialog = inject(MatDialog);
@@ -104,6 +113,17 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
   showLottie = true;
   columns: string[] = ['name', 'date', 'nationality', 'gender', 'expand'];
 
+  emiratesIdForm = this.formBuilder.group({
+    name: ['', Validators.required],
+    lastName: ['', Validators.required],
+    documentTypeEmiratesId: ['', Validators.required],
+    id: ['', Validators.required],
+    issuingCountry: ['', Validators.required],
+    nationality: ['', Validators.required],
+    date: ['', Validators.required],
+    gender: ['', Validators.required],
+  });
+
   fileSize = signal('');
   fileSizePassport = signal('');
   fileSizeId = signal('');
@@ -116,6 +136,8 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
   normalizedContent = signal<JsonResult[]>([]);
   expandData = signal<JsonResult[]>([]);
   images = signal<string[]>([]);
+  emiratesId = signal<JsonResult | undefined>(undefined);
+  passport = signal<JsonResult[]>([]);
 
   ngAfterViewInit() {
     this.document.defaultView?.setTimeout(this.startLottie, 0);
@@ -304,9 +326,11 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
       .subscribe({
         next: (result) => {
           this.DialogRef?.close();
-          this._view.set('table');
+          this._view.set('review');
           const serviceResult = result.results[0].json_result[0];
           const expandResult = result.results[0].json_result;
+          this.filterDocumentTypes(expandResult);
+          this.patchValueFormsInEmiratesId();
           this.normalizedContent.set(
             Array.isArray(serviceResult)
               ? serviceResult.map((item) => normalizeKeys(item))
@@ -383,6 +407,26 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
         sizeSetter.set(formatFileSize(resizedFile.size));
       },
       error: (error) => console.error('Error processing image:', error),
+    });
+  }
+
+  private filterDocumentTypes(doc: JsonResult[]) {
+    const emiratesId = doc.find(
+      (emirates) => emirates.document_type === 'Emirates ID'
+    );
+    this.emiratesId.set(emiratesId);
+  }
+
+  private patchValueFormsInEmiratesId() {
+    this.emiratesIdForm.patchValue({
+      name: this.emiratesId()?.name,
+      lastName: this.emiratesId()?.last_name,
+      documentTypeEmiratesId: this.emiratesId()?.document_type,
+      id: this.emiratesId()?.Id_number,
+      issuingCountry: this.emiratesId()?.issuing_country,
+      nationality: this.emiratesId()?.Nationality,
+      date: this.emiratesId()?.birthday,
+      gender: this.emiratesId()?.Gender,
     });
   }
 }

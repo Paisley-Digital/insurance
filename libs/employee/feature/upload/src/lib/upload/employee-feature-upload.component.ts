@@ -51,7 +51,7 @@ import { ErrorMessageComponent } from '@shared-ui-input-validator';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 
-type View = 'upload' | 'reviewEmiratesId' | 'passportReview' | 'table';
+type View = 'upload' | 'reviewEmiratesId' | 'visa' | 'passportReview' | 'table';
 type FileType = 'passport' | 'emiratesId' | 'residency';
 
 @Component({
@@ -137,6 +137,21 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
     expireDate: ['', Validators.required],
   });
 
+  visaForm = this.formBuilder.group({
+    name: ['', Validators.required],
+    lastName: ['', Validators.required],
+    documentTypeEmiratesId: ['', Validators.required],
+    id: ['', Validators.required],
+    issuingCountry: ['', Validators.required],
+    nationality: ['', Validators.required],
+    date: ['', Validators.required],
+    gender: ['', Validators.required],
+    placeOfBirth: ['', Validators.required],
+    expireDate: ['', Validators.required],
+    occupation: ['', Validators.required],
+    sponsor: ['', Validators.required],
+  });
+
   fileSize = signal('');
   fileSizePassport = signal('');
   fileSizeId = signal('');
@@ -151,6 +166,7 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
   images = signal<string[]>([]);
   emiratesId = signal<JsonResult | undefined>(undefined);
   passport = signal<JsonResult | undefined>(undefined);
+  visa = signal<JsonResult | undefined>(undefined);
 
   ngAfterViewInit() {
     this.document.defaultView?.setTimeout(this.startLottie, 0);
@@ -344,6 +360,7 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
           const expandResult = result.results[0].json_result;
           this.filterDocumentTypes(expandResult);
           this.filterPassport(expandResult);
+          this.filterVisa(expandResult);
           this.patchValueFormsInEmiratesId();
           this.normalizedContent.set(
             Array.isArray(serviceResult)
@@ -380,6 +397,11 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
   }
 
   changeViewToVisa() {
+    this.patchValueFormsVisa();
+    this._view.set('visa');
+  }
+
+  changeViewToTable() {
     this._view.set('table');
   }
 
@@ -447,6 +469,12 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
     this.passport.set(emiratesId);
   }
 
+  private filterVisa(doc: JsonResult[]) {
+    const emiratesId = doc.find((emirates) => emirates.Occupation !== 'N/A');
+    const normalizedData = replaceKeys(emiratesId, '/', '_');
+    this.visa.set(normalizedData);
+  }
+
   private patchValueFormsInEmiratesId() {
     this.emiratesIdForm.patchValue({
       name: this.emiratesId()?.name,
@@ -472,6 +500,23 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
       gender: this.passport()?.Gender,
       placeOfBirth: this.passport()?.place_of_birth,
       expireDate: this.passport()?.expiry_date,
+    });
+  }
+
+  private patchValueFormsVisa() {
+    this.visaForm.patchValue({
+      name: this.visa()?.name,
+      lastName: this.visa()?.last_name,
+      documentTypeEmiratesId: this.visa()?.document_type,
+      id: this.visa()?.Id_number,
+      issuingCountry: this.visa()?.issuing_country,
+      nationality: this.visa()?.Nationality,
+      date: this.visa()?.birthday,
+      gender: this.visa()?.Gender,
+      placeOfBirth: this.visa()?.place_of_birth,
+      expireDate: this.visa()?.expiry_date,
+      occupation: this.visa()?.Occupation,
+      sponsor: this.visa()?.Sponsor_Employer,
     });
   }
 }

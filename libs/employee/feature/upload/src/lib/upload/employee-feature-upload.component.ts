@@ -365,22 +365,11 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
         next: (result) => {
           this.DialogRef?.close();
           this._view.set('reviewEmiratesId');
-          const serviceResult = result.results[0].json_result[0];
           const expandResult = result.results[0].json_result;
           this.filterDocumentTypes(expandResult);
           this.filterPassport(expandResult);
           this.filterVisa(expandResult);
           this.patchValueFormsInEmiratesId();
-          this.normalizedContent.set(
-            Array.isArray(serviceResult)
-              ? serviceResult.map((item) => normalizeKeys(item))
-              : [normalizeKeys(serviceResult)]
-          );
-          this.expandData.set(
-            Array.isArray(expandResult)
-              ? expandResult.map((item) => replaceKeys(item, '/', '_'))
-              : [replaceKeys(expandResult, '/', '_')]
-          );
         },
         error: () => {
           this.DialogRef?.close();

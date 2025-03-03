@@ -11,12 +11,13 @@ import {
 import { CommonModule, DOCUMENT, NgOptimizedImage } from '@angular/common';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { AlertService } from '@shared-ui-alert';
 import {
   AiPayload,
   EmployeeDataDashboardService,
+  FormsEntity,
   JsonResult,
 } from '@insurance-employee-data-dashboards';
 import { finalize, switchMap } from 'rxjs';
@@ -47,8 +48,11 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { ExcelService } from '../../../../../../shared/ui/excel-service/src/lib/download-excel.service';
+import { ErrorMessageComponent } from '@shared-ui-input-validator';
+import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 
-type View = 'upload' | 'table';
+type View = 'upload' | 'reviewEmiratesId' | 'visa' | 'passportReview' | 'table';
 type FileType = 'passport' | 'emiratesId' | 'residency';
 
 @Component({
@@ -68,6 +72,11 @@ type FileType = 'passport' | 'emiratesId' | 'residency';
     MatDivider,
     MatDialogContent,
     MatDialogTitle,
+    ErrorMessageComponent,
+    MatError,
+    MatFormField,
+    MatInput,
+    MatLabel,
   ],
   templateUrl: './employee-feature-upload.component.html',
   styleUrls: ['./employee-feature-upload.component.scss'],
@@ -85,6 +94,7 @@ type FileType = 'passport' | 'emiratesId' | 'residency';
 export class EmployeeFeatureUploadComponent implements AfterViewInit {
   private alert = inject(AlertService);
   private service = inject(EmployeeDataDashboardService);
+  private formBuilder = inject(FormBuilder);
   private apiRoot = inject(API_ROOT);
   private lottiesPath = './assets/images/loadingAnimation.json';
   private dialog = inject(MatDialog);
@@ -100,9 +110,53 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
   filePreview: string | ArrayBuffer | null = null;
   passportFilePreview: string | ArrayBuffer | null = null;
   filePreviewEmiratesId: string | ArrayBuffer | null = null;
-  selectedTransactionId: number | null = null;
   showLottie = true;
   columns: string[] = ['name', 'date', 'nationality', 'gender', 'expand'];
+
+  emiratesIdForm = this.formBuilder.group({
+    name: ['', Validators.required],
+    lastName: ['', Validators.required],
+    documentTypeEmiratesId: ['', Validators.required],
+    id: ['', Validators.required],
+    issuingCountry: ['', Validators.required],
+    nationality: ['', Validators.required],
+    date: ['', Validators.required],
+    gender: ['', Validators.required],
+    expireDate: ['', Validators.required],
+    placeOfBirth: ['', Validators.required],
+    holderSignature: ['', Validators.required],
+    sponsor: ['', Validators.required],
+    occupation: ['', Validators.required],
+  });
+
+  passportForm = this.formBuilder.group({
+    name: ['', Validators.required],
+    lastName: ['', Validators.required],
+    documentTypeEmiratesId: ['', Validators.required],
+    id: ['', Validators.required],
+    issuingCountry: ['', Validators.required],
+    nationality: ['', Validators.required],
+    date: ['', Validators.required],
+    gender: ['', Validators.required],
+    holderSignature: ['', Validators.required],
+    placeOfBirth: ['', Validators.required],
+    expireDate: ['', Validators.required],
+  });
+
+  visaForm = this.formBuilder.group({
+    name: ['', Validators.required],
+    lastName: ['', Validators.required],
+    documentTypeEmiratesId: ['', Validators.required],
+    id: ['', Validators.required],
+    issuingCountry: ['', Validators.required],
+    nationality: ['', Validators.required],
+    date: ['', Validators.required],
+    gender: ['', Validators.required],
+    placeOfBirth: ['', Validators.required],
+    expireDate: ['', Validators.required],
+    occupation: ['', Validators.required],
+    sponsor: ['', Validators.required],
+  });
 
   fileSize = signal('');
   fileSizePassport = signal('');
@@ -113,9 +167,12 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
   _view = signal<View>('upload');
   _loading = signal(false);
   _isExpanded = signal(true);
-  normalizedContent = signal<JsonResult[]>([]);
-  expandData = signal<JsonResult[]>([]);
   images = signal<string[]>([]);
+  emiratesId = signal<JsonResult | undefined>(undefined);
+  passport = signal<JsonResult | undefined>(undefined);
+  visa = signal<JsonResult | undefined>(undefined);
+  formsList = signal<FormsEntity[]>([]);
+  downloadExcelData = signal<any[]>([]);
 
   ngAfterViewInit() {
     this.document.defaultView?.setTimeout(this.startLottie, 0);
@@ -304,19 +361,12 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
       .subscribe({
         next: (result) => {
           this.DialogRef?.close();
-          this._view.set('table');
-          const serviceResult = result.results[0].json_result[0];
+          this._view.set('reviewEmiratesId');
           const expandResult = result.results[0].json_result;
-          this.normalizedContent.set(
-            Array.isArray(serviceResult)
-              ? serviceResult.map((item) => normalizeKeys(item))
-              : [normalizeKeys(serviceResult)]
-          );
-          this.expandData.set(
-            Array.isArray(expandResult)
-              ? expandResult.map((item) => replaceKeys(item, '/', '_'))
-              : [replaceKeys(expandResult, '/', '_')]
-          );
+          this.filterDocumentTypes(expandResult);
+          this.filterPassport(expandResult);
+          this.filterVisa(expandResult);
+          this.patchValueFormsInEmiratesId();
         },
         error: () => {
           this.DialogRef?.close();
@@ -327,13 +377,34 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
 
   downloadExcel() {
     this.excelService.exportExcel(
-      this.expandData(),
-      this.normalizedContent()[0].name
+      this.downloadExcelData(),
+      this.emiratesIdForm.value.name!
     );
   }
 
   setExpandValue() {
     this._isExpanded.update((current) => !current);
+  }
+
+  changeViewToPassportReview() {
+    this.patchValueFormsPassport();
+    this._view.set('passportReview');
+  }
+
+  changeViewToVisa() {
+    this.patchValueFormsVisa();
+    this._view.set('visa');
+  }
+
+  changeViewToTable() {
+    const formsValue = this.emiratesIdForm.getRawValue();
+    this.formsList.set([formsValue] as FormsEntity[]);
+    this.downloadExcelData.set([
+      this.emiratesIdForm.getRawValue(),
+      this.passportForm.getRawValue(),
+      this.visaForm.getRawValue(),
+    ]);
+    this._view.set('table');
   }
 
   private startLottie = () => {
@@ -383,6 +454,78 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
         sizeSetter.set(formatFileSize(resizedFile.size));
       },
       error: (error) => console.error('Error processing image:', error),
+    });
+  }
+
+  private filterDocumentTypes(doc: JsonResult[]) {
+    const emiratesId = doc.find(
+      (emirates) => emirates.document_type === 'Emirates ID'
+    );
+    const normalizedData = replaceKeys(emiratesId, '/', '_');
+    this.emiratesId.set(normalizedData);
+  }
+
+  private filterPassport(doc: JsonResult[]) {
+    const emiratesId = doc.find(
+      (emirates) => emirates.document_type === 'Passport'
+    );
+    this.passport.set(emiratesId);
+  }
+
+  private filterVisa(doc: JsonResult[]) {
+    const emiratesId = doc.find((emirates) => emirates.Occupation !== 'N/A');
+    const normalizedData = replaceKeys(emiratesId, '/', '_');
+    this.visa.set(normalizedData);
+  }
+
+  private patchValueFormsInEmiratesId() {
+    this.emiratesIdForm.patchValue({
+      name: this.emiratesId()?.name,
+      lastName: this.emiratesId()?.last_name,
+      documentTypeEmiratesId: this.emiratesId()?.document_type,
+      id: this.emiratesId()?.Id_number,
+      issuingCountry: this.emiratesId()?.issuing_country,
+      nationality: this.emiratesId()?.Nationality,
+      date: this.emiratesId()?.birthday,
+      gender: this.emiratesId()?.Gender,
+      expireDate: this.emiratesId()?.expiry_date,
+      placeOfBirth: this.emiratesId()?.place_of_birth,
+      holderSignature: this.emiratesId()?.holders_signature,
+      sponsor: this.emiratesId()?.Sponsor_Employer,
+      occupation: this.emiratesId()?.Occupation,
+    });
+  }
+
+  private patchValueFormsPassport() {
+    this.passportForm.patchValue({
+      name: this.passport()?.name,
+      lastName: this.passport()?.last_name,
+      documentTypeEmiratesId: this.passport()?.document_type,
+      id: this.passport()?.Id_number,
+      issuingCountry: this.passport()?.issuing_country,
+      nationality: this.passport()?.Nationality,
+      date: this.passport()?.birthday,
+      gender: this.passport()?.Gender,
+      placeOfBirth: this.passport()?.place_of_birth,
+      expireDate: this.passport()?.expiry_date,
+      holderSignature: this.passport()?.holders_signature,
+    });
+  }
+
+  private patchValueFormsVisa() {
+    this.visaForm.patchValue({
+      name: this.visa()?.name,
+      lastName: this.visa()?.last_name,
+      documentTypeEmiratesId: this.visa()?.document_type,
+      id: this.visa()?.Id_number,
+      issuingCountry: this.visa()?.issuing_country,
+      nationality: this.visa()?.Nationality,
+      date: this.visa()?.birthday,
+      gender: this.visa()?.Gender,
+      placeOfBirth: this.visa()?.place_of_birth,
+      expireDate: this.visa()?.expiry_date,
+      occupation: this.visa()?.Occupation,
+      sponsor: this.visa()?.Sponsor_Employer,
     });
   }
 }

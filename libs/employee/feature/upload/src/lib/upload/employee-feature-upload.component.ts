@@ -175,6 +175,7 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
   passport = signal<JsonResult | undefined>(undefined);
   visa = signal<JsonResult | undefined>(undefined);
   formsList = signal<FormsEntity[]>([]);
+  downloadExcelData = signal<any[]>([]);
 
   ngAfterViewInit() {
     this.document.defaultView?.setTimeout(this.startLottie, 0);
@@ -390,8 +391,8 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
 
   downloadExcel() {
     this.excelService.exportExcel(
-      this.expandData(),
-      this.normalizedContent()[0].name
+      this.downloadExcelData(),
+      this.emiratesIdForm.value.name!
     );
   }
 
@@ -412,6 +413,11 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
   changeViewToTable() {
     const formsValue = this.emiratesIdForm.getRawValue();
     this.formsList.set([formsValue] as FormsEntity[]);
+    this.downloadExcelData.set([
+      this.emiratesIdForm.getRawValue(),
+      this.passportForm.getRawValue(),
+      this.visaForm.getRawValue(),
+    ]);
     this._view.set('table');
   }
 

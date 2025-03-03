@@ -310,7 +310,7 @@
   </div>
   <table
     class="statement-table mt-3 w-full"
-    [dataSource]="normalizedContent()"
+    [dataSource]="formsList()"
     multiTemplateDataRows
     mat-table
     matSort
@@ -318,24 +318,24 @@
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Full Name</th>
       <td mat-cell *matCellDef="let transaction">
-        <div>{{ transaction.name }} {{ transaction.last_name }}</div>
+        <div>{{ transaction.name }} {{ transaction.lastName }}</div>
       </td>
     </ng-container>
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
       <td mat-cell *matCellDef="let transaction">
-        {{ expandData()[0]?.birthday ? transaction.birthday : 'Not found' }}
+        {{ transaction.date ? transaction.date : 'Not found' }}
       </td>
     </ng-container>
     <ng-container matColumnDef="nationality">
       <th mat-header-cell *matHeaderCellDef>Nationality</th>
       <td mat-cell *matCellDef="let transaction">
-        {{ transaction.Nationality }}
+        {{ transaction.nationality }}
       </td>
     </ng-container>
     <ng-container matColumnDef="gender">
       <th mat-header-cell *matHeaderCellDef>Gender</th>
-      <td mat-cell *matCellDef="let transaction">{{ transaction.Gender }}</td>
+      <td mat-cell *matCellDef="let transaction">{{ transaction.gender }}</td>
     </ng-container>
     <ng-container matColumnDef="expand">
       <th class="!w-10" mat-header-cell *matHeaderCellDef></th>
@@ -363,68 +363,67 @@
             <div class="grid grid-cols-2 gap-x-8 gap-y-2">
               <div
                 *ngIf="
-                  expandData()[0]?.document_type &&
-                  expandData()[0]?.document_type !== 'N/A'
+                  emiratesIdForm.value.documentTypeEmiratesId &&
+                  emiratesIdForm.value.documentTypeEmiratesId !== 'N/A'
                 "
                 class="flex items-center"
               >
                 <p class="text-[#232730] font-medium mr-2">Document Type:</p>
                 <p class="text-[#232730] font-bold">
-                  {{ expandData()[0]?.document_type }}
+                  {{ emiratesIdForm.value.documentTypeEmiratesId }}
                 </p>
               </div>
               <div
                 *ngIf="
-                  expandData()[0]?.issuing_country &&
-                  expandData()[0]?.issuing_country !== 'N/A'
+                  emiratesIdForm.value.issuingCountry &&
+                  emiratesIdForm.value.issuingCountry !== 'N/A'
                 "
                 class="flex items-center"
               >
                 <p class="text-[#232730] font-medium mr-2">Issuing Country:</p>
                 <p class="text-[#232730] font-bold">
-                  {{ expandData()[0]?.issuing_country }}
+                  {{ emiratesIdForm.value.issuingCountry }}
                 </p>
               </div>
               <div
                 *ngIf="
-                  expandData()[0]?.expiry_date &&
-                  expandData()[0]?.expiry_date !== 'N/A'
+                  emiratesIdForm.value.expireDate &&
+                  emiratesIdForm.value.expireDate !== 'N/A'
                 "
                 class="flex items-center"
               >
                 <p class="text-[#232730] font-medium mr-2">Expiry Date:</p>
                 <p class="text-[#232730] font-bold">
-                  {{ expandData()[0]?.expiry_date }}
+                  {{ emiratesIdForm.value.expireDate }}
                 </p>
               </div>
               <div
                 *ngIf="
-                  expandData()[0]?.Id_number &&
-                  expandData()[0]?.Id_number !== 'N/A'
+                  emiratesIdForm.value.id && emiratesIdForm.value.id !== 'N/A'
                 "
                 class="flex items-center"
               >
                 <p class="text-[#232730] font-medium mr-2">ID Number:</p>
                 <p class="text-[#232730] font-bold">
-                  {{ expandData()[0]?.Id_number }}
+                  {{ emiratesIdForm.value.id }}
                 </p>
               </div>
               <div
                 *ngIf="
-                  expandData()[0]?.place_of_birth &&
-                  expandData()[0]?.place_of_birth !== 'N/A'
+                  emiratesIdForm.value.placeOfBirth &&
+                  emiratesIdForm.value.placeOfBirth !== 'N/A'
                 "
                 class="flex items-center"
               >
                 <p class="text-[#232730] font-medium mr-2">Place of Birth:</p>
                 <p class="text-[#232730] font-bold">
-                  {{ expandData()[0]?.place_of_birth }}
+                  {{ emiratesIdForm.value.placeOfBirth }}
                 </p>
               </div>
               <div
                 *ngIf="
-                  expandData()[0]?.holders_signature &&
-                  expandData()[0]?.holders_signature !== 'N/A'
+                  emiratesIdForm.value.placeOfBirth &&
+                  emiratesIdForm.value.placeOfBirth !== 'N/A'
                 "
                 class="flex items-center"
               >
@@ -432,31 +431,31 @@
                   Holder's Signature:
                 </p>
                 <p class="text-[#232730] font-bold">
-                  {{ expandData()[0]?.holders_signature }}
+                  {{ emiratesIdForm.value.placeOfBirth }}
                 </p>
               </div>
               <div
                 *ngIf="
-                  expandData()[0]?.Sponsor_Employer &&
-                  expandData()[0]?.Sponsor_Employer !== 'N/A'
+                  emiratesIdForm.value.sponsor &&
+                  emiratesIdForm.value.sponsor !== 'N/A'
                 "
                 class="flex items-center"
               >
                 <p class="text-[#232730] font-medium mr-2">Sponsor/Employer:</p>
                 <p class="text-[#232730] font-bold">
-                  {{ expandData()[0]?.Sponsor_Employer }}
+                  {{ emiratesIdForm.value.sponsor }}
                 </p>
               </div>
               <div
                 *ngIf="
-                  expandData()[0]?.Occupation &&
-                  expandData()[0]?.Occupation !== 'N/A'
+                  emiratesIdForm.value.occupation &&
+                  emiratesIdForm.value.occupation !== 'N/A'
                 "
                 class="flex items-center"
               >
                 <p class="text-[#232730] font-medium mr-2">Occupation:</p>
                 <p class="text-[#232730] font-bold">
-                  {{ expandData()[0]?.Occupation }}
+                  {{ emiratesIdForm.value.occupation }}
                 </p>
               </div>
             </div>
@@ -466,20 +465,19 @@
               <div class="grid grid-cols-2 gap-x-8 gap-y-2">
                 <div
                   *ngIf="
-                    expandData()[1]?.document_type &&
-                    expandData()[1]?.document_type !== 'N/A'
+                    passportForm.value.documentTypeEmiratesId &&
+                    passportForm.value.documentTypeEmiratesId !== 'N/A'
                   "
                   class="flex items-center"
                 >
                   <p class="text-[#232730] font-medium mr-2">Document Type:</p>
                   <p class="text-[#232730] font-bold">
-                    {{ expandData()[1]?.document_type }}
+                    {{ passportForm.value.documentTypeEmiratesId }}
                   </p>
                 </div>
                 <div
                   *ngIf="
-                    expandData()[1]?.Id_number &&
-                    expandData()[1]?.Id_number !== 'N/A'
+                    passportForm.value.id && passportForm.value.id !== 'N/A'
                   "
                   class="flex items-center"
                 >
@@ -487,25 +485,25 @@
                     Passport Number:
                   </p>
                   <p class="text-[#232730] font-bold">
-                    {{ expandData()[1]?.Id_number }}
+                    {{ passportForm.value.id }}
                   </p>
                 </div>
                 <div
                   *ngIf="
-                    expandData()[1]?.expiry_date &&
-                    expandData()[1]?.expiry_date !== 'N/A'
+                    passportForm.value.expireDate &&
+                    passportForm.value.expireDate !== 'N/A'
                   "
                   class="flex items-center"
                 >
                   <p class="text-[#232730] font-medium mr-2">Expiry Date:</p>
                   <p class="text-[#232730] font-bold">
-                    {{ expandData()[1]?.expiry_date }}
+                    {{ passportForm.value.expireDate }}
                   </p>
                 </div>
                 <div
                   *ngIf="
-                    expandData()[1]?.holders_signature &&
-                    expandData()[1]?.holders_signature !== 'N/A'
+                    passportForm.value.holderSignature &&
+                    passportForm.value.holderSignature !== 'N/A'
                   "
                   class="flex items-center"
                 >
@@ -513,25 +511,25 @@
                     Holder's Signature:
                   </p>
                   <p class="text-[#232730] font-bold">
-                    {{ expandData()[1]?.holders_signature }}
+                    {{ passportForm.value.holderSignature }}
                   </p>
                 </div>
                 <div
                   *ngIf="
-                    expandData()[1]?.place_of_birth &&
-                    expandData()[1]?.place_of_birth !== 'N/A'
+                    passportForm.value.placeOfBirth &&
+                    passportForm.value.placeOfBirth !== 'N/A'
                   "
                   class="flex items-center"
                 >
                   <p class="text-[#232730] font-medium mr-2">Place of Birth:</p>
                   <p class="text-[#232730] font-bold">
-                    {{ expandData()[1]?.place_of_birth }}
+                    {{ passportForm.value.placeOfBirth }}
                   </p>
                 </div>
                 <div
                   *ngIf="
-                    expandData()[1]?.issuing_country &&
-                    expandData()[1]?.issuing_country !== 'N/A'
+                    passportForm.value.issuingCountry &&
+                    passportForm.value.issuingCountry !== 'N/A'
                   "
                   class="flex items-center"
                 >
@@ -539,7 +537,7 @@
                     Issuing Country:
                   </p>
                   <p class="text-[#232730] font-bold">
-                    {{ expandData()[1]?.issuing_country }}
+                    {{ passportForm.value.issuingCountry }}
                   </p>
                 </div>
               </div>
@@ -550,62 +548,61 @@
               <div class="grid grid-cols-2 gap-x-8 gap-y-2">
                 <div
                   *ngIf="
-                    expandData()[2]?.document_type &&
-                    expandData()[2]?.document_type !== 'N/A'
+                    visaForm.value.documentTypeEmiratesId &&
+                    visaForm.value.documentTypeEmiratesId !== 'N/A'
                   "
                   class="flex items-center"
                 >
                   <p class="text-[#232730] font-medium mr-2">Document Type:</p>
                   <p class="text-[#232730] font-bold">
-                    {{ expandData()[2]?.document_type }}
+                    {{ visaForm.value.documentTypeEmiratesId }}
                   </p>
                 </div>
                 <div
                   *ngIf="
-                    expandData()[2]?.issuing_country &&
-                    expandData()[2]?.issuing_country !== 'N/A'
+                    visaForm.value.issuingCountry &&
+                    visaForm.value.issuingCountry !== 'N/A'
                   "
                   class="flex items-center"
                 >
-                  <p class="text-[#232730] font-medium mr-2">Issuing Place:</p>
+                  <p class="text-[#232730] font-medium mr-2">
+                    Issuing Country:
+                  </p>
                   <p class="text-[#232730] font-bold">
-                    {{ expandData()[2]?.issuing_country }}
+                    {{ visaForm.value.issuingCountry }}
                   </p>
                 </div>
                 <div
                   *ngIf="
-                    expandData()[2]?.expiry_date &&
-                    expandData()[2]?.expiry_date !== 'N/A'
+                    visaForm.value.expireDate &&
+                    visaForm.value.expireDate !== 'N/A'
                   "
                   class="flex items-center"
                 >
                   <p class="text-[#232730] font-medium mr-2">Expiry Date:</p>
                   <p class="text-[#232730] font-bold">
-                    {{ expandData()[2]?.expiry_date }}
+                    {{ visaForm.value.expireDate }}
                   </p>
                 </div>
                 <div
-                  *ngIf="
-                    expandData()[2]?.Id_number &&
-                    expandData()[2]?.Id_number !== 'N/A'
-                  "
+                  *ngIf="visaForm.value.id && visaForm.value.id !== 'N/A'"
                   class="flex items-center"
                 >
                   <p class="text-[#232730] font-medium mr-2">ID Number:</p>
                   <p class="text-[#232730] font-bold">
-                    {{ expandData()[2]?.Id_number }}
+                    {{ visaForm.value.id }}
                   </p>
                 </div>
                 <div
                   *ngIf="
-                    expandData()[2]?.Occupation &&
-                    expandData()[2]?.Occupation !== 'N/A'
+                    visaForm.value.occupation &&
+                    visaForm.value.occupation !== 'N/A'
                   "
                   class="flex items-center"
                 >
                   <p class="text-[#232730] font-medium mr-2">Occupation:</p>
                   <p class="text-[#232730] font-bold">
-                    {{ expandData()[2]?.Occupation }}
+                    {{ visaForm.value.occupation }}
                   </p>
                 </div>
               </div>
@@ -710,6 +707,45 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
+        <mat-label>Expire Date</mat-label>
+        <input matInput formControlName="expireDate" />
+        <mat-error>
+          <insurance-error-message [input]="emiratesIdForm.get('expireDate')" />
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field hideRequiredMarker class="!rounded-lg">
+        <mat-label>Place Of Birth</mat-label>
+        <input matInput formControlName="placeOfBirth" />
+        <mat-error>
+          <insurance-error-message
+            [input]="emiratesIdForm.get('placeOfBirth')"
+          />
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field hideRequiredMarker class="!rounded-lg">
+        <mat-label>Holder Signature</mat-label>
+        <input matInput formControlName="holderSignature" />
+        <mat-error>
+          <insurance-error-message
+            [input]="emiratesIdForm.get('holderSignature')"
+          />
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field hideRequiredMarker class="!rounded-lg">
+        <mat-label>Sponsor</mat-label>
+        <input matInput formControlName="sponsor" />
+        <mat-error>
+          <insurance-error-message [input]="emiratesIdForm.get('sponsor')" />
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field hideRequiredMarker class="!rounded-lg">
+        <mat-label>Occupation</mat-label>
+        <input matInput formControlName="occupation" />
+        <mat-error>
+          <insurance-error-message [input]="emiratesIdForm.get('occupation')" />
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Date Of Birth</mat-label>
         <input matInput formControlName="date" />
         <mat-error>
@@ -778,6 +814,15 @@
         <input matInput formControlName="nationality" />
         <mat-error>
           <insurance-error-message [input]="passportForm.get('nationality')" />
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field hideRequiredMarker class="!rounded-lg">
+        <mat-label>Holder Signature</mat-label>
+        <input matInput formControlName="holderSignature" />
+        <mat-error>
+          <insurance-error-message
+            [input]="passportForm.get('holderSignature')"
+          />
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">

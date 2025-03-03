@@ -17,6 +17,7 @@ import { AlertService } from '@shared-ui-alert';
 import {
   AiPayload,
   EmployeeDataDashboardService,
+  FormsEntity,
   JsonResult,
 } from '@insurance-employee-data-dashboards';
 import { finalize, switchMap } from 'rxjs';
@@ -122,6 +123,11 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
     nationality: ['', Validators.required],
     date: ['', Validators.required],
     gender: ['', Validators.required],
+    expireDate: ['', Validators.required],
+    placeOfBirth: ['', Validators.required],
+    holderSignature: ['', Validators.required],
+    sponsor: ['', Validators.required],
+    occupation: ['', Validators.required],
   });
 
   passportForm = this.formBuilder.group({
@@ -133,6 +139,7 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
     nationality: ['', Validators.required],
     date: ['', Validators.required],
     gender: ['', Validators.required],
+    holderSignature: ['', Validators.required],
     placeOfBirth: ['', Validators.required],
     expireDate: ['', Validators.required],
   });
@@ -167,6 +174,7 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
   emiratesId = signal<JsonResult | undefined>(undefined);
   passport = signal<JsonResult | undefined>(undefined);
   visa = signal<JsonResult | undefined>(undefined);
+  formsList = signal<FormsEntity[]>([]);
 
   ngAfterViewInit() {
     this.document.defaultView?.setTimeout(this.startLottie, 0);
@@ -402,6 +410,8 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
   }
 
   changeViewToTable() {
+    const formsValue = this.emiratesIdForm.getRawValue();
+    this.formsList.set([formsValue] as FormsEntity[]);
     this._view.set('table');
   }
 
@@ -459,7 +469,8 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
     const emiratesId = doc.find(
       (emirates) => emirates.document_type === 'Emirates ID'
     );
-    this.emiratesId.set(emiratesId);
+    const normalizedData = replaceKeys(emiratesId, '/', '_');
+    this.emiratesId.set(normalizedData);
   }
 
   private filterPassport(doc: JsonResult[]) {
@@ -485,6 +496,11 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
       nationality: this.emiratesId()?.Nationality,
       date: this.emiratesId()?.birthday,
       gender: this.emiratesId()?.Gender,
+      expireDate: this.emiratesId()?.expiry_date,
+      placeOfBirth: this.emiratesId()?.place_of_birth,
+      holderSignature: this.emiratesId()?.holders_signature,
+      sponsor: this.emiratesId()?.Sponsor_Employer,
+      occupation: this.emiratesId()?.Occupation,
     });
   }
 
@@ -500,6 +516,7 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
       gender: this.passport()?.Gender,
       placeOfBirth: this.passport()?.place_of_birth,
       expireDate: this.passport()?.expiry_date,
+      holderSignature: this.passport()?.holders_signature,
     });
   }
 

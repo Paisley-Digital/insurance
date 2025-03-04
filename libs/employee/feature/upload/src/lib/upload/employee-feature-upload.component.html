@@ -1,24 +1,24 @@
 <div class="p-[20px] sm:p-[20px] lg:p-[72px] md:p-[60px]">
   <mat-card appearance="outlined">
     @if (_view() === 'upload') {
-    <div class="flex w-full justify-center max-sm:h-full">
-      <div class="w-full sm:w-1/2 md:w-2/3 lg:w-1/2 p-5">
-        <div class="!flex !justify-center font-semibold text-2xl !w-full mb-6">
-          Upload Required Documents
+      <div class="flex w-full justify-center max-sm:h-full">
+        <div class="w-full sm:w-1/2 md:w-2/3 lg:w-1/2 p-5">
+          <div class="!flex !justify-center font-semibold text-2xl !w-full mb-6">
+            Upload Required Documents
+          </div>
+          <ng-container [ngTemplateOutlet]="uploadWrapper"/>
         </div>
-        <ng-container [ngTemplateOutlet]="uploadWrapper" />
       </div>
-    </div>
-    } @else if(_view() === 'reviewEmiratesId') {
-    <ng-container [ngTemplateOutlet]="reviewTemplate" />
-    } @else if (_view() === 'passportReview'){
-    <ng-container [ngTemplateOutlet]="passportReviewTemplate" />
-    } @else if (_view() === 'visa'){
-    <ng-container [ngTemplateOutlet]="visaReviewTemplate" />
-    } @else if (_view() === 'table'){
-    <div class="p-4">
-      <ng-container [ngTemplateOutlet]="table" />
-    </div>
+    } @else if (_view() === 'reviewEmiratesId') {
+      <ng-container [ngTemplateOutlet]="reviewTemplate"/>
+    } @else if (_view() === 'passportReview') {
+      <ng-container [ngTemplateOutlet]="passportReviewTemplate"/>
+    } @else if (_view() === 'visa') {
+      <ng-container [ngTemplateOutlet]="visaReviewTemplate"/>
+    } @else if (_view() === 'table') {
+      <div class="p-4">
+        <ng-container [ngTemplateOutlet]="table"/>
+      </div>
     }
   </mat-card>
 </div>
@@ -26,19 +26,19 @@
 <ng-template #uploadWrapper>
   <div class="flex flex-col items-center max-sm:h-full max-sm:pb-8 w-full">
     <div class="w-full flex flex-col gap-8">
-      <ng-container [ngTemplateOutlet]="residencyVisa" />
-      <ng-container [ngTemplateOutlet]="passport" />
-      <ng-container [ngTemplateOutlet]="emiratesId" />
+      <ng-container [ngTemplateOutlet]="residencyVisa"/>
+      <ng-container [ngTemplateOutlet]="passport"/>
+      <ng-container [ngTemplateOutlet]="emiratesId"/>
     </div>
+    <button
+      mat-flat-button
+      class="w-full mt-8"
+      (click)="openDialog()"
+      [insuranceOverlaySpinner]="_loading()"
+    >
+      Submit
+    </button>
   </div>
-  <button
-    mat-flat-button
-    class="w-full mt-8"
-    (click)="openDialog()"
-    [insuranceOverlaySpinner]="_loading()"
-  >
-    Submit
-  </button>
 </ng-template>
 
 <ng-template #residencyVisa>
@@ -46,81 +46,83 @@
     <div
       class="flex flex-1 flex-col border-dashed p-6 border-[#D0D5DD] rounded-lg"
     >
-      @if (file()) { @if (file()?.type === 'application/pdf') {
-      <div class="flex flex-col !justify-center !items-center mt-4">
-        <span class="!font-semibold">Residency Visa</span>
-        <img ngSrc="./assets/icons/pdf.svg" alt="" width="100" height="100" />
-        <p>Image size: {{ fileSize() }}</p>
-        <div class="flex justify-center">
-          <button mat-icon-button type="button" (click)="removeFile()">
-            <mat-icon svgIcon="trash-warn" />
-          </button>
-          <input
-            type="file"
-            #fileInput
-            (change)="onFileSelected($event)"
-            accept="image/png, image/jpeg, application/pdf"
-            hidden
-          />
-          <button mat-icon-button (click)="fileInput.click()" type="button">
-            <mat-icon svgIcon="refresh" />
-          </button>
-        </div>
-      </div>
+      @if (file()) {
+        @if (file()?.type === 'application/pdf') {
+          <div class="flex flex-col !justify-center !items-center mt-4">
+            <span class="!font-semibold">Residency Visa</span>
+            <img ngSrc="./assets/icons/pdf.svg" alt="" width="100" height="100"/>
+            <p>Image size: {{ fileSize() }}</p>
+            <div class="flex justify-center">
+              <button mat-icon-button type="button" (click)="removeFile()">
+                <mat-icon svgIcon="trash-warn"/>
+              </button>
+              <input
+                type="file"
+                #fileInput
+                (change)="onFileSelected($event)"
+                accept="image/png, image/jpeg, application/pdf"
+                hidden
+              />
+              <button mat-icon-button (click)="fileInput.click()" type="button">
+                <mat-icon svgIcon="refresh"/>
+              </button>
+            </div>
+          </div>
+        } @else {
+          <div class="flex flex-col !justify-center !items-center mt-4">
+            <span class="!font-semibold">Residency Visa</span>
+            <img
+              [src]="filePreview"
+              class="!w-[200px] !h-[120px] !object-cover rounded-md mt-3"
+              alt="File preview"
+            />
+            <p>Image size: {{ fileSize() }}</p>
+            <div class="flex justify-center">
+              <button mat-icon-button type="button" (click)="removeFile()">
+                <mat-icon svgIcon="trash-warn"/>
+              </button>
+              <input
+                type="file"
+                #fileInput
+                (change)="onFileSelected($event)"
+                accept="image/png, image/jpeg, application/pdf"
+                hidden
+              />
+              <button mat-icon-button (click)="fileInput.click()" type="button">
+                <mat-icon svgIcon="refresh"/>
+              </button>
+            </div>
+          </div>
+        }
       } @else {
-      <div class="flex flex-col !justify-center !items-center mt-4">
-        <span class="!font-semibold">Residency Visa</span>
-        <img
-          [src]="filePreview"
-          class="!w-[200px] !h-[120px] !object-cover rounded-md mt-3"
-          alt="File preview"
-        />
-        <p>Image size: {{ fileSize() }}</p>
-        <div class="flex justify-center">
-          <button mat-icon-button type="button" (click)="removeFile()">
-            <mat-icon svgIcon="trash-warn" />
-          </button>
-          <input
-            type="file"
-            #fileInput
-            (change)="onFileSelected($event)"
-            accept="image/png, image/jpeg, application/pdf"
-            hidden
-          />
-          <button mat-icon-button (click)="fileInput.click()" type="button">
-            <mat-icon svgIcon="refresh" />
-          </button>
-        </div>
-      </div>
-      } } @else {
-      <div class="flex flex-col justify-center items-center gap-3">
-        <span class="!font-semibold">Residency Visa</span>
-        <span class="font-light text-center">
+        <div class="flex flex-col justify-center items-center gap-3">
+          <span class="!font-semibold">Residency Visa</span>
+          <span class="font-light text-center">
           Please upload a clear, high-quality image of your Residency
           Visa.</span
-        >
-        <span class="font-light"> Supported formats: JPG, PNG, PDF.</span>
-        <span class="font-light"> Max file size: 5MB.</span>
-      </div>
+          >
+          <span class="font-light"> Supported formats: JPG, PNG, PDF.</span>
+          <span class="font-light"> Max file size: 5MB.</span>
+        </div>
 
-      <div class="flex flex-col gap-6 justify-center items-center">
-        <input
-          type="file"
-          #fileInput
-          (change)="onFileSelected($event)"
-          accept="image/png, image/jpeg, application/pdf"
-          hidden
-        />
-        <button
-          mat-flat-button
-          class="mt-4"
-          (click)="fileInput.click()"
-          type="button"
-        >
-          Choose File
-          <mat-icon svgIcon="add" />
-        </button>
-      </div>
+        <div class="flex flex-col gap-6 justify-center items-center">
+          <input
+            type="file"
+            #fileInput
+            (change)="onFileSelected($event)"
+            accept="image/png, image/jpeg, application/pdf"
+            hidden
+          />
+          <button
+            mat-flat-button
+            class="mt-4"
+            (click)="fileInput.click()"
+            type="button"
+          >
+            Choose File
+            <mat-icon svgIcon="add"/>
+          </button>
+        </div>
       }
     </div>
   </form>
@@ -131,45 +133,73 @@
     <div
       class="flex flex-1 flex-col border-dashed p-6 border-[#D0D5DD] rounded-lg"
     >
-      @if (filePassport()) { @if (filePassport()?.type === 'application/pdf') {
-      <div class="flex flex-col !justify-center !items-center mt-4">
-        <span class="!font-semibold">Residency Visa</span>
-        <img ngSrc="./assets/icons/pdf.svg" alt="" width="100" height="100" />
-        <p>Image size: {{ fileSizePassport() }}</p>
-        <div class="flex justify-center">
-          <button mat-icon-button type="button" (click)="removeFilePassport()">
-            <mat-icon svgIcon="trash-warn" />
-          </button>
-          <input
-            type="file"
-            #fileInputPassport
-            (change)="onFileSelectedPassport($event)"
-            accept="image/png, image/jpeg, application/pdf"
-            hidden
-          />
-          <button
-            mat-icon-button
-            (click)="fileInputPassport.click()"
-            type="button"
-          >
-            <mat-icon svgIcon="refresh" />
-          </button>
-        </div>
-      </div>
-      } @else {
+      @if (filePassport()) {
+        @if (filePassport()?.type === 'application/pdf') {
+          <div class="flex flex-col !justify-center !items-center mt-4">
+            <span class="!font-semibold">Residency Visa</span>
+            <img ngSrc="./assets/icons/pdf.svg" alt="" width="100" height="100"/>
+            <p>Image size: {{ fileSizePassport() }}</p>
+            <div class="flex justify-center">
+              <button mat-icon-button type="button" (click)="removeFilePassport()">
+                <mat-icon svgIcon="trash-warn"/>
+              </button>
+              <input
+                type="file"
+                #fileInputPassport
+                (change)="onFileSelectedPassport($event)"
+                accept="image/png, image/jpeg, application/pdf"
+                hidden
+              />
+              <button
+                mat-icon-button
+                (click)="fileInputPassport.click()"
+                type="button"
+              >
+                <mat-icon svgIcon="refresh"/>
+              </button>
+            </div>
+          </div>
+        } @else {
 
-      <div class="flex flex-col !justify-center !items-center mt-4">
-        <span class="!font-semibold">Passport</span>
-        <img
-          [src]="passportFilePreview"
-          class="!w-[200px] !h-[120px] !object-cover rounded-md mt-3"
-          alt="File preview"
-        />
-        <p>Image size: {{ fileSizePassport() }}</p>
-        <div class="flex justify-center">
-          <button mat-icon-button type="button" (click)="removeFilePassport()">
-            <mat-icon svgIcon="trash-warn" />
-          </button>
+          <div class="flex flex-col !justify-center !items-center mt-4">
+            <span class="!font-semibold">Passport</span>
+            <img
+              [src]="passportFilePreview"
+              class="!w-[200px] !h-[120px] !object-cover rounded-md mt-3"
+              alt="File preview"
+            />
+            <p>Image size: {{ fileSizePassport() }}</p>
+            <div class="flex justify-center">
+              <button mat-icon-button type="button" (click)="removeFilePassport()">
+                <mat-icon svgIcon="trash-warn"/>
+              </button>
+              <input
+                type="file"
+                #fileInputPassport
+                (change)="onFileSelectedPassport($event)"
+                accept="image/png, image/jpeg, application/pdf"
+                hidden
+              />
+              <button
+                mat-icon-button
+                (click)="fileInputPassport.click()"
+                type="button"
+              >
+                <mat-icon svgIcon="refresh"/>
+              </button>
+            </div>
+          </div>
+        }
+      } @else {
+        <div class="flex flex-col justify-center items-center gap-3">
+          <span class="!font-semibold">Passport</span>
+          <span class="font-light text-center">
+          Please upload a clear, high-quality image of your Passport.</span
+          >
+          <span class="font-light"> Supported formats: JPG, PNG, PDF.</span>
+          <span class="font-light"> Max file size: 5MB.</span>
+        </div>
+        <div class="flex flex-col gap-6 justify-center items-center">
           <input
             type="file"
             #fileInputPassport
@@ -178,41 +208,15 @@
             hidden
           />
           <button
-            mat-icon-button
+            mat-flat-button
+            class="mt-4"
             (click)="fileInputPassport.click()"
             type="button"
           >
-            <mat-icon svgIcon="refresh" />
+            Choose File
+            <mat-icon svgIcon="add"/>
           </button>
         </div>
-      </div>
-      } } @else {
-      <div class="flex flex-col justify-center items-center gap-3">
-        <span class="!font-semibold">Passport</span>
-        <span class="font-light text-center">
-          Please upload a clear, high-quality image of your Passport.</span
-        >
-        <span class="font-light"> Supported formats: JPG, PNG, PDF.</span>
-        <span class="font-light"> Max file size: 5MB.</span>
-      </div>
-      <div class="flex flex-col gap-6 justify-center items-center">
-        <input
-          type="file"
-          #fileInputPassport
-          (change)="onFileSelectedPassport($event)"
-          accept="image/png, image/jpeg, application/pdf"
-          hidden
-        />
-        <button
-          mat-flat-button
-          class="mt-4"
-          (click)="fileInputPassport.click()"
-          type="button"
-        >
-          Choose File
-          <mat-icon svgIcon="add" />
-        </button>
-      </div>
       }
     </div>
   </form>
@@ -223,82 +227,84 @@
     <div
       class="flex flex-1 flex-col border-dashed p-6 border-[#D0D5DD] rounded-lg"
     >
-      @if (fileEmiratesId()) { @if (fileEmiratesId()?.type ===
-      'application/pdf') {
-      <div class="flex flex-col !justify-center !items-center mt-4">
-        <span class="!font-semibold">Emirates ID</span>
-        <img ngSrc="./assets/icons/pdf.svg" alt="" width="100" height="100" />
-        <p>Image size: {{ fileSizeId() }}</p>
-        <div class="flex justify-center">
-          <button mat-icon-button type="button" (click)="removeFileId()">
-            <mat-icon svgIcon="trash-warn" />
-          </button>
-          <input
-            type="file"
-            #fileInputId
-            (change)="onFileSelectedId($event)"
-            accept="image/png, image/jpeg, application/pdf"
-            hidden
-          />
-          <button mat-icon-button (click)="fileInputId.click()" type="button">
-            <mat-icon svgIcon="refresh" />
-          </button>
-        </div>
-      </div>
-      } @else {
+      @if (fileEmiratesId()) {
+        @if (fileEmiratesId()?.type ===
+        'application/pdf') {
+          <div class="flex flex-col !justify-center !items-center mt-4">
+            <span class="!font-semibold">Emirates ID</span>
+            <img ngSrc="./assets/icons/pdf.svg" alt="" width="100" height="100"/>
+            <p>Image size: {{ fileSizeId() }}</p>
+            <div class="flex justify-center">
+              <button mat-icon-button type="button" (click)="removeFileId()">
+                <mat-icon svgIcon="trash-warn"/>
+              </button>
+              <input
+                type="file"
+                #fileInputId
+                (change)="onFileSelectedId($event)"
+                accept="image/png, image/jpeg, application/pdf"
+                hidden
+              />
+              <button mat-icon-button (click)="fileInputId.click()" type="button">
+                <mat-icon svgIcon="refresh"/>
+              </button>
+            </div>
+          </div>
+        } @else {
 
-      <div class="flex flex-col !justify-center !items-center mt-4">
-        <span class="!font-semibold">Emirates ID</span>
-        <img
-          [src]="filePreviewEmiratesId"
-          class="!w-[200px] !h-[120px] !object-cover rounded-md mt-3"
-          alt="File preview"
-        />
-        <p>Image size: {{ fileSizeId() }}</p>
-        <div class="flex justify-center">
-          <button mat-icon-button type="button" (click)="removeFileId()">
-            <mat-icon svgIcon="trash-warn" />
-          </button>
-          <input
-            type="file"
-            #fileInputId
-            (change)="onFileSelectedId($event)"
-            accept="image/png, image/jpeg, application/pdf"
-            hidden
-          />
-          <button mat-icon-button (click)="fileInputId.click()" type="button">
-            <mat-icon svgIcon="refresh" />
-          </button>
-        </div>
-      </div>
-      } } @else {
-      <div class="flex flex-col justify-center items-center gap-3">
-        <span class="!font-semibold">Emirates ID</span>
-        <span class="font-light text-center">
+          <div class="flex flex-col !justify-center !items-center mt-4">
+            <span class="!font-semibold">Emirates ID</span>
+            <img
+              [src]="filePreviewEmiratesId"
+              class="!w-[200px] !h-[120px] !object-cover rounded-md mt-3"
+              alt="File preview"
+            />
+            <p>Image size: {{ fileSizeId() }}</p>
+            <div class="flex justify-center">
+              <button mat-icon-button type="button" (click)="removeFileId()">
+                <mat-icon svgIcon="trash-warn"/>
+              </button>
+              <input
+                type="file"
+                #fileInputId
+                (change)="onFileSelectedId($event)"
+                accept="image/png, image/jpeg, application/pdf"
+                hidden
+              />
+              <button mat-icon-button (click)="fileInputId.click()" type="button">
+                <mat-icon svgIcon="refresh"/>
+              </button>
+            </div>
+          </div>
+        }
+      } @else {
+        <div class="flex flex-col justify-center items-center gap-3">
+          <span class="!font-semibold">Emirates ID</span>
+          <span class="font-light text-center">
           Please upload clear images of both the front and back of your Emirates
           ID.</span
-        >
-        <span class="font-light"> Supported formats: JPG, PNG, PDF.</span>
-        <span class="font-light"> Max file size: 5MB.</span>
-      </div>
-      <div class="flex flex-col gap-6 justify-center items-center">
-        <input
-          type="file"
-          #fileInputId
-          (change)="onFileSelectedId($event)"
-          accept="image/png, image/jpeg, application/pdf"
-          hidden
-        />
-        <button
-          mat-flat-button
-          class="mt-4"
-          (click)="fileInputId.click()"
-          type="button"
-        >
-          Choose File
-          <mat-icon svgIcon="add" />
-        </button>
-      </div>
+          >
+          <span class="font-light"> Supported formats: JPG, PNG, PDF.</span>
+          <span class="font-light"> Max file size: 5MB.</span>
+        </div>
+        <div class="flex flex-col gap-6 justify-center items-center">
+          <input
+            type="file"
+            #fileInputId
+            (change)="onFileSelectedId($event)"
+            accept="image/png, image/jpeg, application/pdf"
+            hidden
+          />
+          <button
+            mat-flat-button
+            class="mt-4"
+            (click)="fileInputId.click()"
+            type="button"
+          >
+            Choose File
+            <mat-icon svgIcon="add"/>
+          </button>
+        </div>
       }
     </div>
   </form>
@@ -308,323 +314,381 @@
   <div class="flex justify-end">
     <button mat-flat-button (click)="downloadExcel()">Download Excel</button>
   </div>
-  <table
-    class="statement-table mt-3 w-full"
-    [dataSource]="formsList()"
-    multiTemplateDataRows
-    mat-table
-    matSort
-  >
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Full Name</th>
-      <td mat-cell *matCellDef="let transaction">
-        <div>{{ transaction.name }} {{ transaction.lastName }}</div>
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
-      <td mat-cell *matCellDef="let transaction">
-        {{ transaction.date ? transaction.date : 'Not found' }}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="nationality">
-      <th mat-header-cell *matHeaderCellDef>Nationality</th>
-      <td mat-cell *matCellDef="let transaction">
-        {{ transaction.nationality }}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="gender">
-      <th mat-header-cell *matHeaderCellDef>Gender</th>
-      <td mat-cell *matCellDef="let transaction">{{ transaction.gender }}</td>
-    </ng-container>
-    <ng-container matColumnDef="expand">
-      <th class="!w-10" mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let transaction">
-        <button
-          mat-icon-button
-          (click)="$event.stopPropagation(); setExpandValue()"
+  @if (isDesktop) {
+    <table
+      class="statement-table mt-3 w-full"
+      [dataSource]="formsList()"
+      multiTemplateDataRows
+      mat-table
+      matSort
+    >
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Full Name</th>
+        <td mat-cell *matCellDef="let transaction">
+          <div>{{ transaction.name }} {{ transaction.lastName }}</div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
+        <td mat-cell *matCellDef="let transaction">
+          {{ transaction.date ? transaction.date : 'Not found' }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="nationality">
+        <th mat-header-cell *matHeaderCellDef>Nationality</th>
+        <td mat-cell *matCellDef="let transaction">
+          {{ transaction.nationality }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef>Gender</th>
+        <td mat-cell *matCellDef="let transaction">{{ transaction.gender }}</td>
+      </ng-container>
+      <ng-container matColumnDef="expand">
+        <th class="!w-10" mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let transaction">
+          <button
+            mat-icon-button
+            (click)="$event.stopPropagation(); setExpandValue()"
+          >
+            <mat-icon
+              class="transition-transform duration-150"
+              [class.rotate-180]="_isExpanded()"
+              [svgIcon]="'chevron-down'"
+            />
+          </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="expandedDetail">
+        <td
+          mat-cell
+          *matCellDef="let transaction"
+          [attr.colspan]="columns.length"
         >
-          <mat-icon
-            class="transition-transform duration-150"
-            [class.rotate-180]="_isExpanded()"
-            [svgIcon]="'chevron-down'"
-          />
-        </button>
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="expandedDetail">
-      <td
-        mat-cell
-        *matCellDef="let transaction"
-        [attr.colspan]="columns.length"
-      >
-        <div [@detailExpand]="_isExpanded() ? 'expanded' : 'collapsed'">
-          <div class="pb-2 pt-4 space-y-6">
-            <div class="grid grid-cols-2 gap-x-8 gap-y-2">
-              <div
-                *ngIf="
-                  emiratesIdForm.value.documentTypeEmiratesId &&
-                  emiratesIdForm.value.documentTypeEmiratesId !== 'N/A'
-                "
-                class="flex items-center"
-              >
-                <p class="text-[#232730] font-medium mr-2">Document Type:</p>
-                <p class="text-[#232730] font-bold">
-                  {{ emiratesIdForm.value.documentTypeEmiratesId }}
-                </p>
-              </div>
-              <div
-                *ngIf="
-                  emiratesIdForm.value.issuingCountry &&
-                  emiratesIdForm.value.issuingCountry !== 'N/A'
-                "
-                class="flex items-center"
-              >
-                <p class="text-[#232730] font-medium mr-2">Issuing Country:</p>
-                <p class="text-[#232730] font-bold">
-                  {{ emiratesIdForm.value.issuingCountry }}
-                </p>
-              </div>
-              <div
-                *ngIf="
-                  emiratesIdForm.value.expireDate &&
-                  emiratesIdForm.value.expireDate !== 'N/A'
-                "
-                class="flex items-center"
-              >
-                <p class="text-[#232730] font-medium mr-2">Expiry Date:</p>
-                <p class="text-[#232730] font-bold">
-                  {{ emiratesIdForm.value.expireDate }}
-                </p>
-              </div>
-              <div
-                *ngIf="
-                  emiratesIdForm.value.id && emiratesIdForm.value.id !== 'N/A'
-                "
-                class="flex items-center"
-              >
-                <p class="text-[#232730] font-medium mr-2">ID Number:</p>
-                <p class="text-[#232730] font-bold">
-                  {{ emiratesIdForm.value.id }}
-                </p>
-              </div>
-              <div
-                *ngIf="
-                  emiratesIdForm.value.placeOfBirth &&
-                  emiratesIdForm.value.placeOfBirth !== 'N/A'
-                "
-                class="flex items-center"
-              >
-                <p class="text-[#232730] font-medium mr-2">Place of Birth:</p>
-                <p class="text-[#232730] font-bold">
-                  {{ emiratesIdForm.value.placeOfBirth }}
-                </p>
-              </div>
-              <div
-                *ngIf="
-                  emiratesIdForm.value.placeOfBirth &&
-                  emiratesIdForm.value.placeOfBirth !== 'N/A'
-                "
-                class="flex items-center"
-              >
-                <p class="text-[#232730] font-medium mr-2">
-                  Holder's Signature:
-                </p>
-                <p class="text-[#232730] font-bold">
-                  {{ emiratesIdForm.value.placeOfBirth }}
-                </p>
-              </div>
-              <div
-                *ngIf="
-                  emiratesIdForm.value.sponsor &&
-                  emiratesIdForm.value.sponsor !== 'N/A'
-                "
-                class="flex items-center"
-              >
-                <p class="text-[#232730] font-medium mr-2">Sponsor/Employer:</p>
-                <p class="text-[#232730] font-bold">
-                  {{ emiratesIdForm.value.sponsor }}
-                </p>
-              </div>
-              <div
-                *ngIf="
-                  emiratesIdForm.value.occupation &&
-                  emiratesIdForm.value.occupation !== 'N/A'
-                "
-                class="flex items-center"
-              >
-                <p class="text-[#232730] font-medium mr-2">Occupation:</p>
-                <p class="text-[#232730] font-bold">
-                  {{ emiratesIdForm.value.occupation }}
-                </p>
-              </div>
-            </div>
-
-            <ng-container *ngIf="passportFilePreview">
-              <mat-divider></mat-divider>
+          <div [@detailExpand]="_isExpanded() ? 'expanded' : 'collapsed'">
+            <div class="pb-2 pt-4 space-y-6">
               <div class="grid grid-cols-2 gap-x-8 gap-y-2">
                 <div
                   *ngIf="
-                    passportForm.value.documentTypeEmiratesId &&
-                    passportForm.value.documentTypeEmiratesId !== 'N/A'
-                  "
+                  emiratesIdForm.value.documentTypeEmiratesId &&
+                  emiratesIdForm.value.documentTypeEmiratesId !== 'N/A'
+                "
                   class="flex items-center"
                 >
                   <p class="text-[#232730] font-medium mr-2">Document Type:</p>
                   <p class="text-[#232730] font-bold">
-                    {{ passportForm.value.documentTypeEmiratesId }}
+                    {{ emiratesIdForm.value.documentTypeEmiratesId }}
                   </p>
                 </div>
                 <div
                   *ngIf="
-                    passportForm.value.id && passportForm.value.id !== 'N/A'
-                  "
+                  emiratesIdForm.value.issuingCountry &&
+                  emiratesIdForm.value.issuingCountry !== 'N/A'
+                "
                   class="flex items-center"
                 >
-                  <p class="text-[#232730] font-medium mr-2">
-                    Passport Number:
-                  </p>
+                  <p class="text-[#232730] font-medium mr-2">Issuing Country:</p>
                   <p class="text-[#232730] font-bold">
-                    {{ passportForm.value.id }}
+                    {{ emiratesIdForm.value.issuingCountry }}
                   </p>
                 </div>
                 <div
                   *ngIf="
-                    passportForm.value.expireDate &&
-                    passportForm.value.expireDate !== 'N/A'
-                  "
+                  emiratesIdForm.value.expireDate &&
+                  emiratesIdForm.value.expireDate !== 'N/A'
+                "
                   class="flex items-center"
                 >
                   <p class="text-[#232730] font-medium mr-2">Expiry Date:</p>
                   <p class="text-[#232730] font-bold">
-                    {{ passportForm.value.expireDate }}
+                    {{ emiratesIdForm.value.expireDate }}
                   </p>
                 </div>
                 <div
                   *ngIf="
-                    passportForm.value.holderSignature &&
-                    passportForm.value.holderSignature !== 'N/A'
-                  "
+                  emiratesIdForm.value.id && emiratesIdForm.value.id !== 'N/A'
+                "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">ID Number:</p>
+                  <p class="text-[#232730] font-bold">
+                    {{ emiratesIdForm.value.id }}
+                  </p>
+                </div>
+                <div
+                  *ngIf="
+                  emiratesIdForm.value.placeOfBirth &&
+                  emiratesIdForm.value.placeOfBirth !== 'N/A'
+                "
+                  class="flex items-center"
+                >
+                  <p class="text-[#232730] font-medium mr-2">Place of Birth:</p>
+                  <p class="text-[#232730] font-bold">
+                    {{ emiratesIdForm.value.placeOfBirth }}
+                  </p>
+                </div>
+                <div
+                  *ngIf="
+                  emiratesIdForm.value.placeOfBirth &&
+                  emiratesIdForm.value.placeOfBirth !== 'N/A'
+                "
                   class="flex items-center"
                 >
                   <p class="text-[#232730] font-medium mr-2">
                     Holder's Signature:
                   </p>
                   <p class="text-[#232730] font-bold">
-                    {{ passportForm.value.holderSignature }}
+                    {{ emiratesIdForm.value.placeOfBirth }}
                   </p>
                 </div>
                 <div
                   *ngIf="
-                    passportForm.value.placeOfBirth &&
-                    passportForm.value.placeOfBirth !== 'N/A'
-                  "
+                  emiratesIdForm.value.sponsor &&
+                  emiratesIdForm.value.sponsor !== 'N/A'
+                "
                   class="flex items-center"
                 >
-                  <p class="text-[#232730] font-medium mr-2">Place of Birth:</p>
+                  <p class="text-[#232730] font-medium mr-2">Sponsor/Employer:</p>
                   <p class="text-[#232730] font-bold">
-                    {{ passportForm.value.placeOfBirth }}
+                    {{ emiratesIdForm.value.sponsor }}
                   </p>
                 </div>
                 <div
                   *ngIf="
-                    passportForm.value.issuingCountry &&
-                    passportForm.value.issuingCountry !== 'N/A'
-                  "
-                  class="flex items-center"
-                >
-                  <p class="text-[#232730] font-medium mr-2">
-                    Issuing Country:
-                  </p>
-                  <p class="text-[#232730] font-bold">
-                    {{ passportForm.value.issuingCountry }}
-                  </p>
-                </div>
-              </div>
-            </ng-container>
-
-            <ng-container *ngIf="filePreviewEmiratesId">
-              <mat-divider></mat-divider>
-              <div class="grid grid-cols-2 gap-x-8 gap-y-2">
-                <div
-                  *ngIf="
-                    visaForm.value.documentTypeEmiratesId &&
-                    visaForm.value.documentTypeEmiratesId !== 'N/A'
-                  "
-                  class="flex items-center"
-                >
-                  <p class="text-[#232730] font-medium mr-2">Document Type:</p>
-                  <p class="text-[#232730] font-bold">
-                    {{ visaForm.value.documentTypeEmiratesId }}
-                  </p>
-                </div>
-                <div
-                  *ngIf="
-                    visaForm.value.issuingCountry &&
-                    visaForm.value.issuingCountry !== 'N/A'
-                  "
-                  class="flex items-center"
-                >
-                  <p class="text-[#232730] font-medium mr-2">
-                    Issuing Country:
-                  </p>
-                  <p class="text-[#232730] font-bold">
-                    {{ visaForm.value.issuingCountry }}
-                  </p>
-                </div>
-                <div
-                  *ngIf="
-                    visaForm.value.expireDate &&
-                    visaForm.value.expireDate !== 'N/A'
-                  "
-                  class="flex items-center"
-                >
-                  <p class="text-[#232730] font-medium mr-2">Expiry Date:</p>
-                  <p class="text-[#232730] font-bold">
-                    {{ visaForm.value.expireDate }}
-                  </p>
-                </div>
-                <div
-                  *ngIf="visaForm.value.id && visaForm.value.id !== 'N/A'"
-                  class="flex items-center"
-                >
-                  <p class="text-[#232730] font-medium mr-2">ID Number:</p>
-                  <p class="text-[#232730] font-bold">
-                    {{ visaForm.value.id }}
-                  </p>
-                </div>
-                <div
-                  *ngIf="
-                    visaForm.value.occupation &&
-                    visaForm.value.occupation !== 'N/A'
-                  "
+                  emiratesIdForm.value.occupation &&
+                  emiratesIdForm.value.occupation !== 'N/A'
+                "
                   class="flex items-center"
                 >
                   <p class="text-[#232730] font-medium mr-2">Occupation:</p>
                   <p class="text-[#232730] font-bold">
-                    {{ visaForm.value.occupation }}
+                    {{ emiratesIdForm.value.occupation }}
                   </p>
                 </div>
               </div>
-            </ng-container>
+
+              <ng-container *ngIf="passportFilePreview">
+                <mat-divider></mat-divider>
+                <div class="grid grid-cols-2 gap-x-8 gap-y-2">
+                  <div
+                    *ngIf="
+                    passportForm.value.documentTypeEmiratesId &&
+                    passportForm.value.documentTypeEmiratesId !== 'N/A'
+                  "
+                    class="flex items-center"
+                  >
+                    <p class="text-[#232730] font-medium mr-2">Document Type:</p>
+                    <p class="text-[#232730] font-bold">
+                      {{ passportForm.value.documentTypeEmiratesId }}
+                    </p>
+                  </div>
+                  <div
+                    *ngIf="
+                    passportForm.value.id && passportForm.value.id !== 'N/A'
+                  "
+                    class="flex items-center"
+                  >
+                    <p class="text-[#232730] font-medium mr-2">
+                      Passport Number:
+                    </p>
+                    <p class="text-[#232730] font-bold">
+                      {{ passportForm.value.id }}
+                    </p>
+                  </div>
+                  <div
+                    *ngIf="
+                    passportForm.value.expireDate &&
+                    passportForm.value.expireDate !== 'N/A'
+                  "
+                    class="flex items-center"
+                  >
+                    <p class="text-[#232730] font-medium mr-2">Expiry Date:</p>
+                    <p class="text-[#232730] font-bold">
+                      {{ passportForm.value.expireDate }}
+                    </p>
+                  </div>
+                  <div
+                    *ngIf="
+                    passportForm.value.holderSignature &&
+                    passportForm.value.holderSignature !== 'N/A'
+                  "
+                    class="flex items-center"
+                  >
+                    <p class="text-[#232730] font-medium mr-2">
+                      Holder's Signature:
+                    </p>
+                    <p class="text-[#232730] font-bold">
+                      {{ passportForm.value.holderSignature }}
+                    </p>
+                  </div>
+                  <div
+                    *ngIf="
+                    passportForm.value.placeOfBirth &&
+                    passportForm.value.placeOfBirth !== 'N/A'
+                  "
+                    class="flex items-center"
+                  >
+                    <p class="text-[#232730] font-medium mr-2">Place of Birth:</p>
+                    <p class="text-[#232730] font-bold">
+                      {{ passportForm.value.placeOfBirth }}
+                    </p>
+                  </div>
+                  <div
+                    *ngIf="
+                    passportForm.value.issuingCountry &&
+                    passportForm.value.issuingCountry !== 'N/A'
+                  "
+                    class="flex items-center"
+                  >
+                    <p class="text-[#232730] font-medium mr-2">
+                      Issuing Country:
+                    </p>
+                    <p class="text-[#232730] font-bold">
+                      {{ passportForm.value.issuingCountry }}
+                    </p>
+                  </div>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="filePreviewEmiratesId">
+                <mat-divider></mat-divider>
+                <div class="grid grid-cols-2 gap-x-8 gap-y-2">
+                  <div
+                    *ngIf="
+                    visaForm.value.documentTypeEmiratesId &&
+                    visaForm.value.documentTypeEmiratesId !== 'N/A'
+                  "
+                    class="flex items-center"
+                  >
+                    <p class="text-[#232730] font-medium mr-2">Document Type:</p>
+                    <p class="text-[#232730] font-bold">
+                      {{ visaForm.value.documentTypeEmiratesId }}
+                    </p>
+                  </div>
+                  <div
+                    *ngIf="
+                    visaForm.value.issuingCountry &&
+                    visaForm.value.issuingCountry !== 'N/A'
+                  "
+                    class="flex items-center"
+                  >
+                    <p class="text-[#232730] font-medium mr-2">
+                      Issuing Country:
+                    </p>
+                    <p class="text-[#232730] font-bold">
+                      {{ visaForm.value.issuingCountry }}
+                    </p>
+                  </div>
+                  <div
+                    *ngIf="
+                    visaForm.value.expireDate &&
+                    visaForm.value.expireDate !== 'N/A'
+                  "
+                    class="flex items-center"
+                  >
+                    <p class="text-[#232730] font-medium mr-2">Expiry Date:</p>
+                    <p class="text-[#232730] font-bold">
+                      {{ visaForm.value.expireDate }}
+                    </p>
+                  </div>
+                  <div
+                    *ngIf="visaForm.value.id && visaForm.value.id !== 'N/A'"
+                    class="flex items-center"
+                  >
+                    <p class="text-[#232730] font-medium mr-2">ID Number:</p>
+                    <p class="text-[#232730] font-bold">
+                      {{ visaForm.value.id }}
+                    </p>
+                  </div>
+                  <div
+                    *ngIf="
+                    visaForm.value.occupation &&
+                    visaForm.value.occupation !== 'N/A'
+                  "
+                    class="flex items-center"
+                  >
+                    <p class="text-[#232730] font-medium mr-2">Occupation:</p>
+                    <p class="text-[#232730] font-bold">
+                      {{ visaForm.value.occupation }}
+                    </p>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
           </div>
-        </div>
-      </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="columns"></tr>
-    <tr
-      mat-row
-      *matRowDef="let transaction; columns: columns"
-      class="transaction-row"
-      [class.transaction-expanded-row]="_isExpanded()"
-      (click)="setExpandValue()"
-    ></tr>
-    <tr
-      mat-row
-      *matRowDef="let row; columns: ['expandedDetail']"
-      class="transaction-detail-row"
-    ></tr>
-  </table>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let transaction; columns: columns"
+        class="transaction-row"
+        [class.transaction-expanded-row]="_isExpanded()"
+        (click)="setExpandValue()"
+      ></tr>
+      <tr
+
+        mat-row
+        *matRowDef="let row; columns: ['expandedDetail']"
+        class="transaction-detail-row"
+      ></tr>
+    </table>
+
+  } @else {
+    <div *ngIf="formsList()?.length">
+      <div *ngFor="let transaction of formsList()">
+
+        <mat-card class="mb-4 p-4">
+          <mat-card-title>Personal Information</mat-card-title>
+          <mat-card-content>
+            <p><strong>Full Name:</strong> {{ transaction.name }} {{ transaction.lastName }}</p>
+            <p><strong>Date of Birth:</strong> {{ transaction.date || 'Not found' }}</p>
+            <p><strong>Nationality:</strong> {{ transaction.nationality }}</p>
+            <p><strong>Gender:</strong> {{ transaction.gender }}</p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="mb-4 p-4" *ngIf="emiratesIdForm.value">
+          <mat-card-title>Emirates ID</mat-card-title>
+          <mat-card-content>
+            <p><strong>Document Type:</strong> {{ emiratesIdForm.value.documentTypeEmiratesId || 'N/A' }}</p>
+            <p><strong>Issuing Country:</strong> {{ emiratesIdForm.value.issuingCountry || 'N/A' }}</p>
+            <p><strong>Expiry Date:</strong> {{ emiratesIdForm.value.expireDate || 'N/A' }}</p>
+            <p><strong>ID Number:</strong> {{ emiratesIdForm.value.id || 'N/A' }}</p>
+            <p><strong>Place of Birth:</strong> {{ emiratesIdForm.value.placeOfBirth || 'N/A' }}</p>
+            <p><strong>Holder's Signature:</strong> {{ emiratesIdForm.value.holderSignature || 'N/A' }}</p>
+            <p><strong>Sponsor/Employer:</strong> {{ emiratesIdForm.value.sponsor || 'N/A' }}</p>
+            <p><strong>Occupation:</strong> {{ emiratesIdForm.value.occupation || 'N/A' }}</p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="mb-4 p-4" *ngIf="passportForm.value">
+          <mat-card-title>Passport</mat-card-title>
+          <mat-card-content>
+            <p><strong>Document Type:</strong> {{ passportForm.value.documentTypeEmiratesId || 'N/A' }}</p>
+            <p><strong>Passport Number:</strong> {{ passportForm.value.id || 'N/A' }}</p>
+            <p><strong>Expiry Date:</strong> {{ passportForm.value.expireDate || 'N/A' }}</p>
+            <p><strong>Holder's Signature:</strong> {{ passportForm.value.holderSignature || 'N/A' }}</p>
+            <p><strong>Place of Birth:</strong> {{ passportForm.value.placeOfBirth || 'N/A' }}</p>
+            <p><strong>Issuing Country:</strong> {{ passportForm.value.issuingCountry || 'N/A' }}</p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="mb-4 p-4" *ngIf="visaForm.value">
+          <mat-card-title>Visa</mat-card-title>
+          <mat-card-content>
+            <p><strong>Document Type:</strong> {{ visaForm.value.documentTypeEmiratesId || 'N/A' }}</p>
+            <p><strong>Issuing Country:</strong> {{ visaForm.value.issuingCountry || 'N/A' }}</p>
+            <p><strong>Expiry Date:</strong> {{ visaForm.value.expireDate || 'N/A' }}</p>
+            <p><strong>ID Number:</strong> {{ visaForm.value.id || 'N/A' }}</p>
+            <p><strong>Occupation:</strong> {{ visaForm.value.occupation || 'N/A' }}</p>
+          </mat-card-content>
+        </mat-card>
+
+      </div>
+    </div>
+  }
+
 </ng-template>
 <ng-template #openDialogCrossDialog>
   <h4 class="flex justify-center text-center" mat-dialog-title>
@@ -646,26 +710,26 @@
   <div class="p-4 flex justify-center">
     <form
       [formGroup]="emiratesIdForm"
-      class="flex flex-col w-1/3 justify-center"
+      class="flex flex-col  max-w-[480px] w-full justify-center"
     >
       <h3>Emirates Id</h3>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Name</mat-label>
-        <input matInput formControlName="name" />
+        <input matInput formControlName="name"/>
         <mat-error>
-          <insurance-error-message [input]="emiratesIdForm.get('name')" />
+          <insurance-error-message [input]="emiratesIdForm.get('name')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Last Name</mat-label>
-        <input matInput formControlName="lastName" />
+        <input matInput formControlName="lastName"/>
         <mat-error>
-          <insurance-error-message [input]="emiratesIdForm.get('lastName')" />
+          <insurance-error-message [input]="emiratesIdForm.get('lastName')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Document Type</mat-label>
-        <input matInput formControlName="documentTypeEmiratesId" />
+        <input matInput formControlName="documentTypeEmiratesId"/>
         <mat-error>
           <insurance-error-message
             [input]="emiratesIdForm.get('documentTypeEmiratesId')"
@@ -674,14 +738,14 @@
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Id</mat-label>
-        <input matInput formControlName="id" />
+        <input matInput formControlName="id"/>
         <mat-error>
-          <insurance-error-message [input]="emiratesIdForm.get('id')" />
+          <insurance-error-message [input]="emiratesIdForm.get('id')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Issuing Country</mat-label>
-        <input matInput formControlName="issuingCountry" />
+        <input matInput formControlName="issuingCountry"/>
         <mat-error>
           <insurance-error-message
             [input]="emiratesIdForm.get('issuingCountry')"
@@ -690,7 +754,7 @@
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Nationality</mat-label>
-        <input matInput formControlName="nationality" />
+        <input matInput formControlName="nationality"/>
         <mat-error>
           <insurance-error-message
             [input]="emiratesIdForm.get('nationality')"
@@ -699,7 +763,7 @@
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Nationality</mat-label>
-        <input matInput formControlName="nationality" />
+        <input matInput formControlName="nationality"/>
         <mat-error>
           <insurance-error-message
             [input]="emiratesIdForm.get('nationality')"
@@ -708,14 +772,14 @@
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Expire Date</mat-label>
-        <input matInput formControlName="expireDate" />
+        <input matInput formControlName="expireDate"/>
         <mat-error>
-          <insurance-error-message [input]="emiratesIdForm.get('expireDate')" />
+          <insurance-error-message [input]="emiratesIdForm.get('expireDate')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Place Of Birth</mat-label>
-        <input matInput formControlName="placeOfBirth" />
+        <input matInput formControlName="placeOfBirth"/>
         <mat-error>
           <insurance-error-message
             [input]="emiratesIdForm.get('placeOfBirth')"
@@ -724,7 +788,7 @@
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Holder Signature</mat-label>
-        <input matInput formControlName="holderSignature" />
+        <input matInput formControlName="holderSignature"/>
         <mat-error>
           <insurance-error-message
             [input]="emiratesIdForm.get('holderSignature')"
@@ -733,30 +797,30 @@
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Sponsor</mat-label>
-        <input matInput formControlName="sponsor" />
+        <input matInput formControlName="sponsor"/>
         <mat-error>
-          <insurance-error-message [input]="emiratesIdForm.get('sponsor')" />
+          <insurance-error-message [input]="emiratesIdForm.get('sponsor')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Occupation</mat-label>
-        <input matInput formControlName="occupation" />
+        <input matInput formControlName="occupation"/>
         <mat-error>
-          <insurance-error-message [input]="emiratesIdForm.get('occupation')" />
+          <insurance-error-message [input]="emiratesIdForm.get('occupation')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Date Of Birth</mat-label>
-        <input matInput formControlName="date" />
+        <input matInput formControlName="date"/>
         <mat-error>
-          <insurance-error-message [input]="emiratesIdForm.get('date')" />
+          <insurance-error-message [input]="emiratesIdForm.get('date')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Gender</mat-label>
-        <input matInput formControlName="gender" />
+        <input matInput formControlName="gender"/>
         <mat-error>
-          <insurance-error-message [input]="emiratesIdForm.get('gender')" />
+          <insurance-error-message [input]="emiratesIdForm.get('gender')"/>
         </mat-error>
       </mat-form-field>
       <button mat-flat-button (click)="changeViewToPassportReview()">
@@ -768,25 +832,26 @@
 
 <ng-template #passportReviewTemplate>
   <div class="p-4 flex justify-center">
-    <form [formGroup]="passportForm" class="flex flex-col w-1/3 justify-center">
+    <form [formGroup]="passportForm" class="flex flex-col  max-w-[480px] w-full justify-center"
+    >
       <h3>Passport</h3>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Name</mat-label>
-        <input matInput formControlName="name" />
+        <input matInput formControlName="name"/>
         <mat-error>
-          <insurance-error-message [input]="passportForm.get('name')" />
+          <insurance-error-message [input]="passportForm.get('name')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Last Name</mat-label>
-        <input matInput formControlName="lastName" />
+        <input matInput formControlName="lastName"/>
         <mat-error>
-          <insurance-error-message [input]="passportForm.get('lastName')" />
+          <insurance-error-message [input]="passportForm.get('lastName')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Document Type</mat-label>
-        <input matInput formControlName="documentTypeEmiratesId" />
+        <input matInput formControlName="documentTypeEmiratesId"/>
         <mat-error>
           <insurance-error-message
             [input]="passportForm.get('documentTypeEmiratesId')"
@@ -795,14 +860,14 @@
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Id</mat-label>
-        <input matInput formControlName="id" />
+        <input matInput formControlName="id"/>
         <mat-error>
-          <insurance-error-message [input]="passportForm.get('id')" />
+          <insurance-error-message [input]="passportForm.get('id')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Issuing Country</mat-label>
-        <input matInput formControlName="issuingCountry" />
+        <input matInput formControlName="issuingCountry"/>
         <mat-error>
           <insurance-error-message
             [input]="passportForm.get('issuingCountry')"
@@ -811,14 +876,14 @@
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Nationality</mat-label>
-        <input matInput formControlName="nationality" />
+        <input matInput formControlName="nationality"/>
         <mat-error>
-          <insurance-error-message [input]="passportForm.get('nationality')" />
+          <insurance-error-message [input]="passportForm.get('nationality')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Holder Signature</mat-label>
-        <input matInput formControlName="holderSignature" />
+        <input matInput formControlName="holderSignature"/>
         <mat-error>
           <insurance-error-message
             [input]="passportForm.get('holderSignature')"
@@ -827,30 +892,30 @@
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Place Of Birth</mat-label>
-        <input matInput formControlName="placeOfBirth" />
+        <input matInput formControlName="placeOfBirth"/>
         <mat-error>
-          <insurance-error-message [input]="passportForm.get('placeOfBirth')" />
+          <insurance-error-message [input]="passportForm.get('placeOfBirth')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Expire Date</mat-label>
-        <input matInput formControlName="expireDate" />
+        <input matInput formControlName="expireDate"/>
         <mat-error>
-          <insurance-error-message [input]="passportForm.get('expireDate')" />
+          <insurance-error-message [input]="passportForm.get('expireDate')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Date Of Birth</mat-label>
-        <input matInput formControlName="date" />
+        <input matInput formControlName="date"/>
         <mat-error>
-          <insurance-error-message [input]="passportForm.get('date')" />
+          <insurance-error-message [input]="passportForm.get('date')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Gender</mat-label>
-        <input matInput formControlName="gender" />
+        <input matInput formControlName="gender"/>
         <mat-error>
-          <insurance-error-message [input]="passportForm.get('gender')" />
+          <insurance-error-message [input]="passportForm.get('gender')"/>
         </mat-error>
       </mat-form-field>
       <button mat-flat-button (click)="changeViewToVisa()">
@@ -862,39 +927,40 @@
 
 <ng-template #visaReviewTemplate>
   <div class="p-4 flex justify-center">
-    <form [formGroup]="visaForm" class="flex flex-col w-1/3 justify-center">
+    <form [formGroup]="visaForm" class="flex flex-col  max-w-[480px] w-full justify-center"
+    >
       <h3>Visa</h3>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Name</mat-label>
-        <input matInput formControlName="name" />
+        <input matInput formControlName="name"/>
         <mat-error>
-          <insurance-error-message [input]="visaForm.get('name')" />
+          <insurance-error-message [input]="visaForm.get('name')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Last Name</mat-label>
-        <input matInput formControlName="lastName" />
+        <input matInput formControlName="lastName"/>
         <mat-error>
-          <insurance-error-message [input]="visaForm.get('lastName')" />
+          <insurance-error-message [input]="visaForm.get('lastName')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Occupation</mat-label>
-        <input matInput formControlName="occupation" />
+        <input matInput formControlName="occupation"/>
         <mat-error>
-          <insurance-error-message [input]="visaForm.get('occupation')" />
+          <insurance-error-message [input]="visaForm.get('occupation')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Sponsor</mat-label>
-        <input matInput formControlName="sponsor" />
+        <input matInput formControlName="sponsor"/>
         <mat-error>
-          <insurance-error-message [input]="visaForm.get('sponsor')" />
+          <insurance-error-message [input]="visaForm.get('sponsor')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Document Type</mat-label>
-        <input matInput formControlName="documentTypeEmiratesId" />
+        <input matInput formControlName="documentTypeEmiratesId"/>
         <mat-error>
           <insurance-error-message
             [input]="visaForm.get('documentTypeEmiratesId')"
@@ -903,51 +969,51 @@
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Id</mat-label>
-        <input matInput formControlName="id" />
+        <input matInput formControlName="id"/>
         <mat-error>
-          <insurance-error-message [input]="visaForm.get('id')" />
+          <insurance-error-message [input]="visaForm.get('id')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Issuing Country</mat-label>
-        <input matInput formControlName="issuingCountry" />
+        <input matInput formControlName="issuingCountry"/>
         <mat-error>
-          <insurance-error-message [input]="visaForm.get('issuingCountry')" />
+          <insurance-error-message [input]="visaForm.get('issuingCountry')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Nationality</mat-label>
-        <input matInput formControlName="nationality" />
+        <input matInput formControlName="nationality"/>
         <mat-error>
-          <insurance-error-message [input]="visaForm.get('nationality')" />
+          <insurance-error-message [input]="visaForm.get('nationality')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Place Of Birth</mat-label>
-        <input matInput formControlName="placeOfBirth" />
+        <input matInput formControlName="placeOfBirth"/>
         <mat-error>
-          <insurance-error-message [input]="visaForm.get('placeOfBirth')" />
+          <insurance-error-message [input]="visaForm.get('placeOfBirth')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Expire Date</mat-label>
-        <input matInput formControlName="expireDate" />
+        <input matInput formControlName="expireDate"/>
         <mat-error>
-          <insurance-error-message [input]="visaForm.get('expireDate')" />
+          <insurance-error-message [input]="visaForm.get('expireDate')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Date Of Birth</mat-label>
-        <input matInput formControlName="date" />
+        <input matInput formControlName="date"/>
         <mat-error>
-          <insurance-error-message [input]="visaForm.get('date')" />
+          <insurance-error-message [input]="visaForm.get('date')"/>
         </mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="!rounded-lg">
         <mat-label>Gender</mat-label>
-        <input matInput formControlName="gender" />
+        <input matInput formControlName="gender"/>
         <mat-error>
-          <insurance-error-message [input]="visaForm.get('gender')" />
+          <insurance-error-message [input]="visaForm.get('gender')"/>
         </mat-error>
       </mat-form-field>
       <button mat-flat-button (click)="changeViewToTable()">

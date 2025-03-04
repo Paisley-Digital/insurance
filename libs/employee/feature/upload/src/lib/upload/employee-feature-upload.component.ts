@@ -1,8 +1,8 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef,
-  inject,
+  ElementRef, HostListener,
+  inject, OnInit,
   signal,
   TemplateRef,
   ViewChild,
@@ -91,7 +91,7 @@ type FileType = 'passport' | 'emiratesId' | 'residency';
     ]),
   ],
 })
-export class EmployeeFeatureUploadComponent implements AfterViewInit {
+export class EmployeeFeatureUploadComponent implements OnInit , AfterViewInit {
   private alert = inject(AlertService);
   private service = inject(EmployeeDataDashboardService);
   private formBuilder = inject(FormBuilder);
@@ -158,6 +158,9 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
     sponsor: ['', Validators.required],
   });
 
+  isDesktop ?= true;
+
+
   fileSize = signal('');
   fileSizePassport = signal('');
   fileSizeId = signal('');
@@ -174,8 +177,18 @@ export class EmployeeFeatureUploadComponent implements AfterViewInit {
   formsList = signal<FormsEntity[]>([]);
   downloadExcelData = signal<any[]>([]);
 
+  ngOnInit() {
+    this.checkScreenSize();
+  }
+
   ngAfterViewInit() {
     this.document.defaultView?.setTimeout(this.startLottie, 0);
+  }
+
+
+  @HostListener('window:resize', ['$event'])
+  checkScreenSize() {
+    this.isDesktop = window.innerWidth > 768;
   }
 
   onFileSelected(event: Event) {

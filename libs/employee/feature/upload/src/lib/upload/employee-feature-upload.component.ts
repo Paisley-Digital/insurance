@@ -175,7 +175,7 @@ export class EmployeeFeatureUploadComponent implements OnInit , AfterViewInit {
   passport = signal<JsonResult | undefined>(undefined);
   visa = signal<JsonResult | undefined>(undefined);
   formsList = signal<FormsEntity[]>([]);
-  downloadExcelData = signal<any[]>([]);
+  downloadExcelData = signal<Partial<FormsEntity[]>>([]);
 
   ngOnInit() {
     this.checkScreenSize();
@@ -416,7 +416,7 @@ export class EmployeeFeatureUploadComponent implements OnInit , AfterViewInit {
       this.emiratesIdForm.getRawValue(),
       this.passportForm.getRawValue(),
       this.visaForm.getRawValue(),
-    ]);
+    ] as FormsEntity[]);
     this._view.set('table');
   }
 

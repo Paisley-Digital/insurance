@@ -1,29 +1,23 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
-import { MatFormField, MatSuffix } from '@angular/material/form-field';
-import {
-  MatDrawerContainer,
-  MatSidenavModule,
-} from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormField } from '@angular/material/form-field';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import {
   FormBuilder,
   FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
-import {
-  MatAnchor,
-  MatButton,
-  MatButtonModule,
-  MatIconButton,
-} from '@angular/material/button';
-import { MatInput, MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatAnchor, MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 import { ErrorMessageComponent } from '@shared-ui-input-validator';
 import { Router } from '@angular/router';
 import { isHandsetScreen } from '@shared-util-common';
 import { OverlaySpinnerDirective } from '@insurance-shared-ui-overlay-spinner';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
+import { SettingService, theme } from '@insurance-shared-data-setting';
 
 @Component({
   selector: 'insurance-employee-feature-auth',
@@ -40,6 +34,9 @@ import { OverlaySpinnerDirective } from '@insurance-shared-ui-overlay-spinner';
     ErrorMessageComponent,
     MatCheckboxModule,
     OverlaySpinnerDirective,
+    MatMenu,
+    MatMenuItem,
+    MatMenuTrigger,
   ],
   templateUrl: './employee-feature-auth.component.html',
   styleUrl: './employee-feature-auth.component.scss',
@@ -47,6 +44,9 @@ import { OverlaySpinnerDirective } from '@insurance-shared-ui-overlay-spinner';
 export class EmployeeFeatureAuthComponent {
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
+  private service = inject(SettingService);
+
+  protected readonly theme = theme;
 
   isHandsetScreen$ = isHandsetScreen();
 
@@ -78,5 +78,9 @@ export class EmployeeFeatureAuthComponent {
     }
     this.loading.set(true);
     this.router.navigate(['/console']);
+  }
+
+  setTheme(id: string) {
+    this.service.setTheme(id);
   }
 }

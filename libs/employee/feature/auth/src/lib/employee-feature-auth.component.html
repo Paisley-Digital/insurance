@@ -20,6 +20,14 @@
 </mat-drawer-container>
 
 <ng-template #login>
+  <button mat-button [matMenuTriggerFor]="menu">Theme</button>
+  <mat-menu #menu="matMenu">
+    @for (theme of theme; track theme){
+    <button mat-menu-item (click)="setTheme(theme.id)">
+      {{ theme.displayName }}
+    </button>
+    }
+  </mat-menu>
   <div class="flex flex-col items-center max-sm:h-full max-sm:pb-8 w-full">
     <h1 class="!flex !justify-start !w-full">
       Emaar Employee Insurance Portal

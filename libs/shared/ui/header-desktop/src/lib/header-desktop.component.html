@@ -23,5 +23,15 @@
     >
       <mat-icon svgIcon="bell" />
     </button>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon svgIcon="cog" />
+    </button>
+    <mat-menu #menu="matMenu">
+      @for (theme of theme; track theme){
+      <button mat-menu-item (click)="setTheme(theme.id)">
+        {{ theme.displayName }}
+      </button>
+      }
+    </mat-menu>
   </div>
 </mat-toolbar>

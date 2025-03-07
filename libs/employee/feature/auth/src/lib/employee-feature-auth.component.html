@@ -20,14 +20,24 @@
 </mat-drawer-container>
 
 <ng-template #login>
-  <button mat-button [matMenuTriggerFor]="menu">Theme</button>
-  <mat-menu #menu="matMenu">
-    @for (theme of theme; track theme){
-    <button mat-menu-item (click)="setTheme(theme.id)">
-      {{ theme.displayName }}
+  <div class="fixed top-2 right-20">
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon svgIcon="cog" />
     </button>
-    }
-  </mat-menu>
+    <mat-menu #menu="matMenu">
+      @for (theme of theme; track theme){
+      <button mat-menu-item (click)="setTheme(theme.id)">
+        <div class="flex items-center gap-3">
+          <div
+            class="w-4 h-4 rounded-full"
+            [style.background-color]="theme.primary"
+          ></div>
+          <span>{{ theme.displayName }}</span>
+        </div>
+      </button>
+      }
+    </mat-menu>
+  </div>
   <div class="flex flex-col items-center max-sm:h-full max-sm:pb-8 w-full">
     <h1 class="!flex !justify-start !w-full">
       Emaar Employee Insurance Portal

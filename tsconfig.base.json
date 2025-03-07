@@ -15,7 +15,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@shared-ui-alert": ["libs/shared/ui/alert/src/index.ts"],
       "@./assets": ["libs/shared/assets/src/index.ts"],
       "@./locales": ["libs/shared/util/locales/src/index.ts"],
       "@insurance-broker-feature-auth": [
@@ -40,6 +39,8 @@
       "@insurance-shared-ui-overlay-spinner": [
         "libs/shared/ui/overlay-spinner/src/index.ts"
       ],
+      "@insurance-shared-data-setting": ["libs/shared/data/setting/src/index.ts"],
+      "@shared-ui-alert": ["libs/shared/ui/alert/src/index.ts"],
       "@shared-ui-header-desktop": [
         "libs/shared/ui/header-desktop/src/index.ts"
       ],

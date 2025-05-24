@@ -10,7 +10,7 @@ export const shellRoutes: Route[] = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'dashboard',
+        redirectTo: 'ekyc-management',
       },
       {
         path: 'dashboard',

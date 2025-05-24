@@ -2,7 +2,7 @@
   <mat-card appearance="outlined">
     <div class="p-4">
       <h3>Know-Your-Customer Form- Group Policies</h3>
-      <mat-stepper [linear]="true" #stepper>
+      <mat-stepper [linear]="true" labelPosition="bottom" #stepper>
         <mat-step [stepControl]="companyInfoForm">
           <form [formGroup]="companyInfoForm" class="!mt-4">
             <h3>Upload Trade License</h3>
@@ -68,15 +68,93 @@
               }
             </div>
             <ng-template matStepLabel>Company Info</ng-template>
-            <mat-form-field>
-              <mat-label>Name</mat-label>
-              <input
-                matInput
-                placeholder="Last name, First name"
-                formControlName="firstCtrl"
-                required
-              />
-            </mat-form-field>
+            <h3>Basic Info</h3>
+            <div class="!flex !w-full mt-4 form-gap">
+              <mat-form-field class="w-full">
+                <mat-label>Full Legal Name</mat-label>
+                <input matInput formControlName="fullLegalName" required />
+                <mat-error>
+                  <insurance-error-message
+                    [input]="companyInfoForm.get('fullLegalName')"
+                  />
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>Full Trading Name</mat-label>
+                <input matInput formControlName="fullTradingName" required />
+                <mat-error>
+                  <insurance-error-message
+                    [input]="companyInfoForm.get('fullTradingName')"
+                  />
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <h3>Company Details</h3>
+            <div class="!flex !w-full mt-4 form-gap">
+              <mat-form-field class="w-full">
+                <mat-label>Full Legal Name</mat-label>
+                <input matInput formControlName="typeOfCompany" required />
+                <mat-error>
+                  <insurance-error-message
+                    [input]="companyInfoForm.get('typeOfCompany')"
+                  />
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>Full Trading Name</mat-label>
+                <input matInput formControlName="licenseNumber" required />
+                <mat-error>
+                  <insurance-error-message
+                    [input]="companyInfoForm.get('licenseNumber')"
+                  />
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <h3>Address</h3>
+            <div class="!flex !w-full mt-4 form-gap">
+              <mat-form-field class="w-full">
+                <mat-label>Registered Address</mat-label>
+                <textarea
+                  matInput
+                  formControlName="registeredAddress"
+                  rows="5"
+                ></textarea>
+                <mat-hint>{{ getCharacter }}</mat-hint>
+                <mat-error>
+                  <insurance-error-message
+                    [input]="companyInfoForm.get('registeredAddress')"
+                  />
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>Business Address</mat-label>
+                <textarea
+                  matInput
+                  formControlName="businessAddress"
+                  rows="5"
+                ></textarea>
+                <mat-hint>{{ getCharacterBusinessAddress }}</mat-hint>
+                <mat-error>
+                  <insurance-error-message
+                    [input]="companyInfoForm.get('businessAddress')"
+                  />
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="!w-full form-gap flex">
+              <mat-form-field class="w-full mt-6">
+                <mat-label>Country</mat-label>
+                <mat-select>
+                  @for (countries of country; track countries.code){
+
+                  <mat-option [value]="countries.code">{{
+                    countries.name
+                  }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              <div class="w-full"></div>
+            </div>
             <div>
               <button mat-button matStepperNext>Next</button>
             </div>

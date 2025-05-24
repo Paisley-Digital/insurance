@@ -13,6 +13,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
 import { AlertService } from '@shared-ui-alert';
+import { ErrorMessageComponent } from '@shared-ui-input-validator';
+import { MatSelectModule } from '@angular/material/select';
+import { country } from './ekyc-management.constant';
 
 @Component({
   selector: 'insurance-broker-feature-ekyc-management',
@@ -26,7 +29,9 @@ import { AlertService } from '@shared-ui-alert';
     MatFormFieldModule,
     MatInputModule,
     MatIcon,
+    MatSelectModule,
     NgOptimizedImage,
+    ErrorMessageComponent,
   ],
   templateUrl: './broker-feature-ekyc-management.component.html',
   styleUrl: './broker-feature-ekyc-management.component.scss',
@@ -34,6 +39,8 @@ import { AlertService } from '@shared-ui-alert';
 export class BrokerFeatureEkycManagementComponent {
   private _formBuilder = inject(FormBuilder);
   private alert = inject(AlertService);
+
+  readonly maxCharLength = 120;
 
   filePreview: string | ArrayBuffer | null = null;
   passportFilePreview: string | ArrayBuffer | null = null;
@@ -43,11 +50,35 @@ export class BrokerFeatureEkycManagementComponent {
   fileSize = signal('');
 
   companyInfoForm = this._formBuilder.group({
-    firstCtrl: ['', Validators.required],
+    fullLegalName: ['', Validators.required],
+    fullTradingName: ['', Validators.required],
+    typeOfCompany: ['', Validators.required],
+    licenseNumber: ['', Validators.required],
+    registeredAddress: [
+      '',
+      [Validators.required, Validators.maxLength(this.maxCharLength)],
+    ],
+    businessAddress: ['', Validators.required],
   });
+
   secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
+    secondCtrl: [
+      '',
+      [Validators.required, Validators.maxLength(this.maxCharLength)],
+    ],
   });
+
+  get getCharacter() {
+    return `(Allowed characters: ${
+      this.companyInfoForm.value.registeredAddress!.length || 0
+    } - ${this.maxCharLength})`;
+  }
+
+  get getCharacterBusinessAddress() {
+    return `(Allowed characters: ${
+      this.companyInfoForm.value.businessAddress!.length || 0
+    } - ${this.maxCharLength})`;
+  }
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -86,4 +117,6 @@ export class BrokerFeatureEkycManagementComponent {
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
     return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
   }
+
+  protected readonly country = country;
 }

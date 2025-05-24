@@ -20,10 +20,10 @@ export const shellRoutes: Route[] = [
           ),
       },
       {
-        path: 'upload',
+        path: 'ekyc-management',
         loadChildren: () =>
-          import('@insurance-employee-feature-upload').then(
-            (m) => m.uploadRoutes
+          import('@insurance-broker-feature-ekyc-management').then(
+            (m) => m.ekycManagementRoutes
           ),
       },
     ],

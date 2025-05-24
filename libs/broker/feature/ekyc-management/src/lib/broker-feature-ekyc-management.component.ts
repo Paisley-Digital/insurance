@@ -16,6 +16,8 @@ import { AlertService } from '@shared-ui-alert';
 import { ErrorMessageComponent } from '@shared-ui-input-validator';
 import { MatSelectModule } from '@angular/material/select';
 import { country } from './ekyc-management.constant';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'insurance-broker-feature-ekyc-management',
@@ -32,6 +34,7 @@ import { country } from './ekyc-management.constant';
     MatSelectModule,
     NgOptimizedImage,
     ErrorMessageComponent,
+    MatDatepickerModule,
   ],
   templateUrl: './broker-feature-ekyc-management.component.html',
   styleUrl: './broker-feature-ekyc-management.component.scss',
@@ -59,6 +62,8 @@ export class BrokerFeatureEkycManagementComponent {
       [Validators.required, Validators.maxLength(this.maxCharLength)],
     ],
     businessAddress: ['', Validators.required],
+    country: ['', Validators.required],
+    tradeLicenseNumber: ['', Validators.required],
   });
 
   secondFormGroup = this._formBuilder.group({

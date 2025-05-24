@@ -144,7 +144,7 @@
             <div class="!w-full form-gap flex">
               <mat-form-field class="w-full mt-6">
                 <mat-label>Country</mat-label>
-                <mat-select>
+                <mat-select formControlName="country">
                   @for (countries of country; track countries.code){
 
                   <mat-option [value]="countries.code">{{
@@ -152,11 +152,57 @@
                   }}</mat-option>
                   }
                 </mat-select>
+                <mat-error>
+                  <insurance-error-message
+                    [input]="companyInfoForm.get('country')"
+                  />
+                </mat-error>
               </mat-form-field>
               <div class="w-full"></div>
             </div>
-            <div>
-              <button mat-button matStepperNext>Next</button>
+            <h3>Company Details</h3>
+            <div class="!flex !w-full mt-4 form-gap">
+              <mat-form-field class="w-full">
+                <mat-label>Trade License Number</mat-label>
+                <input matInput formControlName="tradeLicenseNumber" required />
+                <mat-error>
+                  <insurance-error-message
+                    [input]="companyInfoForm.get('tradeLicenseNumber')"
+                  />
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>Trade License Number</mat-label>
+                <input matInput formControlName="tradeLicenseNumber" required />
+                <mat-error>
+                  <insurance-error-message
+                    [input]="companyInfoForm.get('tradeLicenseNumber')"
+                  />
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="!w-full form-gap flex">
+              <mat-form-field class="w-full mt-6">
+                <mat-label>License Expiry Date</mat-label>
+                <input matInput [matDatepicker]="picker" />
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              <div class="w-full"></div>
+            </div>
+            <div class="w-full flex form-gap mt-4">
+              <button class="w-2/3" mat-flat-button matStepperNext>
+                Continue
+              </button>
+              <button class="w-2/3" mat-stroked-button matStepperNext>
+                Save for Later
+              </button>
+              <button class="w-2/3" mat-stroked-button matStepperNext>
+                Back
+              </button>
             </div>
           </form>
         </mat-step>

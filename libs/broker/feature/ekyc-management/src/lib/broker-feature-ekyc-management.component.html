@@ -1,1 +1,137 @@
-<p>broker-feature-ekyc-management works!</p>
+<div class="p-[20px] sm:p-[20px] lg:p-[72px] md:p-[60px]">
+  <mat-card appearance="outlined">
+    <div class="p-4">
+      <h3>Know-Your-Customer Form- Group Policies</h3>
+      <mat-stepper [linear]="true" #stepper>
+        <mat-step [stepControl]="companyInfoForm">
+          <form [formGroup]="companyInfoForm" class="!mt-4">
+            <h3>Upload Trade License</h3>
+            <div
+              class="flex flex-1 flex-col border-dashed p-6 border-[#D0D5DD] rounded-lg"
+            >
+              @if (file()) {
+              <div class="flex flex-col !justify-center !items-center mt-4">
+                <p>Image size: {{ fileSize() }}</p>
+                <img
+                  [src]="filePreview"
+                  class="!w-[200px] !h-[120px] !object-cover rounded-md"
+                  alt="File preview"
+                />
+                <div class="flex justify-center">
+                  <button mat-icon-button type="button" (click)="removeFile()">
+                    <mat-icon svgIcon="trash-warn" />
+                  </button>
+                  <input
+                    type="file"
+                    #fileInput
+                    (change)="onFileSelected($event)"
+                    accept="image/png, image/jpeg, application/pdf"
+                    hidden
+                  />
+                  <button
+                    mat-icon-button
+                    (click)="fileInput.click()"
+                    type="button"
+                  >
+                    <mat-icon svgIcon="refresh" />
+                  </button>
+                </div>
+              </div>
+              } @else {
+
+              <div class="flex flex-col justify-center items-center gap-3">
+                <span class="!font-semibold">Drag & Drop your file here</span>
+                <span class="font-light">
+                  Accepted formats: JPG, PNG, PDF.</span
+                >
+                <span class="font-light"> Max file size: 5MB.</span>
+              </div>
+
+              <div class="flex flex-col gap-6 justify-center items-center">
+                <input
+                  type="file"
+                  #fileInput
+                  (change)="onFileSelected($event)"
+                  accept="image/png, image/jpeg, application/pdf"
+                  hidden
+                />
+                <button
+                  mat-flat-button
+                  class="mt-4"
+                  (click)="fileInput.click()"
+                  type="button"
+                >
+                  Browse
+                  <mat-icon svgIcon="add" />
+                </button>
+              </div>
+              }
+            </div>
+            <ng-template matStepLabel>Company Info</ng-template>
+            <mat-form-field>
+              <mat-label>Name</mat-label>
+              <input
+                matInput
+                placeholder="Last name, First name"
+                formControlName="firstCtrl"
+                required
+              />
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup" label="Shareholders">
+          <form [formGroup]="secondFormGroup">
+            <mat-form-field>
+              <mat-label>Address</mat-label>
+              <input
+                matInput
+                formControlName="secondCtrl"
+                placeholder="Ex. 1 Main St, New York, NY"
+                required
+              />
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Board & Management</ng-template>
+          <p>You are now done.</p>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>PEPs & Compliance</ng-template>
+          <p>You are now done.</p>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Source of Funds</ng-template>
+          <p>You are now done.</p>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Declaration</ng-template>
+          <p>You are now done.</p>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+          </div>
+        </mat-step>
+      </mat-stepper>
+    </div>
+  </mat-card>
+</div>

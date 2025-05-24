@@ -1,0 +1,24 @@
+.mat-expansion-panel:not([class*='mat-elevation-z']) {
+  box-shadow: none !important;
+}
+.mat-mdc-list-base {
+  .mat-mdc-list-item {
+    @apply overflow-hidden #{!important};
+    padding-inline-start: 32px;
+
+    &.active {
+      background-color: #f4ebff !important;
+    }
+
+    &.mat-mdc-list-item-with-avatar
+      .mat-mdc-list-item-content
+      .mat-mdc-list-text {
+      @apply ps-2 #{!important};
+    }
+  }
+}
+
+.mat-mdc-list-base .mat-mdc-list-item {
+  overflow: hidden !important;
+  padding-inline-start: 0px;
+}

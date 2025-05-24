@@ -1,0 +1,12 @@
+$path-to-images: '^./assets/images';
+.sidenav-position {
+  position: absolute !important;
+}
+
+.background-container {
+  @apply h-full w-full mb-8 #{!important};
+
+  svg {
+    @apply h-auto w-auto #{!important};
+  }
+}

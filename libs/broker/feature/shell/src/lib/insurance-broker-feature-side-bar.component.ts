@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatAccordion } from '@angular/material/expansion';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import {
   MatListItem,
   MatListItemIcon,
@@ -13,13 +13,15 @@ import { MatIcon } from '@angular/material/icon';
   selector: 'insurance-insurance-broker-feature-side-bar',
   imports: [
     CommonModule,
-    MatAccordion,
     MatIcon,
+    RouterLink,
+    NgOptimizedImage,
+    MatAccordion,
+    RouterLinkActive,
+    MatExpansionModule,
+    MatNavList,
     MatListItem,
     MatListItemIcon,
-    MatNavList,
-    RouterLink,
-    RouterLinkActive,
   ],
   templateUrl: './insurance-broker-feature-side-bar.component.html',
   styleUrl: './insurance-broker-feature-side-bar.component.scss',

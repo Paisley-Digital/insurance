@@ -1,20 +1,26 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderDesktopComponent } from '@shared-ui-header-desktop';
-import { MatSidenav, MatSidenavContainer } from '@angular/material/sidenav';
+import {
+  MatSidenav,
+  MatSidenavContainer,
+  MatSidenavModule,
+} from '@angular/material/sidenav';
 import { InsuranceBrokerFeatureSideBarComponent } from './insurance-broker-feature-side-bar.component';
 import { RouterOutlet } from '@angular/router';
 import { isHandsetScreen } from '@shared-util-common';
+import { SideBarComponent } from '../../../../../employee/feature/shell/src/lib/side-bar.component';
 
 @Component({
   selector: 'insurance-insurance-broker-feature-shell',
   imports: [
     CommonModule,
-    HeaderDesktopComponent,
-    MatSidenav,
     MatSidenavContainer,
-    InsuranceBrokerFeatureSideBarComponent,
+    SideBarComponent,
+    MatSidenavModule,
     RouterOutlet,
+    HeaderDesktopComponent,
+    InsuranceBrokerFeatureSideBarComponent,
   ],
   templateUrl: './insurance-broker-feature-shell.component.html',
   styleUrl: './insurance-broker-feature-shell.component.scss',

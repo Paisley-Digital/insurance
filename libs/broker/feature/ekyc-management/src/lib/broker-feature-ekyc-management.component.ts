@@ -45,6 +45,8 @@ export class BrokerFeatureEkycManagementComponent {
 
   readonly maxCharLength = 120;
 
+  toDay = new Date();
+
   filePreview: string | ArrayBuffer | null = null;
   passportFilePreview: string | ArrayBuffer | null = null;
   visaFilePreview: string | ArrayBuffer | null = null;
@@ -64,6 +66,7 @@ export class BrokerFeatureEkycManagementComponent {
     businessAddress: ['', Validators.required],
     country: ['', Validators.required],
     tradeLicenseNumber: ['', Validators.required],
+    date: [Validators.required],
   });
 
   secondFormGroup = this._formBuilder.group({

@@ -184,7 +184,12 @@
             <div class="!w-full form-gap flex">
               <mat-form-field class="w-full mt-6">
                 <mat-label>License Expiry Date</mat-label>
-                <input matInput [matDatepicker]="picker" />
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  [max]="toDay"
+                  formControlName="date"
+                />
                 <mat-datepicker-toggle
                   matIconSuffix
                   [for]="picker"

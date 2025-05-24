@@ -14,6 +14,7 @@ export const svgIconNames = [
   'bell',
   'folder',
   'payment',
+  'list',
   'calendar',
   'phone',
   'circle',

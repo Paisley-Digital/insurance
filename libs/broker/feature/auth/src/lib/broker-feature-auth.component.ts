@@ -1,16 +1,21 @@
-import {Component, inject, signal} from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {isHandsetScreen} from "@shared-util-common";
-import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
-import {MatSidenavModule} from "@angular/material/sidenav";
-import {MatAnchor, MatButtonModule} from "@angular/material/button";
-import {MatFormField} from "@angular/material/form-field";
-import {MatIconModule} from "@angular/material/icon";
-import {MatInputModule} from "@angular/material/input";
-import {ErrorMessageComponent} from "@shared-ui-input-validator";
-import {MatCheckboxModule} from "@angular/material/checkbox";
-import {OverlaySpinnerDirective} from "@insurance-shared-ui-overlay-spinner";
+import { Component, inject, signal } from '@angular/core';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { isHandsetScreen } from '@shared-util-common';
+import {
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatAnchor, MatButtonModule } from '@angular/material/button';
+import { MatFormField } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { ErrorMessageComponent } from '@shared-ui-input-validator';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { OverlaySpinnerDirective } from '@insurance-shared-ui-overlay-spinner';
 
 @Component({
   selector: 'insurance-broker-feature-auth',
@@ -27,6 +32,7 @@ import {OverlaySpinnerDirective} from "@insurance-shared-ui-overlay-spinner";
     ErrorMessageComponent,
     MatCheckboxModule,
     OverlaySpinnerDirective,
+    NgOptimizedImage,
   ],
   templateUrl: './broker-feature-auth.component.html',
   styleUrl: './broker-feature-auth.component.scss',

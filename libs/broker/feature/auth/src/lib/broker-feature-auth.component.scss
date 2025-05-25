@@ -1,7 +1,7 @@
 $path-to-images: '^./assets/images';
 .cover-image {
   @apply flex h-full w-full items-center justify-center bg-cover bg-no-repeat;
-  background-image: url(#{$path-to-images}/broker-login.jpg);
+  background-image: url(#{$path-to-images}/broker.jpg);
 
   svg {
     @apply h-auto w-auto #{!important};

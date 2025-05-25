@@ -1,0 +1,9 @@
+@use '@angular/material' as mat;
+
+:root {
+  @include mat.button-overrides(
+    (
+      container-shape: 8px,
+    )
+  );
+}

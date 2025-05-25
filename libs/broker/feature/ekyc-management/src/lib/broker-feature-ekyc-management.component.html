@@ -1,0 +1,583 @@
+<div class="p-[20px] sm:p-[20px] lg:p-[72px] md:p-[60px]">
+  <mat-card appearance="outlined">
+    <div class="p-4">
+      <h3 class="ms-6">Know-Your-Customer Form- Group Policies</h3>
+      <mat-stepper [linear]="false" labelPosition="bottom" #stepper>
+        <mat-step [stepControl]="companyInfoForm" label="Company Info">
+          <ng-container [ngTemplateOutlet]="companyInfo" />
+          <div class="w-full flex form-gap mt-4">
+            <button class="w-2/3" mat-flat-button matStepperNext>
+              Continue
+            </button>
+            <button class="w-2/3" mat-stroked-button>Save for Later</button>
+            <button class="w-2/3" mat-stroked-button matStepperPrevious>
+              Back
+            </button>
+          </div>
+        </mat-step>
+        <mat-step
+          [stepControl]="secondFormGroup"
+          label="Shareholders"
+          [completed]="false"
+        >
+          <form [formGroup]="secondFormGroup">
+            <h3>
+              Is the company regulated by a Stock exchange or other regulatory
+              authorities in the country? (select applicable box)
+            </h3>
+            <mat-radio-group aria-label="Select an option">
+              <mat-radio-button value="1">Yes</mat-radio-button>
+              <mat-radio-button value="2" class="ms-8">No</mat-radio-button>
+            </mat-radio-group>
+            <div class="!flex !w-full mt-4 form-gap">
+              <mat-form-field class="w-full">
+                <mat-label>Stock Exchange / Authority Name</mat-label>
+                <input matInput formControlName="authorityName" required />
+                <mat-error>
+                  <insurance-error-message
+                    [input]="secondFormGroup.get('authorityName')"
+                  />
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>License Number</mat-label>
+                <input matInput formControlName="licenseNumber" required />
+                <mat-error>
+                  <insurance-error-message
+                    [input]="secondFormGroup.get('licenseNumber')"
+                  />
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <h3>
+              Does anyone hold more than 20% of direct or indirect ownership in
+              the company?
+            </h3>
+            <mat-radio-group aria-label="Select an option">
+              <mat-radio-button value="1">Yes</mat-radio-button>
+              <mat-radio-button value="2" class="ms-8">No</mat-radio-button>
+            </mat-radio-group>
+            <ng-container [ngTemplateOutlet]="table" />
+            <button mat-button class="mt-3">
+              <mat-icon svgIcon="add-2" />
+              Add shareholder
+            </button>
+            <div class="flex w-full gap-4 mt-8">
+              <button mat-flat-button matStepperNext class="w-1/2">
+                Continue
+              </button>
+              <button mat-stroked-button matStepperPrevious class="w-1/2">
+                Back
+              </button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [completed]="false">
+          <ng-template matStepLabel>Board & Management</ng-template>
+          <h3>Board members</h3>
+          <ng-container [ngTemplateOutlet]="boardMembers" />
+          <button mat-button class="mt-3">
+            <mat-icon svgIcon="add-2" />
+            Add member
+          </button>
+          <ng-container [ngTemplateOutlet]="table" />
+          <button mat-button class="mt-3">
+            <mat-icon svgIcon="add-2" />
+            Add manager
+          </button>
+          <div class="flex w-full gap-4 mt-8">
+            <button mat-flat-button matStepperNext class="w-1/2">
+              Continue
+            </button>
+            <button mat-stroked-button matStepperPrevious class="w-1/2">
+              Back
+            </button>
+          </div>
+        </mat-step>
+        <mat-step [completed]="false">
+          <ng-template matStepLabel>PEPs & Compliance</ng-template>
+          <h3>
+            do any board members, senior managers, or shareholders hold a pEP
+            status?
+          </h3>
+          <mat-radio-group aria-label="Select an option">
+            <mat-radio-button value="1">Yes</mat-radio-button>
+            <mat-radio-button value="2" class="ms-8">No</mat-radio-button>
+          </mat-radio-group>
+          <ng-container [ngTemplateOutlet]="boardMembersFour" />
+          <button mat-button class="mt-3">
+            <mat-icon svgIcon="add-2" />
+            Add PEP
+          </button>
+          <div class="flex w-full gap-4 mt-8">
+            <button mat-flat-button matStepperNext class="w-1/2">
+              Continue
+            </button>
+            <button mat-stroked-button matStepperPrevious class="w-1/2">
+              Back
+            </button>
+          </div>
+        </mat-step>
+        <mat-step [completed]="false" [stepControl]="fiveFormGroup">
+          <ng-template matStepLabel>Source of Funds</ng-template>
+          <h3>Are there any additional sources of revenue:</h3>
+          <mat-radio-group aria-label="Select an option">
+            <mat-radio-button value="1">Yes</mat-radio-button>
+            <mat-radio-button value="2" class="ms-8">No</mat-radio-button>
+          </mat-radio-group>
+          <h3>Describe the source of income:</h3>
+          <form [formGroup]="fiveFormGroup">
+            <mat-form-field class="w-full mt-4">
+              <mat-label
+                >Income from property rentals or external investments</mat-label
+              >
+              <textarea
+                matInput
+                formControlName="businessAddress"
+                rows="5"
+              ></textarea>
+              <mat-hint>{{ getCharacterAddress }}</mat-hint>
+              <mat-error>
+                <insurance-error-message
+                  [input]="fiveFormGroup.get('businessAddress')"
+                />
+              </mat-error>
+            </mat-form-field>
+            <div class="mt-8">
+              <h3>Upload documents supporting the source:</h3>
+              <ng-container [ngTemplateOutlet]="uploadFile" />
+            </div>
+          </form>
+          <div class="flex w-full gap-4 mt-8">
+            <button mat-flat-button matStepperNext class="w-1/2">
+              Continue
+            </button>
+            <button mat-stroked-button matStepperPrevious class="w-1/2">
+              Back
+            </button>
+          </div>
+        </mat-step>
+        <mat-step [completed]="false" [stepControl]="lastFormGroup">
+          <ng-template matStepLabel>Declaration</ng-template>
+          <div
+            class="bg-background p-4 rounded-lg mt-3 border-solid border-[#0000001A]"
+          >
+            <h3>declaration</h3>
+            <p>
+              I hereby declare that all information supplied and documents
+              submitted are true and accurate and that all the relevant and
+              mandatory documents as listed under the “Document Check-list” are
+              enclosed with this duly completed Know-Your-Customer Form.
+            </p>
+          </div>
+          <form [formGroup]="lastFormGroup">
+            <div class="!flex !w-full !mt-6 form-gap">
+              <mat-form-field class="w-full">
+                <mat-label>Authorized Signatory</mat-label>
+                <input matInput formControlName="signatory" required />
+                <mat-error>
+                  <insurance-error-message
+                    [input]="lastFormGroup.get('signatory')"
+                  />
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>Designation / Title</mat-label>
+                <input matInput formControlName="designation" required />
+                <mat-error>
+                  <insurance-error-message
+                    [input]="lastFormGroup.get('designation')"
+                  />
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="!flex !w-full mt-4 form-gap">
+              <mat-form-field class="w-full">
+                <mat-label>Company Name</mat-label>
+                <input matInput formControlName="companyName" required />
+                <mat-error>
+                  <insurance-error-message
+                    [input]="lastFormGroup.get('companyName')"
+                  />
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>Date</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  [max]="toDay"
+                  formControlName="date"
+                />
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error>
+                  <insurance-error-message
+                    [input]="lastFormGroup.get('date')"
+                  />
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <h3>Upload Company Stamp / Signature</h3>
+            <div class="flex form-gap">
+              <ng-container [ngTemplateOutlet]="uploadFile" />
+              <ng-container [ngTemplateOutlet]="uploadFile" />
+            </div>
+          </form>
+          <div class="flex w-full gap-4 mt-8">
+            <button mat-flat-button (click)="submitForm()" class="w-1/2">
+              Continue
+            </button>
+            <button mat-stroked-button matStepperPrevious class="w-1/2">
+              Back
+            </button>
+          </div>
+        </mat-step>
+      </mat-stepper>
+    </div>
+  </mat-card>
+</div>
+
+<ng-template #boardMembersFour>
+  <table
+    mat-table
+    [dataSource]="boardMembersListFour"
+    class="mat-elevation-z8 mt-2"
+  >
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef>Full Name</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.name }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Connection</th>
+      <td mat-cell *matCellDef="let element">{{ element.connection }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="weight">
+      <th mat-header-cell *matHeaderCellDef>Nationality</th>
+      <td mat-cell *matCellDef="let element">{{ element.nationality }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="symbol">
+      <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.weight }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="office">
+      <th mat-header-cell *matHeaderCellDef>Office & Position</th>
+      <td mat-cell *matCellDef="let element">{{ element.office }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="appointment">
+      <th mat-header-cell *matHeaderCellDef>Country of Appointment</th>
+      <td mat-cell *matCellDef="let element">{{ element.appointment }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <div class="flex gap-2">
+          <button mat-icon-button><mat-icon svgIcon="edit" /></button>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr
+      mat-header-row
+      *matHeaderRowDef="displayedColumnsBoardMemberStepFour"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumnsBoardMemberStepFour"
+    ></tr>
+  </table>
+</ng-template>
+
+<ng-template #boardMembers>
+  <table mat-table [dataSource]="boardMembersList" class="mat-elevation-z8">
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef>Full Name</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.name }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Designation / Title</th>
+      <td mat-cell *matCellDef="let element">{{ element.type }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="weight">
+      <th mat-header-cell *matHeaderCellDef>Nationality</th>
+      <td mat-cell *matCellDef="let element">{{ element.nationality }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="symbol">
+      <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.weight }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <div class="flex gap-2">
+          <button mat-icon-button><mat-icon svgIcon="trash2" /></button>
+          <button mat-icon-button><mat-icon svgIcon="edit" /></button>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsBoardMember"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsBoardMember"></tr>
+  </table>
+</ng-template>
+
+<ng-template #table>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef>Full Name</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.name }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Type</th>
+      <td mat-cell *matCellDef="let element">{{ element.type }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="weight">
+      <th mat-header-cell *matHeaderCellDef>% of shareholding</th>
+      <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="symbol">
+      <th mat-header-cell *matHeaderCellDef>Nationality</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.nationality }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</ng-template>
+
+<ng-template #uploadFile>
+  <div
+    class="flex flex-1 flex-col border-dashed p-6 border-[#D0D5DD] rounded-lg"
+  >
+    @if (file()) {
+    <div class="flex flex-col !justify-center !items-center mt-4">
+      <p>Image size: {{ fileSize() }}</p>
+      <img
+        [src]="filePreview"
+        class="!w-[200px] !h-[120px] !object-cover rounded-md"
+        alt="File preview"
+      />
+      <div class="flex justify-center">
+        <button mat-icon-button type="button" (click)="removeFile()">
+          <mat-icon svgIcon="trash-warn" />
+        </button>
+        <input
+          type="file"
+          #fileInput
+          (change)="onFileSelected($event)"
+          accept="image/png, image/jpeg, application/pdf"
+          hidden
+        />
+        <button mat-icon-button (click)="fileInput.click()" type="button">
+          <mat-icon svgIcon="refresh" />
+        </button>
+      </div>
+    </div>
+    } @else {
+
+    <div class="flex flex-col justify-center items-center gap-3">
+      <span class="!font-semibold">Drag & Drop your file here</span>
+      <span class="font-light"> Accepted formats: JPG, PNG, PDF.</span>
+      <span class="font-light"> Max file size: 5MB.</span>
+    </div>
+
+    <div class="flex flex-col gap-6 justify-center items-center">
+      <input
+        type="file"
+        #fileInput
+        (change)="onFileSelected($event)"
+        accept="image/png, image/jpeg, application/pdf"
+        hidden
+      />
+      <button
+        mat-flat-button
+        class="mt-4"
+        (click)="fileInput.click()"
+        type="button"
+      >
+        Browse
+        <mat-icon svgIcon="add" />
+      </button>
+    </div>
+    }
+  </div>
+</ng-template>
+
+<ng-template #companyInfo>
+  <form [formGroup]="companyInfoForm" class="!mt-4">
+    <h3>Upload Trade License</h3>
+    <ng-container [ngTemplateOutlet]="uploadFile" />
+    <ng-template matStepLabel>Company Info</ng-template>
+    <h3>Basic Info</h3>
+    <div class="!flex !w-full mt-4 form-gap">
+      <mat-form-field class="w-full">
+        <mat-label>Full Legal Name</mat-label>
+        <input matInput formControlName="fullLegalName" required />
+        <mat-error>
+          <insurance-error-message
+            [input]="companyInfoForm.get('fullLegalName')"
+          />
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Full Trading Name</mat-label>
+        <input matInput formControlName="fullTradingName" required />
+        <mat-error>
+          <insurance-error-message
+            [input]="companyInfoForm.get('fullTradingName')"
+          />
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <h3>Company Details</h3>
+    <div class="!flex !w-full mt-4 form-gap">
+      <mat-form-field class="w-full">
+        <mat-label>Full Legal Name</mat-label>
+        <input matInput formControlName="typeOfCompany" required />
+        <mat-error>
+          <insurance-error-message
+            [input]="companyInfoForm.get('typeOfCompany')"
+          />
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Full Trading Name</mat-label>
+        <input matInput formControlName="licenseNumber" required />
+        <mat-error>
+          <insurance-error-message
+            [input]="companyInfoForm.get('licenseNumber')"
+          />
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <h3>Address</h3>
+    <div class="!flex !w-full mt-4 form-gap">
+      <mat-form-field class="w-full">
+        <mat-label>Registered Address</mat-label>
+        <textarea
+          matInput
+          formControlName="registeredAddress"
+          rows="5"
+        ></textarea>
+        <mat-hint>{{ getCharacter }}</mat-hint>
+        <mat-error>
+          <insurance-error-message
+            [input]="companyInfoForm.get('registeredAddress')"
+          />
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Business Address</mat-label>
+        <textarea
+          matInput
+          formControlName="businessAddress"
+          rows="5"
+        ></textarea>
+        <mat-hint>{{ getCharacterBusinessAddress }}</mat-hint>
+        <mat-error>
+          <insurance-error-message
+            [input]="companyInfoForm.get('businessAddress')"
+          />
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="!w-full form-gap flex">
+      <mat-form-field class="w-full mt-6">
+        <mat-label>Country</mat-label>
+        <mat-select formControlName="country">
+          @for (countries of country; track countries.code){
+
+          <mat-option [value]="countries.code">{{ countries.name }}</mat-option>
+          }
+        </mat-select>
+        <mat-error>
+          <insurance-error-message [input]="companyInfoForm.get('country')" />
+        </mat-error>
+      </mat-form-field>
+      <div class="w-full"></div>
+    </div>
+    <h3>Company Details</h3>
+    <div class="!flex !w-full mt-4 form-gap">
+      <mat-form-field class="w-full">
+        <mat-label>Trade License Number</mat-label>
+        <input matInput formControlName="tradeLicenseNumber" required />
+        <mat-error>
+          <insurance-error-message
+            [input]="companyInfoForm.get('tradeLicenseNumber')"
+          />
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Trade License Number</mat-label>
+        <input matInput formControlName="tradeLicenseNumber" required />
+        <mat-error>
+          <insurance-error-message
+            [input]="companyInfoForm.get('tradeLicenseNumber')"
+          />
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="!w-full form-gap flex">
+      <mat-form-field class="w-full mt-6">
+        <mat-label>License Expiry Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [max]="toDay"
+          formControlName="date"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error>
+          <insurance-error-message [input]="companyInfoForm.get('date')" />
+        </mat-error>
+      </mat-form-field>
+      <div class="w-full"></div>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #successfulAction>
+  <div class="!flex !flex-col !justify-center !items-center">
+    <mat-icon svgIcon="tick" class="!w-10 !h-10 relative top-6" />
+    <h2 mat-dialog-title>KYC Form Submitted</h2>
+    <mat-dialog-content
+      >The KYC form has been successfully submitted for
+      review.</mat-dialog-content
+    >
+    <mat-dialog-actions align="center">
+      <button mat-stroked-button mat-dialog-close>Go To Dashboard</button>
+    </mat-dialog-actions>
+  </div>
+</ng-template>

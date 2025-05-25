@@ -10,6 +10,7 @@ import { InsuranceBrokerFeatureSideBarComponent } from './insurance-broker-featu
 import { RouterOutlet } from '@angular/router';
 import { isHandsetScreen } from '@shared-util-common';
 import { SideBarComponent } from '../../../../../employee/feature/shell/src/lib/side-bar.component';
+import {HeaderComponent} from "@insurance-broker-feature-header";
 
 @Component({
   selector: 'insurance-insurance-broker-feature-shell',
@@ -21,6 +22,7 @@ import { SideBarComponent } from '../../../../../employee/feature/shell/src/lib/
     RouterOutlet,
     HeaderDesktopComponent,
     InsuranceBrokerFeatureSideBarComponent,
+    HeaderComponent,
   ],
   templateUrl: './insurance-broker-feature-shell.component.html',
   styleUrl: './insurance-broker-feature-shell.component.scss',

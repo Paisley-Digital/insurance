@@ -1,0 +1,77 @@
+<mat-accordion>
+  <div class="flex justify-center items-center w-full flex-col">
+    <img
+      ngSrc="./assets/images/upload-image.svg"
+      width="60"
+      height="60"
+      alt=""
+    />
+    <h3>Mariana Robi</h3>
+    <span>Cigna Company Admin Emaar</span>
+    <span class="!text-sm text-gray-400 mt-2">Account Managr:MariRobi.com</span>
+  </div>
+  <mat-nav-list>
+    <div class="!p-4">
+      <a
+        mat-list-item
+        [routerLink]="'/console/dashboard'"
+        routerLinkActive="active"
+      >
+        <div matListItemTitle class="flex justify-start items-center me-8">
+          <mat-icon svgIcon="home" matListItemIcon class="!ms-3"/>
+          <div class="relative left-3">Dashboard</div>
+        </div>
+      </a>
+    </div>
+  </mat-nav-list>
+  <div class="!p-4">
+    <div class="!text-[#d3d3d3] ms-5">Menu</div>
+    <mat-nav-list>
+      <a
+        mat-list-item
+        [routerLink]="'/console/KYCDocuments'"
+        routerLinkActive="active"
+      >
+        <div matListItemTitle class="flex justify-start items-center me-8">
+          <mat-icon svgIcon="folder" matListItemIcon class="!ms-3"/>
+          <div class="relative left-3">KYC Documents</div>
+        </div>
+      </a>
+    </mat-nav-list>
+    <mat-nav-list>
+      <a
+        mat-list-item
+        [routerLink]="'/console/customer-management'"
+        routerLinkActive="active"
+      >
+        <div matListItemTitle class="flex justify-start items-center me-8">
+          <mat-icon svgIcon="history" matListItemIcon class="!ms-3"/>
+          <div class="relative left-3">My History</div>
+        </div>
+      </a>
+    </mat-nav-list>
+
+  </div>
+  <div class="bottom-0 mt-auto">
+    <mat-nav-list>
+      <a
+        mat-list-item
+        [routerLink]="'/console/customer-management'"
+        routerLinkActive="active"
+      >
+        <div matListItemTitle class="flex justify-start items-center me-8">
+          <mat-icon svgIcon="cog" matListItemIcon class="!ms-3"/>
+          <div class="relative left-3">Settings</div>
+        </div>
+      </a>
+    </mat-nav-list>
+    <mat-nav-list>
+      <a mat-list-item (click)="logout()">
+        <div matListItemTitle class="flex justify-start items-center me-8">
+          <mat-icon svgIcon="logout" matListItemIcon class="!ms-3"/>
+          <div class="relative left-3">Logout</div>
+        </div>
+      </a>
+    </mat-nav-list>
+  </div>
+</mat-accordion>

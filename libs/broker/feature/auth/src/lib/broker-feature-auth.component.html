@@ -18,10 +18,12 @@
 </mat-drawer-container>
 
 <ng-template #login>
+  <div class="!w-full flex justify-center relative bottom-10">
+    <img ngSrc="./assets/images/cignal.jpg" width="148" height="81" />
+  </div>
   <div class="flex flex-col items-center max-sm:h-full max-sm:pb-8 w-full">
-    <h1 class="!flex !justify-start !w-full">Welcome To</h1>
     <h1 class="!flex !justify-start !w-full relative bottom-7">
-      Insurance Broker Portal
+      Emaar Insurance Portal
     </h1>
     <div class="mt-10 w-full flex-1 relative bottom-12">
       <ng-container [ngTemplateOutlet]="loginTemplate" />
@@ -66,7 +68,7 @@
       </div>
       <div class="mt-3 flex items-start justify-between">
         <mat-checkbox class="example-margin"
-        >stay signed in on this device</mat-checkbox
+          >stay signed in on this device</mat-checkbox
         >
         <a mat-button color="primary"> Forgot password? </a>
       </div>
@@ -76,13 +78,9 @@
           <mat-icon svgIcon="signup" />
         </button>
         <div class="flex gap-6 w-full">
-          <button mat-stroked-button color="primary" class="w-1/2 !rounded-lg">
+          <button mat-stroked-button color="primary" class="w-full !rounded-lg">
             Continue with UAE PASS
             <mat-icon svgIcon="finger-prints" />
-          </button>
-          <button mat-stroked-button color="primary" class="w-1/2 !rounded-lg">
-            Continue with Google
-            <mat-icon svgIcon="google-login" />
           </button>
         </div>
       </div>

@@ -27,3 +27,46 @@
 .statement-key-value-grid > div {
   @apply flex gap-2 items-start;
 }
+.statement-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.statement-table th, .statement-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.statement-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+  text-align: left;
+}
+
+.mobile-card {
+  display: none;
+}
+
+.card {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+@media screen and (max-width: 768px) {
+  table {
+    display: none;
+  }
+  .mobile-card {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .mobile-card {
+    display: none;
+  }
+}

@@ -40,7 +40,7 @@ export interface JsonResult {
   Occupation: string;
   Sponsor_Employer: string;
   place_of_birth: string;
-  birthday:string
+  birthday: string;
   holders_signature: string;
   expiry_date: string;
   issuing_country: string;
@@ -61,4 +61,20 @@ export interface UploadImageResponse {
   fileName: string;
   fileType: string;
   downloadUrl: string;
+}
+
+export interface FormsEntity {
+  date: string;
+  documentTypeEmiratesId: string;
+  expireDate: string;
+  gender: string;
+  holderSignature: string;
+  id: string;
+  issuingCountry: string;
+  lastName: string;
+  name: string;
+  nationality: string;
+  occupation: string;
+  placeOfBirth: string;
+  sponsor: string;
 }

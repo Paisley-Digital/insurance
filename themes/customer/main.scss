@@ -1,3 +1,4 @@
-@import "customer_theme-colors";
+@import 'themes/broker-theme';
 @import './fonts/poppins';
-@import './overrides/overrides';
+@import './base/base';
+@import 'themes/broker/overrides/overrides';

@@ -28,7 +28,7 @@
             "output": "assets"
           }
         ],
-        "styles": ["themes/base/main.scss"],
+        "styles": ["themes/customer/main.scss"],
         "scripts": []
       },
       "configurations": {

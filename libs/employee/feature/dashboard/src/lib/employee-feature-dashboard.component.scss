@@ -1,0 +1,89 @@
+.dashboard {
+    .submission-summary-container {
+        display: flex;
+        background-color: white;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      
+        .summary-box {
+          flex: 1;
+          padding: 24px;
+          text-align: center;
+          position: relative;
+
+          &:not(:first-child)::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 48px;
+            bottom: 48px;
+            width: 1px;
+            background-color: #e5e7eb;
+          }
+      
+          .value {
+            font-size: 60px;
+            font-weight: bold;
+            color: #065f46;
+          }
+      
+          .title {
+            font-size: 18px;
+            margin-top: 12px;
+            font-weight: 600;
+            color: #101828;
+          }
+      
+          .muted {
+            font-size: 0.875rem;
+            color: #6b7280;
+            font-weight: normal;
+          }
+      
+          .description {
+            margin-top: 0.25rem;
+            font-size: 16px;
+            color: #667085;
+          }
+        }
+      }
+      
+    .card {
+      padding: 24px 16px;
+      background-color: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 1rem;
+  
+      .title {
+        font-weight: 700;
+        color: #18181B;
+        font-size: 20px;
+      }
+  
+      .value {
+        font-size: 21px;
+        font-weight: 700;
+        color: #287A6E;
+      }
+  
+      .subtitle {
+        font-size: 14px;
+        font-weight: 500;
+        color: #71717A;
+      }
+    }
+  
+    .section-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #374151;
+    }
+  
+    .graph-section img,
+    .grid img {
+      max-height: 300px;
+      object-fit: contain;
+    }
+  }
+  

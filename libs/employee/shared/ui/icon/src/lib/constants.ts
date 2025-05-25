@@ -41,4 +41,5 @@ export const svgIconNames = [
   'mail-green',
   'group',
   'trailing',
+  'profile-outline',
 ] as const;

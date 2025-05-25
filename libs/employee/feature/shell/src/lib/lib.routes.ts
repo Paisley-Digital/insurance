@@ -9,10 +9,10 @@ export const shellRoutes: Route[] = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'dashboard',
+        redirectTo: 'complianceoverview',
       },
       {
-        path: 'dashboard',
+        path: 'complianceoverview',
         loadChildren: () =>
           import('@insurance-employee-feature-dashboard').then(
             (m) => m.dashboardRoutes

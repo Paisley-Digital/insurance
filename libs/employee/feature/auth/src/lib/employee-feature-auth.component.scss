@@ -1,8 +1,19 @@
 $path-to-images: '^./assets/images';
 .cover-image {
   @apply flex h-full w-full items-center justify-center bg-cover bg-no-repeat;
-  background-image: url(#{$path-to-images}/loginBackground.svg);
+  background-image: url(#{$path-to-images}/broker-login.jpg);
 
+  svg {
+    @apply h-auto w-auto #{!important};
+  }
+}
+
+.top-image {
+  @apply flex h-full w-full items-center justify-center bg-no-repeat;
+  background-image: url(#{$path-to-images}/cigna.jpg);
+  max-width: 148px;
+  max-height: 81px;
+  margin-left: 280px;
   svg {
     @apply h-auto w-auto #{!important};
   }

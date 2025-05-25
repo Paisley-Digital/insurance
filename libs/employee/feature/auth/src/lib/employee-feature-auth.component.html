@@ -1,4 +1,4 @@
-<mat-drawer-container class="!bg-card !h-full" autosize>
+<mat-drawer-container class="!bg-white !h-full" autosize>
   <mat-drawer-content class="!flex flex-col">
     <div class="relative flex flex-1 flex-wrap">
       @if ((isHandsetScreen$ | async) === false) {
@@ -20,9 +20,11 @@
 </mat-drawer-container>
 
 <ng-template #login>
+    <div class="top-image"></div>
+
   <div class="flex flex-col items-center max-sm:h-full max-sm:pb-8 w-full">
-    <h1 class="!flex !justify-start !w-full">
-      Emaar Employee Insurance Portal
+    <h1 class="!flex !justify-center !w-full">
+      Welcome to Cigna eKYC Portal
     </h1>
     <div class="mt-6 w-full flex-1">
       <ng-container [ngTemplateOutlet]="loginTemplate" />
@@ -85,7 +87,7 @@
           Sign in
           <mat-icon svgIcon="signup" />
         </button>
-        <div
+        <!-- <div
           class="flex gap-6 w-full"
           [ngClass]="(isHandsetScreen$ | async) ? 'flex flex-col w-full' : ''"
         >
@@ -107,7 +109,7 @@
             Continue with Google
             <mat-icon svgIcon="google-login" />
           </button>
-        </div>
+        </div> -->
       </div>
     </div>
   </form>

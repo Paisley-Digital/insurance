@@ -243,3 +243,37 @@ export const country = [
   { name: 'Zambia', code: 'ZM' },
   { name: 'Zimbabwe', code: 'ZW' },
 ];
+
+export const ELEMENT_DATA = [
+  { type: 'Entity', name: 'John Stewart', weight: 25, nationality: 'Britain' },
+  { type: '_', name: 'Entity', weight: 25, nationality: 'Put Germany' },
+];
+
+export const ELEMENT_DATA_Board_Members = [
+  {
+    type: 'Entity',
+    name: 'John Doe',
+    weight: '1/2/1993',
+    nationality: 'Dubai',
+  },
+  { type: '_', name: 'Daniel', weight: '1/2/1983', nationality: 'USA' },
+];
+
+export const ELEMENT_DATA_Board_Members_Four = [
+  {
+    connection: 'shareholder',
+    name: 'John Doe',
+    weight: 'june20,1982',
+    nationality: 'Australia',
+    office: 'Ministry of Finance, Advisor',
+    appointment: 'Australia',
+  },
+  {
+    connection: 'Board member',
+    name: 'mary johnson',
+    weight: 'june15,1965',
+    nationality: 'canada',
+    office: 'Ministry of Industry, Advisor',
+    appointment: 'Canada',
+  },
+];

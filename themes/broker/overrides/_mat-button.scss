@@ -3,7 +3,7 @@
 :root {
   @include mat.button-overrides(
     (
-      filled-container-shape: 8px,
+      container-shape: 8px,
     )
   );
 }

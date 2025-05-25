@@ -7,13 +7,13 @@
 $path-to-fonts: '^./assets/fonts';
 
 @font-face {
-  font-family: Poppins;
+  font-family: Inter;
   font-style: normal;
   font-weight: normal;
-  src: url('#{$path-to-fonts}/poppins/Poppins-light.woff2') format('woff');
+  src: url('#{$path-to-fonts}/inter/inter.ttf') format('woff');
 }
 
-$font-family-poppins: 'Poppins', sans-serif;
+$font-family-poppins: 'Inter', sans-serif;
 
 html,
 body {

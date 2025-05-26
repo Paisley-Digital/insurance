@@ -1,5 +1,6 @@
 @use '@angular/material' as mat;
 @use 'themes_primary-colors' as theme;
+
 html {
   color-scheme: light dark;
   @include mat.theme(

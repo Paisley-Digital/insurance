@@ -14,6 +14,8 @@ export const svgIconNames = [
   'edit',
   'chevron-down',
   'tick',
+  'user',
+  'retry',
   'home',
   'chart',
   'bell',

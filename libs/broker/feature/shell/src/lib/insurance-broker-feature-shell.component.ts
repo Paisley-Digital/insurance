@@ -9,18 +9,17 @@ import {
 import { InsuranceBrokerFeatureSideBarComponent } from './insurance-broker-feature-side-bar.component';
 import { RouterOutlet } from '@angular/router';
 import { isHandsetScreen } from '@shared-util-common';
-import { SideBarComponent } from '../../../../../employee/feature/shell/src/lib/side-bar.component';
+import { BrokerHeaderComponent } from '@insurance-broker-feature-header';
 
 @Component({
   selector: 'insurance-insurance-broker-feature-shell',
   imports: [
     CommonModule,
     MatSidenavContainer,
-    SideBarComponent,
     MatSidenavModule,
     RouterOutlet,
-    HeaderDesktopComponent,
     InsuranceBrokerFeatureSideBarComponent,
+    BrokerHeaderComponent,
   ],
   templateUrl: './insurance-broker-feature-shell.component.html',
   styleUrl: './insurance-broker-feature-shell.component.scss',

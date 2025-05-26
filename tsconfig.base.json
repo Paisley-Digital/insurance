@@ -16,19 +16,17 @@
     "baseUrl": ".",
     "paths": {
       "@./assets": ["libs/shared/assets/src/index.ts"],
-      "@insurance-broker-feature-ekyc-management": [
-        "libs/broker/feature/ekyc-management/src/index.ts"
-      ],
+      "@insurance-broker-feature-header": ["libs/broker/feature/header/src/index.ts"],
       "@./insurance-customer": ["libs/customer/src/index.ts"],
-      "@insurance-customer-feature-upload": [
-        "libs/customer/feature/upload-file/src/index.ts"
-      ],
       "@./locales": ["libs/shared/util/locales/src/index.ts"],
       "@insurance-broker-feature-auth": [
         "libs/broker/feature/auth/src/index.ts"
       ],
       "@insurance-broker-feature-dashboard": [
         "libs/broker/feature/dashboard/src/index.ts"
+      ],
+      "@insurance-broker-feature-ekyc-management": [
+        "libs/broker/feature/ekyc-management/src/index.ts"
       ],
       "@insurance-broker-feature-shell": [
         "libs/broker/feature/shell/src/index.ts"
@@ -38,6 +36,9 @@
       ],
       "@insurance-customer-feature-shell": [
         "libs/customer/feature/shell/src/index.ts"
+      ],
+      "@insurance-customer-feature-upload": [
+        "libs/customer/feature/upload-file/src/index.ts"
       ],
       "@insurance-employee-data-dashboards": [
         "libs/employee/data/data-dashboards/src/index.ts"

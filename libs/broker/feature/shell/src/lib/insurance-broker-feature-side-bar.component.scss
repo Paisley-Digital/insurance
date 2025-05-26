@@ -7,7 +7,7 @@
     padding-inline-start: 32px;
 
     &.active {
-      background-color: #0042a91a !important;
+      @apply bg-blue-100 !important;
     }
 
     &.mat-mdc-list-item-with-avatar,

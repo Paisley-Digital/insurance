@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'broker-header',
   imports: [CommonModule, MatToolbarModule, MatIconModule, MatButtonModule],
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+  templateUrl: './broker-header.component.html',
+  styleUrls: ['./broker-header.component.scss'],
 })
-export class HeaderComponent {}
+export class BrokerHeaderComponent {}

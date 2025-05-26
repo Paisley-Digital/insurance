@@ -1,1 +1,1 @@
-export * from './lib/header.component';
+export * from './lib/broker-header.component';

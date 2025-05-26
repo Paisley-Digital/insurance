@@ -1,10 +1,153 @@
-<div class="p-[20px] sm:p-[20px] lg:p-[72px] md:p-[60px]">
+<div class="p-5 sm:p-5 lg:p-[4.5rem] md:p-[3.75rem]">
   <mat-card appearance="outlined">
     <div class="p-4">
       <h3 class="ms-6">Know-Your-Customer Form- Group Policies</h3>
-      <mat-stepper [linear]="false" labelPosition="bottom" #stepper>
-        <mat-step [stepControl]="companyInfoForm" label="Company Info">
-          <ng-container [ngTemplateOutlet]="companyInfo" />
+      <mat-stepper [linear]="true" labelPosition="bottom" #stepper>
+        <mat-step
+          [stepControl]="companyInfoForm"
+          label="Company Info"
+          [completed]="false"
+        >
+          <form [formGroup]="companyInfoForm" class="!mt-4">
+            <h3>Upload Trade License</h3>
+            <ng-container [ngTemplateOutlet]="uploadLicenseFile" />
+            <ng-template matStepLabel>Company Info</ng-template>
+            <h3>Basic Info</h3>
+            <div class="!flex !w-full mt-4 form-gap">
+              <mat-form-field class="w-full">
+                <mat-label>Full Legal Name</mat-label>
+                <input matInput formControlName="fullLegalName" required />
+                <mat-error>
+                  <insurance-error-message
+                    [input]="companyInfoForm.get('fullLegalName')"
+                  />
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>Full Trading Name</mat-label>
+                <input matInput formControlName="fullTradingName" required />
+                <mat-error>
+                  <insurance-error-message
+                    [input]="companyInfoForm.get('fullTradingName')"
+                  />
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <h3>Company Details</h3>
+            <div class="!flex !w-full mt-4 form-gap">
+              <mat-form-field class="w-full">
+                <mat-label>Full Legal Name</mat-label>
+                <input matInput formControlName="typeOfCompany" required />
+                <mat-error>
+                  <insurance-error-message
+                    [input]="companyInfoForm.get('typeOfCompany')"
+                  />
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>Full Trading Name</mat-label>
+                <input matInput formControlName="licenseNumber" required />
+                <mat-error>
+                  <insurance-error-message
+                    [input]="companyInfoForm.get('licenseNumber')"
+                  />
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <h3>Address</h3>
+            <div class="!flex !w-full mt-4 form-gap">
+              <mat-form-field class="w-full">
+                <mat-label>Registered Address</mat-label>
+                <textarea
+                  matInput
+                  formControlName="registeredAddress"
+                  rows="5"
+                ></textarea>
+                <mat-hint>{{ getCharacter }}</mat-hint>
+                <mat-error>
+                  <insurance-error-message
+                    [input]="companyInfoForm.get('registeredAddress')"
+                  />
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>Business Address</mat-label>
+                <textarea
+                  matInput
+                  formControlName="businessAddress"
+                  rows="5"
+                ></textarea>
+                <mat-hint>{{ getCharacterBusinessAddress }}</mat-hint>
+                <mat-error>
+                  <insurance-error-message
+                    [input]="companyInfoForm.get('businessAddress')"
+                  />
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="!w-full form-gap flex">
+              <mat-form-field class="w-full mt-6">
+                <mat-label>Country</mat-label>
+                <mat-select formControlName="country">
+                  @for (countries of country; track countries.code){
+
+                  <mat-option [value]="countries.code">{{
+                    countries.name
+                  }}</mat-option>
+                  }
+                </mat-select>
+                <mat-error>
+                  <insurance-error-message
+                    [input]="companyInfoForm.get('country')"
+                  />
+                </mat-error>
+              </mat-form-field>
+              <div class="w-full"></div>
+            </div>
+            <h3>Company Details</h3>
+            <div class="!flex !w-full mt-4 form-gap">
+              <mat-form-field class="w-full">
+                <mat-label>Trade License Number</mat-label>
+                <input matInput formControlName="tradeLicenseNumber" required />
+                <mat-error>
+                  <insurance-error-message
+                    [input]="companyInfoForm.get('tradeLicenseNumber')"
+                  />
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>Trade License Number</mat-label>
+                <input matInput formControlName="tradeLicenseNumber" required />
+                <mat-error>
+                  <insurance-error-message
+                    [input]="companyInfoForm.get('tradeLicenseNumber')"
+                  />
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="!w-full form-gap flex">
+              <mat-form-field class="w-full mt-6">
+                <mat-label>License Expiry Date</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  [max]="toDay"
+                  formControlName="date"
+                />
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error>
+                  <insurance-error-message
+                    [input]="companyInfoForm.get('date')"
+                  />
+                </mat-error>
+              </mat-form-field>
+              <div class="w-full"></div>
+            </div>
+          </form>
           <div class="w-full flex form-gap mt-4">
             <button class="w-2/3" mat-flat-button matStepperNext>
               Continue
@@ -16,11 +159,11 @@
           </div>
         </mat-step>
         <mat-step
-          [stepControl]="secondFormGroup"
+          [stepControl]="shareholdersForm"
           label="Shareholders"
           [completed]="false"
         >
-          <form [formGroup]="secondFormGroup">
+          <form [formGroup]="shareholdersForm">
             <h3>
               Is the company regulated by a Stock exchange or other regulatory
               authorities in the country? (select applicable box)
@@ -35,7 +178,7 @@
                 <input matInput formControlName="authorityName" required />
                 <mat-error>
                   <insurance-error-message
-                    [input]="secondFormGroup.get('authorityName')"
+                    [input]="shareholdersForm.get('authorityName')"
                   />
                 </mat-error>
               </mat-form-field>
@@ -44,7 +187,7 @@
                 <input matInput formControlName="licenseNumber" required />
                 <mat-error>
                   <insurance-error-message
-                    [input]="secondFormGroup.get('licenseNumber')"
+                    [input]="shareholdersForm.get('licenseNumber')"
                   />
                 </mat-error>
               </mat-form-field>
@@ -72,7 +215,7 @@
             </div>
           </form>
         </mat-step>
-        <mat-step [completed]="false">
+        <mat-step [completed]="false" [stepControl]="shareholdersForm">
           <ng-template matStepLabel>Board & Management</ng-template>
           <h3>Board members</h3>
           <ng-container [ngTemplateOutlet]="boardMembers" />
@@ -94,7 +237,7 @@
             </button>
           </div>
         </mat-step>
-        <mat-step [completed]="false">
+        <mat-step [completed]="false" [stepControl]="shareholdersForm">
           <ng-template matStepLabel>PEPs & Compliance</ng-template>
           <h3>
             do any board members, senior managers, or shareholders hold a pEP
@@ -118,7 +261,7 @@
             </button>
           </div>
         </mat-step>
-        <mat-step [completed]="false" [stepControl]="fiveFormGroup">
+        <mat-step [completed]="false" [stepControl]="boardManagementForm">
           <ng-template matStepLabel>Source of Funds</ng-template>
           <h3>Are there any additional sources of revenue:</h3>
           <mat-radio-group aria-label="Select an option">
@@ -126,7 +269,7 @@
             <mat-radio-button value="2" class="ms-8">No</mat-radio-button>
           </mat-radio-group>
           <h3>Describe the source of income:</h3>
-          <form [formGroup]="fiveFormGroup">
+          <form [formGroup]="boardManagementForm">
             <mat-form-field class="w-full mt-4">
               <mat-label
                 >Income from property rentals or external investments</mat-label
@@ -139,13 +282,13 @@
               <mat-hint>{{ getCharacterAddress }}</mat-hint>
               <mat-error>
                 <insurance-error-message
-                  [input]="fiveFormGroup.get('businessAddress')"
+                  [input]="boardManagementForm.get('businessAddress')"
                 />
               </mat-error>
             </mat-form-field>
             <div class="mt-8">
               <h3>Upload documents supporting the source:</h3>
-              <ng-container [ngTemplateOutlet]="uploadFile" />
+              <ng-container [ngTemplateOutlet]="uploadFileFund" />
             </div>
           </form>
           <div class="flex w-full gap-4 mt-8">
@@ -157,7 +300,7 @@
             </button>
           </div>
         </mat-step>
-        <mat-step [completed]="false" [stepControl]="lastFormGroup">
+        <mat-step [completed]="false">
           <ng-template matStepLabel>Declaration</ng-template>
           <div
             class="bg-background p-4 rounded-lg mt-3 border-solid border-[#0000001A]"
@@ -170,14 +313,14 @@
               enclosed with this duly completed Know-Your-Customer Form.
             </p>
           </div>
-          <form [formGroup]="lastFormGroup">
+          <form [formGroup]="declarationForm">
             <div class="!flex !w-full !mt-6 form-gap">
               <mat-form-field class="w-full">
                 <mat-label>Authorized Signatory</mat-label>
                 <input matInput formControlName="signatory" required />
                 <mat-error>
                   <insurance-error-message
-                    [input]="lastFormGroup.get('signatory')"
+                    [input]="declarationForm.get('signatory')"
                   />
                 </mat-error>
               </mat-form-field>
@@ -186,7 +329,7 @@
                 <input matInput formControlName="designation" required />
                 <mat-error>
                   <insurance-error-message
-                    [input]="lastFormGroup.get('designation')"
+                    [input]="declarationForm.get('designation')"
                   />
                 </mat-error>
               </mat-form-field>
@@ -197,7 +340,7 @@
                 <input matInput formControlName="companyName" required />
                 <mat-error>
                   <insurance-error-message
-                    [input]="lastFormGroup.get('companyName')"
+                    [input]="declarationForm.get('companyName')"
                   />
                 </mat-error>
               </mat-form-field>
@@ -205,36 +348,41 @@
                 <mat-label>Date</mat-label>
                 <input
                   matInput
-                  [matDatepicker]="picker"
+                  [matDatepicker]="pickerStepSix"
                   [max]="toDay"
                   formControlName="date"
                 />
                 <mat-datepicker-toggle
                   matIconSuffix
-                  [for]="picker"
+                  [for]="pickerStepSix"
                 ></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
+                <mat-datepicker #pickerStepSix></mat-datepicker>
                 <mat-error>
                   <insurance-error-message
-                    [input]="lastFormGroup.get('date')"
+                    [input]="declarationForm.get('date')"
                   />
                 </mat-error>
               </mat-form-field>
             </div>
             <h3>Upload Company Stamp / Signature</h3>
-            <div class="flex form-gap">
-              <ng-container [ngTemplateOutlet]="uploadFile" />
-              <ng-container [ngTemplateOutlet]="uploadFile" />
+            <div class="grid grid-cols-2 form-gap">
+              <ng-container [ngTemplateOutlet]="uploadStampFile" />
+              <ng-container [ngTemplateOutlet]="uploadSignatureFile" />
+            </div>
+            <div class="flex w-full gap-4 mt-8">
+              <button
+                mat-flat-button
+                type="submit"
+                (click)="submitForm()"
+                class="w-1/2"
+              >
+                Continue
+              </button>
+              <button mat-stroked-button matStepperPrevious class="w-1/2">
+                Back
+              </button>
             </div>
           </form>
-          <div class="flex w-full gap-4 mt-8">
-            <button mat-flat-button (click)="submitForm()" class="w-1/2">
-              Continue
-            </button>
-            <button mat-stroked-button matStepperPrevious class="w-1/2">
-              Back
-            </button>
-          </div>
         </mat-step>
       </mat-stepper>
     </div>
@@ -292,11 +440,11 @@
 
     <tr
       mat-header-row
-      *matHeaderRowDef="displayedColumnsBoardMemberStepFour"
+      *matHeaderRowDef="displayedColumnsBoardMemberStepFour()"
     ></tr>
     <tr
       mat-row
-      *matRowDef="let row; columns: displayedColumnsBoardMemberStepFour"
+      *matRowDef="let row; columns: displayedColumnsBoardMemberStepFour()"
     ></tr>
   </table>
 </ng-template>
@@ -337,8 +485,11 @@
       </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumnsBoardMember"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumnsBoardMember"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsBoardMember()"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumnsBoardMember()"
+    ></tr>
   </table>
 </ng-template>
 
@@ -368,36 +519,44 @@
       </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns()"></tr>
   </table>
 </ng-template>
 
-<ng-template #uploadFile>
+<ng-template #uploadLicenseFile>
   <div
-    class="flex flex-1 flex-col border-dashed p-6 border-[#D0D5DD] rounded-lg"
+    class="flex flex-1 flex-col border-dashed p-6 border-gray-300 rounded-lg"
+    (dragover)="onDragOverLicenseFile($event)"
+    (drop)="onDropLicenseFile($event)"
   >
-    @if (file()) {
+    @if (licenseFile()) {
     <div class="flex flex-col !justify-center !items-center mt-4">
-      <p>Image size: {{ fileSize() }}</p>
+      <p>Image size: {{ licenseFileSize() }}</p>
       <img
-        [src]="filePreview"
-        class="!w-[200px] !h-[120px] !object-cover rounded-md"
+        [ngSrc]="licenseFilePreview()!"
+        class="!object-cover rounded-md"
+        width="210"
+        height="120"
         alt="File preview"
       />
       <div class="flex justify-center">
-        <button mat-icon-button type="button" (click)="removeFile()">
+        <button mat-icon-button type="button" (click)="removeLicenseFile()">
           <mat-icon svgIcon="trash-warn" />
         </button>
         <input
           type="file"
-          #fileInput
-          (change)="onFileSelected($event)"
+          #fileLicenseInput
+          (change)="onFileLicenseSelected($event)"
           accept="image/png, image/jpeg, application/pdf"
           hidden
         />
-        <button mat-icon-button (click)="fileInput.click()" type="button">
-          <mat-icon svgIcon="refresh" />
+        <button
+          mat-icon-button
+          (click)="fileLicenseInput.click()"
+          type="button"
+        >
+          <mat-icon svgIcon="retry" />
         </button>
       </div>
     </div>
@@ -412,164 +571,216 @@
     <div class="flex flex-col gap-6 justify-center items-center">
       <input
         type="file"
-        #fileInput
-        (change)="onFileSelected($event)"
+        #fileLicenseInput
+        (change)="onFileLicenseSelected($event)"
         accept="image/png, image/jpeg, application/pdf"
         hidden
       />
       <button
         mat-flat-button
         class="mt-4"
-        (click)="fileInput.click()"
+        (click)="fileLicenseInput.click()"
         type="button"
       >
         Browse
-        <mat-icon svgIcon="add" />
       </button>
     </div>
     }
   </div>
 </ng-template>
 
-<ng-template #companyInfo>
-  <form [formGroup]="companyInfoForm" class="!mt-4">
-    <h3>Upload Trade License</h3>
-    <ng-container [ngTemplateOutlet]="uploadFile" />
-    <ng-template matStepLabel>Company Info</ng-template>
-    <h3>Basic Info</h3>
-    <div class="!flex !w-full mt-4 form-gap">
-      <mat-form-field class="w-full">
-        <mat-label>Full Legal Name</mat-label>
-        <input matInput formControlName="fullLegalName" required />
-        <mat-error>
-          <insurance-error-message
-            [input]="companyInfoForm.get('fullLegalName')"
-          />
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field class="w-full">
-        <mat-label>Full Trading Name</mat-label>
-        <input matInput formControlName="fullTradingName" required />
-        <mat-error>
-          <insurance-error-message
-            [input]="companyInfoForm.get('fullTradingName')"
-          />
-        </mat-error>
-      </mat-form-field>
-    </div>
-    <h3>Company Details</h3>
-    <div class="!flex !w-full mt-4 form-gap">
-      <mat-form-field class="w-full">
-        <mat-label>Full Legal Name</mat-label>
-        <input matInput formControlName="typeOfCompany" required />
-        <mat-error>
-          <insurance-error-message
-            [input]="companyInfoForm.get('typeOfCompany')"
-          />
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field class="w-full">
-        <mat-label>Full Trading Name</mat-label>
-        <input matInput formControlName="licenseNumber" required />
-        <mat-error>
-          <insurance-error-message
-            [input]="companyInfoForm.get('licenseNumber')"
-          />
-        </mat-error>
-      </mat-form-field>
-    </div>
-    <h3>Address</h3>
-    <div class="!flex !w-full mt-4 form-gap">
-      <mat-form-field class="w-full">
-        <mat-label>Registered Address</mat-label>
-        <textarea
-          matInput
-          formControlName="registeredAddress"
-          rows="5"
-        ></textarea>
-        <mat-hint>{{ getCharacter }}</mat-hint>
-        <mat-error>
-          <insurance-error-message
-            [input]="companyInfoForm.get('registeredAddress')"
-          />
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field class="w-full">
-        <mat-label>Business Address</mat-label>
-        <textarea
-          matInput
-          formControlName="businessAddress"
-          rows="5"
-        ></textarea>
-        <mat-hint>{{ getCharacterBusinessAddress }}</mat-hint>
-        <mat-error>
-          <insurance-error-message
-            [input]="companyInfoForm.get('businessAddress')"
-          />
-        </mat-error>
-      </mat-form-field>
-    </div>
-    <div class="!w-full form-gap flex">
-      <mat-form-field class="w-full mt-6">
-        <mat-label>Country</mat-label>
-        <mat-select formControlName="country">
-          @for (countries of country; track countries.code){
-
-          <mat-option [value]="countries.code">{{ countries.name }}</mat-option>
-          }
-        </mat-select>
-        <mat-error>
-          <insurance-error-message [input]="companyInfoForm.get('country')" />
-        </mat-error>
-      </mat-form-field>
-      <div class="w-full"></div>
-    </div>
-    <h3>Company Details</h3>
-    <div class="!flex !w-full mt-4 form-gap">
-      <mat-form-field class="w-full">
-        <mat-label>Trade License Number</mat-label>
-        <input matInput formControlName="tradeLicenseNumber" required />
-        <mat-error>
-          <insurance-error-message
-            [input]="companyInfoForm.get('tradeLicenseNumber')"
-          />
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field class="w-full">
-        <mat-label>Trade License Number</mat-label>
-        <input matInput formControlName="tradeLicenseNumber" required />
-        <mat-error>
-          <insurance-error-message
-            [input]="companyInfoForm.get('tradeLicenseNumber')"
-          />
-        </mat-error>
-      </mat-form-field>
-    </div>
-    <div class="!w-full form-gap flex">
-      <mat-form-field class="w-full mt-6">
-        <mat-label>License Expiry Date</mat-label>
+<ng-template #uploadFileFund>
+  <div
+    class="flex flex-1 flex-col border-dashed p-6 border-gray-300 rounded-lg"
+    (dragover)="onDragOverFund($event)"
+    (drop)="onDropFund($event)"
+  >
+    @if (fileFund()) {
+    <div class="flex flex-col !justify-center !items-center mt-4">
+      <p>Image size: {{ fileSizeFund() }}</p>
+      <img
+        [ngSrc]="filePreviewFund()!"
+        class="!object-cover rounded-md"
+        width="210"
+        height="120"
+        alt="File preview"
+      />
+      <div class="flex justify-center">
+        <button mat-icon-button type="button" (click)="removeFileFund()">
+          <mat-icon svgIcon="trash-warn" />
+        </button>
         <input
-          matInput
-          [matDatepicker]="picker"
-          [max]="toDay"
-          formControlName="date"
+          type="file"
+          #fileInputFund
+          (change)="onFileSelectedFund($event)"
+          accept="image/png, image/jpeg, application/pdf"
+          hidden
         />
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="picker"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-        <mat-error>
-          <insurance-error-message [input]="companyInfoForm.get('date')" />
-        </mat-error>
-      </mat-form-field>
-      <div class="w-full"></div>
+        <button mat-icon-button (click)="fileInputFund.click()" type="button">
+          <mat-icon svgIcon="retry" />
+        </button>
+      </div>
     </div>
-  </form>
+    } @else {
+    <div class="flex flex-col items-center justify-center h-full w-full">
+      <div class="flex flex-col justify-center items-center gap-3">
+        <span class="!font-semibold">Drag & Drop your file here</span>
+        <span class="font-light"> Accepted formats: JPG, PNG, PDF.</span>
+        <span class="font-light"> Max file size: 5MB.</span>
+      </div>
+
+      <div class="flex flex-col gap-6 justify-center items-center">
+        <input
+          type="file"
+          #fileInputFund
+          (change)="onFileSelectedFund($event)"
+          accept="image/png, image/jpeg, application/pdf"
+          hidden
+        />
+        <button
+          mat-flat-button
+          class="mt-4"
+          (click)="fileInputFund.click()"
+          type="button"
+        >
+          Upload
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+</ng-template>
+
+<ng-template #uploadStampFile>
+  <div
+    class="flex flex-1 flex-col border-dashed p-6 border-gray-300 rounded-lg"
+    (dragover)="onDragStampFile($event)"
+    (drop)="onDropStampFile($event)"
+  >
+    @if (fileStamp()) {
+    <div class="flex flex-col !justify-center !items-center mt-4">
+      <p>Image size: {{ fileSizeStamp() }}</p>
+      <img
+        [ngSrc]="filePreviewStamp()!"
+        class="!w-[12.5rem] !h-[7.5rem] !object-cover rounded-md"
+        width="210"
+        height="120"
+        alt="File preview"
+      />
+      <div class="flex justify-center">
+        <button mat-icon-button type="button" (click)="removeFileStamp()">
+          <mat-icon svgIcon="trash-warn" />
+        </button>
+        <input
+          type="file"
+          #fileInputStamp
+          (change)="onFileSelectedStamp($event)"
+          accept="image/png, image/jpeg, application/pdf"
+          hidden
+        />
+        <button mat-icon-button (click)="fileInputStamp.click()" type="button">
+          <mat-icon svgIcon="retry" />
+        </button>
+      </div>
+    </div>
+    } @else {
+    <div class="flex items-center justify-center flex-col h-full w-full">
+      <div class="flex flex-col justify-center items-center gap-3">
+        <span class="!font-semibold">Stamp</span>
+        <span class="font-light"> Accepted formats: JPG, PNG, PDF.</span>
+        <span class="font-light"> Max file size: 5MB.</span>
+      </div>
+
+      <div class="flex flex-col gap-6 justify-center items-center">
+        <input
+          type="file"
+          #fileInputStamp
+          (change)="onFileSelectedStamp($event)"
+          accept="image/png, image/jpeg, application/pdf"
+          hidden
+        />
+        <button
+          mat-flat-button
+          class="mt-4"
+          (click)="fileInputStamp.click()"
+          type="button"
+        >
+          Upload
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+</ng-template>
+
+<ng-template #uploadSignatureFile>
+  <div
+    class="flex flex-1 flex-col border-dashed p-6 border-gray-300 rounded-lg"
+    (dragover)="onDragSignatureFile($event)"
+    (drop)="onDropSignatureFile($event)"
+  >
+    @if (fileSignature()) {
+    <div class="flex flex-col !justify-center !items-center mt-4">
+      <p>Image size: {{ fileSizeSignature() }}</p>
+      <img
+        [ngSrc]="filePreviewSignature()!"
+        class="!object-cover rounded-md"
+        width="210"
+        height="120"
+        alt="File preview"
+      />
+      <div class="flex justify-center">
+        <button mat-icon-button type="button" (click)="removeFileSignature()">
+          <mat-icon svgIcon="trash-warn" />
+        </button>
+        <input
+          type="file"
+          #fileInputSignature
+          (change)="onFileSelectedSignature($event)"
+          accept="image/png, image/jpeg, application/pdf"
+          hidden
+        />
+        <button
+          mat-icon-button
+          (click)="fileInputSignature.click()"
+          type="button"
+        >
+          <mat-icon svgIcon="retry" />
+        </button>
+      </div>
+    </div>
+    } @else {
+    <div class="flex flex-col items-center justify-center h-full w-full">
+      <div class="flex flex-col justify-center items-center gap-3">
+        <span class="!font-semibold">Signature</span>
+        <span class="font-light"> Accepted formats: JPG, PNG, PDF.</span>
+        <span class="font-light"> Max file size: 5MB.</span>
+      </div>
+
+      <div class="flex flex-col gap-6 justify-center items-center">
+        <input
+          type="file"
+          #fileInputSignature
+          (change)="onFileSelectedSignature($event)"
+          accept="image/png, image/jpeg, application/pdf"
+          hidden
+        />
+        <button
+          mat-flat-button
+          class="mt-4"
+          (click)="fileInputSignature.click()"
+          type="button"
+        >
+          Upload
+        </button>
+      </div>
+    </div>
+    }
+  </div>
 </ng-template>
 
 <ng-template #successfulAction>
-  <div class="!flex !flex-col !justify-center !items-center">
+  <div class="flex flex-col justify-center items-center">
     <mat-icon svgIcon="tick" class="!w-10 !h-10 relative top-6" />
     <h2 mat-dialog-title>KYC Form Submitted</h2>
     <mat-dialog-content

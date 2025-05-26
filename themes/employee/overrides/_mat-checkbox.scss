@@ -1,16 +1,18 @@
 @use '@angular/material' as mat;
 
-// Customize the entire app. Change :root to your selector if you want to scope the styles.
-:root {
-  @include mat.checkbox-overrides((
-    selected-icon-color: #7f56d9,
-    selected-hover-icon-color: #7f56d9,
-    selected-focus-icon-color: #7f56d9,
-    unselected-focus-icon-color: #7f56d9,
-    unselected-hover-icon-color: #7f56d9,
-    unselected-icon-color: #7f56d9,
-    selected-focus-state-layer-color: #7f56d9,
-    selected-hover-state-layer-color: #7f56d9,
-    selected-pressed-state-layer-color: #7f56d9,
-  ));
-}
+$primary-color: #287A6E;
+
+$checkbox-tokens: (
+  selected-icon-color: $primary-color,
+  selected-hover-icon-color: lighten($primary-color, 5%),
+  selected-focus-icon-color: lighten($primary-color, 5%),
+  selected-pressed-icon-color: darken($primary-color, 5%),
+  unselected-icon-color: lighten($primary-color, 30%),
+  unselected-hover-icon-color: lighten($primary-color, 20%),
+  unselected-focus-icon-color: lighten($primary-color, 20%),
+  selected-focus-state-layer-color: rgba($primary-color, 0.12),
+  selected-hover-state-layer-color: rgba($primary-color, 0.08),
+  selected-pressed-state-layer-color: rgba($primary-color, 0.16),
+);
+
+@include mat.checkbox-theme($checkbox-tokens);

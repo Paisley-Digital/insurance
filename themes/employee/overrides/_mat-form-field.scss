@@ -1,14 +1,14 @@
 @use '@angular/material' as mat;
 
-// Customize the entire app. Change :root to your selector if you want to scope the styles.
-:root {
-  @include mat.form-field-overrides((
-    outlined-caret-color: #7f56d9,
-    outlined-focus-outline-color: #7f56d9,
-    outlined-focus-label-text-color: #7f56d9,
-  ));
-}
+$primary-color: #287A6E;
 
+$form-field-tokens: (
+  outlined-caret-color: $primary-color,
+  outlined-focus-outline-color: $primary-color,
+  outlined-focus-label-text-color: $primary-color,
+);
+
+@include mat.form-field-theme($form-field-tokens);
 
 .mdc-text-field--outlined {
   --mdc-outlined-text-field-container-shape: 8px !important;

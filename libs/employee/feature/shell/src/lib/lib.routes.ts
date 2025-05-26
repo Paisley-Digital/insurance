@@ -19,9 +19,19 @@ export const shellRoutes: Route[] = [
           ),
       },
       {
-        path:'upload',
-        loadChildren: () => import('@insurance-employee-feature-upload').then(m => m.uploadRoutes)
-      }
+        path: 'upload',
+        loadChildren: () =>
+          import('@insurance-employee-feature-upload').then(
+            (m) => m.uploadRoutes
+          ),
+      },
+      {
+        path: 'KYC-management',
+        loadChildren: () =>
+          import('@insurance-feature-employee-kyc-management').then(
+            (m) => m.kYCManagementRoutes
+          ),
+      },
     ],
   },
 ];

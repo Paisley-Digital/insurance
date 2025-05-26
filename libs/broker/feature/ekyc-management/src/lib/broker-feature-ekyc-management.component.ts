@@ -28,7 +28,6 @@ import {
   ELEMENT_DATA_Board_Members_Four,
 } from './ekyc-management.constant';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTableModule } from '@angular/material/table';
 import {
@@ -38,6 +37,9 @@ import {
   MatDialogContent,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import { formatFileSize } from '@shared-util-common';
+
+type FileType = 'firstStep' | 'fund' | 'lastStepOfOne' | 'lastStepOfSecond';
 
 @Component({
   selector: 'insurance-broker-feature-ekyc-management',
@@ -52,7 +54,6 @@ import {
     MatInputModule,
     MatIcon,
     MatSelectModule,
-    NgOptimizedImage,
     ErrorMessageComponent,
     MatDatepickerModule,
     MatRadioModule,
@@ -61,36 +62,40 @@ import {
     MatDialogContent,
     MatDialogActions,
     MatDialogClose,
+    NgOptimizedImage,
   ],
   templateUrl: './broker-feature-ekyc-management.component.html',
   styleUrl: './broker-feature-ekyc-management.component.scss',
 })
 export class BrokerFeatureEkycManagementComponent {
-  private _formBuilder = inject(FormBuilder);
+  private formBuilder = inject(FormBuilder);
   private alert = inject(AlertService);
   private dialog = inject(MatDialog);
 
   readonly maxCharLength = 120;
   protected readonly country = country;
 
+  @ViewChild('successfulAction') successfulAction!: TemplateRef<unknown>;
+
   toDay = new Date();
+  dataSource = ELEMENT_DATA;
+  boardMembersList = ELEMENT_DATA_Board_Members;
+  boardMembersListFour = ELEMENT_DATA_Board_Members_Four;
 
-  filePreview: string | ArrayBuffer | null = null;
-  passportFilePreview: string | ArrayBuffer | null = null;
-  visaFilePreview: string | ArrayBuffer | null = null;
-  filePreviewEmiratesId: string | ArrayBuffer | null = null;
-  file = signal<File | null>(null);
-  fileSize = signal('');
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  displayedColumnsBoardMember: string[] = [
-    'position',
-    'name',
-    'weight',
-    'symbol',
-    'edit',
-  ];
-
-  displayedColumnsBoardMemberStepFour: string[] = [
+  licenseFile = signal<File | null>(null);
+  licenseFilePreview = signal<string | ArrayBuffer | null>(null);
+  licenseFileSize = signal('');
+  fileFund = signal<File | null>(null);
+  filePreviewFund = signal<string | ArrayBuffer | null>(null);
+  fileSizeFund = signal('');
+  fileStamp = signal<File | null>(null);
+  filePreviewStamp = signal<string | ArrayBuffer | null>(null);
+  fileSizeStamp = signal('');
+  fileSignature = signal<File | null>(null);
+  filePreviewSignature = signal<string | ArrayBuffer | null>(null);
+  fileSizeSignature = signal('');
+  displayedColumns = signal<string[]>(['position', 'name', 'weight', 'symbol']);
+  displayedColumnsBoardMemberStepFour = signal<string[]>([
     'position',
     'name',
     'weight',
@@ -98,14 +103,16 @@ export class BrokerFeatureEkycManagementComponent {
     'office',
     'appointment',
     'edit',
-  ];
-  dataSource = ELEMENT_DATA;
-  boardMembersList = ELEMENT_DATA_Board_Members;
-  boardMembersListFour = ELEMENT_DATA_Board_Members_Four;
+  ]);
+  displayedColumnsBoardMember = signal<string[]>([
+    'position',
+    'name',
+    'weight',
+    'symbol',
+    'edit',
+  ]);
 
-  @ViewChild('successfulAction') successfulAction!: TemplateRef<unknown>;
-
-  companyInfoForm = this._formBuilder.group({
+  companyInfoForm = this.formBuilder.group({
     fullLegalName: ['', Validators.required],
     fullTradingName: ['', Validators.required],
     typeOfCompany: ['', Validators.required],
@@ -123,20 +130,19 @@ export class BrokerFeatureEkycManagementComponent {
     date: [Validators.required],
   });
 
-  secondFormGroup = this._formBuilder.group({
+  shareholdersForm = this.formBuilder.group({
     authorityName: ['', [Validators.required]],
     licenseNumber: ['', Validators.required],
   });
 
-  fiveFormGroup = this._formBuilder.group({
+  boardManagementForm = this.formBuilder.group({
     businessAddress: [
       '',
       [Validators.required, Validators.maxLength(this.maxCharLength)],
     ],
-    licenseNumber: ['', Validators.required],
   });
 
-  lastFormGroup = this._formBuilder.group({
+  declarationForm = this.formBuilder.group({
     signatory: ['', [Validators.required]],
     designation: ['', Validators.required],
     companyName: ['', [Validators.required]],
@@ -157,52 +163,171 @@ export class BrokerFeatureEkycManagementComponent {
 
   get getCharacterAddress() {
     return `(Allowed characters: ${
-      this.fiveFormGroup.value.businessAddress!.length || 0
+      this.boardManagementForm.value.businessAddress!.length || 0
     } - ${this.maxCharLength})`;
   }
 
-  onFileSelected(event: Event) {
+  onFileLicenseSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (!input.files) return;
     const file = input.files[0];
     if (file && file.size <= 2 * 1024 * 1024) {
-      this.file.set(file);
-      this.fileSize.set(this.formatFileSize(file.size));
-      this.updateFilePreview(file, 'residency');
-    } else {
-      this.alert.open('File size exceeds 2MB!');
+      this.licenseFile.set(file);
+      this.licenseFileSize.set(formatFileSize(file.size));
+      this.updateFilePreview(file, 'firstStep');
+      return;
+    }
+    this.showAlertInUploadFileMaximumSize();
+  }
+
+  onDragOverLicenseFile(event: DragEvent) {
+    event.preventDefault();
+  }
+
+  onDropLicenseFile(event: DragEvent) {
+    event.preventDefault();
+
+    const file = event.dataTransfer?.files?.[0];
+    if (file) {
+      this.licenseFile.set(file);
+      this.updateFilePreview(file, 'firstStep');
+      this.licenseFileSize.set(formatFileSize(file.size));
     }
   }
 
-  removeFile() {
-    this.filePreview = null;
-    this.file.set(null);
+  onFileSelectedFund(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files) return;
+    const file = input.files[0];
+    if (file && file.size <= 2 * 1024 * 1024) {
+      this.fileFund.set(file);
+      this.fileSizeFund.set(formatFileSize(file.size));
+      this.updateFilePreview(file, 'fund');
+      return;
+    }
+    this.showAlertInUploadFileMaximumSize();
   }
 
-  updateFilePreview(file: File, type: string) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (type === 'residency') {
-        this.filePreview = reader.result;
-      } else if (type === 'passport') {
-        this.passportFilePreview = reader.result;
-      } else if (type === 'emiratesId') {
-        this.filePreviewEmiratesId = reader.result;
-      }
-    };
-    reader.readAsDataURL(file);
+  onDragOverFund(event: DragEvent) {
+    event.preventDefault();
+  }
+
+  onDropFund(event: DragEvent) {
+    event.preventDefault();
+
+    const file = event.dataTransfer?.files?.[0];
+    if (file) {
+      this.fileFund.set(file);
+      this.updateFilePreview(file, 'fund');
+      this.fileSizeFund.set(formatFileSize(file.size));
+    }
+  }
+
+  onFileSelectedStamp(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files) return;
+    const file = input.files[0];
+    if (file && file.size <= 2 * 1024 * 1024) {
+      this.fileStamp.set(file);
+      this.fileSizeStamp.set(formatFileSize(file.size));
+      this.updateFilePreview(file, 'lastStepOfOne');
+      return;
+    }
+    this.showAlertInUploadFileMaximumSize();
+  }
+
+  onDragStampFile(event: DragEvent) {
+    event.preventDefault();
+  }
+
+  onDropStampFile(event: DragEvent) {
+    event.preventDefault();
+
+    const file = event.dataTransfer?.files?.[0];
+    if (file) {
+      this.fileStamp.set(file);
+      this.updateFilePreview(file, 'lastStepOfOne');
+      this.fileSizeStamp.set(formatFileSize(file.size));
+    }
+  }
+
+  onFileSelectedSignature(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files) return;
+    const file = input.files[0];
+    if (file && file.size <= 2 * 1024 * 1024) {
+      this.fileSignature.set(file);
+      this.fileSizeSignature.set(formatFileSize(file.size));
+      this.updateFilePreview(file, 'lastStepOfSecond');
+      return;
+    }
+    this.showAlertInUploadFileMaximumSize();
+  }
+
+  onDragSignatureFile(event: DragEvent) {
+    event.preventDefault();
+  }
+
+  onDropSignatureFile(event: DragEvent) {
+    event.preventDefault();
+
+    const file = event.dataTransfer?.files?.[0];
+    if (file) {
+      this.fileSignature.set(file);
+      this.updateFilePreview(file, 'lastStepOfSecond');
+      this.fileSizeSignature.set(formatFileSize(file.size));
+    }
+  }
+
+  removeLicenseFile() {
+    this.licenseFilePreview.set(null);
+    this.licenseFile.set(null);
+  }
+
+  removeFileFund() {
+    this.filePreviewFund.set(null);
+    this.fileFund.set(null);
+  }
+
+  removeFileStamp() {
+    this.filePreviewStamp.set(null);
+    this.fileStamp.set(null);
+  }
+
+  removeFileSignature() {
+    this.filePreviewSignature.set(null);
+    this.fileSignature.set(null);
   }
 
   submitForm() {
-    if (this.lastFormGroup.invalid) return;
+    if (this.declarationForm.invalid) return;
     this.dialog.open(this.successfulAction, {
       width: '460px',
     });
   }
 
-  private formatFileSize(bytes: number): string {
-    if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+  private updateFilePreview(file: File, type: FileType) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      switch (type) {
+        case 'firstStep':
+          this.licenseFilePreview.set(reader.result);
+          break;
+        case 'fund':
+          this.filePreviewFund.set(reader.result);
+          break;
+        case 'lastStepOfOne':
+          this.filePreviewStamp.set(reader.result);
+          break;
+        case 'lastStepOfSecond':
+          this.filePreviewSignature.set(reader.result);
+          break;
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  private showAlertInUploadFileMaximumSize() {
+    this.alert.open('File size exceeds 2MB!');
   }
 }

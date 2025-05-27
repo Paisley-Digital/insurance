@@ -91,7 +91,7 @@ export class DashboardComponent {
       ],
     },
     grid: { containLabel: true },
-    xAxis: { name: 'amount' },
+    xAxis: { name: '' },
     yAxis: { type: 'category' },
     series: [
       {

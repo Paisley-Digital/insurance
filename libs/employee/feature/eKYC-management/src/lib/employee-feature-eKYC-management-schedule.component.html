@@ -76,30 +76,80 @@
   </mat-step>
   <mat-step completed="false">
     <ng-template matStepLabel>Submit</ng-template>
-    <div>
-      <h3>Select KYC Form</h3>
-      <div class="flex">
-        <mat-icon svgIcon="fluent-calendar" />
-        <h2>Know-Your-Customer Form- Group Policies</h2>
-      </div>
-      <div>
-        <h2>Assigned to Employer</h2>
-        <dl class="!striped-receipt-records">
-          <dt>Notification Type</dt>
-          <dd>Email</dd>
-          <dt>When to Send</dt>
-          <dd>One month before expiry</dd>
-          <dt>From Date</dt>
-          <dd>March 6, 2025</dd>
-          <dt>To Date</dt>
-          <dd>December 12, 2025</dd>
-          <dt>Employer</dt>
-          <dd>Emaar</dd>
-          <dt>Assigned Person (Name)</dt>
-          <dd>December 12, 2025</dd>
-          <dt>Assigned Person (Email)</dt>
-          <dd>March 6, 2025</dd>
-        </dl>
+    <h3>Select KYC Form</h3>
+    <div class="flex gap-2 items-center">
+      <mat-icon svgIcon="fluent-calendar" />
+      <h2>Know-Your-Customer Form- Group Policies</h2>
+    </div>
+    <div class="w-full !pb-[3rem]">
+      <div class="w-full !pb-[3rem]">
+        <h2 class="text-lg font-semibold mb-4">Assigned to Employer</h2>
+        <div class="grid grid-cols-5 w-full">
+          <div
+            class="col-span-3 bg-[#9098A70F] flex items-center ps-2 min-h-[48px] rounded-s-lg"
+          >
+            Notification Type
+          </div>
+          <div
+            class="col-span-2 bg-[#9098A70F] flex items-center justify-end pe-2 rounded-e-lg"
+          >
+            Email
+          </div>
+
+          <div class="col-span-3 flex items-center ps-2 min-h-[48px]">
+            When to Send
+          </div>
+          <div class="col-span-2 flex items-center justify-end pe-2">
+            One month before expiry
+          </div>
+
+          <div
+            class="col-span-3 bg-[#9098A70F] flex items-center ps-2 min-h-[48px] rounded-s-lg"
+          >
+            From Date
+          </div>
+          <div
+            class="col-span-2 bg-[#9098A70F] flex items-center justify-end pe-2 rounded-e-lg"
+          >
+            March 6, 2025
+          </div>
+
+          <div class="col-span-3 flex items-center ps-2 min-h-[48px]">
+            To Date
+          </div>
+          <div class="col-span-2 flex items-center justify-end pe-2">
+            December 12, 2025
+          </div>
+
+          <div
+            class="col-span-3 bg-[#9098A70F] flex items-center ps-2 min-h-[48px] rounded-s-lg"
+          >
+            Employer
+          </div>
+          <div
+            class="col-span-2 bg-[#9098A70F] flex items-center justify-end pe-2 rounded-e-lg"
+          >
+            Emaar
+          </div>
+
+          <div class="col-span-3 flex items-center ps-2 min-h-[48px]">
+            Assigned Person (Name)
+          </div>
+          <div class="col-span-2 flex items-center justify-end pe-2">
+            December 12, 2025
+          </div>
+
+          <div
+            class="col-span-3 bg-[#9098A70F] flex items-center ps-2 min-h-[48px] rounded-s-lg"
+          >
+            Assigned Person (Email)
+          </div>
+          <div
+            class="col-span-2 bg-[#9098A70F] flex items-center justify-end pe-2 rounded-e-lg"
+          >
+            March 6, 2025
+          </div>
+        </div>
       </div>
     </div>
   </mat-step></mat-stepper

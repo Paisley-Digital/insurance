@@ -1,13 +1,4 @@
 <mat-accordion>
-  <div class="flex justify-center items-center w-full flex-col">
-    <img
-      ngSrc="./assets/images/upload-image.svg"
-      width="60"
-      height="60"
-      alt=""
-    />
-    <h3>Mariana Robi</h3>
-  </div>
   <mat-nav-list>
     <div class="!p-4">
       <a
@@ -17,7 +8,7 @@
       >
         <div matListItemTitle class="flex justify-start items-center me-8">
           <mat-icon svgIcon="home" matListItemIcon class="!ms-3" />
-          <div class="relative left-3">Dashboard</div>
+          <div class="relative left-3">Compliance Overview</div>
         </div>
       </a>
     </div>
@@ -31,8 +22,8 @@
         routerLinkActive="active"
       >
         <div matListItemTitle class="flex justify-start items-center me-8">
-          <mat-icon svgIcon="folder" matListItemIcon class="!ms-3" />
-          <div class="relative left-3">My Document</div>
+          <mat-icon svgIcon="list" matListItemIcon class="!ms-3" />
+          <div class="relative left-3">Employer Management</div>
         </div>
       </a>
     </mat-nav-list>
@@ -43,37 +34,11 @@
         routerLinkActive="active"
       >
         <div matListItemTitle class="flex justify-start items-center me-8">
-          <mat-icon svgIcon="bell" matListItemIcon class="!ms-3" />
-          <div class="relative left-3">Orders</div>
+          <mat-icon svgIcon="calendar" matListItemIcon class="!ms-3" />
+          <div class="relative left-3">KYC Management</div>
         </div>
       </a>
     </mat-nav-list>
-    <mat-nav-list>
-      <a
-        mat-list-item
-        [routerLink]="'/console/customer-management'"
-        routerLinkActive="active"
-      >
-        <div matListItemTitle class="flex justify-start items-center me-8">
-          <mat-icon svgIcon="report" matListItemIcon class="!ms-3" />
-          <div class="relative left-3">Reports</div>
-        </div>
-      </a>
-    </mat-nav-list>
-    <mat-nav-list>
-      <a
-        mat-list-item
-        [routerLink]="'/console/customer-management'"
-        routerLinkActive="active"
-      >
-        <div matListItemTitle class="flex justify-start items-center me-8">
-          <mat-icon svgIcon="payment" matListItemIcon class="!ms-3" />
-          <div class="relative left-3">Billing & Payments</div>
-        </div>
-      </a>
-    </mat-nav-list>
-  </div>
-  <div class="p-4 mt-auto">
     <mat-nav-list>
       <a
         mat-list-item

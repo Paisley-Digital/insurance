@@ -7,17 +7,18 @@
     padding-inline-start: 32px;
 
     &.active {
-      background-color: #F4EBFF !important;
+      background-color: #287a6e1a !important;
     }
 
-    &.mat-mdc-list-item-with-avatar .mat-mdc-list-item-content .mat-mdc-list-text {
+    &.mat-mdc-list-item-with-avatar
+      .mat-mdc-list-item-content
+      .mat-mdc-list-text {
       @apply ps-2 #{!important};
     }
   }
 }
 
-
-.mat-mdc-list-base .mat-mdc-list-item{
+.mat-mdc-list-base .mat-mdc-list-item {
   overflow: hidden !important;
   padding-inline-start: 0px;
 }

@@ -1,3 +1,26 @@
-@import "themes/employee/overrides/overrides";
-@import "themes/base/base/base";
-@import "themes/base/fonts/poppins";
+@import 'themes/broker/overrides/overrides';
+@import 'themes/employee/theme/employee-primary-theme';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+$path-to-fonts: '^./assets/fonts';
+
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  src: url('#{$path-to-fonts}/inter/inter.ttf') format('woff');
+}
+
+$font-family-poppins: 'Inter', sans-serif;
+
+html,
+body {
+  @apply h-full;
+  font-family: $font-family-poppins;
+  font-size: 14px;
+}
+
+body {
+  margin: 0 !important;
+}

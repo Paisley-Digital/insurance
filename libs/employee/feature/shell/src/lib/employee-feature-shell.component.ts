@@ -8,6 +8,7 @@ import { SideBarComponent } from './side-bar.component';
 import { RouterOutlet } from '@angular/router';
 import { HeaderDesktopComponent } from '@shared-ui-header-desktop';
 import { isHandsetScreen } from '@shared-util-common';
+import {BrokerHeaderComponent} from "@insurance-broker-feature-header";
 
 @Component({
   selector: 'insurance-employee-feature-shell',
@@ -18,6 +19,7 @@ import { isHandsetScreen } from '@shared-util-common';
     MatSidenavModule,
     RouterOutlet,
     HeaderDesktopComponent,
+    BrokerHeaderComponent,
   ],
   templateUrl: './employee-feature-shell.component.html',
   styleUrl: './employee-feature-shell.component.scss',

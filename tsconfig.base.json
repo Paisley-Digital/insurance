@@ -16,7 +16,6 @@
     "baseUrl": ".",
     "paths": {
       "@./assets": ["libs/shared/assets/src/index.ts"],
-      "@insurance-broker-feature-header": ["libs/broker/feature/header/src/index.ts"],
       "@./insurance-customer": ["libs/customer/src/index.ts"],
       "@./locales": ["libs/shared/util/locales/src/index.ts"],
       "@insurance-broker-feature-auth": [
@@ -27,6 +26,9 @@
       ],
       "@insurance-broker-feature-ekyc-management": [
         "libs/broker/feature/ekyc-management/src/index.ts"
+      ],
+      "@insurance-broker-feature-header": [
+        "libs/broker/feature/header/src/index.ts"
       ],
       "@insurance-broker-feature-shell": [
         "libs/broker/feature/shell/src/index.ts"
@@ -54,6 +56,9 @@
       ],
       "@insurance-employee-feature-upload": [
         "libs/employee/feature/upload/src/index.ts"
+      ],
+      "@insurance-employee-feature-eKYC-management": [
+        "libs/employee/feature/eKYC-management/src/index.ts"
       ],
       "@insurance-shared-app-core": ["libs/shared/util/appp-core/src/index.ts"],
       "@insurance-shared-ui-overlay-spinner": [

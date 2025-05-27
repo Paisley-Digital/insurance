@@ -12,6 +12,7 @@ import { employeeSharedUiIconRegister } from '@shared-ui-icon';
 import { overrideLocaleData } from '@./locales';
 import { provideHttpClient } from '@angular/common/http';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 function initializeEnvironment() {
   const localeId = inject(LOCALE_ID);
@@ -25,6 +26,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(),
     provideNativeDateAdapter(),
+    provideAnimationsAsync(),
     provideRouter(appRoutes),
     {
       provide: ENVIRONMENT_INITIALIZER,

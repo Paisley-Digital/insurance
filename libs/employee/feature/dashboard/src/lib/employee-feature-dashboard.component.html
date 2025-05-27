@@ -38,19 +38,19 @@
   <mat-card>
     <mat-card-content>
       <div class="flex justify-between mx-6">
-        <div class="flex text-center flex-col gap-4">
+        <div class="flex text-center flex-col">
           <h1 class="text-green-600">17,756</h1>
           <h3>Compliant Submissions</h3>
           <p>KYC records fully submitted and verified as compliant</p>
         </div>
         <mat-divider vertical class="!h-[120px] relative top-9"></mat-divider>
-        <div class="flex text-center flex-col gap-4">
+        <div class="flex text-center flex-col">
           <h1 class="text-green-600">2,559</h1>
           <h3>Non-Compliant Submissions</h3>
           <p>Records flagged due to risk score, PEP match, or incomplete KYC</p>
         </div>
         <mat-divider vertical class="!h-[120px] relative top-9"></mat-divider>
-        <div class="flex text-center flex-col gap-4">
+        <div class="flex text-center flex-col">
           <h1 class="text-green-600">890</h1>
           <h3>Expiring Documents (Next 6 Months)</h3>
           <p>KYC documents flagged for upcoming expiry</p>
@@ -59,6 +59,7 @@
     </mat-card-content>
   </mat-card>
 </div>
+
 <div class="p-3">
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6 mt-8">
     @for (item of dashboardMock; track item.title) {

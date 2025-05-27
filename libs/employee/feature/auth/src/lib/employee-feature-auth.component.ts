@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatFormField, MatSuffix } from '@angular/material/form-field';
 import {
@@ -40,6 +40,7 @@ import { OverlaySpinnerDirective } from '@insurance-shared-ui-overlay-spinner';
     ErrorMessageComponent,
     MatCheckboxModule,
     OverlaySpinnerDirective,
+    NgOptimizedImage,
   ],
   templateUrl: './employee-feature-auth.component.html',
   styleUrl: './employee-feature-auth.component.scss',

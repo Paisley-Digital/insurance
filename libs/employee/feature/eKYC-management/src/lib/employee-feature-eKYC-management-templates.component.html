@@ -1,0 +1,367 @@
+@switch (view()) { @case ('businessSelectionTemplate') {
+<ng-container [ngTemplateOutlet]="businessSelectionTemplate" /> } @case
+('stepKyc') { <ng-container [ngTemplateOutlet]="stepKyc" /> }}<ng-template
+  #businessSelectionTemplate
+>
+  <div class="gap-2">
+    <div class="flex flex-col gap-2">
+      <h2 class="font-bold">KYC Template</h2>
+      <span>
+        Please select the appropriate KYC form based on the nature of your
+        business or identity.
+      </span>
+    </div>
+    <mat-radio-group class="flex flex-col mt-5">
+      @for (season of businessSelection; track season.tag) {
+      <mat-radio-button
+        class="example-radio-button"
+        (change)="selectedBusiness(season.tag)"
+        [value]="season.tag"
+        >{{ season.title }}
+      </mat-radio-button>
+      }
+    </mat-radio-group>
+  </div></ng-template
+><ng-template #stepKyc>
+  <div class="flex flex-col">
+    <h2 class="font-bold text-gray-500">
+      Know-Your-Customer Form- Group Policies
+    </h2>
+    <div class="my-4">
+      <h4 class="text-gray-600">Review KYC Information Steps</h4>
+      <span class="text-gray-400"
+        >In this section, you can review all the steps of the KYC form.</span
+      >
+    </div>
+  </div>
+  <mat-accordion class="!w-auto">
+    <div class="my-4 !w-auto">
+      <mat-expansion-panel class="!w-auto">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="my-auto gap-2 flex justify-between text-center py-4">
+              <mat-icon
+                svgIcon="one"
+                class="my-auto flex !w-[32px] !h-[32px]"
+              />
+              <span class="m-auto text-lg">Company Information</span>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="flex gap-4">
+          <div class="w-full">
+            <mat-list role="list">
+              <mat-list-item role="listitem">Full Legal Name</mat-list-item>
+              <mat-list-item role="listitem">Full Trading Name</mat-list-item>
+              <mat-list-item role="listitem"
+                >Place of Incorporation</mat-list-item
+              >
+              <mat-list-item role="listitem"
+                >Date of Incorporation</mat-list-item
+              >
+              <mat-list-item role="listitem"
+                >Trade License / Commercial Registration No</mat-list-item
+              >
+              <mat-list-item role="listitem">Registered Address</mat-list-item>
+              <mat-list-item role="listitem">Address</mat-list-item>
+              <mat-list-item role="listitem">PO Box</mat-list-item>
+              <mat-list-item role="listitem">Telephone</mat-list-item>
+              <mat-list-item role="listitem">Fax</mat-list-item>
+            </mat-list>
+          </div>
+          <div class="w-full">
+            <mat-list role="list">
+              <mat-list-item role="listitem">Email</mat-list-item>
+              <mat-list-item role="listitem"
+                >Trading Address (if different than above)</mat-list-item
+              >
+              <mat-list-item role="listitem"
+                >Head Office Address (if applicable)</mat-list-item
+              >
+              <mat-list-item role="listitem">Type of Company</mat-list-item>
+              <mat-list-item role="listitem"
+                >Limited Liability Company (LLC)</mat-list-item
+              >
+              <mat-list-item role="listitem">Specify Others</mat-list-item>
+              <mat-list-item role="listitem">Business Activities</mat-list-item>
+              <mat-list-item role="listitem"
+                >Tax Registration Number (TRN / VAT)</mat-list-item
+              >
+              <mat-list-item role="listitem">Tax Residency</mat-list-item>
+              <mat-list-item role="listitem"
+                ><p class="!whitespace-normal">
+                  Name of External Auditors (Only applicable in Bahrain)
+                </p></mat-list-item
+              >
+            </mat-list>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <div class="my-4">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="my-auto gap-2 flex justify-between text-center py-4">
+              <mat-icon
+                svgIcon="two"
+                class="my-auto flex !w-[32px] !h-[32px]"
+              />
+              <span class="m-auto text-lg">Shareholder Details</span>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div>
+          <div>
+            <span>
+              Is the company regulated by a Stock exchange or other regulatory
+              authorities in the country? (select applicable box)
+            </span>
+            <mat-radio-group class="flex mt-5">
+              <mat-radio-button>Yes </mat-radio-button>
+              <mat-radio-button>No </mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div>
+            <span class="text-sm text-gray-400">
+              Stock exchange / other Regulatory Authority Name
+            </span>
+            <mat-list>
+              <mat-list-item>License number</mat-list-item>
+              <mat-list-item>
+                <div
+                  class="w-full whitespace-normal font-bold break-words leading-relaxed"
+                >
+                  Do any natural person or legal entity have a direct or
+                  indirect controlling interest (shareholding) of more than 20%
+                  of the company? If ‘Yes’, please provide below details and
+                  identification documents of all individuals and entities.
+                </div>
+              </mat-list-item>
+            </mat-list>
+            <div class="flex gap-4">
+              <div class="w-full">
+                <mat-list>
+                  <mat-list-item>Full Name</mat-list-item>
+                  <mat-list-item>Type</mat-list-item>
+                  <mat-list-item>% of interest / shareholding</mat-list-item>
+                </mat-list>
+              </div>
+              <div class="w-full">
+                <mat-list>
+                  <mat-list-item>Nationality</mat-list-item>
+                  <mat-list-item>Date of Birth</mat-list-item>
+                </mat-list>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <div class="my-4">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="my-auto gap-2 flex justify-between text-center py-4">
+              <mat-icon
+                svgIcon="three"
+                class="my-auto flex !w-[32px] !h-[32px]"
+              />
+              <span class="m-auto text-lg">Board Memberrs</span>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div>
+          <span class="text-gray-400">
+            The information listed above is based on industry interpretations of
+            current applicable law requirements and are subject to change. We
+            are providing this form to you for your convenience and cannot
+            guarantee any outcomes. By completing this form, you hereby consent
+            to the use and disclosure of your personal information, by
+            [Insurance company] and/or its affiliates, subsidiaries and business
+            partners for any and all lawful purposes. Your information may also
+            be shared with your employer in furtherance of the objective and
+            purpose of this form.
+          </span>
+          <div class="flex gap-4 my-4">
+            <div class="w-full">
+              <mat-list>
+                <mat-list-item>Full Name</mat-list-item>
+                <mat-list-item>Designation / Title</mat-list-item>
+                <mat-list-item>Nationality</mat-list-item>
+              </mat-list>
+            </div>
+            <div class="w-full">
+              <mat-list>
+                <mat-list-item> Date of Birth </mat-list-item>
+                <mat-list-item> Country of Residence </mat-list-item>
+              </mat-list>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <div class="my-4">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="my-auto gap-2 flex justify-between text-center py-4">
+              <mat-icon
+                svgIcon="four"
+                class="my-auto flex !w-[32px] !h-[32px]"
+              />
+              <span class="m-auto text-lg">Senior Management</span>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div>
+          <span class="text-gray-400"
+            >The information listed above is based on industry interpretations
+            of current applicable law requirements and are subject to change. We
+            are providing this form to you for your convenience and cannot
+            guarantee any outcomes. By completing this form, you hereby consent
+            to the use and disclosure of your personal information, by
+            [Insurance company] and/or its affiliates, subsidiaries and business
+            partners for any and all lawful purposes. Your information may also
+            be shared with your employer in furtherance of the objective and
+            purpose of this form.
+          </span>
+          <div class="flex gap-4 my-4">
+            <div class="w-full">
+              <mat-list>
+                <mat-list-item>Full Name</mat-list-item>
+                <mat-list-item>Designation / Title</mat-list-item>
+              </mat-list>
+            </div>
+            <div class="w-full">
+              <mat-list>
+                <mat-list-item> Nationality </mat-list-item>
+                <mat-list-item> Date of Birth </mat-list-item>
+              </mat-list>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <div class="my-4">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="my-auto gap-2 flex justify-between text-center py-4">
+              <mat-icon
+                svgIcon="five"
+                class="my-auto flex !w-[32px] !h-[32px]"
+              />
+              <span class="m-auto text-lg">Politically Exposed Persons</span>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="my-4">
+          <div class="flex flex-col">
+            <span class="text-gray-400">
+              The information listed above is based on industry interpretations
+              of current applicable law requirements and are subject to change.
+              We are providing this form to you for your convenience and cannot
+              guarantee any outcomes. By completing this form, you hereby
+              consent to the use and disclosure of your personal information, by
+              [Insurance company] and/or its affiliates, subsidiaries and
+              business partners for any and all lawful purposes. Your
+              information may also be shared with your employer in furtherance
+              of the objective and purpose of this form.
+            </span>
+            <span class="font-bold">
+              Do any of the Board of Directors or Senior Managers or
+              Shareholders hold Foreign or Domestic PEP* status? (select
+              applicable box)
+            </span>
+          </div>
+          <mat-radio-group class="flex my-5">
+            <mat-radio-button>Yes </mat-radio-button>
+            <mat-radio-button>No </mat-radio-button>
+          </mat-radio-group>
+          <span class="font-bold">
+            If ‘Yes’, please provide additional information below and provide
+            the Passport copy of the PEP:
+          </span>
+          <div class="flex gap-4 my-4">
+            <div class="w-full">
+              <mat-list>
+                <mat-list-item>Full Name</mat-list-item>
+                <mat-list-item>Office and State position</mat-list-item>
+                <mat-list-item> Country of appointment </mat-list-item>
+                <mat-list-item>
+                  <div class="flex flex-col">
+                    <span> Connection to the company </span>
+                    <span class="!text-sm"
+                      >(eg: member of BOD, shareholder, senior manager etc)
+                    </span>
+                  </div>
+                </mat-list-item>
+              </mat-list>
+            </div>
+            <div class="w-full">
+              <mat-list>
+                <mat-list-item> Nationality </mat-list-item>
+                <mat-list-item> Date of Birth </mat-list-item>
+                <mat-list-item> Date of Appointment </mat-list-item>
+              </mat-list>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+    <div class="my-4">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="my-auto gap-2 flex justify-between text-center py-4">
+              <mat-icon
+                svgIcon="six"
+                class="my-auto flex !w-[32px] !h-[32px]"
+              />
+              <span class="m-auto text-lg">Source of Funds</span>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div>
+          <div class="flex flex-col gap-2">
+            <span class="text-sm text-gray-400">
+              The information listed above is based on industry interpretations
+              of current applicable law requirements and are subject to change.
+              We are providing this form to you for your convenience and cannot
+              guarantee any outcomes. By completing this form, you hereby
+              consent to the use and disclosure of your personal information, by
+              [Insurance company] and/or its affiliates, subsidiaries and
+              business partners for any and all lawful purposes. Your
+              information may also be shared with your employer in furtherance
+              of the objective and purpose of this form.
+            </span>
+            <span class="font-bold">
+              Are there additional sources of revenue? (select applicable box)
+            </span>
+          </div>
+          <mat-radio-group class="flex my-5">
+            <mat-radio-button>Yes </mat-radio-button>
+            <mat-radio-button>No </mat-radio-button>
+          </mat-radio-group>
+          <span class="font-bold">
+            If ‘Yes', please identify the source(s):
+          </span>
+          <div>
+            <ol>
+              <li class="font-bold">
+                Please provide a completed “Know-Your-Customer Form” for the
+                third party payee and enclose the required supporting documents
+                listed under the “Document-Check-List”.
+              </li>
+              <li class="font-bold">
+                Please provide the relationship letter that clarifies the
+                relationship between policyholder and the third party payee.
+              </li>
+            </ol>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+  </mat-accordion></ng-template
+>

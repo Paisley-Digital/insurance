@@ -1,0 +1,58 @@
+<div class="flex justify-between w-full h-auto">
+  <div class="flex">
+    <mat-nav-list>
+      <a
+        mat-list-item
+        routerLink="templates"
+        routerLinkActive="active-menu"
+        class="rounded-xl px-2 py-3 transition-colors duration-200 hover:bg-gray-50 flex items-start gap-3"
+      >
+        <mat-icon
+          matListItemIcon
+          svgIcon="kyc-management"
+          class="my-auto flex !w-[32px] !h-[32px]"
+        ></mat-icon>
+        <div matListItemTitle class="font-bold">KYC Templates</div>
+        <span matListItemLine class="text-xs text-gray-500"
+          >Manage and send KYC form templates.</span
+        >
+      </a>
+      <a
+        mat-list-item
+        routerLink="schedule"
+        routerLinkActive="active-menu"
+        class="rounded-xl px-2 py-3 transition-colors duration-200 hover:bg-gray-50 flex items-start gap-3"
+      >
+        <mat-icon
+          matListItemIcon
+          svgIcon="schedule-notification"
+          class="my-auto flex !w-[32px] !h-[32px]"
+        ></mat-icon>
+        <div matListItemTitle class="font-bold">Schedule Notification</div>
+        <span matListItemLine class="text-xs text-gray-500"
+          >Schedule when and how to notify the employee.</span
+        >
+      </a>
+      <a
+        mat-list-item
+        routerLink="history"
+        routerLinkActive="active-menu"
+        class="rounded-xl px-2 py-3 transition-colors duration-200 hover:bg-gray-50 flex items-start gap-3"
+      >
+        <mat-icon
+          matListItemIcon
+          svgIcon="delivery-history"
+          class="my-auto flex !w-[32px] !h-[32px]"
+        ></mat-icon>
+        <div matListItemTitle class="font-bold">Delivery History</div>
+        <span matListItemLine class="text-xs text-gray-500"
+          >Access the history of all KYC form deliveries.</span
+        >
+      </a>
+    </mat-nav-list>
+  </div>
+  <div class="border-r-[0.1px] border-dotted border-gray-300 h-auto mx-2"></div>
+  <div class="flex-1 w-1/2 px-8 py-4">
+    <router-outlet></router-outlet>
+  </div>
+</div>

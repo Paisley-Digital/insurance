@@ -1,0 +1,106 @@
+<h2 class="font-bold text-gray-600 mb-10">Recipients</h2>
+<mat-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="firstFormGroup" completed="false">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Select KYC Template</ng-template>
+      <mat-radio-group class="flex flex-col mt-5">
+        <mat-radio-button class="example-radio-button" value="kyc-group-policy">
+          Know-Your-Customer Form - Group Policies
+        </mat-radio-button>
+      </mat-radio-group>
+    </form>
+  </mat-step>
+  <mat-step
+    [stepControl]="secondFormGroup"
+    completed="false"
+    label="Fill out your address"
+  >
+    <form [formGroup]="secondFormGroup" class="flex flex-col">
+      <div class="my-4 font-bold text-gray-600">Assign to</div>
+      <mat-form-field>
+        <mat-label>Contact Email</mat-label> <input type="email" matInput />
+      </mat-form-field>
+      <div>
+        <div class="font-bold text-gray-600 my-4">Notification Type</div>
+        <mat-chip-listbox>
+          <mat-chip-option>
+            <div class="flex items-center space-x-2">
+              <mat-icon svgIcon="email"></mat-icon> <span>Email</span>
+            </div>
+          </mat-chip-option>
+          <mat-chip-option>
+            <div class="flex items-center space-x-2">
+              <mat-icon svgIcon="sms"></mat-icon> <span>SMS</span>
+            </div>
+          </mat-chip-option>
+        </mat-chip-listbox>
+      </div>
+      <div class="font-bold">
+        <h3 class="text-sm font-semibold text-gray-600 mb-4">
+          Sending Settings
+        </h3>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Send On</mat-label>
+          <input matInput [matDatepicker]="picker" placeholder="Select date" />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Repeat</mat-label>
+          <mat-select>
+            @for (option of repeatOptions; track option.label) {
+            <mat-option [value]="option.value"> {{ option.label }} </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <mat-form-field appearance="outline" class="w-full mb-2">
+        <mat-label>Notes / Description</mat-label>
+        <textarea
+          matInput
+          rows="3"
+          maxlength="120"
+          [formControl]="noteControl"
+        ></textarea>
+        <mat-hint align="start" class="text-xs text-gray-400">
+          (Allowed characters: {{ noteControl.value?.length || 0 }}–120)
+        </mat-hint>
+      </mat-form-field>
+      <button mat-flat-button color="primary" class="w-32">Next</button>
+    </form>
+  </mat-step>
+  <mat-step completed="false">
+    <ng-template matStepLabel>Submit</ng-template>
+    <div>
+      <h3>Select KYC Form</h3>
+      <div class="flex">
+        <mat-icon svgIcon="fluent-calendar" />
+        <h2>Know-Your-Customer Form- Group Policies</h2>
+      </div>
+      <div>
+        <h2>Assigned to Employer</h2>
+        <dl class="!striped-receipt-records">
+          <dt>Notification Type</dt>
+          <dd>Email</dd>
+          <dt>When to Send</dt>
+          <dd>One month before expiry</dd>
+          <dt>From Date</dt>
+          <dd>March 6, 2025</dd>
+          <dt>To Date</dt>
+          <dd>December 12, 2025</dd>
+          <dt>Employer</dt>
+          <dd>Emaar</dd>
+          <dt>Assigned Person (Name)</dt>
+          <dd>December 12, 2025</dd>
+          <dt>Assigned Person (Email)</dt>
+          <dd>March 6, 2025</dd>
+        </dl>
+      </div>
+    </div>
+  </mat-step></mat-stepper
+>

@@ -51,14 +51,14 @@
       "@insurance-employee-feature-dashboard": [
         "libs/employee/feature/dashboard/src/index.ts"
       ],
+      "@insurance-employee-feature-eKYC-management": [
+        "libs/employee/feature/eKYC-management/src/index.ts"
+      ],
       "@insurance-employee-feature-shell": [
         "libs/employee/feature/shell/src/index.ts"
       ],
       "@insurance-employee-feature-upload": [
         "libs/employee/feature/upload/src/index.ts"
-      ],
-      "@insurance-employee-feature-eKYC-management": [
-        "libs/employee/feature/eKYC-management/src/index.ts"
       ],
       "@insurance-shared-app-core": ["libs/shared/util/appp-core/src/index.ts"],
       "@insurance-shared-ui-overlay-spinner": [

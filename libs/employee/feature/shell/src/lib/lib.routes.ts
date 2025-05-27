@@ -25,6 +25,13 @@ export const shellRoutes: Route[] = [
             (m) => m.eKYCManagementRoutes
           ),
       },
+      {
+        path: 'employer-management',
+        loadChildren: () =>
+          import('@insurance-employee-feature-employer-management').then(
+            (m) => m.employerManagementRoutes
+          ),
+      },
     ],
   },
 ];

@@ -44,8 +44,14 @@
   </div>
 </div>
 <div class="my-8">
-  <button mat-stroked-button color="primary" class="mt-4 md:mt-0">
-    <mat-icon svgIcon="Leading" class="mr-2"></mat-icon> Filters
+  <button
+    mat-stroked-button
+    color="primary"
+    class="mt-4 md:mt-0"
+    (click)="openDialog()"
+  >
+    <mat-icon svgIcon="Leading" class="mr-2"></mat-icon>
+    Filters
   </button>
 </div>
 <div class="overflow-auto rounded-xl border border-gray-200">
@@ -129,3 +135,35 @@
     class="border-t"
   ></mat-paginator>
 </div>
+<ng-template #filterDialog>
+  <div mat-dialog-title>Filters</div>
+  <mat-dialog-content>
+    <mat-form-field class="w-full !mt-6">
+      <mat-label>Employer Name</mat-label>
+      <input type="text" matInput />
+    </mat-form-field>
+    <mat-form-field class="w-full my-2">
+      <mat-label>KYC Form</mat-label>
+      <input type="text" matInput />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full my-2">
+      <mat-label>Send On</mat-label>
+      <input matInput [matDatepicker]="picker" placeholder="Select date" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <div class="my-2">
+      <span class="font-bold"> Status </span>
+    </div>
+    <mat-chip-listbox class="my-2">
+      <mat-chip-option> Verifled</mat-chip-option>
+      <mat-chip-option> Rejected</mat-chip-option>
+      <mat-chip-option> Pending</mat-chip-option>
+    </mat-chip-listbox>
+  </mat-dialog-content>
+  <mat-dialog-actions align="start">
+    <button mat-flat-button mat-dialog-close>Search</button>
+    <button mat-stroked-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</ng-template>

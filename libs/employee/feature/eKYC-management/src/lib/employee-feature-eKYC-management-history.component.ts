@@ -1,9 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInput } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'insurance-employee-feature-e-kyc-management-history',
@@ -13,11 +25,26 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatIconModule,
     MatButtonModule,
     MatPaginatorModule,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+    MatFormFieldModule,
+    MatFormField,
+    MatChipsModule,
+    MatIconModule,
+    MatDatepickerModule,
+    MatInput,
+    MatSelectModule,
+    MatButton,
   ],
   templateUrl: './employee-feature-eKYC-management-history.component.html',
   styleUrl: './employee-feature-eKYC-management-history.component.scss',
 })
 export class EmployeeFeatureEKYCManagementHistoryComponent {
+  readonly dialog = inject(MatDialog);
+  @ViewChild('filterDialog') filterDialog!: TemplateRef<unknown>;
+
   displayedColumns: string[] = [
     'employer',
     'template',
@@ -55,6 +82,7 @@ export class EmployeeFeatureEKYCManagementHistoryComponent {
       status: 'Verified',
     },
   ];
+
   getStatusClass(status: string): string {
     switch (status.toLowerCase()) {
       case 'verified':
@@ -66,5 +94,11 @@ export class EmployeeFeatureEKYCManagementHistoryComponent {
       default:
         return 'bg-gray-100 text-gray-600';
     }
+  }
+
+  openDialog() {
+    this.dialog.open(this.filterDialog, {
+      width: '480px',
+    });
   }
 }

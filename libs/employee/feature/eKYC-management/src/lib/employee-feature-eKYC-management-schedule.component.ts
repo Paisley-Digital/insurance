@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatStepperModule } from '@angular/material/stepper';
 import {
@@ -15,6 +15,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInput } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButton } from '@angular/material/button';
+import { ErrorMessageComponent } from '@shared-ui-input-validator';
 
 @Component({
   selector: 'insurance-employee-feature-e-kyc-management-schedule',
@@ -30,20 +31,23 @@ import { MatButton } from '@angular/material/button';
     MatInput,
     MatSelectModule,
     MatButton,
+    ErrorMessageComponent,
   ],
   templateUrl: './employee-feature-eKYC-management-schedule.component.html',
   styleUrl: './employee-feature-eKYC-management-schedule.component.scss',
 })
-export class EmployeeFeatureEKYCManagementScheduleComponent {
-  private formBuilder = inject(FormBuilder);
+export class EmployeeFeatureEKYCManagementScheduleComponent implements OnInit {
   private _formBuilder = inject(FormBuilder);
   firstFormGroup = this._formBuilder.group({
-    firstCtrl: ['', Validators.required],
+    kycTemplate: ['', Validators.required],
   });
   secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    notificationType: ['', Validators.required],
+    sendOn: ['', Validators.required],
+    repeat: ['', Validators.required],
+    note: ['', Validators.required],
   });
-  noteControl = new FormControl();
   isLinear = false;
   repeatOptions = [
     { value: 'none', label: 'Does not repeat' },
@@ -54,4 +58,27 @@ export class EmployeeFeatureEKYCManagementScheduleComponent {
     { value: 'expiry', label: 'One Month Before Expiry' },
     { value: 'custom', label: 'Custom' },
   ];
+
+  submittedFirst = false;
+  submittedSecond = false;
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    console.log('s');
+  }
+
+  goToNext(stepper: any, step: number) {
+    if (step === 1) {
+      this.submittedFirst = true;
+      if (this.firstFormGroup.valid) {
+        stepper.next();
+      }
+    } else if (step === 2) {
+      this.submittedSecond = true;
+      if (this.secondFormGroup.valid) {
+        stepper.next();
+      }
+    }
+  }
 }

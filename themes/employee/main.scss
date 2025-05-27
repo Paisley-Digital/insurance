@@ -1,14 +1,5 @@
 @use '@angular/material' as mat;
-@use "employee_theme-colors" as theme;
 
 @import "themes/employee/overrides/overrides";
 @import "themes/base/base/base";
 @import "themes/base/fonts/poppins";
-
-html {
-  color-scheme: light dark;
-
-  @include mat.theme((
-    color: theme.$primary-palette
-  ));
-}

@@ -1,83 +1,116 @@
-<div class="grid grid-cols-3 p-9 gap-6">
-  <mat-card>
-    <mat-card-content>
-      <div class="flex flex-col gap-3">
-        <div class="w-full flex justify-between">
-          <h4>Total Employer</h4>
-          <h4 class="text-green-600">32</h4>
-        </div>
-        <p>Number of registered Employer on the portal.</p>
-      </div>
-    </mat-card-content>
-  </mat-card>
-  <mat-card>
-    <mat-card-content>
-      <div class="flex flex-col gap-3">
-        <div class="w-full flex justify-between">
-          <h4>Total Employees</h4>
-          <h4 class="text-green-600">32</h4>
-        </div>
-        <p>Number of employees added by customers.</p>
-      </div>
-    </mat-card-content>
-  </mat-card>
-  <mat-card>
-    <mat-card-content>
-      <div class="flex flex-col gap-3">
-        <div class="w-full flex justify-between">
-          <h4>Enrolled Members</h4>
-          <h4 class="text-green-600">32</h4>
-        </div>
-        <p>Individuals registered in an insurance plan with active coverage.</p>
-      </div>
-    </mat-card-content>
-  </mat-card>
-</div>
-
-<div class="p-9">
-  <mat-card>
-    <mat-card-content>
-      <div class="flex justify-between mx-6">
-        <div class="flex text-center flex-col">
-          <h1 class="text-green-600">17,756</h1>
-          <h3>Compliant Submissions</h3>
-          <p>KYC records fully submitted and verified as compliant</p>
-        </div>
-        <mat-divider vertical class="!h-[120px] relative top-9"></mat-divider>
-        <div class="flex text-center flex-col">
-          <h1 class="text-green-600">2,559</h1>
-          <h3>Non-Compliant Submissions</h3>
-          <p>Records flagged due to risk score, PEP match, or incomplete KYC</p>
-        </div>
-        <mat-divider vertical class="!h-[120px] relative top-9"></mat-divider>
-        <div class="flex text-center flex-col">
-          <h1 class="text-green-600">890</h1>
-          <h3>Expiring Documents (Next 6 Months)</h3>
-          <p>KYC documents flagged for upcoming expiry</p>
-        </div>
-      </div>
-    </mat-card-content>
-  </mat-card>
-</div>
-
-<div class="p-3">
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6 mt-8">
-    @for (item of dashboardMock; track item.title) {
+<div class="flex flex-col gap-6 p-9">
+  <div class="grid grid-cols-3 gap-6">
     <mat-card>
       <mat-card-content>
-        <img
-          [src]="item.image"
-          alt="Medical Insurance"
-          class="w-full h-48 object-cover"
-        />
-        <div class="p-4">
-          <h3 class="text-xl font-bold text-gray-800">{{ item.title }}</h3>
-          <p class="text-gray-600 text-sm">
-            {{ item.description }}
+        <div class="flex flex-col gap-3">
+          <div class="w-full flex justify-between">
+            <h4>Total Employer</h4>
+            <h4 class="text-green-600">32</h4>
+          </div>
+          <p>Number of registered Employer on the portal.</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-content>
+        <div class="flex flex-col gap-3">
+          <div class="w-full flex justify-between">
+            <h4>Total Employees</h4>
+            <h4 class="text-green-600">32</h4>
+          </div>
+          <p>Number of employees added by customers.</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-content>
+        <div class="flex flex-col gap-3">
+          <div class="w-full flex justify-between">
+            <h4>Enrolled Members</h4>
+            <h4 class="text-green-600">32</h4>
+          </div>
+          <p>
+            Individuals registered in an insurance plan with active coverage.
           </p>
         </div>
       </mat-card-content>
     </mat-card>
-    }
+  </div>
+  <div>
+    <mat-card>
+      <mat-card-content>
+        <div class="flex justify-between mx-6">
+          <div class="flex text-center flex-col">
+            <h1 class="text-green-600">17,756</h1>
+            <h3>Compliant Submissions</h3>
+            <p>KYC records fully submitted and verified as compliant</p>
+          </div>
+          <mat-divider vertical class="!h-[120px] relative top-9"></mat-divider>
+          <div class="flex text-center flex-col">
+            <h1 class="text-green-600">2,559</h1>
+            <h3>Non-Compliant Submissions</h3>
+            <p>
+              Records flagged due to risk score, PEP match, or incomplete KYC
+            </p>
+          </div>
+          <mat-divider vertical class="!h-[120px] relative top-9"></mat-divider>
+          <div class="flex text-center flex-col">
+            <h1 class="text-green-600">890</h1>
+            <h3>Expiring Documents (Next 6 Months)</h3>
+            <p>KYC documents flagged for upcoming expiry</p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div>
+    <mat-card>
+      <mat-card-content>
+        <div class="flex justify-between mx-12">
+          <h2>Success vs. Rejected Rate</h2>
+          <div>
+            <button mat-stroked-button class="ms-2">12 Months</button>
+            <button mat-stroked-button class="ms-2">6 Months</button>
+            <button mat-stroked-button class="ms-2">30 Days</button>
+            <button mat-stroked-button class="ms-2">7 Days</button>
+          </div>
+          <button mat-stroked-button>Export PDF</button>
+        </div>
+        <div
+          echarts
+          [options]="option"
+          [theme]="chartTheme"
+          class="min-h-[300px] w-full min-w-[300px]"
+        ></div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="w-full flex gap-6">
+    <div class="w-2/3">
+      <mat-card>
+        <mat-card-content>
+          <h3 class="text-center">Document Verification Breakdown</h3>
+          <div
+            echarts
+            [options]="optionTwo"
+            [theme]="chartTheme"
+            class="min-h-[500px] w-full min-w-[300px]"
+          ></div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="w-1/2">
+      <mat-card>
+        <mat-card-content>
+          <h3 class="text-center">Document Verification Breakdown</h3>
+          <div
+            echarts
+            [options]="optionThree"
+            [theme]="chartTheme"
+            class="min-h-[500px] w-full min-w-[300px]"
+          ></div>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
 </div>

@@ -16,6 +16,9 @@
     "baseUrl": ".",
     "paths": {
       "@./assets": ["libs/shared/assets/src/index.ts"],
+      "@insurance-employee-feature-employer-management": [
+        "libs/employee/feature/employer-management/src/index.ts"
+      ],
       "@./insurance-customer": ["libs/customer/src/index.ts"],
       "@./locales": ["libs/shared/util/locales/src/index.ts"],
       "@insurance-broker-feature-auth": [

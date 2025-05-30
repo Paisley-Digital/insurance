@@ -1,1 +1,94 @@
-<p>employee-feature-employer-management works!</p>
+<div class="card-wrapper">
+    @if (_view() === 'employee') {
+<mat-card>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  
+        <ng-container matColumnDef="employer">
+          <th mat-header-cell *matHeaderCellDef> Employer </th>
+          <td mat-cell *matCellDef="let element"> {{element.employer}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="lastUpdate">
+          <th mat-header-cell *matHeaderCellDef> Last Update </th>
+          <td mat-cell *matCellDef="let element"> {{element.lastUpdate}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="numberOfForms">
+          <th mat-header-cell *matHeaderCellDef> Number Of Forms </th>
+          <td mat-cell *matCellDef="let element"> {{element.numberOfForms}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="totalEmployees">
+          <th mat-header-cell *matHeaderCellDef> Total Employees </th>
+          <td mat-cell *matCellDef="let element"> {{element.totalEmployees}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="enrolledMembers">
+          <th mat-header-cell *matHeaderCellDef> Enrolled Members </th>
+          <td mat-cell *matCellDef="let element"> {{element.enrolledMembers}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="issues">
+          <th mat-header-cell *matHeaderCellDef> Issues </th>
+          <td mat-cell *matCellDef="let element"> {{element.issues}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="kycStatus">
+          <th mat-header-cell *matHeaderCellDef> KYC Status </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="status" [ngClass]="element.kycStatus.toLowerCase()">{{element.kycStatus}}</span>
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon svgIcon="chevron-right" (click)="nextStep()"></mat-icon>
+          </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [hidePageSize]="true" showFirstLastButtons></mat-paginator>
+  </mat-card>}@else if (_view() === 'upload') {
+    <mat-card class="p-6 h-[424px]">
+      <div class="flex flex-col gap-4">
+        <h3 class="flex items-center gap-2 text-lg font-semibold">
+          <mat-icon svgIcon="circle" color="primary" (click)="back()"></mat-icon>
+          Operational Modules Dashboard
+        </h3>
+  
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2">
+          <mat-card class="flex-1 min-w-full max-w-sm cursor-pointer p-4 border border-gray-200 rounded-2xl hover:shadow-md transition"
+                    >
+            <div class="flex flex-col items-start gap-3">
+              <mat-icon style="width: 32px; height: 32px;" svgIcon="entity-kyc" class="text-primary"></mat-icon>
+              <div>
+                <div class="font-semibold text-base">Entity KYC</div>
+                <div class="text-sm text-gray-600">
+                  Manage Entity verification documents and monitor compliance status.
+                </div>
+              </div>
+            </div>
+          </mat-card>
+  
+          <mat-card class="flex-1 min-w-full max-w-sm cursor-pointer p-4 border border-gray-200 rounded-2xl hover:shadow-md transition"
+                    >
+            <div class="flex flex-col items-start gap-3">
+              <mat-icon style="width: 32px; height: 32px;" svgIcon="employee-kyc" class="text-primary"></mat-icon>
+              <div>
+                <div class="font-semibold text-base">Employee KYC</div>
+                <div class="text-sm text-gray-600">
+                  Add, view, and manage employees associated with registered employers.
+                </div>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </mat-card>
+  }
+  
+
+</div>

@@ -15,7 +15,23 @@ interface EmployerData {
   issues: number;
   kycStatus: 'Verified' | 'unverified' | 'Pending';
 }
-type View = 'upload' | 'employee';
+
+type RiskLevel = 'Low' | 'Medium' | 'High';
+type DocumentType = 'Passport' | 'National ID' | 'Driving License';
+type ActionType = 'View' | 'Review' | 'View / Review';
+type KYCStatus = 'Compliant' | 'Non-Compliant' | 'Pending';
+
+interface EntityData {
+  person: string;
+  pep: 'Yes' | 'No';
+  riskLevel: RiskLevel;
+  documentType: DocumentType;
+  submissionData: string;
+  action: ActionType;
+  kycStatus: KYCStatus;
+}
+
+type View = 'upload' | 'employee' | 'entity';
 
 @Component({
   selector: 'insurance-employee-feature-employer-management',
@@ -39,6 +55,10 @@ export class EmployeeFeatureEmployerManagementComponent implements AfterViewInit
 
   back(){
     this._view.set('employee');
+  }
+
+  entity(){
+    this._view.set('entity');
   }
 
 
@@ -110,7 +130,58 @@ export class EmployeeFeatureEmployerManagementComponent implements AfterViewInit
     }
   ];
 
+  eneityData: EntityData[] = [
+    {
+      person: 'John Doe',
+      pep: 'Yes',
+      riskLevel: 'High',
+      documentType: 'Passport',
+      submissionData: '22/01/2024',
+      action: 'View / Review',
+      kycStatus: 'Compliant'
+    },
+    {
+      person: 'Omar AlSaeed',
+      pep: 'No',
+      riskLevel: 'Low',
+      documentType: 'National ID',
+      submissionData: '15/01/2024',
+      action: 'View',
+      kycStatus: 'Non-Compliant'
+    },
+    {
+      person: 'Ahmed Nasr',
+      pep: 'No',
+      riskLevel: 'Medium',
+      documentType: 'Driving License',
+      submissionData: '20/01/2024',
+      action: 'Review',
+      kycStatus: 'Pending'
+    },
+    {
+      person: 'Ferhad Abdi',
+      pep: 'Yes',
+      riskLevel: 'Low',
+      documentType: 'National ID',
+      submissionData: '06/01/2024',
+      action: 'View',
+      kycStatus: 'Pending'
+    },
+    {
+      person: 'Fatima Akhalid',
+      pep: 'Yes',
+      riskLevel: 'High',
+      documentType: 'Passport',
+      submissionData: '10/01/2024',
+      action: 'Review',
+      kycStatus: 'Compliant'
+    }
+  ];
+  
+
   dataSource = new MatTableDataSource<EmployerData>(this.data);
+
+  entityDataSource = new MatTableDataSource<EntityData>(this.eneityData);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 

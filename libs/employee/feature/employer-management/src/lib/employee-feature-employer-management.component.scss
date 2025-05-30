@@ -7,12 +7,14 @@
   text-transform: capitalize;
 }
 
-.status.verified {
+.status.verified,
+.status.compliant {
   background-color: #e0f7e9;
   color: #2e7d32;
 }
 
-.status.unverified {
+.status.unverified,
+.status.non-compliant {
   background-color: #ffebee;
   color: #c62828;
 }
@@ -23,39 +25,41 @@
 }
 
 .card-wrapper {
-    padding: 16px;
-    min-height: 100vh;
-    box-sizing: border-box;
-  }
+  padding: 16px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
 
 table {
-    background-color: white;
-    padding: 24px 48px;
-    width: 100%;
-    max-width: 100%;
-    border-spacing: 0;
-    box-sizing: border-box;
-  }
-  
-  th.mat-header-cell, td.mat-cell {
-    padding: 12px;
-    text-align: center;
-  }
+  background-color: white;
+  padding: 24px 48px;
+  width: 100%;
+  max-width: 100%;
+  border-spacing: 0;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
 
-  .mat-mdc-cell,.mat-mdc-header-cell{
-    text-align: center;
-  }
-   
+th.mat-header-cell,
+td.mat-cell {
+  padding: 12px;
+  text-align: center;
+}
+
+.mat-mdc-cell,
+.mat-mdc-header-cell {
+  text-align: center;
+}
+
 mat-icon {
   vertical-align: middle;
   color: #757575;
   cursor: pointer;
 }
-mat-paginator{
-    background-color: white !important;
+mat-paginator {
+  background-color: white !important;
 }
 
 mat-card {
-    background-color: white;
+  background-color: white;
 }
-  

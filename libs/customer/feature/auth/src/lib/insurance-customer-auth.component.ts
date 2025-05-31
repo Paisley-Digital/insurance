@@ -1,16 +1,21 @@
-import {Component, inject, signal} from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ErrorMessageComponent} from "@shared-ui-input-validator";
-import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
-import {isHandsetScreen} from "@shared-util-common";
-import {MatSidenavModule} from "@angular/material/sidenav";
-import {MatAnchor, MatButtonModule} from "@angular/material/button";
-import {MatFormField} from "@angular/material/form-field";
-import {MatIconModule} from "@angular/material/icon";
-import {MatInputModule} from "@angular/material/input";
-import {MatCheckboxModule} from "@angular/material/checkbox";
-import {OverlaySpinnerDirective} from "@insurance-shared-ui-overlay-spinner";
+import { ErrorMessageComponent } from '@shared-ui-input-validator';
+import {
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { isHandsetScreen } from '@shared-util-common';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatAnchor, MatButtonModule } from '@angular/material/button';
+import { MatFormField } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { OverlaySpinnerDirective } from '@insurance-shared-ui-overlay-spinner';
 
 @Component({
   selector: 'insurance-insurance-customer-auth',
@@ -30,6 +35,7 @@ import {OverlaySpinnerDirective} from "@insurance-shared-ui-overlay-spinner";
   ],
   templateUrl: './insurance-customer-auth.component.html',
   styleUrl: './insurance-customer-auth.component.scss',
+  standalone: true,
 })
 export class InsuranceCustomerAuthComponent {
   private formBuilder = inject(FormBuilder);
@@ -59,7 +65,7 @@ export class InsuranceCustomerAuthComponent {
   navigateToProduct() {
     const userName = this.loginForm.getRawValue().userName;
     const password = this.loginForm.getRawValue().password;
-    if (userName !== 'bbgroup' || password !== '123') {
+    if (userName !== 'employee1' || password !== 'testemp123') {
       this.loginForm.get('password')?.setErrors({ notValid: true });
       return;
     }

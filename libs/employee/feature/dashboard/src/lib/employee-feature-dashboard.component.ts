@@ -7,7 +7,7 @@ import { MatCard, MatCardContent } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 import { MatDivider } from '@angular/material/divider';
 import { NgxEchartsDirective } from 'ngx-echarts';
-
+import * as echarts from 'echarts';
 @Component({
   selector: 'insurance-dashboard',
   imports: [
@@ -95,6 +95,10 @@ export class DashboardComponent {
     yAxis: { type: 'category' },
     series: [
       {
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          { offset: 1, color: '#E17676' },
+          { offset: 0.5, color: '#9F2A2A' },
+        ]),
         type: 'bar',
         encode: {
           x: 'amount',

@@ -7,4 +7,9 @@ html {
       color: theme.$primary-palette,
     )
   );
+  .mat-mdc-card-outlined,
+  .mat-toolbar,
+  .mat-drawer {
+    background-color: white !important;
+  }
 }

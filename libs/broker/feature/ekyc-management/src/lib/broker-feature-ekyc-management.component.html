@@ -2,7 +2,7 @@
   <mat-card appearance="outlined">
     <div class="p-4">
       <h3 class="ms-6">Know-Your-Customer Form- Group Policies</h3>
-      <mat-stepper [linear]="true" labelPosition="bottom" #stepper>
+      <mat-stepper [linear]="false" labelPosition="bottom" #stepper>
         <mat-step
           [stepControl]="companyInfoForm"
           label="Company Info"
@@ -201,7 +201,7 @@
               <mat-radio-button value="2" class="ms-8">No</mat-radio-button>
             </mat-radio-group>
             <ng-container [ngTemplateOutlet]="table" />
-            <button mat-button class="mt-3">
+            <button mat-stroked-button class="mt-3">
               <mat-icon svgIcon="add-2" />
               Add shareholder
             </button>
@@ -219,12 +219,12 @@
           <ng-template matStepLabel>Board & Management</ng-template>
           <h3>Board members</h3>
           <ng-container [ngTemplateOutlet]="boardMembers" />
-          <button mat-button class="mt-3">
+          <button mat-stroked-button class="mt-3">
             <mat-icon svgIcon="add-2" />
             Add member
           </button>
           <ng-container [ngTemplateOutlet]="table" />
-          <button mat-button class="mt-3">
+          <button mat-stroked-button class="mt-3">
             <mat-icon svgIcon="add-2" />
             Add manager
           </button>
@@ -248,7 +248,7 @@
             <mat-radio-button value="2" class="ms-8">No</mat-radio-button>
           </mat-radio-group>
           <ng-container [ngTemplateOutlet]="boardMembersFour" />
-          <button mat-button class="mt-3">
+          <button mat-stroked-button class="mt-3">
             <mat-icon svgIcon="add-2" />
             Add PEP
           </button>
@@ -577,7 +577,7 @@
         hidden
       />
       <button
-        mat-flat-button
+        mat-stroked-button
         class="mt-4"
         (click)="fileLicenseInput.click()"
         type="button"
@@ -638,7 +638,7 @@
           hidden
         />
         <button
-          mat-flat-button
+          mat-stroked-button
           class="mt-4"
           (click)="fileInputFund.click()"
           type="button"
@@ -700,7 +700,7 @@
           hidden
         />
         <button
-          mat-flat-button
+          mat-stroked-button
           class="mt-4"
           (click)="fileInputStamp.click()"
           type="button"
@@ -766,7 +766,7 @@
           hidden
         />
         <button
-          mat-flat-button
+          mat-stroked-button
           class="mt-4"
           (click)="fileInputSignature.click()"
           type="button"

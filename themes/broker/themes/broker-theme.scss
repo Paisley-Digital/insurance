@@ -8,4 +8,10 @@ html {
       color: theme.$primary-palette,
     )
   );
+  .mat-mdc-card-outlined,
+  .mat-toolbar,
+  .mat-drawer,
+  .mat-stepper-horizontal {
+    background-color: white !important;
+  }
 }

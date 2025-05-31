@@ -11,6 +11,7 @@ export const svgIconNames = [
   'add',
   'add-2',
   'trash2',
+  'cigna',
   'edit',
   'chevron-down',
   'tick',

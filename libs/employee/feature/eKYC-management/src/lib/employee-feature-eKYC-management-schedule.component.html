@@ -4,7 +4,7 @@
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Select KYC Template</ng-template>
       <mat-radio-group class="flex flex-col mt-5" formControlName="kycTemplate">
-        <mat-radio-button value="kyc-group-policy">
+        <mat-radio-button value="kyc-group-policy" matStepperNext>
           Know-Your-Customer Form - Group Policies
         </mat-radio-button>
       </mat-radio-group>

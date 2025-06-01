@@ -4,6 +4,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButton } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
 
 type View = 'stepKyc' | 'businessSelectionTemplate';
 
@@ -16,6 +18,8 @@ type View = 'stepKyc' | 'businessSelectionTemplate';
     MatExpansionModule,
     MatListModule,
     MatIconModule,
+    MatButton,
+    RouterLink,
   ],
   templateUrl: './employee-feature-eKYC-management-templates.component.html',
   styleUrl: './employee-feature-eKYC-management-templates.component.scss',

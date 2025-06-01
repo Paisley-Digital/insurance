@@ -1,8 +1,9 @@
 @switch (view()) { @case ('businessSelectionTemplate') {
-<ng-container [ngTemplateOutlet]="businessSelectionTemplate" /> } @case
-('stepKyc') { <ng-container [ngTemplateOutlet]="stepKyc" /> }}<ng-template
-  #businessSelectionTemplate
->
+<ng-container [ngTemplateOutlet]="businessSelectionTemplate" />
+} @case ('stepKyc') {
+<ng-container [ngTemplateOutlet]="stepKyc" />
+} }
+<ng-template #businessSelectionTemplate>
   <div class="gap-2">
     <div class="flex flex-col gap-2">
       <h2 class="font-bold">KYC Template</h2>
@@ -21,8 +22,9 @@
       </mat-radio-button>
       }
     </mat-radio-group>
-  </div></ng-template
-><ng-template #stepKyc>
+  </div>
+</ng-template>
+<ng-template #stepKyc>
   <div class="flex flex-col">
     <h2 class="font-bold text-gray-500">
       Know-Your-Customer Form- Group Policies
@@ -37,12 +39,12 @@
   <mat-accordion class="!w-auto">
     <div class="my-4 !w-auto">
       <mat-expansion-panel class="!w-auto">
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header class="!h-auto min-h-[3rem] max-sm:!py-2">
           <mat-panel-title>
             <div class="my-auto gap-2 flex justify-between text-center py-4">
               <mat-icon
                 svgIcon="one"
-                class="my-auto flex !w-[32px] !h-[32px]"
+                class="my-auto flex !w-[48px] !h-[48px]"
               />
               <span class="m-auto text-lg">Company Information</span>
             </div>
@@ -54,14 +56,14 @@
               <mat-list-item role="listitem">Full Legal Name</mat-list-item>
               <mat-list-item role="listitem">Full Trading Name</mat-list-item>
               <mat-list-item role="listitem"
-                >Place of Incorporation</mat-list-item
-              >
+                >Place of Incorporation
+              </mat-list-item>
               <mat-list-item role="listitem"
-                >Date of Incorporation</mat-list-item
-              >
+                >Date of Incorporation
+              </mat-list-item>
               <mat-list-item role="listitem"
-                >Trade License / Commercial Registration No</mat-list-item
-              >
+                >Trade License / Commercial Registration No
+              </mat-list-item>
               <mat-list-item role="listitem">Registered Address</mat-list-item>
               <mat-list-item role="listitem">Address</mat-list-item>
               <mat-list-item role="listitem">PO Box</mat-list-item>
@@ -73,20 +75,20 @@
             <mat-list role="list">
               <mat-list-item role="listitem">Email</mat-list-item>
               <mat-list-item role="listitem"
-                >Trading Address (if different than above)</mat-list-item
-              >
+                >Trading Address (if different than above)
+              </mat-list-item>
               <mat-list-item role="listitem"
-                >Head Office Address (if applicable)</mat-list-item
-              >
+                >Head Office Address (if applicable)
+              </mat-list-item>
               <mat-list-item role="listitem">Type of Company</mat-list-item>
               <mat-list-item role="listitem"
-                >Limited Liability Company (LLC)</mat-list-item
-              >
+                >Limited Liability Company (LLC)
+              </mat-list-item>
               <mat-list-item role="listitem">Specify Others</mat-list-item>
               <mat-list-item role="listitem">Business Activities</mat-list-item>
               <mat-list-item role="listitem"
-                >Tax Registration Number (TRN / VAT)</mat-list-item
-              >
+                >Tax Registration Number (TRN / VAT)
+              </mat-list-item>
               <mat-list-item role="listitem">Tax Residency</mat-list-item>
               <mat-list-item role="listitem"
                 ><p class="!whitespace-normal">
@@ -100,12 +102,12 @@
     </div>
     <div class="my-4">
       <mat-expansion-panel>
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header class="!h-auto min-h-[3rem] max-sm:!py-2">
           <mat-panel-title>
             <div class="my-auto gap-2 flex justify-between text-center py-4">
               <mat-icon
                 svgIcon="two"
-                class="my-auto flex !w-[32px] !h-[32px]"
+                class="my-auto flex !w-[48px] !h-[48px]"
               />
               <span class="m-auto text-lg">Shareholder Details</span>
             </div>
@@ -118,8 +120,8 @@
               authorities in the country? (select applicable box)
             </span>
             <mat-radio-group class="flex mt-5">
-              <mat-radio-button>Yes </mat-radio-button>
-              <mat-radio-button>No </mat-radio-button>
+              <mat-radio-button>Yes</mat-radio-button>
+              <mat-radio-button>No</mat-radio-button>
             </mat-radio-group>
           </div>
           <div>
@@ -160,12 +162,12 @@
     </div>
     <div class="my-4">
       <mat-expansion-panel>
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header class="!h-auto min-h-[3rem] max-sm:!py-2">
           <mat-panel-title>
             <div class="my-auto gap-2 flex justify-between text-center py-4">
               <mat-icon
                 svgIcon="three"
-                class="my-auto flex !w-[32px] !h-[32px]"
+                class="my-auto flex !w-[48px] !h-[48px]"
               />
               <span class="m-auto text-lg">Board Memberrs</span>
             </div>
@@ -193,8 +195,8 @@
             </div>
             <div class="w-full">
               <mat-list>
-                <mat-list-item> Date of Birth </mat-list-item>
-                <mat-list-item> Country of Residence </mat-list-item>
+                <mat-list-item> Date of Birth</mat-list-item>
+                <mat-list-item> Country of Residence</mat-list-item>
               </mat-list>
             </div>
           </div>
@@ -203,12 +205,12 @@
     </div>
     <div class="my-4">
       <mat-expansion-panel>
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header class="!h-auto min-h-[3rem] max-sm:!py-2">
           <mat-panel-title>
             <div class="my-auto gap-2 flex justify-between text-center py-4">
               <mat-icon
                 svgIcon="four"
-                class="my-auto flex !w-[32px] !h-[32px]"
+                class="my-auto flex !w-[48px] !h-[48px]"
               />
               <span class="m-auto text-lg">Senior Management</span>
             </div>
@@ -235,8 +237,8 @@
             </div>
             <div class="w-full">
               <mat-list>
-                <mat-list-item> Nationality </mat-list-item>
-                <mat-list-item> Date of Birth </mat-list-item>
+                <mat-list-item> Nationality</mat-list-item>
+                <mat-list-item> Date of Birth</mat-list-item>
               </mat-list>
             </div>
           </div>
@@ -245,12 +247,12 @@
     </div>
     <div class="my-4">
       <mat-expansion-panel>
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header class="!h-auto min-h-[3rem] max-sm:!py-2">
           <mat-panel-title>
             <div class="my-auto gap-2 flex justify-between text-center py-4">
               <mat-icon
                 svgIcon="five"
-                class="my-auto flex !w-[32px] !h-[32px]"
+                class="my-auto flex !w-[48px] !h-[48px]"
               />
               <span class="m-auto text-lg">Politically Exposed Persons</span>
             </div>
@@ -276,8 +278,8 @@
             </span>
           </div>
           <mat-radio-group class="flex my-5">
-            <mat-radio-button>Yes </mat-radio-button>
-            <mat-radio-button>No </mat-radio-button>
+            <mat-radio-button>Yes</mat-radio-button>
+            <mat-radio-button>No</mat-radio-button>
           </mat-radio-group>
           <span class="font-bold">
             If ‘Yes’, please provide additional information below and provide
@@ -288,7 +290,7 @@
               <mat-list>
                 <mat-list-item>Full Name</mat-list-item>
                 <mat-list-item>Office and State position</mat-list-item>
-                <mat-list-item> Country of appointment </mat-list-item>
+                <mat-list-item> Country of appointment</mat-list-item>
                 <mat-list-item>
                   <div class="flex flex-col">
                     <span> Connection to the company </span>
@@ -301,9 +303,9 @@
             </div>
             <div class="w-full">
               <mat-list>
-                <mat-list-item> Nationality </mat-list-item>
-                <mat-list-item> Date of Birth </mat-list-item>
-                <mat-list-item> Date of Appointment </mat-list-item>
+                <mat-list-item> Nationality</mat-list-item>
+                <mat-list-item> Date of Birth</mat-list-item>
+                <mat-list-item> Date of Appointment</mat-list-item>
               </mat-list>
             </div>
           </div>
@@ -312,12 +314,12 @@
     </div>
     <div class="my-4">
       <mat-expansion-panel>
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header class="!h-auto min-h-[3rem] max-sm:!py-2">
           <mat-panel-title>
             <div class="my-auto gap-2 flex justify-between text-center py-4">
               <mat-icon
                 svgIcon="six"
-                class="my-auto flex !w-[32px] !h-[32px]"
+                class="my-auto flex !w-[48px] !h-[48px]"
               />
               <span class="m-auto text-lg">Source of Funds</span>
             </div>
@@ -341,8 +343,8 @@
             </span>
           </div>
           <mat-radio-group class="flex my-5">
-            <mat-radio-button>Yes </mat-radio-button>
-            <mat-radio-button>No </mat-radio-button>
+            <mat-radio-button>Yes</mat-radio-button>
+            <mat-radio-button>No</mat-radio-button>
           </mat-radio-group>
           <span class="font-bold">
             If ‘Yes', please identify the source(s):
@@ -363,5 +365,17 @@
         </div>
       </mat-expansion-panel>
     </div>
-  </mat-accordion></ng-template
->
+  </mat-accordion>
+  <div class="flex gap-1 mt-6 mb-4">
+    <button
+      class="w-full"
+      routerLink="/console/eKYC-management/schedule"
+      mat-flat-button
+    >
+      Continue
+    </button>
+    <button routerLink="/console" class="w-full" mat-stroked-button>
+      Back
+    </button>
+  </div>
+</ng-template>

@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatStepperModule } from '@angular/material/stepper';
+import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import {
   FormBuilder,
   FormControl,
@@ -68,17 +68,9 @@ export class EmployeeFeatureEKYCManagementScheduleComponent implements OnInit {
     console.log('s');
   }
 
-  goToNext(stepper: any, step: number) {
-    if (step === 1) {
-      this.submittedFirst = true;
-      if (this.firstFormGroup.valid) {
-        stepper.next();
-      }
-    } else if (step === 2) {
-      this.submittedSecond = true;
-      if (this.secondFormGroup.valid) {
-        stepper.next();
-      }
+  goToNextStep(stepper: MatStepper): void {
+    if (this.firstFormGroup.valid) {
+      stepper.next();
     }
   }
 }

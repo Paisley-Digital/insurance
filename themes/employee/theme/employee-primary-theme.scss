@@ -1,16 +1,21 @@
 @use '@angular/material' as mat;
 @use 'theme_theme-colors' as theme;
+
 html {
   color-scheme: light;
   @include mat.theme(
-    (
-      color: theme.$primary-palette,
-    )
+      (
+        color: theme.$primary-palette,
+      )
   );
+
   .mat-mdc-card-outlined,
   .mat-mdc-card,
   .mat-toolbar,
   .mat-drawer,
+  .mat-header-row,
+  .mat-table,
+  .mat-row,
   .mat-stepper-horizontal {
     background-color: white !important;
   }

@@ -3,3 +3,11 @@
 .mdc-text-field--outlined {
   --mdc-outlined-text-field-container-shape: 8px !important;
 }
+
+:root {
+  @include mat.divider-overrides(
+    (
+      color: #e4e4e7,
+    )
+  );
+}

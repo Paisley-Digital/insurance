@@ -5,7 +5,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-
+import {MatTabsModule} from '@angular/material/tabs';
 interface EmployerData {
   employer: string;
   lastUpdate: string;
@@ -14,6 +14,31 @@ interface EmployerData {
   enrolledMembers: number;
   issues: number;
   kycStatus: 'Verified' | 'unverified' | 'Pending';
+}
+
+interface KycData {
+  fullName: string;
+  dateOfBirth: string;
+  nationality: string;
+  gender: string;
+  enrolledSince: string;
+  renevwalDate: string;
+}
+
+interface KycDataExpire {
+  fullName: string;
+  dateOfBirth: string;
+  nationality: string;
+  gender: string;
+  remainingValidity: string;
+}
+
+interface KycDataRejected {
+  fullName: string;
+  dateOfBirth: string;
+  nationality: string;
+  gender: string;
+  rejectionReason: string;
 }
 
 type RiskLevel = 'Low' | 'Medium' | 'High';
@@ -31,7 +56,7 @@ interface EntityData {
   kycStatus: KYCStatus;
 }
 
-type View = 'upload' | 'employee' | 'entity';
+type View = 'upload' | 'employee' | 'entity' | 'employeeKyc';
 
 @Component({
   selector: 'insurance-employee-feature-employer-management',
@@ -41,7 +66,8 @@ type View = 'upload' | 'employee' | 'entity';
     MatCardModule,
     MatTableModule,
     MatIconModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTabsModule
   ],
   templateUrl: './employee-feature-employer-management.component.html',
   styleUrl: './employee-feature-employer-management.component.scss',
@@ -53,12 +79,20 @@ export class EmployeeFeatureEmployerManagementComponent implements AfterViewInit
     this._view.set('upload');
   }
 
+  backEntity(){
+    this._view.set('upload');
+  }
+
   back(){
     this._view.set('employee');
   }
 
   entity(){
     this._view.set('entity');
+  }
+
+  employee(){
+    this._view.set('employeeKyc');
   }
 
 
@@ -70,7 +104,36 @@ export class EmployeeFeatureEmployerManagementComponent implements AfterViewInit
     'enrolledMembers',
     'issues',
     'kycStatus',
-    'action'
+    'action',
+
+  ];
+
+  displayedColumnsKyc: string[] = [
+    'fullName',
+    'dateOfBirth',
+    'nationality',
+    'gender',
+    'enrolledSince',
+    'renevwalDate',
+    'action',
+  ];
+
+  displayedColumnsKycExpire: string[] = [
+    'fullName',
+    'dateOfBirth',
+    'nationality',
+    'gender',
+    'remainingValidity',
+    'action',
+  ];
+
+  displayedColumnsKycRejected: string[] = [
+    'fullName',
+    'dateOfBirth',
+    'nationality',
+    'gender',
+    'rejectionReason',
+    'action',
   ];
 
   data: EmployerData[] = [
@@ -130,6 +193,117 @@ export class EmployeeFeatureEmployerManagementComponent implements AfterViewInit
     }
   ];
 
+  dataKyc: KycData[] = [
+    {
+      fullName: 'Borzo Barardari',
+      dateOfBirth: '10/01/1982',
+      nationality: 'Luxembourg',
+      gender: 'M',
+      enrolledSince: '18/05/2020',
+      renevwalDate: '18/05/2025',
+    },
+    {
+      fullName: 'Ehsan Baradari',
+      dateOfBirth: '10/01/1982',
+      nationality: 'Luxembourg',
+      gender: 'M',
+      enrolledSince: '01/08/2015',
+      renevwalDate: '01/08/2015',
+    },
+    {
+      fullName: 'Albert Flores',
+      dateOfBirth: '9/07/8/2016',
+      nationality: 'Greensboro (NC)',
+      gender: 'M',
+      enrolledSince: '15/07/2017',
+      renevwalDate: '15/07/2017',
+    },
+    {
+      fullName: 'Annette Black',
+      dateOfBirth: '10/28/2012',
+      nationality: 'Hagen',
+      gender: 'M',
+      enrolledSince: '01/10/2019',
+      renevwalDate: '01/10/2019',
+    }
+  ];
+
+  dataKycExpire: KycDataExpire[] = [
+    {
+      fullName: 'Bahador Barardari',
+      dateOfBirth: '10/01/1982',
+      nationality: 'Luxembourg',
+      gender: 'M',
+      remainingValidity:'Residency Visa (Expiring in 10 days)',
+    },
+    {
+      fullName: 'Ehsan Baradari',
+      dateOfBirth: '10/01/1982',
+      nationality: 'Luxembourg',
+      gender: 'M',
+      remainingValidity:'Passport (Expiring in 30 days)',
+    },
+    {
+      fullName: 'Albert Flores',
+      dateOfBirth: '90/18/2016', 
+      nationality: 'Greensboro (NC)',
+      gender: 'F',              
+      remainingValidity:'Emirates ID (Expiring in 120 days)',
+    },
+    {
+      fullName: 'Adil Tom',
+      dateOfBirth: '15/28/2008',
+      nationality: 'Dubai',
+      gender: 'M',
+      remainingValidity:'Passport (Expiring in 30 days)',
+    },
+    {
+      fullName: 'Annette Black',
+      dateOfBirth: '10/28/2012',
+      nationality: 'Hagen',
+      gender: 'M',
+      remainingValidity:'Residency Visa (Expiring in 10 days)',
+    }
+  ];
+
+  dataKycRejected: KycDataRejected[] = [
+    {
+      fullName: 'Babak Barardari',
+      dateOfBirth: '10/01/1982',
+      nationality: 'Luxembourg',
+      gender: 'M',
+      rejectionReason:'Residency Visa was unclear',
+    },
+    {
+      fullName: 'Ehsan Baradari',
+      dateOfBirth: '10/01/1982',
+      nationality: 'Luxembourg',
+      gender: 'M',
+      rejectionReason:'Passport was unclear',
+    },
+    {
+      fullName: 'Albert Flores',
+      dateOfBirth: '90/18/2016', 
+      nationality: 'Greensboro (NC)',
+      gender: 'F',              
+      rejectionReason:'Emirates ID  unclear',
+    },
+    {
+      fullName: 'Adil Tom',
+      dateOfBirth: '15/28/2008',
+      nationality: 'Dubai',
+      gender: 'M',
+      rejectionReason:'Passport was unclear',
+    },
+    {
+      fullName: 'Annette Black',
+      dateOfBirth: '10/28/2012',
+      nationality: 'Hagen',
+      gender: 'M',
+      rejectionReason:'Residency Visa was unclear',
+    }
+  ];
+
   eneityData: EntityData[] = [
     {
       person: 'John Doe',
@@ -182,6 +356,12 @@ export class EmployeeFeatureEmployerManagementComponent implements AfterViewInit
   dataSource = new MatTableDataSource<EmployerData>(this.data);
 
   entityDataSource = new MatTableDataSource<EntityData>(this.eneityData);
+
+  kycDataSource = new MatTableDataSource<KycData>(this.dataKyc);
+
+  kycExpireDataSource = new MatTableDataSource<KycDataExpire>(this.dataKycExpire);
+
+  kycRejectedDataSource = new MatTableDataSource<KycDataRejected>(this.dataKycRejected);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 

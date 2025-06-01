@@ -29,6 +29,8 @@ export const svgIconNames = [
   'mail-employee',
   'signup',
   'trash-warn',
+  'expire',
+  'white-check',
   'refresh',
   'check',
   'location',
@@ -71,4 +73,7 @@ export const svgIconNames = [
   'fluent-calendar',
   'employee-kyc',
   'entity-kyc',
+  'closecircle-bulk',
+  'infocircle-bulk',
+  'tick-circle',
 ] as const;

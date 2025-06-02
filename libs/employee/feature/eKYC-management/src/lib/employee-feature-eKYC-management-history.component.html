@@ -4,8 +4,8 @@
       <h2>Reports</h2>
       <div class="grid grid-cols-4 gap-4">
         <div class="flex items-center space-x-4 p-4 rounded-2xl shadow">
-          <div class="p-3 rounded-xl bg-blue-100">
-            <mat-icon svgIcon="document"></mat-icon>
+          <div class="p-3 rounded-xl">
+            <mat-icon svgIcon="document" class="!w-[40px] !h-[40px]"></mat-icon>
           </div>
           <div class="flex flex-col">
             <h3 class="text-lg font-bold text-gray-800">Total KYC Forms</h3>
@@ -13,8 +13,8 @@
           </div>
         </div>
         <div class="flex items-center space-x-4 p-4 rounded-2xl shadow">
-          <div class="p-3 rounded-xl bg-green-100">
-            <mat-icon svgIcon="tick"></mat-icon>
+          <div class="p-3 rounded-xl">
+            <mat-icon svgIcon="tick" class="!w-[40px] !h-[40px]"></mat-icon>
           </div>
           <div class="flex flex-col">
             <h3 class="text-lg font-bold text-gray-800">Approved</h3>
@@ -22,8 +22,11 @@
           </div>
         </div>
         <div class="flex items-center space-x-4 p-4 rounded-2xl shadow">
-          <div class="p-3 rounded-xl bg-yellow-100">
-            <mat-icon svgIcon="hourglass"></mat-icon>
+          <div class="p-3 rounded-xl">
+            <mat-icon
+              svgIcon="hourglass"
+              class="!w-[40px] !h-[40px]"
+            ></mat-icon>
           </div>
           <div class="flex flex-col">
             <h3 class="text-lg font-bold text-gray-800">Pending</h3>
@@ -31,8 +34,8 @@
           </div>
         </div>
         <div class="flex items-center space-x-4 p-4 rounded-2xl shadow">
-          <div class="p-3 rounded-xl bg-red-100">
-            <mat-icon svgIcon="error"></mat-icon>
+          <div class="p-3 rounded-xl">
+            <mat-icon svgIcon="error" class="!w-[40px] !h-[40px]"></mat-icon>
           </div>
           <div class="flex flex-col">
             <h3 class="text-lg font-bold text-gray-800">Expiring Soon</h3>
@@ -139,7 +142,7 @@
   <mat-paginator
     [length]="10"
     [pageSize]="5"
-    [pageSizeOptions]="[5, 10, 25]"
+    [hidePageSize]="true"
     class="border-t mat-header-row"
   ></mat-paginator>
 </div>

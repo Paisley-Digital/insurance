@@ -71,4 +71,6 @@ export const svgIconNames = [
   'Leading',
   'fluent-calendar',
   'close',
+  'entity-KYC',
+  'employee-kyc',
 ] as const;

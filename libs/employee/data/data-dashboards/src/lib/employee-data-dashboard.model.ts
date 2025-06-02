@@ -78,3 +78,54 @@ export interface FormsEntity {
   placeOfBirth: string;
   sponsor: string;
 }
+// employer-management.model.ts
+
+export interface EmployerData {
+  employer: string;
+  lastUpdate: string;
+  numberOfForms: number;
+  totalEmployees: number;
+  enrolledMembers: number;
+  issues: number;
+  kycStatus: 'Verified' | 'unverified' | 'Pending';
+}
+
+export interface KycData {
+  fullName: string;
+  dateOfBirth: string;
+  nationality: string;
+  gender: string;
+  enrolledSince: string;
+  renevwalDate: string;
+}
+
+export interface KycDataExpire {
+  fullName: string;
+  dateOfBirth: string;
+  nationality: string;
+  gender: string;
+  remainingValidity: string;
+}
+
+export interface KycDataRejected {
+  fullName: string;
+  dateOfBirth: string;
+  nationality: string;
+  gender: string;
+  rejectionReason: string;
+}
+
+type RiskLevel = 'Low' | 'Medium' | 'High';
+type DocumentType = 'Passport' | 'National ID' | 'Driving License';
+type ActionType = 'View' | 'Review' | 'View / Review';
+type KYCStatus = 'Compliant' | 'Non-Compliant' | 'Pending';
+
+export interface EntityData {
+  person: string;
+  pep: 'Yes' | 'No';
+  riskLevel: RiskLevel;
+  documentType: DocumentType;
+  submissionData: string;
+  action: ActionType;
+  kycStatus: KYCStatus;
+}

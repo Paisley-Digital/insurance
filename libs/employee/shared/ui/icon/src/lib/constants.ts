@@ -70,4 +70,5 @@ export const svgIconNames = [
   'hourglass',
   'Leading',
   'fluent-calendar',
+  'close',
 ] as const;

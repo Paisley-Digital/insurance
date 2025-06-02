@@ -22,13 +22,34 @@
   >
     <form [formGroup]="secondFormGroup" class="flex flex-col">
       <div class="my-4 font-bold text-gray-600">Assign to</div>
-      <mat-form-field>
-        <mat-label>Contact Email</mat-label>
-        <input type="email" matInput formControlName="email" />
+      <mat-form-field class="example-form-field">
+        <mat-label>Contact emails</mat-label>
+        <mat-chip-grid #chipGrid>
+          <mat-chip-row
+            *ngFor="let ctrl of emails.controls; let i = index"
+            (removed)="removeEmail(i)"
+          >
+            {{ ctrl.value }}
+            <button matChipRemove [attr.aria-label]="'remove ' + ctrl.value">
+              <mat-icon svgIcon="close"></mat-icon>
+            </button>
+          </mat-chip-row>
+        </mat-chip-grid>
+
+        <input
+          placeholder="Contact Email"
+          [formControl]="emailInput"
+          [matChipInputFor]="chipGrid"
+          (matChipInputTokenEnd)="addEmail($event)"
+        />
+
         <mat-error>
-          <insurance-error-message [input]="secondFormGroup.get('email')" />
+          <insurance-error-message
+            [input]="emailInput"
+          ></insurance-error-message>
         </mat-error>
       </mat-form-field>
+
       <div>
         <div class="font-bold text-gray-600 my-4">Notification Type</div>
         <mat-chip-listbox formControlName="notificationType">

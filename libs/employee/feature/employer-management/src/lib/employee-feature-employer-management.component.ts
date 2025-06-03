@@ -22,6 +22,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { MatDivider } from '@angular/material/divider';
+import { MatRipple } from '@angular/material/core';
 
 interface EmployerData {
   employer: string;
@@ -89,6 +90,7 @@ type View = 'upload' | 'employee' | 'entity' | 'employeeKyc';
     MatIconButton,
     MatDivider,
     NgOptimizedImage,
+    MatRipple,
   ],
   animations: [
     trigger('detailExpand', [
@@ -113,6 +115,7 @@ export class EmployeeFeatureEmployerManagementComponent
   eneityData: EntityData[] = ENTITY_DATA;
   selectedTransactionId: number | null = null;
   selectedTransactionExpiredId: number | null = null;
+  selectedTransactionRejectedId: number | null = null;
 
   _view = signal<View>('employee');
   _isExpanded = signal(true);
@@ -200,6 +203,11 @@ export class EmployeeFeatureEmployerManagementComponent
   setSelectedTransactionExpired(id: number) {
     this.selectedTransactionExpiredId =
       this.selectedTransactionExpiredId !== id ? id : null;
+  }
+
+  setSelectedTransactionRejected(id: number) {
+    this.selectedTransactionRejectedId =
+      this.selectedTransactionRejectedId !== id ? id : null;
   }
 
   setExpandValue() {

@@ -34,6 +34,7 @@ module.exports = {
       background: 'rgba(242, 244, 247, 1)',
       red: colors.red,
       yellow: colors.yellow,
+      gray: colors.gray,
     },
   },
   plugins: [],

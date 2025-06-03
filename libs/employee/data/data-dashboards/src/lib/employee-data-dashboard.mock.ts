@@ -66,6 +66,7 @@ export const EMPLOYER_DATA: EmployerData[] = [
 
 export const EMPLOYEE_KYC_DATA: KycData[] = [
   {
+    id: 1,
     fullName: 'Borzo Barardari',
     dateOfBirth: '10/01/1982',
     nationality: 'Luxembourg',
@@ -74,6 +75,7 @@ export const EMPLOYEE_KYC_DATA: KycData[] = [
     renevwalDate: '18/05/2025',
   },
   {
+    id: 2,
     fullName: 'Ehsan Baradari',
     dateOfBirth: '10/01/1982',
     nationality: 'Luxembourg',
@@ -82,6 +84,7 @@ export const EMPLOYEE_KYC_DATA: KycData[] = [
     renevwalDate: '01/08/2015',
   },
   {
+    id: 3,
     fullName: 'Albert Flores',
     dateOfBirth: '9/07/8/2016',
     nationality: 'Greensboro (NC)',
@@ -90,6 +93,7 @@ export const EMPLOYEE_KYC_DATA: KycData[] = [
     renevwalDate: '15/07/2017',
   },
   {
+    id: 4,
     fullName: 'Annette Black',
     dateOfBirth: '10/28/2012',
     nationality: 'Hagen',
@@ -101,6 +105,7 @@ export const EMPLOYEE_KYC_DATA: KycData[] = [
 
 export const EMPLOYEE_KYC_EXPIRE: KycDataExpire[] = [
   {
+    id: 1,
     fullName: 'Bahador Barardari',
     dateOfBirth: '10/01/1982',
     nationality: 'Luxembourg',
@@ -108,6 +113,7 @@ export const EMPLOYEE_KYC_EXPIRE: KycDataExpire[] = [
     remainingValidity: 'Residency Visa (Expiring in 10 days)',
   },
   {
+    id: 2,
     fullName: 'Ehsan Baradari',
     dateOfBirth: '10/01/1982',
     nationality: 'Luxembourg',
@@ -115,6 +121,7 @@ export const EMPLOYEE_KYC_EXPIRE: KycDataExpire[] = [
     remainingValidity: 'Passport (Expiring in 30 days)',
   },
   {
+    id: 3,
     fullName: 'Albert Flores',
     dateOfBirth: '90/18/2016',
     nationality: 'Greensboro (NC)',
@@ -122,6 +129,7 @@ export const EMPLOYEE_KYC_EXPIRE: KycDataExpire[] = [
     remainingValidity: 'Emirates ID (Expiring in 120 days)',
   },
   {
+    id: 4,
     fullName: 'Adil Tom',
     dateOfBirth: '15/28/2008',
     nationality: 'Dubai',
@@ -129,6 +137,7 @@ export const EMPLOYEE_KYC_EXPIRE: KycDataExpire[] = [
     remainingValidity: 'Passport (Expiring in 30 days)',
   },
   {
+    id: 5,
     fullName: 'Annette Black',
     dateOfBirth: '10/28/2012',
     nationality: 'Hagen',
@@ -139,6 +148,7 @@ export const EMPLOYEE_KYC_EXPIRE: KycDataExpire[] = [
 
 export const EMPLOYEE_KYC_REJECTED: KycDataRejected[] = [
   {
+    id: 1,
     fullName: 'Babak Barardari',
     dateOfBirth: '10/01/1982',
     nationality: 'Luxembourg',
@@ -146,6 +156,7 @@ export const EMPLOYEE_KYC_REJECTED: KycDataRejected[] = [
     rejectionReason: 'Residency Visa was unclear',
   },
   {
+    id: 2,
     fullName: 'Ehsan Baradari',
     dateOfBirth: '10/01/1982',
     nationality: 'Luxembourg',
@@ -153,6 +164,7 @@ export const EMPLOYEE_KYC_REJECTED: KycDataRejected[] = [
     rejectionReason: 'Passport was unclear',
   },
   {
+    id: 3,
     fullName: 'Albert Flores',
     dateOfBirth: '90/18/2016',
     nationality: 'Greensboro (NC)',
@@ -160,6 +172,7 @@ export const EMPLOYEE_KYC_REJECTED: KycDataRejected[] = [
     rejectionReason: 'Emirates ID  unclear',
   },
   {
+    id: 4,
     fullName: 'Adil Tom',
     dateOfBirth: '15/28/2008',
     nationality: 'Dubai',
@@ -167,6 +180,7 @@ export const EMPLOYEE_KYC_REJECTED: KycDataRejected[] = [
     rejectionReason: 'Passport was unclear',
   },
   {
+    id: 5,
     fullName: 'Annette Black',
     dateOfBirth: '10/28/2012',
     nationality: 'Hagen',

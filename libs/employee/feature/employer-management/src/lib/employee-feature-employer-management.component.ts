@@ -1,5 +1,5 @@
 import { Component, ViewChild, AfterViewInit, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,6 +13,15 @@ import {
   EMPLOYER_DATA,
   ENTITY_DATA,
 } from '@insurance-employee-data-dashboards';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import { MatDivider } from '@angular/material/divider';
 
 interface EmployerData {
   employer: string;
@@ -76,6 +85,20 @@ type View = 'upload' | 'employee' | 'entity' | 'employeeKyc';
     MatIconModule,
     MatPaginatorModule,
     MatTabsModule,
+    MatButton,
+    MatIconButton,
+    MatDivider,
+    NgOptimizedImage,
+  ],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      ),
+    ]),
   ],
   templateUrl: './employee-feature-employer-management.component.html',
   styleUrl: './employee-feature-employer-management.component.scss',
@@ -88,8 +111,10 @@ export class EmployeeFeatureEmployerManagementComponent
   dataKycExpire: KycDataExpire[] = EMPLOYEE_KYC_EXPIRE;
   dataKycRejected: KycDataRejected[] = EMPLOYEE_KYC_REJECTED;
   eneityData: EntityData[] = ENTITY_DATA;
+  selectedTransactionId: number | null = null;
 
   _view = signal<View>('employee');
+  _isExpanded = signal(true);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -143,6 +168,10 @@ export class EmployeeFeatureEmployerManagementComponent
     this.dataKycRejected
   );
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
   nextStep() {
     this._view.set('upload');
   }
@@ -163,7 +192,11 @@ export class EmployeeFeatureEmployerManagementComponent
     this._view.set('employeeKyc');
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+  setSelectedTransaction(id: number) {
+    this.selectedTransactionId = this.selectedTransactionId !== id ? id : null;
+  }
+
+  setExpandValue() {
+    this._isExpanded.update((current) => !current);
   }
 }

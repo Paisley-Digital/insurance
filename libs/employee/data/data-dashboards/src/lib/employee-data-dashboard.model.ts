@@ -91,6 +91,7 @@ export interface EmployerData {
 }
 
 export interface KycData {
+  id: number;
   fullName: string;
   dateOfBirth: string;
   nationality: string;
@@ -100,6 +101,7 @@ export interface KycData {
 }
 
 export interface KycDataExpire {
+  id: number;
   fullName: string;
   dateOfBirth: string;
   nationality: string;
@@ -108,6 +110,7 @@ export interface KycDataExpire {
 }
 
 export interface KycDataRejected {
+  id: number;
   fullName: string;
   dateOfBirth: string;
   nationality: string;

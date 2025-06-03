@@ -112,6 +112,7 @@ export class EmployeeFeatureEmployerManagementComponent
   dataKycRejected: KycDataRejected[] = EMPLOYEE_KYC_REJECTED;
   eneityData: EntityData[] = ENTITY_DATA;
   selectedTransactionId: number | null = null;
+  selectedTransactionExpiredId: number | null = null;
 
   _view = signal<View>('employee');
   _isExpanded = signal(true);
@@ -194,6 +195,11 @@ export class EmployeeFeatureEmployerManagementComponent
 
   setSelectedTransaction(id: number) {
     this.selectedTransactionId = this.selectedTransactionId !== id ? id : null;
+  }
+
+  setSelectedTransactionExpired(id: number) {
+    this.selectedTransactionExpiredId =
+      this.selectedTransactionExpiredId !== id ? id : null;
   }
 
   setExpandValue() {

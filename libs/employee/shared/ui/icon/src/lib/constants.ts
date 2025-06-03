@@ -19,6 +19,7 @@ export const svgIconNames = [
   'user',
   'info',
   'warn',
+  'warning',
   'retry',
   'home',
   'chart',

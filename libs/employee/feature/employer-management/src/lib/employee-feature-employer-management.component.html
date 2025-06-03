@@ -478,55 +478,258 @@
           </button>
         </div>
         <table
-          mat-table
+          class="statement-table w-full !p-0"
           [dataSource]="kycExpireDataSource"
-          class="mat-elevation-z8 p-0"
+          multiTemplateDataRows
+          mat-table
         >
           <ng-container matColumnDef="fullName">
             <th mat-header-cell *matHeaderCellDef>Full Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.fullName }}</td>
+            <td mat-cell *matCellDef="let transaction">
+              <div>{{ transaction.fullName }}</div>
+            </td>
           </ng-container>
-
           <ng-container matColumnDef="dateOfBirth">
             <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.dateOfBirth }}
+            <td mat-cell *matCellDef="let transaction">
+              {{ transaction.dateOfBirth }}
             </td>
           </ng-container>
-
           <ng-container matColumnDef="nationality">
             <th mat-header-cell *matHeaderCellDef>Nationality</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.nationality }}
+            <td mat-cell *matCellDef="let transaction">
+              {{ transaction.nationality }}
             </td>
           </ng-container>
-
           <ng-container matColumnDef="gender">
             <th mat-header-cell *matHeaderCellDef>Gender</th>
-            <td mat-cell *matCellDef="let element">{{ element.gender }}</td>
+            <td mat-cell *matCellDef="let transaction">
+              {{ transaction.gender }}
+            </td>
           </ng-container>
-
           <ng-container matColumnDef="remainingValidity">
             <th mat-header-cell *matHeaderCellDef>
-              Remaining Validity
-              <mat-icon svgIcon="expire"></mat-icon>
+              <div class="flex gap-2 justify-center items-center">
+                <span> Remaining Validity </span>
+                <mat-icon svgIcon="warning" />
+              </div>
             </th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.remainingValidity }}
+            <td mat-cell *matCellDef="let transaction">
+              {{ transaction.remainingValidity }}
             </td>
           </ng-container>
-
           <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element">
-              <mat-icon svgIcon="chevron-down"></mat-icon>
+            <th class="!w-10" mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let transaction">
+              <button
+                mat-icon-button
+                (click)="
+                  $event.stopPropagation();
+                  setSelectedTransactionExpired(transaction.id)
+                "
+              >
+                <mat-icon
+                  class="transition-transform duration-150"
+                  [class.rotate-180]="
+                    selectedTransactionExpiredId === transaction.id
+                  "
+                  [svgIcon]="'chevron-down'"
+                />
+              </button>
             </td>
           </ng-container>
+          <ng-container matColumnDef="expandedDetail">
+            <td
+              mat-cell
+              *matCellDef="let transaction"
+              [attr.colspan]="displayedColumnsKyc.length"
+            >
+              <div
+                [@detailExpand]="
+                  selectedTransactionExpiredId === transaction?.id
+                    ? 'expanded'
+                    : 'collapsed'
+                "
+              >
+                <div class="pb-2 pt-4 space-y-6">
+                  <div
+                    class="flex items-start gap-6 p-4 rounded-lg border border-gray-200"
+                  >
+                    <img
+                      ngSrc="./assets/images/passport.jpg"
+                      width="122"
+                      height="70"
+                      class="relative top-10"
+                      alt="Passport"
+                    />
 
+                    <div class="grid grid-cols-2 gap-x-8 gap-y-2 w-full">
+                      <div class="flex items-center">
+                        <p class="text-[#232730] font-medium mr-2">
+                          Document Type:
+                        </p>
+                        <p class="text-[#232730] font-bold">Passport</p>
+                      </div>
+                      <div class="flex items-center">
+                        <p class="text-[#232730] font-medium mr-2">
+                          Issuing Country:
+                        </p>
+                        <p class="text-[#232730] font-bold">Luxembourg</p>
+                      </div>
+                      <div class="flex items-center">
+                        <p class="text-[#232730] font-medium mr-2">
+                          Expiry Date:
+                        </p>
+                        <p class="text-green-600 font-bold">18/05/2026</p>
+                      </div>
+                      <div class="flex items-center">
+                        <p class="text-[#232730] font-medium mr-2">
+                          ID Number:
+                        </p>
+                        <p class="text-[#232730] font-bold">KCN5C3T9</p>
+                      </div>
+                      <div class="flex items-center">
+                        <p class="text-[#232730] font-medium mr-2">
+                          Place of Birth:
+                        </p>
+                        <p class="text-[#232730] font-bold">Shiraz</p>
+                      </div>
+                      <div class="flex items-center">
+                        <p class="text-[#232730] font-medium mr-2">
+                          Holder's Signature:
+                        </p>
+                        <p class="text-[#232730] font-bold">Present</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <ng-container>
+                    <mat-divider></mat-divider>
+                    <div
+                      class="flex items-start gap-6 p-4 rounded-lg border border-gray-200"
+                    >
+                      <img
+                        ngSrc="./assets/images/visa2.jpg"
+                        width="122"
+                        height="70"
+                        class="relative top-10"
+                        alt="Passport"
+                      />
+
+                      <div class="grid grid-cols-2 gap-x-8 gap-y-2 w-full">
+                        <div class="flex items-center">
+                          <p class="text-[#232730] font-medium mr-2">
+                            Document Type:
+                          </p>
+                          <p class="text-[#232730] font-bold">-</p>
+                        </div>
+                        <div class="flex items-center">
+                          <p class="text-[#232730] font-medium mr-2">
+                            Passport Number:
+                          </p>
+                          <p class="text-[#232730] font-bold">-</p>
+                        </div>
+                        <div class="flex items-center">
+                          <p class="text-[#232730] font-medium mr-2">
+                            Expiry Date:
+                          </p>
+                          <p class="text-green-600 font-bold">-</p>
+                        </div>
+                        <div class="flex items-center">
+                          <p class="text-[#232730] font-medium mr-2">
+                            ID Number:
+                          </p>
+                          <p class="text-[#232730] font-bold">-</p>
+                        </div>
+                        <div class="flex items-center">
+                          <p class="text-[#232730] font-medium mr-2">
+                            Occupation:
+                          </p>
+                          <p class="text-[#232730] font-bold">-</p>
+                        </div>
+                        <div class="flex items-center">
+                          <p class="text-[#232730] font-medium mr-2">
+                            Sponsor/Employer:
+                          </p>
+                          <p class="text-[#232730] font-bold">-</p>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+
+                  <ng-container>
+                    <mat-divider></mat-divider>
+                    <div class="pb-2 pt-4 space-y-6">
+                      <div
+                        class="flex items-start gap-6 p-4 rounded-lg border border-gray-200"
+                      >
+                        <img
+                          ngSrc="./assets/images/visa.jpg"
+                          width="122"
+                          height="70"
+                          class="relative top-10"
+                          alt="Passport"
+                        />
+
+                        <div class="grid grid-cols-2 gap-x-8 gap-y-2 w-full">
+                          <div class="flex items-center">
+                            <p class="text-[#232730] font-medium mr-2">
+                              Document Type:
+                            </p>
+                            <p class="text-[#232730] font-bold">Emirates ID</p>
+                          </div>
+                          <div class="flex items-center">
+                            <p class="text-[#232730] font-medium mr-2">
+                              Issuing Place:
+                            </p>
+                            <p class="text-[#232730] font-bold">
+                              Not specified
+                            </p>
+                          </div>
+                          <div class="flex items-center">
+                            <p class="text-[#232730] font-medium mr-2">
+                              Expiry Date:
+                            </p>
+                            <p class="text-green-600 font-bold">18/05/2026</p>
+                          </div>
+                          <div class="flex items-center">
+                            <p class="text-[#232730] font-medium mr-2">
+                              ID Number:
+                            </p>
+                            <p class="text-[#232730] font-bold">
+                              784-1982-2605365-4
+                            </p>
+                          </div>
+                          <div class="flex items-center">
+                            <p class="text-[#232730] font-medium mr-2">
+                              Occupation:
+                            </p>
+                            <p class="text-[#232730] font-bold">
+                              Vice President
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </td>
+          </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumnsKycExpire"></tr>
           <tr
             mat-row
-            *matRowDef="let row; columns: displayedColumnsKycExpire"
+            *matRowDef="let transaction; columns: displayedColumnsKycExpire"
+            class="transaction-row"
+            [class.transaction-expanded-row]="
+              selectedTransactionExpiredId === transaction.id
+            "
+            (click)="setSelectedTransaction(transaction.id)"
+          ></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: ['expandedDetail']"
+            class="transaction-detail-row"
           ></tr>
         </table>
         <mat-paginator

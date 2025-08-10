@@ -1,6 +1,6 @@
 const { createGlobPatternsForDependencies } = require('@nx/angular/tailwind');
 const { join } = require('path');
-
+const colors = require('tailwindcss/colors');
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -28,6 +28,13 @@ module.exports = {
       padding: {
         sm: '1rem',
       },
+    },
+    colors: {
+      green: colors.green,
+      background: 'rgba(242, 244, 247, 1)',
+      red: colors.red,
+      yellow: colors.yellow,
+      gray: colors.gray,
     },
   },
   plugins: [],

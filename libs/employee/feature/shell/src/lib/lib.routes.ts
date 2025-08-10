@@ -19,9 +19,19 @@ export const shellRoutes: Route[] = [
           ),
       },
       {
-        path:'upload',
-        loadChildren: () => import('@insurance-employee-feature-upload').then(m => m.uploadRoutes)
-      }
+        path: 'eKYC-management',
+        loadChildren: () =>
+          import('@insurance-employee-feature-eKYC-management').then(
+            (m) => m.eKYCManagementRoutes
+          ),
+      },
+      {
+        path: 'employer-management',
+        loadChildren: () =>
+          import('@insurance-employee-feature-employer-management').then(
+            (m) => m.employerManagementRoutes
+          ),
+      },
     ],
   },
 ];

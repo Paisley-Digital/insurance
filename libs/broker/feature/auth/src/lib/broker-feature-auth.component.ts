@@ -65,7 +65,7 @@ export class BrokerFeatureAuthComponent {
   navigateToProduct() {
     const userName = this.loginForm.getRawValue().userName;
     const password = this.loginForm.getRawValue().password;
-    if (userName !== 'bbgroup' || password !== '123') {
+    if (userName !== 'assigned1' || password !== 'testkyc123') {
       this.loginForm.get('password')?.setErrors({ notValid: true });
       return;
     }

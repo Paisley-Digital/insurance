@@ -1,0 +1,62 @@
+<div class="flex w-full h-auto">
+  <div class="flex">
+    <mat-nav-list class="max-w-[230px] max-h[222px]">
+      <a
+        mat-list-item
+        routerLink="templates"
+        routerLinkActive="active-menu"
+        class="px-2 !h-auto !w-auto !my-3 !pb-3 transition-colors hover:bg-gray-50 flex items-start gap-3"
+      >
+        <mat-icon
+          matListItemIcon
+          svgIcon="kyc-management"
+          class="my-auto flex !w-[32px] !h-[32px]"
+        ></mat-icon>
+        <div matListItemTitle class="!font-bold">KYC Templates</div>
+        <span class="!text-gray-500 !whitespace-normal"
+          >Manage and send KYC form templates.</span
+        >
+      </a>
+      <a
+        mat-list-item
+        routerLink="schedule"
+        routerLinkActive="active-menu"
+        class="!h-auto !w-auto px-2 !my-3 !pb-3 transition-colors hover:bg-gray-50 flex items-start gap-3"
+      >
+        <mat-icon
+          matListItemIcon
+          svgIcon="schedule-notification"
+          class="my-auto flex !w-[32px] !h-[32px]"
+        ></mat-icon>
+        <div matListItemTitle class="!font-bold">Schedule Notification</div>
+        <span class="text-gray-500 !whitespace-normal"
+          >Schedule when and how to notify the employee.</span
+        >
+      </a>
+      <a
+        mat-list-item
+        routerLink="history"
+        routerLinkActive="active-menu"
+        class="!h-auto !my-3 !w-auto px-2 !pb-3 transition-colors hover:bg-gray-50 flex items-start gap-3"
+      >
+        <mat-icon
+          matListItemIcon
+          svgIcon="delivery-history"
+          class="my-auto flex !w-[32px] !h-[32px]"
+        ></mat-icon>
+        <div matListItemTitle class="!font-bold">Delivery History</div>
+        <span class="text-gray-500 !whitespace-normal h-auto"
+          >Access the history of all KYC form deliveries.</span
+        >
+      </a>
+    </mat-nav-list>
+  </div>
+
+  <div
+    class="w-0 border-l !border-gray-300 text-gray-300 border-dotted mx-6"
+    style="border-left-width: 0px; color: #0000001a"
+  ></div>
+  <div class="flex-1 w-1/2 px-8 py-4">
+    <router-outlet></router-outlet>
+  </div>
+</div>

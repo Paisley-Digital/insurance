@@ -2,16 +2,16 @@
   <mat-drawer-content class="!flex flex-col">
     <div class="relative flex flex-1 flex-wrap">
       @if ((isHandsetScreen$ | async) === false) {
-        <div class="w-1/2">
-          <div class="cover-image"></div>
-        </div>
+      <div class="w-1/2">
+        <div class="cover-image"></div>
+      </div>
       }
       <div
         class="w-full max-sm:mt-8 md:flex md:w-1/2 md:items-center md:justify-center"
       >
         <div class="flex w-full justify-center max-sm:h-full">
           <div class="w-3/4 sm:w-1/2 md:mt-12 md:w-2/3 lg:w-full p-20">
-            <ng-container [ngTemplateOutlet]="login"/>
+            <ng-container [ngTemplateOutlet]="login" />
           </div>
         </div>
       </div>
@@ -20,15 +20,14 @@
 </mat-drawer-container>
 
 <ng-template #login>
+  <div class="!w-full flex justify-center relative bottom-10">
+    <img src="./assets/images/cigna.png" class="!w-[148px] !h-[81px]" />
+  </div>
+
   <div class="flex flex-col items-center max-sm:h-full max-sm:pb-8 w-full">
-    <div class="size-1/2">
-      <mat-icon class="w-full h-full text-black" svgIcon="screenshot"/>
-    </div>
-    <h1 class="!flex justify-center !w-full mx-auto ">
-      Emaar Insurance Portal
-    </h1>
+    <h1 class="!flex justify-center !w-full mx-auto">Cigna Insurance Portal</h1>
     <div class="mt-6 w-full flex-1">
-      <ng-container [ngTemplateOutlet]="loginTemplate"/>
+      <ng-container [ngTemplateOutlet]="loginTemplate" />
     </div>
   </div>
 </ng-template>
@@ -39,9 +38,9 @@
       <div class="!mt-3 flex flex-col gap-3">
         <mat-form-field hideRequiredMarker class="!rounded-lg">
           <mat-label>Username</mat-label>
-          <input matInput formControlName="userName"/>
+          <input matInput formControlName="userName" />
           <mat-error>
-            <insurance-error-message [input]="loginForm.get('userName')"/>
+            <insurance-error-message [input]="loginForm.get('userName')" />
           </mat-error>
         </mat-form-field>
       </div>
@@ -56,9 +55,9 @@
           />
           <mat-error>
             @if (loginForm.get('password')?.hasError('notValid')) {
-              {{ errorMessage }}
+            {{ errorMessage }}
             } @else {
-              <insurance-error-message [input]="loginForm.get('password')"/>
+            <insurance-error-message [input]="loginForm.get('password')" />
             }
           </mat-error>
           <button
@@ -68,15 +67,14 @@
             (click)="isShowPassword()"
             [attr.aria-pressed]="showPassword()"
           >
-            <mat-icon [svgIcon]="showPassword() ? 'eye' : 'eye-slash'"/>
+            <mat-icon [svgIcon]="showPassword() ? 'eye' : 'eye-slash'" />
           </button>
         </mat-form-field>
       </div>
       <div class="mt-3 flex items-start justify-between">
         <mat-checkbox class="example-margin"
-        >stay signed in on this device
-        </mat-checkbox
-        >
+          >stay signed in on this device
+        </mat-checkbox>
         <a mat-button color="primary"> Forgot password? </a>
       </div>
       <div class="flex flex-col gap-6">
@@ -87,7 +85,7 @@
           [insuranceOverlaySpinner]="loading()"
         >
           Sign in
-          <mat-icon svgIcon="signup"/>
+          <mat-icon svgIcon="signup" />
         </button>
         <div
           class="flex gap-6 w-full"
@@ -96,20 +94,11 @@
           <button
             mat-stroked-button
             color="primary"
-            class="w-1/2 !rounded-lg"
+            class="!rounded-lg !w-full"
             [class.w-full]="isHandsetScreen$ | async"
           >
             Continue with UAE PASS
-            <mat-icon svgIcon="finger-prints"/>
-          </button>
-          <button
-            mat-stroked-button
-            color="primary"
-            class="w-1/2 !rounded-lg"
-            [class.w-full]="isHandsetScreen$ | async"
-          >
-            Continue with Google
-            <mat-icon svgIcon="google-login"/>
+            <mat-icon svgIcon="finger-prints" />
           </button>
         </div>
       </div>

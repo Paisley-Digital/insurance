@@ -1,0 +1,95 @@
+.status {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  display: inline-block;
+  text-transform: capitalize;
+}
+
+.status.verified,
+.status.compliant {
+  background-color: #e0f7e9;
+  color: #2e7d32;
+}
+
+.status.unverified,
+.status.non-compliant {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.status.pending {
+  background-color: #fff3e0;
+  color: #ef6c00;
+}
+
+.card-wrapper {
+  padding: 16px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+table {
+  background-color: white;
+  padding: 24px 48px;
+  width: 100%;
+  max-width: 100%;
+  border-spacing: 0;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+th.mat-header-cell,
+td.mat-cell {
+  padding: 12px;
+  text-align: center;
+}
+
+.mat-mdc-cell,
+.mat-mdc-header-cell {
+  text-align: center;
+}
+
+mat-icon {
+  vertical-align: middle;
+  color: #757575;
+  cursor: pointer;
+}
+mat-paginator {
+  background-color: white !important;
+}
+
+mat-card {
+  background-color: white;
+}
+
+.statement-table {
+  tr.transaction-detail-row {
+    height: 0;
+  }
+
+  tr.transaction-row:hover {
+    @apply bg-[inherit] #{!important};
+  }
+
+  tr.transaction-row:not(.transaction-expanded-row):hover {
+    @apply bg-[#F2F4F7] #{!important};
+  }
+
+  tr.transaction-detail-row {
+    @apply bg-[#F2F4F7] #{!important};
+  }
+
+  .transaction-row td {
+    border-bottom-width: 0;
+  }
+}
+
+.statement-key-value-grid {
+  @apply grid grid-cols-2 gap-x-8 gap-y-2;
+}
+
+.statement-key-value-grid > div {
+  @apply flex gap-2 items-start;
+}

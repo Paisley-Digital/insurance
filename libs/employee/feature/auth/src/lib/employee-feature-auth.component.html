@@ -21,9 +21,10 @@
 
 <ng-template #login>
   <div class="flex flex-col items-center max-sm:h-full max-sm:pb-8 w-full">
-    <h1 class="!flex !justify-start !w-full">
-      Emaar Employee Insurance Portal
-    </h1>
+    <div class="!w-full flex justify-center relative bottom-10">
+      <img ngSrc="./assets/images/cigna.png" width="148" height="81" />
+    </div>
+    <h1 class="text-center !w-full">Welcome to Cigna eKYC Portal</h1>
     <div class="mt-6 w-full flex-1">
       <ng-container [ngTemplateOutlet]="loginTemplate" />
     </div>
@@ -85,29 +86,6 @@
           Sign in
           <mat-icon svgIcon="signup" />
         </button>
-        <div
-          class="flex gap-6 w-full"
-          [ngClass]="(isHandsetScreen$ | async) ? 'flex flex-col w-full' : ''"
-        >
-          <button
-            mat-stroked-button
-            color="primary"
-            class="w-1/2 !rounded-lg"
-            [class.w-full]="isHandsetScreen$ | async"
-          >
-            Continue with UAE PASS
-            <mat-icon svgIcon="finger-prints" />
-          </button>
-          <button
-            mat-stroked-button
-            color="primary"
-            class="w-1/2 !rounded-lg"
-            [class.w-full]="isHandsetScreen$ | async"
-          >
-            Continue with Google
-            <mat-icon svgIcon="google-login" />
-          </button>
-        </div>
       </div>
     </div>
   </form>

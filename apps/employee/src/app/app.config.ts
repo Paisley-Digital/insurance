@@ -1,6 +1,7 @@
 import {
   ApplicationConfig,
   ENVIRONMENT_INITIALIZER,
+  importProvidersFrom,
   inject,
   LOCALE_ID,
   provideZoneChangeDetection,
@@ -15,6 +16,8 @@ import { environment } from '../environments/environment';
 import { provideSharedUtilAppCore } from '@insurance-shared-app-core';
 import { provideHttpClient } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { NgxEchartsModule } from 'ngx-echarts';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 function initializeEnvironment() {
   const localeId = inject(LOCALE_ID);
@@ -29,6 +32,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideHttpClient(),
     provideAnimationsAsync(),
+    provideNativeDateAdapter(),
     provideRouter(appRoutes),
     {
       provide: ENVIRONMENT_INITIALIZER,
@@ -37,5 +41,10 @@ export const appConfig: ApplicationConfig = {
     },
     ...MAT_DEFAULT_OPTIONS_OVERRIDES,
     provideSharedUtilAppCore(environment),
+    importProvidersFrom(
+      NgxEchartsModule.forRoot({
+        echarts: () => import('echarts'),
+      })
+    ),
   ],
 };

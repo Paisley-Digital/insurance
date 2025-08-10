@@ -1,0 +1,232 @@
+<h2 class="font-bold text-gray-600 mb-10">Recipients</h2>
+<mat-stepper [linear]="true" #stepper>
+  <mat-step [stepControl]="firstFormGroup" completed="false">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Select KYC Template</ng-template>
+      <mat-radio-group
+        class="flex flex-col mt-5"
+        formControlName="kycTemplate"
+        (change)="goToNextStep(stepper)"
+      >
+        <mat-radio-button value="kyc-group-policy">
+          Know-Your-Customer Form - Group Policies
+        </mat-radio-button>
+      </mat-radio-group>
+    </form>
+  </mat-step>
+
+  <mat-step
+    [stepControl]="secondFormGroup"
+    completed="false"
+    label="Fill out your address"
+  >
+    <form [formGroup]="secondFormGroup" class="flex flex-col">
+      <div class="my-4 font-bold text-gray-600">Assign to</div>
+      <mat-form-field class="example-form-field">
+        <mat-label>Contact emails</mat-label>
+        <mat-chip-grid #chipGrid>
+          <mat-chip-row
+            *ngFor="let ctrl of emails.controls; let i = index"
+            (removed)="removeEmail(i)"
+          >
+            {{ ctrl.value }}
+            <button matChipRemove [attr.aria-label]="'remove ' + ctrl.value">
+              <mat-icon svgIcon="close"></mat-icon>
+            </button>
+          </mat-chip-row>
+        </mat-chip-grid>
+
+        <input
+          placeholder="Contact Email"
+          [formControl]="emailInput"
+          [matChipInputFor]="chipGrid"
+          (matChipInputTokenEnd)="addEmail($event)"
+        />
+
+        <mat-error>
+          <insurance-error-message
+            [input]="emailInput"
+          ></insurance-error-message>
+        </mat-error>
+      </mat-form-field>
+
+      <div>
+        <div class="font-bold text-gray-600 my-4">Notification Type</div>
+        <mat-chip-listbox formControlName="notificationType">
+          <mat-chip-option>
+            <div class="flex items-center space-x-2">
+              <mat-icon svgIcon="email"></mat-icon>
+              <span>Email</span>
+            </div>
+          </mat-chip-option>
+          <mat-chip-option>
+            <div class="flex items-center space-x-2">
+              <mat-icon svgIcon="sms"></mat-icon>
+              <span>SMS</span>
+            </div>
+          </mat-chip-option>
+        </mat-chip-listbox>
+      </div>
+      <div class="font-bold">
+        <h3 class="text-sm font-semibold text-gray-600 mb-4">
+          Sending Settings
+        </h3>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Send On</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            placeholder="Select date"
+            formControlName="sendOn"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error>
+            <insurance-error-message [input]="secondFormGroup.get('sendOn')" />
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Repeat</mat-label>
+          <mat-select formControlName="repeat">
+            @for (option of repeatOptions; track option.label) {
+            <mat-option [value]="option.value"> {{ option.label }}</mat-option>
+            }
+          </mat-select>
+          <mat-error>
+            <insurance-error-message [input]="secondFormGroup.get('repeat')" />
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <mat-form-field appearance="outline" class="w-full mb-2">
+        <mat-label>Notes / Description</mat-label>
+        <textarea
+          matInput
+          rows="3"
+          formControlName="note"
+          maxlength="120"
+        ></textarea>
+        <mat-hint align="start" class="text-xs text-gray-400">
+          (Allowed characters:
+          {{ secondFormGroup.value.note?.length || 0 }}–120)
+        </mat-hint>
+        <mat-error>
+          <insurance-error-message [input]="secondFormGroup.get('note')" />
+        </mat-error>
+      </mat-form-field>
+      <div class="flex gap-4 mt-4">
+        <button
+          class="w-full"
+          [class.!hidden]="secondFormGroup.invalid"
+          mat-flat-button
+          matStepperNext
+        >
+          Next
+        </button>
+        <button class="w-full" mat-stroked-button matStepperPrevious>
+          Back
+        </button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step completed="false">
+    <ng-template matStepLabel>Submit</ng-template>
+    <h3>Select KYC Form</h3>
+    <div class="flex gap-2 items-center">
+      <mat-icon svgIcon="fluent-calendar" />
+      <h2>Know-Your-Customer Form- Group Policies</h2>
+    </div>
+    <div class="w-full !pb-[3rem]">
+      <div class="w-full !pb-[3rem]">
+        <h2 class="text-lg font-semibold mb-4">Assigned to Employer</h2>
+        <div class="flex w-full gap-4">
+          <div class="w-full">
+            <div class="grid grid-cols-5 w-full">
+              <div
+                class="col-span-3 bg-[#9098A70F] flex items-center ps-2 min-h-[48px] rounded-s-lg"
+              >
+                Notification Type
+              </div>
+              <div
+                class="col-span-2 bg-[#9098A70F] flex items-center justify-end pe-2 rounded-e-lg"
+              >
+                Email
+              </div>
+
+              <div class="col-span-3 flex items-center ps-2 min-h-[48px]">
+                When to Send
+              </div>
+              <div class="col-span-2 flex items-center justify-end pe-2">
+                One month before expiry
+              </div>
+
+              <div
+                class="col-span-3 bg-[#9098A70F] flex items-center ps-2 min-h-[48px] rounded-s-lg"
+              >
+                From Date
+              </div>
+              <div
+                class="col-span-2 bg-[#9098A70F] flex items-center justify-end pe-2 rounded-e-lg"
+              >
+                March 6, 2025
+              </div>
+              <div class="col-span-3 flex items-center ps-2 min-h-[48px]">
+                To Date
+              </div>
+              <div class="col-span-2 flex items-center justify-end pe-2">
+                December 12, 2025
+              </div>
+            </div>
+          </div>
+          <div class="w-full">
+            <div class="grid grid-cols-5 w-full">
+              <div
+                class="col-span-3 bg-[#9098A70F] flex items-center ps-2 min-h-[48px] rounded-s-lg"
+              >
+                Employer
+              </div>
+              <div
+                class="col-span-2 bg-[#9098A70F] flex items-center justify-end pe-2 rounded-e-lg"
+              >
+                Emaar
+              </div>
+
+              <div class="col-span-3 flex items-center ps-2 min-h-[48px]">
+                Assigned Person (Name)
+              </div>
+              <div class="col-span-2 flex items-center justify-end pe-2">
+                December 12, 2025
+              </div>
+
+              <div
+                class="col-span-3 bg-[#9098A70F] flex items-center ps-2 min-h-[48px] rounded-s-lg"
+              >
+                Assigned Person (Email)
+              </div>
+              <div
+                class="col-span-2 bg-[#9098A70F] flex items-center justify-end pe-2 rounded-e-lg"
+              >
+                March 6, 2025
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex gap-4 mt-4">
+      <button
+        class="w-full"
+        [class.!hidden]="secondFormGroup.invalid"
+        mat-flat-button
+        matStepperNext
+      >
+        Submit
+      </button>
+      <button class="w-full" mat-stroked-button matStepperPrevious>Back</button>
+    </div>
+  </mat-step>
+</mat-stepper>

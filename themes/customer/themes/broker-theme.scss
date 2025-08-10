@@ -2,10 +2,17 @@
 @use 'themes_theme-colors' as theme;
 
 html {
-  color-scheme: light dark;
+  color-scheme: light;
   @include mat.theme(
     (
       color: theme.$primary-palette,
     )
   );
+  .mat-mdc-card-outlined,
+  .mat-toolbar,
+  .mat-drawer,
+  .mat-stepper-horizontal,
+  .mat-mdc-table {
+    background-color: white !important;
+  }
 }

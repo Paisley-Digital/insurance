@@ -5,7 +5,6 @@ $path-to-images: '^./assets/images';
 
 .background-container {
   @apply h-full w-full bg-cover bg-no-repeat mb-8 #{!important};
-  background-image: url(#{$path-to-images}/background.svg);
 
   svg {
     @apply h-auto w-auto #{!important};

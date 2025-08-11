@@ -99,7 +99,7 @@ export class BrokerFeatureEkycManagementComponent {
     'name',
     'weight',
     'symbol',
-    'empty',
+    'edit',
   ]);
   displayedColumnsBoardMemberStepFour = signal<string[]>([
     'position',

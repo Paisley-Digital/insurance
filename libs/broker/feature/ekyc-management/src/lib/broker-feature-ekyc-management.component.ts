@@ -94,7 +94,13 @@ export class BrokerFeatureEkycManagementComponent {
   fileSignature = signal<File | null>(null);
   filePreviewSignature = signal<string | ArrayBuffer | null>(null);
   fileSizeSignature = signal('');
-  displayedColumns = signal<string[]>(['position', 'name', 'weight', 'symbol']);
+  displayedColumns = signal<string[]>([
+    'position',
+    'name',
+    'weight',
+    'symbol',
+    'empty',
+  ]);
   displayedColumnsBoardMemberStepFour = signal<string[]>([
     'position',
     'name',

@@ -1,3 +1,4 @@
+
 .status {
   padding: 4px 8px;
   border-radius: 12px;
@@ -37,7 +38,7 @@ table {
   max-width: 100%;
   border-spacing: 0;
   box-sizing: border-box;
-  border-radius: 8px;
+  border-radius: 12px 12px 0 0;
 }
 
 th.mat-header-cell,
@@ -61,9 +62,18 @@ mat-paginator {
   background-color: white !important;
 }
 
+
 mat-card {
-  background-color: white;
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow:
+    0 14px 32px -18px rgba(0, 0, 0, 0.18),
+    0 4px 14px -6px rgba(0, 0, 0, 0.08);
+
+  outline: 1px solid rgba(0, 0, 0, 0.04);
 }
+
 
 .statement-table {
   tr.transaction-detail-row {

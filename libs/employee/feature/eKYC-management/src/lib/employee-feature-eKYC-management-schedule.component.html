@@ -18,10 +18,10 @@
   <mat-step
     [stepControl]="secondFormGroup"
     completed="false"
-    label="Fill out your address"
+    label="Assign to Employee"
   >
     <form [formGroup]="secondFormGroup" class="flex flex-col">
-      <div class="my-4 font-bold text-gray-600">Assign to</div>
+      <div class="my-2 font-bold text-gray-600">Assign to</div>
       <mat-form-field class="example-form-field">
         <mat-label>Contact emails</mat-label>
         <mat-chip-grid #chipGrid>
@@ -67,14 +67,10 @@
           </mat-chip-option>
         </mat-chip-listbox>
       </div>
-      <div class="font-bold">
-        <h3 class="text-sm font-semibold text-gray-600 mb-4">
-          Sending Settings
-        </h3>
-      </div>
+      <div class="font-bold text-gray-600 mt-8">Sending Settings</div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Send On</mat-label>
+          <mat-label>Submitted Date</mat-label>
           <input
             matInput
             [matDatepicker]="picker"
@@ -121,7 +117,7 @@
       <div class="flex gap-4 mt-4">
         <button
           class="w-full !min-h-[48px]"
-          [class.!hidden]="secondFormGroup.invalid"
+          [disabled]="secondFormGroup.invalid"
           mat-flat-button
           matStepperNext
         >
@@ -226,6 +222,7 @@
         class="w-full !min-h-[48px]"
         [class.!hidden]="secondFormGroup.invalid"
         mat-flat-button
+        [routerLink]="'/console/eKYC-management/history'"
         matStepperNext
       >
         Submit
@@ -235,7 +232,7 @@
         mat-stroked-button
         matStepperPrevious
       >
-        Back
+        Cancel
       </button>
     </div>
   </mat-step>

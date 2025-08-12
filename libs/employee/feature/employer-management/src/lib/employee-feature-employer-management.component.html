@@ -80,7 +80,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 !gap-6 mt-8">
       <mat-card
         mat-ripple
-        class="flex-1 w-full cursor-pointer p-4 !border !border-gray-300 rounded-2xl"
+        class="flex-1 w-full cursor-pointer p-4 !border !border-gray-300 rounded-2xl !shadow-none"
         (click)="entity()"
       >
         <div class="flex flex-col items-start gap-3">
@@ -97,7 +97,7 @@
 
       <mat-card
         mat-ripple
-        class="flex-1 w-full cursor-pointer p-4 !border !border-gray-300 rounded-2xl"
+        class="flex-1 w-full cursor-pointer p-4 !border !border-gray-300 rounded-2xl !shadow-none"
         (click)="employee()"
       >
         <div class="flex flex-col items-start gap-3">
@@ -239,13 +239,13 @@
             </td>
           </ng-container>
           <ng-container matColumnDef="enrolledSince">
-            <th mat-header-cell *matHeaderCellDef>enrolledSince</th>
+            <th mat-header-cell *matHeaderCellDef>Enrolled Since</th>
             <td mat-cell *matCellDef="let transaction">
               {{ transaction.enrolledSince }}
             </td>
           </ng-container>
           <ng-container matColumnDef="renevwalDate">
-            <th mat-header-cell *matHeaderCellDef>renevwal Date</th>
+            <th mat-header-cell *matHeaderCellDef>Renewal Date</th>
             <td mat-cell *matCellDef="let transaction">
               {{ transaction.renevwalDate }}
             </td>

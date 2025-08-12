@@ -17,6 +17,7 @@
         "tsConfig": "apps/customer/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
+          "apps/customer/src/_redirects",
           {
             "input": "libs/shared/assets/src/assets",
             "glob": "**/*",

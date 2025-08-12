@@ -13,7 +13,7 @@
             <ng-container [ngTemplateOutlet]="uploadLicenseFile" />
             <ng-template matStepLabel>Company Info</ng-template>
             <h3>Basic Info</h3>
-            <div class="!flex !w-full mt-4 form-gap">
+            <div class="!flex !w-full mt-4 gap-12">
               <mat-form-field class="w-full">
                 <mat-label>Full Legal Name</mat-label>
                 <input matInput formControlName="fullLegalName" required />
@@ -34,7 +34,7 @@
               </mat-form-field>
             </div>
             <h3>Company Details</h3>
-            <div class="!flex !w-full mt-4 form-gap">
+            <div class="!flex !w-full mt-4 gap-12">
               <mat-form-field class="w-full">
                 <mat-label>Full Legal Name</mat-label>
                 <input matInput formControlName="typeOfCompany" required />
@@ -55,7 +55,7 @@
               </mat-form-field>
             </div>
             <h3>Address</h3>
-            <div class="!flex !w-full mt-4 form-gap">
+            <div class="!flex !w-full mt-4 gap-12">
               <mat-form-field class="w-full">
                 <mat-label>Registered Address</mat-label>
                 <textarea
@@ -85,7 +85,7 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div class="!w-full form-gap flex">
+            <div class="!w-full gap-12 flex">
               <mat-form-field class="w-full mt-6">
                 <mat-label>Country</mat-label>
                 <mat-select formControlName="country">
@@ -105,7 +105,7 @@
               <div class="w-full"></div>
             </div>
             <h3>Company Details</h3>
-            <div class="!flex !w-full mt-4 form-gap">
+            <div class="!flex !w-full mt-4 gap-12">
               <mat-form-field class="w-full">
                 <mat-label>Trade License Number</mat-label>
                 <input matInput formControlName="tradeLicenseNumber" required />
@@ -125,7 +125,7 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div class="!w-full form-gap flex">
+            <div class="!w-full gap-12 flex">
               <mat-form-field class="w-full mt-6">
                 <mat-label>License Expiry Date</mat-label>
                 <input
@@ -148,7 +148,7 @@
               <div class="w-full"></div>
             </div>
           </form>
-          <div class="w-full flex form-gap mt-4">
+          <div class="w-full flex form-gap mt-8">
             <button class="w-2/3" mat-flat-button matStepperNext>
               Continue
             </button>
@@ -172,7 +172,7 @@
               <mat-radio-button value="1">Yes</mat-radio-button>
               <mat-radio-button value="2" class="ms-8">No</mat-radio-button>
             </mat-radio-group>
-            <div class="!flex !w-full mt-4 form-gap">
+            <div class="!flex !w-full mt-4 gap-12">
               <mat-form-field class="w-full">
                 <mat-label>Stock Exchange / Authority Name</mat-label>
                 <input matInput formControlName="authorityName" required />
@@ -205,7 +205,7 @@
               <mat-icon svgIcon="add-2" />
               Add shareholder
             </button>
-            <div class="flex w-full gap-4 mt-8">
+            <div class="flex w-full gap-12 mt-8">
               <button mat-flat-button matStepperNext class="w-1/2">
                 Continue
               </button>
@@ -240,7 +240,7 @@
         <mat-step [completed]="false" [stepControl]="shareholdersForm">
           <ng-template matStepLabel>PEPs & Compliance</ng-template>
           <h3>
-            do any board members, senior managers, or shareholders hold a pEP
+            do any board members, senior managers, or shareholders hold a PEP
             status?
           </h3>
           <mat-radio-group aria-label="Select an option">
@@ -291,7 +291,7 @@
               <ng-container [ngTemplateOutlet]="uploadFileFund" />
             </div>
           </form>
-          <div class="flex w-full gap-4 mt-8">
+          <div class="flex w-full gap-4 mt-[3rem]">
             <button mat-flat-button matStepperNext class="w-1/2">
               Continue
             </button>
@@ -303,9 +303,9 @@
         <mat-step [completed]="false">
           <ng-template matStepLabel>Declaration</ng-template>
           <div
-            class="bg-background p-4 rounded-lg mt-3 border-solid border-[#0000001A]"
+            class="bg-gray-50 border-2 p-4 rounded-lg mt-3 border-solid border-[#0000001A]"
           >
-            <h3>declaration</h3>
+            <h3>Declaration</h3>
             <p>
               I hereby declare that all information supplied and documents
               submitted are true and accurate and that all the relevant and
@@ -314,7 +314,7 @@
             </p>
           </div>
           <form [formGroup]="declarationForm">
-            <div class="!flex !w-full !mt-6 form-gap">
+            <div class="!flex !w-full !mt-12 gap-12">
               <mat-form-field class="w-full">
                 <mat-label>Authorized Signatory</mat-label>
                 <input matInput formControlName="signatory" required />
@@ -334,7 +334,7 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div class="!flex !w-full mt-4 form-gap">
+            <div class="!flex !w-full mt-4 gap-12">
               <mat-form-field class="w-full">
                 <mat-label>Company Name</mat-label>
                 <input matInput formControlName="companyName" required />
@@ -365,11 +365,11 @@
               </mat-form-field>
             </div>
             <h3>Upload Company Stamp / Signature</h3>
-            <div class="grid grid-cols-2 form-gap">
+            <div class="grid grid-cols-2 gap-12">
               <ng-container [ngTemplateOutlet]="uploadStampFile" />
               <ng-container [ngTemplateOutlet]="uploadSignatureFile" />
             </div>
-            <div class="flex w-full gap-4 mt-8">
+            <div class="flex w-full gap-12 mt-[3rem]">
               <button
                 mat-flat-button
                 type="submit"
@@ -519,6 +519,15 @@
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <div class="flex gap-2">
+          <button mat-icon-button><mat-icon svgIcon="edit" /></button>
+        </div>
+      </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns()"></tr>
   </table>
@@ -564,8 +573,10 @@
 
     <div class="flex flex-col justify-center items-center gap-3">
       <span class="!font-semibold">Drag & Drop your file here</span>
-      <span class="font-light"> Accepted formats: JPG, PNG, PDF.</span>
-      <span class="font-light"> Max file size: 5MB.</span>
+      <span class="font-light text-gray-400 relative top-2">
+        Accepted formats: JPG, PNG, PDF.</span
+      >
+      <span class="font-light text-gray-400"> Max file size: 5MB.</span>
     </div>
 
     <div class="flex flex-col gap-6 justify-center items-center">
@@ -625,8 +636,10 @@
     <div class="flex flex-col items-center justify-center h-full w-full">
       <div class="flex flex-col justify-center items-center gap-3">
         <span class="!font-semibold">Drag & Drop your file here</span>
-        <span class="font-light"> Accepted formats: JPG, PNG, PDF.</span>
-        <span class="font-light"> Max file size: 5MB.</span>
+        <span class="font-light text-gray-400 relative top-2">
+          Accepted formats: JPG, PNG, PDF.</span
+        >
+        <span class="font-light text-gray-400"> Max file size: 5MB.</span>
       </div>
 
       <div class="flex flex-col gap-6 justify-center items-center">
@@ -687,8 +700,10 @@
     <div class="flex items-center justify-center flex-col h-full w-full">
       <div class="flex flex-col justify-center items-center gap-3">
         <span class="!font-semibold">Stamp</span>
-        <span class="font-light"> Accepted formats: JPG, PNG, PDF.</span>
-        <span class="font-light"> Max file size: 5MB.</span>
+        <span class="font-light text-gray-400 relative top-2">
+          Accepted formats: JPG, PNG, PDF.</span
+        >
+        <span class="font-light text-gray-400"> Max file size: 5MB.</span>
       </div>
 
       <div class="flex flex-col gap-6 justify-center items-center">
@@ -753,8 +768,10 @@
     <div class="flex flex-col items-center justify-center h-full w-full">
       <div class="flex flex-col justify-center items-center gap-3">
         <span class="!font-semibold">Signature</span>
-        <span class="font-light"> Accepted formats: JPG, PNG, PDF.</span>
-        <span class="font-light"> Max file size: 5MB.</span>
+        <span class="font-light text-gray-400 relative top-2">
+          Accepted formats: JPG, PNG, PDF.</span
+        >
+        <span class="font-light text-gray-400"> Max file size: 5MB.</span>
       </div>
 
       <div class="flex flex-col gap-6 justify-center items-center">

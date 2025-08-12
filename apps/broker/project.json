@@ -17,6 +17,7 @@
         "tsConfig": "apps/broker/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
+          "apps/broker/src/_redirects",
           {
             "input": "libs/shared/assets/src/assets",
             "glob": "**/*",

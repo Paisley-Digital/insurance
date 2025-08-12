@@ -14,6 +14,7 @@ export const svgIconNames = [
   'cigna',
   'cross',
   'fingerprint',
+  'finger-print-blue',
   'download',
   'edit',
   'chevron-down',

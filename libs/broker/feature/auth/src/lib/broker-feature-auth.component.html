@@ -71,14 +71,22 @@
         <a mat-button color="primary"> Forgot password? </a>
       </div>
       <div class="flex flex-col gap-6">
-        <button mat-flat-button class="mt-8" (click)="navigateToProduct()">
+        <button
+          mat-flat-button
+          class="mt-8 !h-14"
+          (click)="navigateToProduct()"
+        >
           Sign in
           <mat-icon svgIcon="signup" />
         </button>
         <div class="flex gap-6 w-full">
-          <button mat-stroked-button color="primary" class="w-full !rounded-lg">
+          <button
+            mat-stroked-button
+            color="primary"
+            class="w-full !rounded-lg !h-14"
+          >
             Continue with UAE PASS
-            <mat-icon svgIcon="finger-prints" />
+            <mat-icon svgIcon="finger-print-blue" />
           </button>
         </div>
       </div>

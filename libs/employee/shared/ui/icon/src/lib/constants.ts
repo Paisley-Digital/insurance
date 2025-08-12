@@ -77,4 +77,5 @@ export const svgIconNames = [
   'close',
   'entity-KYC',
   'employee-kyc',
+  'warn-info',
 ] as const;

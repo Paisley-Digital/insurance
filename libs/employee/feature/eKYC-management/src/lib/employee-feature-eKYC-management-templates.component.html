@@ -368,13 +368,17 @@
   </mat-accordion>
   <div class="flex gap-4 !my-10">
     <button
-      class="w-full"
+      class="w-full !min-h-[48px]"
       routerLink="/console/eKYC-management/schedule"
       mat-flat-button
     >
       Continue
     </button>
-    <button (click)="changeViewToBack()" class="w-full" mat-stroked-button>
+    <button
+      (click)="changeViewToBack()"
+      class="w-full !min-h-[48px]"
+      mat-stroked-button
+    >
       Back
     </button>
   </div>

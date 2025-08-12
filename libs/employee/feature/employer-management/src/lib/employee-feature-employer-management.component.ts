@@ -1,4 +1,12 @@
-import { Component, ViewChild, AfterViewInit, signal } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  AfterViewInit,
+  signal,
+  TemplateRef,
+  viewChild,
+  inject,
+} from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
@@ -7,6 +15,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import {
+  COLLECTED_DATA,
   EMPLOYEE_KYC_DATA,
   EMPLOYEE_KYC_EXPIRE,
   EMPLOYEE_KYC_REJECTED,
@@ -23,6 +32,17 @@ import {
 } from '@angular/animations';
 import { MatDivider } from '@angular/material/divider';
 import { MatRipple } from '@angular/material/core';
+import { MatChipListbox, MatChipsModule } from '@angular/material/chips';
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInput } from '@angular/material/input';
 
 interface EmployerData {
   employer: string;
@@ -74,7 +94,12 @@ interface EntityData {
   kycStatus: KYCStatus;
 }
 
-type View = 'upload' | 'employee' | 'entity' | 'employeeKyc';
+type View =
+  | 'upload'
+  | 'employee'
+  | 'entity'
+  | 'employeeKyc'
+  | 'collectedInsurance';
 
 @Component({
   selector: 'insurance-employee-feature-employer-management',
@@ -91,6 +116,15 @@ type View = 'upload' | 'employee' | 'entity' | 'employeeKyc';
     MatDivider,
     NgOptimizedImage,
     MatRipple,
+    MatChipListbox,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatChipsModule,
+    MatInput,
   ],
   animations: [
     trigger('detailExpand', [
@@ -108,11 +142,13 @@ type View = 'upload' | 'employee' | 'entity' | 'employeeKyc';
 export class EmployeeFeatureEmployerManagementComponent
   implements AfterViewInit
 {
+  readonly dialog = inject(MatDialog);
   data: EmployerData[] = EMPLOYER_DATA;
   dataKyc: KycData[] = EMPLOYEE_KYC_DATA;
   dataKycExpire: KycDataExpire[] = EMPLOYEE_KYC_EXPIRE;
   dataKycRejected: KycDataRejected[] = EMPLOYEE_KYC_REJECTED;
   eneityData: EntityData[] = ENTITY_DATA;
+  collectedData = COLLECTED_DATA;
   selectedTransactionId: number | null = null;
   selectedTransactionExpiredId: number | null = null;
   selectedTransactionRejectedId: number | null = null;
@@ -121,6 +157,8 @@ export class EmployeeFeatureEmployerManagementComponent
   _isExpanded = signal(true);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  downloadDialog = viewChild<TemplateRef<unknown>>('downloadDialog');
 
   displayedColumns: string[] = [
     'employer',
@@ -131,6 +169,18 @@ export class EmployeeFeatureEmployerManagementComponent
     'issues',
     'kycStatus',
     'action',
+  ];
+
+  displayedColumnsCollection: string[] = [
+    'employer',
+    'lastUpdate',
+    'numberOfForms',
+    'totalEmployees',
+    'enrolledMembers',
+    'issues',
+    'kycStatus',
+    'id',
+    'passport',
   ];
 
   displayedColumnsKyc: string[] = [
@@ -208,6 +258,16 @@ export class EmployeeFeatureEmployerManagementComponent
   setSelectedTransactionRejected(id: number) {
     this.selectedTransactionRejectedId =
       this.selectedTransactionRejectedId !== id ? id : null;
+  }
+
+  changeViewToCollection() {
+    this._view.set('collectedInsurance');
+  }
+
+  openDialog() {
+    this.dialog.open(this.downloadDialog()!, {
+      width: '480px',
+    });
   }
 
   setExpandValue() {

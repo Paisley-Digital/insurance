@@ -1102,13 +1102,16 @@
   <div class="!p-9">
     <div class="flex items-center justify-between mb-4">
       <div class="text-lg font-semibold flex items-center gap-2">
-        <mat-icon svgIcon="circle" (click)="backEntity()"></mat-icon>
+        <mat-icon svgIcon="circle" (click)="backList()"></mat-icon>
         Emaar Employee Insurance List
       </div>
     </div>
     <div class="flex justify-start mb-4 mt-4">
       <button mat-flat-button (click)="openDialog()">
-        <mat-icon style="height: auto; width: 16px" svgIcon="cross"></mat-icon>
+        <mat-icon
+          style="height: auto; width: 16px"
+          svgIcon="download"
+        ></mat-icon>
         <span> Download Excel </span>
       </button>
     </div>

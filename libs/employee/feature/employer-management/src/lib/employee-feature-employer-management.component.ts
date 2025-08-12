@@ -270,6 +270,10 @@ export class EmployeeFeatureEmployerManagementComponent
     });
   }
 
+  backList() {
+    this._view.set('employeeKyc');
+  }
+
   setExpandValue() {
     this._isExpanded.update((current) => !current);
   }

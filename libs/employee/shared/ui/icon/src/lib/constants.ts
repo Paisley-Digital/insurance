@@ -13,6 +13,7 @@ export const svgIconNames = [
   'trash2',
   'cigna',
   'cross',
+  'fingerprint',
   'edit',
   'chevron-down',
   'tick',

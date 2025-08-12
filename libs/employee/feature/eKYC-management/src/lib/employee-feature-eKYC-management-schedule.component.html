@@ -120,14 +120,18 @@
       </mat-form-field>
       <div class="flex gap-4 mt-4">
         <button
-          class="w-full"
+          class="w-full !min-h-[48px]"
           [class.!hidden]="secondFormGroup.invalid"
           mat-flat-button
           matStepperNext
         >
           Next
         </button>
-        <button class="w-full" mat-stroked-button matStepperPrevious>
+        <button
+          class="w-full !min-h-[48px]"
+          mat-stroked-button
+          matStepperPrevious
+        >
           Back
         </button>
       </div>
@@ -219,14 +223,20 @@
     </div>
     <div class="flex gap-4 mt-4">
       <button
-        class="w-full"
+        class="w-full !min-h-[48px]"
         [class.!hidden]="secondFormGroup.invalid"
         mat-flat-button
         matStepperNext
       >
         Submit
       </button>
-      <button class="w-full" mat-stroked-button matStepperPrevious>Back</button>
+      <button
+        class="w-full !min-h-[48px]"
+        mat-stroked-button
+        matStepperPrevious
+      >
+        Back
+      </button>
     </div>
   </mat-step>
 </mat-stepper>

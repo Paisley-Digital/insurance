@@ -1,33 +1,22 @@
 <div class="flex flex-col gap-6 p-9">
-  <div class="grid grid-cols-3 gap-6">
-    <mat-card>
+  <div class="flex !gap-4">
+    <mat-card class="w-full h-full max-h-[121px]">
       <mat-card-content>
         <div class="flex flex-col">
           <div class="w-full flex justify-between">
-            <h4>Total Employer</h4>
-            <h1 class="text-green-600">32</h1>
+            <h4 class="!font-bold text-2xl">Total Employer</h4>
+            <h1 class="text-green-800">32</h1>
           </div>
           <span>Number of registered Employer on the portal.</span>
         </div>
       </mat-card-content>
     </mat-card>
-    <mat-card>
+    <mat-card class="w-full h-full max-h-[121px]">
       <mat-card-content>
         <div class="flex flex-col gap-x-3">
           <div class="w-full flex justify-between">
-            <h4>Total Employees</h4>
-            <h1 class="text-green-600">76</h1>
-          </div>
-          <span>Number of employees added by customers.</span>
-        </div>
-      </mat-card-content>
-    </mat-card>
-    <mat-card>
-      <mat-card-content>
-        <div class="flex flex-col gap-x-3">
-          <div class="w-full flex justify-between">
-            <h4>Enrolled Members</h4>
-            <h1 class="text-green-600">85</h1>
+            <h1 class="!font-bold text-2xl">Enrolled Members</h1>
+            <h1 class="text-green-800">21,205</h1>
           </div>
           <span>
             Individuals registered in an insurance plan with active coverage.
@@ -41,13 +30,13 @@
       <mat-card-content>
         <div class="flex justify-between mx-6">
           <div class="flex text-center flex-col">
-            <h1 class="text-green-600">17,756</h1>
+            <h1 class="text-green-800 !font-bold !text-6xl">17,756</h1>
             <h3>Compliant Submissions</h3>
             <p>KYC records fully submitted and verified as compliant</p>
           </div>
           <mat-divider vertical class="!h-[120px] relative top-9"></mat-divider>
           <div class="flex text-center flex-col">
-            <h1 class="text-green-600">2,559</h1>
+            <h1 class="text-green-800 !font-bold !text-6xl">2,559</h1>
             <h3>Non-Compliant Submissions</h3>
             <p>
               Records flagged due to risk score, PEP match, or incomplete KYC
@@ -55,13 +44,168 @@
           </div>
           <mat-divider vertical class="!h-[120px] relative top-9"></mat-divider>
           <div class="flex text-center flex-col">
-            <h1 class="text-green-600">890</h1>
+            <h1 class="text-green-800 !font-bold !text-6xl">890</h1>
             <h3>Expiring Documents (Next 6 Months)</h3>
             <p>KYC documents flagged for upcoming expiry</p>
           </div>
         </div>
       </mat-card-content>
     </mat-card>
+  </div>
+
+  <div class="w-full flex gap-6">
+    <div class="w-1/2 !min-h-[367px] !min-w-[532px]">
+      <mat-card class="w-full h-full">
+        <mat-card-content>
+          <h1 class="text-center font-bold text-2xl mb-3">
+            KYC Data Completeness Overview
+          </h1>
+
+          <div class="flex items-center justify-center !gap-12">
+            <div class="flex flex-col items-center justify-center">
+              <div class="w-[240px] h-[240px]">
+                <div
+                  echarts
+                  [options]="kycDonutOption"
+                  [theme]="chartTheme"
+                  class="w-full h-full"
+                ></div>
+              </div>
+              <div class="text-center font-bold text-xl mt-3">
+                KYC Fields Completed
+              </div>
+            </div>
+
+            <div
+              class="w-0 border-l !border-gray-300 text-gray-300 border-dotted mx-6 !h-[200px]"
+              style="border-left-width: 0px; color: #0000001a"
+            ></div>
+            <div class="flex flex-col items-start">
+              <div class="flex mx-auto justify-center flex-col">
+                <div class="flex items-center gap-2">
+                  <mat-icon svgIcon="warn-info" class="w-[25px] h-[24px]" />
+                  <h1 class="font-bold text-4xl leading-none">1,763</h1>
+                </div>
+                <div class="mt-1 text-xl font-bold">
+                  Critical Fields<br />Missing
+                </div>
+              </div>
+
+              <div class="w-[200px] h-[68px] mt-3">
+                <div
+                  echarts
+                  [options]="kycSparkOption"
+                  [theme]="chartTheme"
+                  class="w-full h-full"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="w-1/2 !min-h-[367px] !min-w-[532px]">
+      <mat-card class="w-full h-full">
+        <mat-card-content>
+          <h1 class="text-center font-bold text-2xl">
+            Policy Coverage & Expiry Breakdown
+          </h1>
+          <div class="flex items-center justify-center gap-8">
+            <div class="w-[240px] h-[240px]">
+              <div
+                echarts
+                [options]="policyOption"
+                [theme]="chartTheme"
+                class="w-full h-full"
+              ></div>
+            </div>
+
+            <div class="flex flex-col gap-4">
+              <div class="flex items-center gap-2">
+                <span
+                  class="w-3 h-3 rounded-full"
+                  style="background: #2f7f6c"
+                ></span>
+                <div>
+                  <div class="text-gray-800 font-medium">Active Policies</div>
+                  <div class="text-gray-500 text-sm">
+                    {{ policyActive | number }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <span
+                  class="w-3 h-3 rounded-full"
+                  style="background: #e38c55"
+                ></span>
+                <div>
+                  <div class="text-gray-800 font-medium">
+                    Expiring In &lt; 6Months
+                  </div>
+                  <div class="text-gray-500 text-sm">
+                    {{ policyExpiring | number }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="w-full flex gap-6">
+    <div class="w-1/2 !min-h-[367px] !min-w-[532px]">
+      <mat-card class="w-full h-full">
+        <mat-card-content>
+          <h1 class="text-center font-bold text-2xl">
+            KYC Data Completeness Overview
+          </h1>
+
+          <div class="flex !gap-40 mb-2 justify-center">
+            <div class="text-center">
+              <div class="text-3xl !font-black">{{ tatAvg }}</div>
+              <div class="font-bold text-xl">Avg. TAT (Days)</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl !font-black">
+                {{ policiesProcessed | number }}
+              </div>
+              <div class="font-bold text-xl">
+                Policies Processed<br />This Month
+              </div>
+            </div>
+          </div>
+
+          <div class="w-full h-[220px]">
+            <div
+              echarts
+              [options]="tatLineOption"
+              [theme]="chartTheme"
+              class="w-full h-full"
+            ></div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="w-1/2 !min-h-[367px] !min-w-[532px]">
+      <mat-card class="w-full h-full">
+        <mat-card-content>
+          <h1 class="text-center font-bold text-2xl">Risk Data</h1>
+          <div class="w-full h-[260px]">
+            <div
+              echarts
+              [options]="riskOption"
+              [theme]="chartTheme"
+              class="w-full h-full"
+            ></div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
   <div>
     <mat-card>
@@ -85,6 +229,7 @@
       </mat-card-content>
     </mat-card>
   </div>
+
   <div class="w-full flex gap-6">
     <div class="w-2/3">
       <mat-card>

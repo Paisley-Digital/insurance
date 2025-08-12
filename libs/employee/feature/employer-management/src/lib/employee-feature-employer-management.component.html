@@ -8,6 +8,8 @@
     <ng-container [ngTemplateOutlet]="entityTemplate" />
     } @else if (_view() === 'employeeKyc') {
     <ng-container [ngTemplateOutlet]="employeeKycTemplate" />
+    } @else if (_view() === 'collectedInsurance'){
+    <ng-container [ngTemplateOutlet]="collectionInsuranceTemplate" />
     }
   </mat-card>
 </div>
@@ -198,7 +200,7 @@
           </span>
         </ng-template>
         <div class="flex justify-start mb-4 mt-4">
-          <button mat-flat-button>
+          <button mat-flat-button (click)="changeViewToCollection()">
             <mat-icon
               style="height: auto; width: 16px"
               svgIcon="cross"
@@ -279,9 +281,9 @@
                     : 'collapsed'
                 "
               >
-                <div class="pb-2 pt-4 space-y-6">
+                <div>
                   <div
-                    class="flex items-start gap-6 p-4 rounded-lg border border-gray-200"
+                    class="flex items-start gap-6 rounded-lg border border-gray-200"
                   >
                     <img
                       ngSrc="./assets/images/passport.jpg"
@@ -478,7 +480,7 @@
           </span>
         </ng-template>
         <div class="flex justify-start mb-4 mt-4">
-          <button mat-flat-button>
+          <button mat-flat-button (click)="changeViewToCollection()">
             <mat-icon class="h-auto w-4" svgIcon="cross"></mat-icon>
             <span> CROSS CHECKING & EXPORT </span>
           </button>
@@ -557,9 +559,9 @@
                     : 'collapsed'
                 "
               >
-                <div class="pb-2 pt-4 space-y-6">
+                <div>
                   <div
-                    class="flex items-start gap-6 p-4 rounded-lg border border-gray-200"
+                    class="flex items-start gap-6 rounded-lg border border-gray-200"
                   >
                     <img
                       ngSrc="./assets/images/passport.jpg"
@@ -760,7 +762,7 @@
         </ng-template>
 
         <div class="flex justify-start mb-4 mt-4">
-          <button mat-flat-button>
+          <button mat-flat-button (click)="changeViewToCollection()">
             <mat-icon class="h-auto w-4" svgIcon="cross"></mat-icon>
             <span> CROSS CHECKING & EXPORT </span>
           </button>
@@ -835,9 +837,9 @@
                     : 'collapsed'
                 "
               >
-                <div class="pb-2 pt-4 space-y-6">
+                <div>
                   <div
-                    class="flex items-start gap-6 p-4 rounded-lg border border-gray-200"
+                    class="flex items-start gap-6 rounded-lg border border-gray-200"
                   >
                     <img
                       ngSrc="./assets/images/passport.jpg"
@@ -890,11 +892,11 @@
                   <ng-container>
                     <mat-divider></mat-divider>
                     <div
-                      class="flex items-start gap-6 p-4 rounded-lg border border-gray-200"
+                      class="flex items-start gap-6 rounded-lg border border-gray-200"
                     >
                       <div class="relative right-8">
                         <img
-                          ngSrc="./assets/images/rejected.jpg"
+                          ngSrc="./assets/images/filter.svg"
                           width="122"
                           height="70"
                           class="relative top-10"
@@ -908,7 +910,7 @@
                         />
                       </div>
                       <div
-                        class="grid grid-cols-2 gap-x-8 gap-y-2 w-full relative right-10"
+                        class="grid grid-cols-2 gap-x-8 gap-y-2 w-full relative right-[2.5rem]"
                       >
                         <div class="flex items-center">
                           <p class="text-[#232730] font-medium mr-2">
@@ -952,9 +954,9 @@
 
                   <ng-container>
                     <mat-divider></mat-divider>
-                    <div class="pb-2 pt-4 space-y-6">
+                    <div>
                       <div
-                        class="flex items-start gap-6 p-4 rounded-lg border border-gray-200"
+                        class="flex items-start gap-6 rounded-lg border border-gray-200"
                       >
                         <img
                           ngSrc="./assets/images/visa.jpg"
@@ -1094,4 +1096,98 @@
 
     <mat-paginator [hidePageSize]="true" showFirstLastButtons></mat-paginator> -->
   </div>
+</ng-template>
+
+<ng-template #collectionInsuranceTemplate>
+  <div class="!p-9">
+    <div class="flex items-center justify-between mb-4">
+      <div class="text-lg font-semibold flex items-center gap-2">
+        <mat-icon svgIcon="circle" (click)="backList()"></mat-icon>
+        Emaar Employee Insurance List
+      </div>
+    </div>
+    <div class="flex justify-start mb-4 mt-4">
+      <button mat-flat-button (click)="openDialog()">
+        <mat-icon
+          style="height: auto; width: 16px"
+          svgIcon="download"
+        ></mat-icon>
+        <span> Download Excel </span>
+      </button>
+    </div>
+    <table
+      mat-table
+      [dataSource]="collectedData"
+      class="statement-table w-full !p-0"
+    >
+      <ng-container matColumnDef="employer">
+        <th mat-header-cell *matHeaderCellDef>Full Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.person }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastUpdate">
+        <th mat-header-cell *matHeaderCellDef>Date of Birth</th>
+        <td mat-cell *matCellDef="let element">{{ element.submissionData }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="numberOfForms">
+        <th mat-header-cell *matHeaderCellDef>Age at 31-Dec-24</th>
+        <td mat-cell *matCellDef="let element">{{ element.age }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="totalEmployees">
+        <th mat-header-cell *matHeaderCellDef>Issuing Country</th>
+        <td mat-cell *matCellDef="let element">{{ element.country }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="enrolledMembers">
+        <th mat-header-cell *matHeaderCellDef>Nationality</th>
+        <td mat-cell *matCellDef="let element">{{ element.nationality }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="issues">
+        <th mat-header-cell *matHeaderCellDef>Emirate of issue</th>
+        <td mat-cell *matCellDef="let element">{{ element.issue }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="kycStatus">
+        <th mat-header-cell *matHeaderCellDef>Gender</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.gender }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID Number</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.id }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="passport">
+        <th mat-header-cell *matHeaderCellDef>Passport</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.passport }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsCollection"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumnsCollection"
+      ></tr>
+    </table>
+  </div>
+</ng-template>
+
+<ng-template #downloadDialog>
+  <h1 mat-dialog-title class="!text-center font-bold">
+    Your Excel file is ready!
+  </h1>
+  <mat-dialog-content>
+    <p class="!text-center">Click the button below to download and open it.</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center" class="!my-4">
+    <button mat-flat-button mat-dialog-close>Open Excel File</button>
+  </mat-dialog-actions>
 </ng-template>

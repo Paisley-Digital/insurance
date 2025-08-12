@@ -269,42 +269,38 @@ export class DashboardComponent implements OnInit {
   };
 
   optionThree = {
+    color: ['#5A9C8B', '#9EBFEA', '#CE7772'],
     tooltip: {
       trigger: 'item',
+      formatter: '{b}<br/>{d} %',
+      confine: true,
     },
     legend: {
-      bottom: '5%',
+      bottom: '2%',
       left: 'center',
+      icon: 'circle',
     },
+
     series: [
       {
-        name: 'Access From',
+        name: 'Document Status',
         type: 'pie',
-        radius: ['40%', '70%'],
-        avoidLabelOverlap: false,
+        radius: ['50%', '78%'],
+        startAngle: 90,
+        clockwise: true,
+        avoidLabelOverlap: true,
+        hoverAnimation: true,
         itemStyle: {
-          borderRadius: 10,
+          borderRadius: 12,
           borderColor: '#fff',
-          borderWidth: 2,
+          borderWidth: 6,
         },
-        label: {
-          show: false,
-          position: 'center',
-        },
-        emphasis: {
-          label: {
-            show: true,
-            fontSize: 40,
-            fontWeight: 'bold',
-          },
-        },
-        labelLine: {
-          show: false,
-        },
+        label: { show: false },
+        labelLine: { show: false },
         data: [
-          { value: 300, name: 'Compliant' },
-          { value: 580, name: 'Expiring Documents' },
-          { value: 484, name: 'Non-Compliant' },
+          { value: 73, name: 'Verified Documents' },
+          { value: 5, name: 'Expiring Soon' },
+          { value: 22, name: 'Rejected' },
         ],
       },
     ],

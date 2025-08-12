@@ -18,6 +18,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButton } from '@angular/material/button';
 import { ErrorMessageComponent } from '@shared-ui-input-validator';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'insurance-employee-feature-e-kyc-management-schedule',
@@ -34,6 +35,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
     MatSelectModule,
     MatButton,
     ErrorMessageComponent,
+    RouterLink,
   ],
   templateUrl: './employee-feature-eKYC-management-schedule.component.html',
   styleUrl: './employee-feature-eKYC-management-schedule.component.scss',

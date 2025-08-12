@@ -245,8 +245,8 @@ export const country = [
 ];
 
 export const ELEMENT_DATA = [
-  { type: 'Entity', name: 'John Stewart', weight: 25, nationality: 'Britain' },
-  { type: '_', name: 'Entity', weight: 25, nationality: 'Put Germany' },
+  { type: '-', name: '-', weight: '-', nationality: '-' },
+  { type: '_', name: '- ', weight: '-', nationality: '-' },
 ];
 
 export const ELEMENT_DATA_Board_Members = [

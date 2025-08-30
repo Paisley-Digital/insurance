@@ -1,1 +1,25 @@
-<p>employee-management-detail works!</p>
+<div class="!p-9 w-auto h-auto">
+  <mat-card>
+    <div class="!p-6">
+      <div
+        class="flex items-center space-x-2 cursor-pointer"
+        (click)="backToEmployeeManagement()"
+      >
+        <mat-icon svgIcon="arrow-circle-left" color="primary"></mat-icon>
+        <span class="font-bold text-lg"> User Registration Progress</span>
+      </div>
+    </div>
+    <div class="w-full mt-6">
+      <div class="flex justify-center flex-col items-center">
+        <img
+          ngSrc="./assets/images/image1.svg"
+          width="106"
+          height="106"
+          class="rounded-full"
+          alt="User Photo."
+        />
+        <h3>{{ selectedEmployee()?.person }}</h3>
+      </div>
+    </div>
+  </mat-card>
+</div>

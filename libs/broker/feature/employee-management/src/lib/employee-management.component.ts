@@ -31,7 +31,7 @@ import {
   MatLabel,
   MatSuffix,
 } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
+import { MatInput, MatInputModule } from '@angular/material/input';
 import {
   FormBuilder,
   FormControl,
@@ -42,6 +42,7 @@ import { DialogRef } from '@angular/cdk/dialog';
 import { COLLECTED_DATA_EMPLOYEE, statusClasses } from './constant';
 import { MatSelectModule } from '@angular/material/select';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'insurance-employee-management',
@@ -55,11 +56,13 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
     MatDialogModule,
     ErrorMessageComponent,
     MatFormFieldModule,
+    MatInputModule,
     ReactiveFormsModule,
     MatSuffix,
     NgOptimizedImage,
     MatIconButton,
     MatSelectModule,
+    RouterLink,
   ],
   templateUrl: './employee-management.component.html',
   styleUrl: './employee-management.component.scss',
@@ -75,7 +78,6 @@ export class EmployeeManagementComponent implements OnInit {
   );
 
   collectedData = COLLECTED_DATA_EMPLOYEE;
-  statusForm = new FormControl('');
   dataEmployeeSource = new MatTableDataSource(COLLECTED_DATA_EMPLOYEE);
   invitationDialogRef?: MatDialogRef<unknown>;
   displayedColumnsCollection: string[] = [
@@ -85,6 +87,7 @@ export class EmployeeManagementComponent implements OnInit {
     'status',
     'arrow',
   ];
+  statusForm = new FormControl('');
   invitationForm = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
   });

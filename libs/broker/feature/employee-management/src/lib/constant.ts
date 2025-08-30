@@ -1,5 +1,14 @@
-export const COLLECTED_DATA_EMPLOYEE = [
+export interface Employee {
+  id: number;
+  person: string;
+  email: string;
+  date: string;
+  status: string;
+  enum: string;
+}
+export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
   {
+    id: 1,
     person: 'Annette Black',
     email: 'tim.jennings@example.com',
     date: '11/07/2024',
@@ -7,6 +16,7 @@ export const COLLECTED_DATA_EMPLOYEE = [
     enum: 'REGISTERED',
   },
   {
+    id: 2,
     person: 'Borzo Baradari',
     email: 'debra.holt@example.com',
     date: '03/04/2023',
@@ -14,6 +24,7 @@ export const COLLECTED_DATA_EMPLOYEE = [
     enum: 'INCOMPLETE',
   },
   {
+    id: 3,
     person: 'Ronald Richards',
     email: 'jackson.graham@example.com',
     date: '12/10/2023',
@@ -21,6 +32,7 @@ export const COLLECTED_DATA_EMPLOYEE = [
     enum: 'COMPLETE',
   },
   {
+    id: 4,
     person: 'Dianne Russell',
     email: 'kenzi.lawson@example.com',
     date: '05/30/2025',
@@ -28,6 +40,7 @@ export const COLLECTED_DATA_EMPLOYEE = [
     enum: 'APPROVED',
   },
   {
+    id: 5,
     person: 'Annette Black',
     email: 'willie.jennings@example.com',
     date: '11/07/2024',
@@ -35,6 +48,7 @@ export const COLLECTED_DATA_EMPLOYEE = [
     enum: 'REGISTERED',
   },
   {
+    id: 6,
     person: 'Dianne Russell',
     email: 'georgia.young@example.com',
     date: '05/30/2025',
@@ -42,6 +56,7 @@ export const COLLECTED_DATA_EMPLOYEE = [
     enum: 'REGISTERED',
   },
   {
+    id: 7,
     person: 'Ronald Richards',
     email: 'michelle.rivera@example.com',
     date: '12/10/2023',
@@ -49,6 +64,7 @@ export const COLLECTED_DATA_EMPLOYEE = [
     enum: 'COMPLETE',
   },
   {
+    id: 8,
     person: 'Devon Lane',
     email: 'bill.sanders@example.com',
     date: '03/04/2023',
@@ -56,6 +72,7 @@ export const COLLECTED_DATA_EMPLOYEE = [
     enum: 'REJECTED',
   },
   {
+    id: 9,
     person: 'Dianne Russell',
     email: 'deanna.curtis@example.com',
     date: '05/30/2025',
@@ -63,6 +80,7 @@ export const COLLECTED_DATA_EMPLOYEE = [
     enum: 'SENT',
   },
   {
+    id: 10,
     person: 'Ronald Richards',
     email: 'jackson.graham@example.com',
     date: '12/10/2023',
@@ -70,6 +88,7 @@ export const COLLECTED_DATA_EMPLOYEE = [
     enum: 'COMPLETE',
   },
   {
+    id: 11,
     person: 'Annette Black',
     email: 'nevaeh.simmons@example.com',
     date: '11/07/2024',
@@ -77,6 +96,7 @@ export const COLLECTED_DATA_EMPLOYEE = [
     enum: 'INCOMPLETE',
   },
   {
+    id: 12,
     person: 'Dianne Russell',
     email: 'sara.cruz@example.com',
     date: '05/30/2025',
@@ -84,6 +104,7 @@ export const COLLECTED_DATA_EMPLOYEE = [
     enum: 'SENT',
   },
   {
+    id: 13,
     person: 'Dianne Russell',
     email: 'jessica.hanson@example.com',
     date: '05/30/2025',
@@ -91,6 +112,7 @@ export const COLLECTED_DATA_EMPLOYEE = [
     enum: 'APPROVED',
   },
   {
+    id: 14,
     person: 'Devon Lane',
     email: 'felicia.reid@example.com',
     date: '03/04/2023',
@@ -98,6 +120,7 @@ export const COLLECTED_DATA_EMPLOYEE = [
     enum: 'REJECTED',
   },
   {
+    id: 15,
     person: 'Ronald Richards',
     email: 'curtis.weaver@example.com',
     date: '12/10/2023',

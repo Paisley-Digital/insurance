@@ -4,9 +4,7 @@
 html {
   color-scheme: light;
   @include mat.theme(
-      (
-        color: theme.$primary-palette,
-      )
+      (color: theme.$primary-palette)
   );
 
   .mat-mdc-card-outlined,

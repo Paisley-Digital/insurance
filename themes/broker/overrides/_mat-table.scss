@@ -1,0 +1,9 @@
+@use '@angular/material' as mat;
+
+:root {
+  @include mat.table-overrides(
+    (
+      row-item-outline-color: #d0d5dd,
+    )
+  );
+}

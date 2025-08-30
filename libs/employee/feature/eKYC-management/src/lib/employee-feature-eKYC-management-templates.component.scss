@@ -1,5 +1,12 @@
 mat-list {
   mat-list-item:nth-child(odd) {
     background-color: #f3f4f6;
+    border-radius: 10px;
   }
+}
+.list-line {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+  font-weight: 600;
 }

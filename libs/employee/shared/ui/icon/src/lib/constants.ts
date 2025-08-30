@@ -13,6 +13,9 @@ export const svgIconNames = [
   'trash2',
   'cigna',
   'cross',
+  'fingerprint',
+  'finger-print-blue',
+  'download',
   'edit',
   'chevron-down',
   'tick',
@@ -77,4 +80,5 @@ export const svgIconNames = [
   'close',
   'entity-KYC',
   'employee-kyc',
+  'warn-info',
 ] as const;

@@ -53,7 +53,7 @@
             formControlName="password"
           />
           <mat-error>
-            @if (loginForm.get('password')?.hasError('notValid')){
+            @if (loginForm.get('password')?.hasError('notValid')) {
             {{ errorMessage }}
             } @else {
             <insurance-error-message [input]="loginForm.get('password')" />
@@ -72,19 +72,19 @@
       </div>
       <div class="mt-3 flex items-start justify-between">
         <mat-checkbox class="example-margin"
-          >stay signed in on this device</mat-checkbox
-        >
+          >stay signed in on this device
+        </mat-checkbox>
         <a mat-button color="primary"> Forgot password? </a>
       </div>
       <div class="flex flex-col gap-6">
         <button
           mat-flat-button
-          class="mt-8"
+          class="mt-8 !min-h-[48px]"
           (click)="navigateToProduct()"
           [insuranceOverlaySpinner]="loading()"
         >
-          Sign in
-          <mat-icon svgIcon="signup" />
+          <span class="font-medium text-lg"> Sign in </span>
+          <mat-icon svgIcon="signup" class="min-w-[24px] min-h-[24px]" />
         </button>
       </div>
     </div>

@@ -1,4 +1,10 @@
-import { Component, inject, TemplateRef, viewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  TemplateRef,
+  viewChild,
+} from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { MatCard } from '@angular/material/card';
 import { COLLECTED_DATA } from '@insurance-employee-data-dashboards';
@@ -7,6 +13,7 @@ import {
   MatCell,
   MatCellDef,
   MatColumnDef,
+  MatTableDataSource,
   MatTableModule,
 } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,13 +27,21 @@ import { ErrorMessageComponent } from '@shared-ui-input-validator';
 import {
   MatError,
   MatFormField,
+  MatFormFieldModule,
   MatLabel,
   MatSuffix,
 } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { DialogRef } from '@angular/cdk/dialog';
 import { COLLECTED_DATA_EMPLOYEE, statusClasses } from './constant';
+import { MatSelectModule } from '@angular/material/select';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'insurance-employee-management',
@@ -39,30 +54,30 @@ import { COLLECTED_DATA_EMPLOYEE, statusClasses } from './constant';
     MatDialogActions,
     MatDialogModule,
     ErrorMessageComponent,
-    MatError,
-    MatFormField,
-    MatInput,
-    MatLabel,
+    MatFormFieldModule,
     ReactiveFormsModule,
     MatSuffix,
     NgOptimizedImage,
     MatIconButton,
+    MatSelectModule,
   ],
   templateUrl: './employee-management.component.html',
   styleUrl: './employee-management.component.scss',
 })
-export class EmployeeManagementComponent {
+export class EmployeeManagementComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
-  protected readonly collectedData = COLLECTED_DATA_EMPLOYEE;
   readonly dialog = inject(MatDialog);
+  protected readonly statusClasses = statusClasses;
 
   invitationDialog = viewChild<TemplateRef<unknown>>('invitationDialog');
   successfulInviteDialog = viewChild<TemplateRef<unknown>>(
     'successfulInviteDialog'
   );
 
+  collectedData = COLLECTED_DATA_EMPLOYEE;
+  statusForm = new FormControl('');
+  dataEmployeeSource = new MatTableDataSource(COLLECTED_DATA_EMPLOYEE);
   invitationDialogRef?: MatDialogRef<unknown>;
-
   displayedColumnsCollection: string[] = [
     'fullName',
     'email',
@@ -70,10 +85,13 @@ export class EmployeeManagementComponent {
     'status',
     'arrow',
   ];
-
   invitationForm = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
   });
+
+  ngOnInit() {
+    this.filterTableWithSelectedStatus();
+  }
 
   openInvitationDialog() {
     this.invitationDialogRef = this.dialog.open(this.invitationDialog()!, {
@@ -89,5 +107,15 @@ export class EmployeeManagementComponent {
     });
   }
 
-  protected readonly statusClasses = statusClasses;
+  private filterTableWithSelectedStatus() {
+    this.statusForm.valueChanges.subscribe((status) => {
+      if (status) {
+        this.dataEmployeeSource.data = this.collectedData.filter(
+          (employee) => employee.enum === status
+        );
+        return;
+      }
+      this.dataEmployeeSource.data = this.collectedData;
+    });
+  }
 }

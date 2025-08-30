@@ -8,18 +8,74 @@
         <mat-icon svgIcon="arrow-circle-left" color="primary"></mat-icon>
         <span class="font-bold text-lg"> User Registration Progress</span>
       </div>
-    </div>
-    <div class="w-full mt-6">
-      <div class="flex justify-center flex-col items-center">
-        <img
-          ngSrc="./assets/images/image1.svg"
-          width="106"
-          height="106"
-          class="rounded-full"
-          alt="User Photo."
-        />
-        <h3>{{ selectedEmployee()?.person }}</h3>
+      <div class="w-full mt-6">
+        <div class="flex justify-center flex-col items-center">
+          <img
+            [ngSrc]="selectedEmployee()?.image!"
+            width="106"
+            height="106"
+            class="rounded-full"
+            alt="User Photo."
+          />
+          <h3>{{ selectedEmployee()?.person }}</h3>
+        </div>
       </div>
+      <mat-stepper
+        orientation="vertical"
+        [selectedIndex]="selectedEmployee()?.index"
+        class="!pointer-events-none mt-2"
+      >
+        <ng-template matStepperIcon="edit">
+          <mat-icon
+            [svgIcon]="
+              selectedEmployee()?.enum === 'INCOMPLETE' ? 'warn' : 'tick-step'
+            "
+            [ngClass]="
+              selectedEmployee()?.enum === 'INCOMPLETE'
+                ? '!w-[2rem] !h-[2rem] !bg-white'
+                : ''
+            "
+          />
+        </ng-template>
+        @for (step of selectedEmployee()?.step; track step.title; let i =
+        $index) {
+        <mat-step>
+          <ng-template matStepLabel>
+            <div class="mat-subtitle-2">{{ step.title }}</div>
+            <div class="mat-caption opacity-60 mt-1">
+              {{ step.description }}
+            </div>
+          </ng-template>
+          @if (selectedEmployee()?.enum === 'INCOMPLETE' &&
+          selectedEmployee()!.step[2]){
+          <div class="flex justify-start gap-3">
+            <img
+              [ngSrc]="selectedEmployee()!.step[2].image!"
+              width="95"
+              height="55"
+            />
+            <img
+              [ngSrc]="selectedEmployee()!.step[2]?.image1!"
+              width="95"
+              height="55"
+            />
+            <img
+              [ngSrc]="selectedEmployee()!.step[2]?.image2!"
+              width="95"
+              height="55"
+            />
+          </div>
+          <div class="flex gap-3 mt-4 text-blue-600 items-center">
+            <mat-icon svgIcon="info-blue" />
+            <p>
+              Notification Sent: An email have been sent to the Borzo. They will
+              be reminded to upload their missing documents.
+            </p>
+          </div>
+          }
+        </mat-step>
+        }
+      </mat-stepper>
     </div>
   </mat-card>
 </div>

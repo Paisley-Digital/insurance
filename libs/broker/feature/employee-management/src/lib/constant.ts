@@ -1,3 +1,5 @@
+import { StepState } from '@angular/cdk/stepper';
+
 export interface Employee {
   id: number;
   person: string;
@@ -5,6 +7,16 @@ export interface Employee {
   date: string;
   status: string;
   enum: string;
+  image: string;
+  index: number;
+  step: {
+    title: string;
+    description: string;
+    image?: string;
+    image1?: string;
+    image2?: string;
+  }[];
+  type: StepState;
 }
 export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
   {
@@ -14,6 +26,31 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     date: '11/07/2024',
     status: 'Registered',
     enum: 'REGISTERED',
+    image: './assets/images/image-3.svg',
+    index: 2,
+    step: [
+      {
+        title: 'Invitation sent',
+        description:
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+      },
+      {
+        title: 'Registered',
+        description:
+          'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
+      },
+      {
+        title: 'Documents completed',
+        description:
+          'The user has uploaded all required documents. The broker will now review and verify them.',
+      },
+      {
+        title: 'Approved by broker',
+        description:
+          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+      },
+    ],
+    type: 'edit',
   },
   {
     id: 2,
@@ -22,6 +59,34 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     date: '03/04/2023',
     status: 'Documents incomplete',
     enum: 'INCOMPLETE',
+    image: './assets/images/baradari.svg',
+    index: 2,
+    step: [
+      {
+        title: 'Invitation sent',
+        description:
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+      },
+      {
+        title: 'Registered',
+        description:
+          'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
+      },
+      {
+        title: 'Documents incomplete',
+        description:
+          'Some required documents are missing or incorrect. The user needs to upload the necessary files to proceed.',
+        image: './assets/images/pass-1.svg',
+        image1: './assets/images/pass-2.svg',
+        image2: './assets/images/pass-3.svg',
+      },
+      {
+        title: 'Approved by broker',
+        description:
+          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+      },
+    ],
+    type: 'error',
   },
   {
     id: 3,
@@ -30,6 +95,31 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     date: '12/10/2023',
     status: 'Documents completed',
     enum: 'COMPLETE',
+    image: './assets/images/image-4.svg',
+    index: 2,
+    step: [
+      {
+        title: 'Invitation sent',
+        description:
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+      },
+      {
+        title: 'Registered',
+        description:
+          'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
+      },
+      {
+        title: 'Documents completed',
+        description:
+          'The user has uploaded all required documents. The broker will now review and verify them.',
+      },
+      {
+        title: 'Approved by broker',
+        description:
+          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+      },
+    ],
+    type: 'edit',
   },
   {
     id: 4,
@@ -38,6 +128,31 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     date: '05/30/2025',
     status: 'Approved by broker',
     enum: 'APPROVED',
+    image: './assets/images/image2.svg',
+    index: 4,
+    step: [
+      {
+        title: 'Invitation sent',
+        description:
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+      },
+      {
+        title: 'Registered',
+        description:
+          'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
+      },
+      {
+        title: 'Documents completed',
+        description:
+          'The user has uploaded all required documents. The broker will now review and verify them.',
+      },
+      {
+        title: 'Approved by broker',
+        description:
+          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+      },
+    ],
+    type: 'edit',
   },
   {
     id: 5,
@@ -46,6 +161,31 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     date: '11/07/2024',
     status: 'Registered',
     enum: 'REGISTERED',
+    image: './assets/images/image-3.svg',
+    index: 3,
+    step: [
+      {
+        title: 'Invitation sent',
+        description:
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+      },
+      {
+        title: 'Registered',
+        description:
+          'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
+      },
+      {
+        title: 'Documents completed',
+        description:
+          'The user has uploaded all required documents. The broker will now review and verify them.',
+      },
+      {
+        title: 'Approved by broker',
+        description:
+          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+      },
+    ],
+    type: 'edit',
   },
   {
     id: 6,
@@ -54,6 +194,31 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     date: '05/30/2025',
     status: 'Approved by broker',
     enum: 'REGISTERED',
+    image: './assets/images/image1.svg',
+    index: 1,
+    step: [
+      {
+        title: 'Invitation sent',
+        description:
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+      },
+      {
+        title: 'Registered',
+        description:
+          'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
+      },
+      {
+        title: 'Documents completed',
+        description:
+          'The user has uploaded all required documents. The broker will now review and verify them.',
+      },
+      {
+        title: 'Approved by broker',
+        description:
+          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+      },
+    ],
+    type: 'edit',
   },
   {
     id: 7,
@@ -62,6 +227,31 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     date: '12/10/2023',
     status: 'Documents completed',
     enum: 'COMPLETE',
+    image: './assets/images/image-4.svg',
+    index: 4,
+    step: [
+      {
+        title: 'Invitation sent',
+        description:
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+      },
+      {
+        title: 'Registered',
+        description:
+          'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
+      },
+      {
+        title: 'Documents completed',
+        description:
+          'The user has uploaded all required documents. The broker will now review and verify them.',
+      },
+      {
+        title: 'Approved by broker',
+        description:
+          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+      },
+    ],
+    type: 'edit',
   },
   {
     id: 8,
@@ -70,6 +260,31 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     date: '03/04/2023',
     status: 'Rejected by broker',
     enum: 'REJECTED',
+    image: './assets/images/image-5.svg',
+    index: 1,
+    step: [
+      {
+        title: 'Invitation sent',
+        description:
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+      },
+      {
+        title: 'Registered',
+        description:
+          'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
+      },
+      {
+        title: 'Documents completed',
+        description:
+          'The user has uploaded all required documents. The broker will now review and verify them.',
+      },
+      {
+        title: 'Approved by broker',
+        description:
+          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+      },
+    ],
+    type: 'edit',
   },
   {
     id: 9,
@@ -78,6 +293,31 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     date: '05/30/2025',
     status: 'Invitation sent',
     enum: 'SENT',
+    image: './assets/images/image1.svg',
+    index: 3,
+    step: [
+      {
+        title: 'Invitation sent',
+        description:
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+      },
+      {
+        title: 'Registered',
+        description:
+          'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
+      },
+      {
+        title: 'Documents completed',
+        description:
+          'The user has uploaded all required documents. The broker will now review and verify them.',
+      },
+      {
+        title: 'Approved by broker',
+        description:
+          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+      },
+    ],
+    type: 'edit',
   },
   {
     id: 10,
@@ -86,6 +326,31 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     date: '12/10/2023',
     status: 'Documents completed',
     enum: 'COMPLETE',
+    image: './assets/images/image-4.svg',
+    index: 2,
+    step: [
+      {
+        title: 'Invitation sent',
+        description:
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+      },
+      {
+        title: 'Registered',
+        description:
+          'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
+      },
+      {
+        title: 'Documents completed',
+        description:
+          'The user has uploaded all required documents. The broker will now review and verify them.',
+      },
+      {
+        title: 'Approved by broker',
+        description:
+          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+      },
+    ],
+    type: 'edit',
   },
   {
     id: 11,
@@ -93,7 +358,32 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     email: 'nevaeh.simmons@example.com',
     date: '11/07/2024',
     status: 'Documents incomplete',
-    enum: 'INCOMPLETE',
+    enum: 'REGISTERED',
+    image: './assets/images/image-3.svg',
+    index: 1,
+    step: [
+      {
+        title: 'Invitation sent',
+        description:
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+      },
+      {
+        title: 'Registered',
+        description:
+          'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
+      },
+      {
+        title: 'Documents completed',
+        description:
+          'The user has uploaded all required documents. The broker will now review and verify them.',
+      },
+      {
+        title: 'Approved by broker',
+        description:
+          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+      },
+    ],
+    type: 'edit',
   },
   {
     id: 12,
@@ -102,6 +392,31 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     date: '05/30/2025',
     status: 'Invitation sent',
     enum: 'SENT',
+    image: './assets/images/image-1.svg',
+    index: 4,
+    step: [
+      {
+        title: 'Invitation sent',
+        description:
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+      },
+      {
+        title: 'Registered',
+        description:
+          'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
+      },
+      {
+        title: 'Documents completed',
+        description:
+          'The user has uploaded all required documents. The broker will now review and verify them.',
+      },
+      {
+        title: 'Approved by broker',
+        description:
+          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+      },
+    ],
+    type: 'edit',
   },
   {
     id: 13,
@@ -110,6 +425,31 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     date: '05/30/2025',
     status: 'Approved by broker',
     enum: 'APPROVED',
+    image: './assets/images/image-1.svg',
+    index: 2,
+    step: [
+      {
+        title: 'Invitation sent',
+        description:
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+      },
+      {
+        title: 'Registered',
+        description:
+          'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
+      },
+      {
+        title: 'Documents completed',
+        description:
+          'The user has uploaded all required documents. The broker will now review and verify them.',
+      },
+      {
+        title: 'Approved by broker',
+        description:
+          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+      },
+    ],
+    type: 'edit',
   },
   {
     id: 14,
@@ -118,6 +458,31 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     date: '03/04/2023',
     status: 'Rejected by broker',
     enum: 'REJECTED',
+    image: './assets/images/image-5.svg',
+    index: 3,
+    step: [
+      {
+        title: 'Invitation sent',
+        description:
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+      },
+      {
+        title: 'Registered',
+        description:
+          'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
+      },
+      {
+        title: 'Documents completed',
+        description:
+          'The user has uploaded all required documents. The broker will now review and verify them.',
+      },
+      {
+        title: 'Approved by broker',
+        description:
+          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+      },
+    ],
+    type: 'edit',
   },
   {
     id: 15,
@@ -126,6 +491,31 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     date: '12/10/2023',
     status: 'Approved by broker',
     enum: 'APPROVED',
+    image: './assets/images/image-4.svg',
+    index: 1,
+    step: [
+      {
+        title: 'Invitation sent',
+        description:
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+      },
+      {
+        title: 'Registered',
+        description:
+          'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
+      },
+      {
+        title: 'Documents completed',
+        description:
+          'The user has uploaded all required documents. The broker will now review and verify them.',
+      },
+      {
+        title: 'Approved by broker',
+        description:
+          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+      },
+    ],
+    type: 'edit',
   },
 ];
 

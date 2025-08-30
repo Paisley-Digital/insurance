@@ -17,6 +17,8 @@ export const svgIconNames = [
   'finger-print-blue',
   'formkit_email',
   'arrow-circle-left',
+  'tick-step',
+  'info-blue',
   'download',
   'edit',
   'chevron-down',

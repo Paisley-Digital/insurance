@@ -80,7 +80,7 @@ export class EmployeeManagementComponent implements OnInit {
     'status',
     'arrow',
   ];
-  statusForm = new FormControl('');
+  statusForm = new FormControl('' as EmployeeStatus);
   invitationForm = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
   });

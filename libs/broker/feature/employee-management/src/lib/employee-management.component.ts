@@ -7,15 +7,8 @@ import {
 } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { MatCard } from '@angular/material/card';
-import { COLLECTED_DATA } from '@insurance-employee-data-dashboards';
 import { MatButton, MatIconButton } from '@angular/material/button';
-import {
-  MatCell,
-  MatCellDef,
-  MatColumnDef,
-  MatTableDataSource,
-  MatTableModule,
-} from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import {
   MatDialog,
@@ -24,25 +17,23 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { ErrorMessageComponent } from '@shared-ui-input-validator';
-import {
-  MatError,
-  MatFormField,
-  MatFormFieldModule,
-  MatLabel,
-  MatSuffix,
-} from '@angular/material/form-field';
-import { MatInput, MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule, MatSuffix } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import {
   FormBuilder,
   FormControl,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { DialogRef } from '@angular/cdk/dialog';
-import { COLLECTED_DATA_EMPLOYEE, statusClasses } from './constant';
+import {
+  COLLECTED_DATA_EMPLOYEE,
+  EmployeeStatus,
+  employeeStatus,
+  statusClasses,
+} from './constant';
 import { MatSelectModule } from '@angular/material/select';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { RouterLink } from '@angular/router';
+import { MatChipListbox, MatChipOption } from '@angular/material/chips';
 
 @Component({
   selector: 'insurance-employee-management',
@@ -63,6 +54,8 @@ import { RouterLink } from '@angular/router';
     MatIconButton,
     MatSelectModule,
     RouterLink,
+    MatChipListbox,
+    MatChipOption,
   ],
   templateUrl: './employee-management.component.html',
   styleUrl: './employee-management.component.scss',
@@ -70,7 +63,7 @@ import { RouterLink } from '@angular/router';
 export class EmployeeManagementComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   readonly dialog = inject(MatDialog);
-  protected readonly statusClasses = statusClasses;
+  protected readonly employeeStatus = employeeStatus;
 
   invitationDialog = viewChild<TemplateRef<unknown>>('invitationDialog');
   successfulInviteDialog = viewChild<TemplateRef<unknown>>(
@@ -91,6 +84,10 @@ export class EmployeeManagementComponent implements OnInit {
   invitationForm = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
   });
+
+  employeeStatusClasses(status: EmployeeStatus) {
+    return statusClasses[status];
+  }
 
   ngOnInit() {
     this.filterTableWithSelectedStatus();

@@ -28,10 +28,14 @@
         <ng-template matStepperIcon="edit">
           <mat-icon
             [svgIcon]="
-              selectedEmployee()?.enum === 'INCOMPLETE' ? 'warn' : 'tick-step'
+              selectedEmployee()?.enum === 'INCOMPLETE' ||
+              selectedEmployee()?.enum === 'REJECTED'
+                ? 'warn'
+                : 'tick-step'
             "
             [ngClass]="
-              selectedEmployee()?.enum === 'INCOMPLETE'
+              selectedEmployee()?.enum === 'INCOMPLETE' ||
+              selectedEmployee()?.enum === 'REJECTED'
                 ? '!w-[2rem] !h-[2rem] !bg-white'
                 : ''
             "
@@ -46,24 +50,11 @@
               {{ step.description }}
             </div>
           </ng-template>
-          @if (selectedEmployee()?.enum === 'INCOMPLETE' &&
-          selectedEmployee()!.step[2]){
+          @if (conditionOfShowImages){
           <div class="flex justify-start gap-3">
-            <img
-              [ngSrc]="selectedEmployee()!.step[2].image!"
-              width="95"
-              height="55"
-            />
-            <img
-              [ngSrc]="selectedEmployee()!.step[2]?.image1!"
-              width="95"
-              height="55"
-            />
-            <img
-              [ngSrc]="selectedEmployee()!.step[2]?.image2!"
-              width="95"
-              height="55"
-            />
+            <img [ngSrc]="firstIncompleteImages!" width="95" height="55" />
+            <img [ngSrc]="secondIncompleteImages!" width="95" height="55" />
+            <img [ngSrc]="threeIncompleteImages!" width="95" height="55" />
           </div>
           <div class="flex gap-3 mt-4 text-blue-600 items-center">
             <mat-icon svgIcon="info-blue" />

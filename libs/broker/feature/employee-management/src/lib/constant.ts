@@ -1,12 +1,25 @@
 import { StepState } from '@angular/cdk/stepper';
 
+export type EmployeeStatus =
+  | 'SENT'
+  | 'REGISTERED'
+  | 'COMPLETE'
+  | 'INCOMPLETE'
+  | 'APPROVED'
+  | 'REJECTED';
+
+export interface EmployeeStatusType {
+  title: string;
+  value: EmployeeStatus;
+}
+
 export interface Employee {
   id: number;
   person: string;
   email: string;
   date: string;
   status: string;
-  enum: string;
+  enum: EmployeeStatus;
   image: string;
   index: number;
   step: {
@@ -18,6 +31,7 @@ export interface Employee {
   }[];
   type: StepState;
 }
+
 export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
   {
     id: 1,
@@ -27,7 +41,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     status: 'Registered',
     enum: 'REGISTERED',
     image: './assets/images/image-3.svg',
-    index: 2,
+    index: 1,
     step: [
       {
         title: 'Invitation sent',
@@ -96,7 +110,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     status: 'Documents completed',
     enum: 'COMPLETE',
     image: './assets/images/image-4.svg',
-    index: 2,
+    index: 3,
     step: [
       {
         title: 'Invitation sent',
@@ -129,7 +143,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     status: 'Approved by broker',
     enum: 'APPROVED',
     image: './assets/images/image2.svg',
-    index: 4,
+    index: 3,
     step: [
       {
         title: 'Invitation sent',
@@ -162,7 +176,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     status: 'Registered',
     enum: 'REGISTERED',
     image: './assets/images/image-3.svg',
-    index: 3,
+    index: 1,
     step: [
       {
         title: 'Invitation sent',
@@ -193,7 +207,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     email: 'georgia.young@example.com',
     date: '05/30/2025',
     status: 'Approved by broker',
-    enum: 'REGISTERED',
+    enum: 'APPROVED',
     image: './assets/images/image1.svg',
     index: 1,
     step: [
@@ -228,7 +242,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     status: 'Documents completed',
     enum: 'COMPLETE',
     image: './assets/images/image-4.svg',
-    index: 4,
+    index: 3,
     step: [
       {
         title: 'Invitation sent',
@@ -261,7 +275,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     status: 'Rejected by broker',
     enum: 'REJECTED',
     image: './assets/images/image-5.svg',
-    index: 1,
+    index: 3,
     step: [
       {
         title: 'Invitation sent',
@@ -279,9 +293,12 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
           'The user has uploaded all required documents. The broker will now review and verify them.',
       },
       {
-        title: 'Approved by broker',
+        title: 'Rejected by broker',
         description:
-          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+          'The broker has reviewed the documents and found issues. The user needs to re-upload the required files for approval.',
+        image: './assets/images/pass-1.svg',
+        image1: './assets/images/pass-2.svg',
+        image2: './assets/images/pass-3.svg',
       },
     ],
     type: 'edit',
@@ -294,7 +311,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     status: 'Invitation sent',
     enum: 'SENT',
     image: './assets/images/image1.svg',
-    index: 3,
+    index: 0,
     step: [
       {
         title: 'Invitation sent',
@@ -358,7 +375,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     email: 'nevaeh.simmons@example.com',
     date: '11/07/2024',
     status: 'Documents incomplete',
-    enum: 'REGISTERED',
+    enum: 'INCOMPLETE',
     image: './assets/images/image-3.svg',
     index: 1,
     step: [
@@ -393,7 +410,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     status: 'Invitation sent',
     enum: 'SENT',
     image: './assets/images/image-1.svg',
-    index: 4,
+    index: 0,
     step: [
       {
         title: 'Invitation sent',
@@ -426,7 +443,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     status: 'Approved by broker',
     enum: 'APPROVED',
     image: './assets/images/image-1.svg',
-    index: 2,
+    index: 3,
     step: [
       {
         title: 'Invitation sent',
@@ -477,9 +494,12 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
           'The user has uploaded all required documents. The broker will now review and verify them.',
       },
       {
-        title: 'Approved by broker',
+        title: 'Rejected by broker',
         description:
-          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+          'The broker has reviewed the documents and found issues. The user needs to re-upload the required files for approval.',
+        image: './assets/images/pass-1.svg',
+        image1: './assets/images/pass-2.svg',
+        image2: './assets/images/pass-3.svg',
       },
     ],
     type: 'edit',
@@ -492,7 +512,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     status: 'Approved by broker',
     enum: 'APPROVED',
     image: './assets/images/image-4.svg',
-    index: 1,
+    index: 3,
     step: [
       {
         title: 'Invitation sent',
@@ -519,7 +539,16 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
   },
 ];
 
-export const statusClasses: Record<string, string> = {
+export const employeeStatus: EmployeeStatusType[] = [
+  { title: 'Invitation sent', value: 'SENT' },
+  { title: 'Registered', value: 'REGISTERED' },
+  { title: 'Documents completed', value: 'COMPLETE' },
+  { title: 'Documents incomplete', value: 'INCOMPLETE' },
+  { title: 'Approved by broker', value: 'APPROVED' },
+  { title: 'Rejected by broker', value: 'REJECTED' },
+];
+
+export const statusClasses: Record<EmployeeStatus, string> = {
   REGISTERED: '!bg-purple-200 !text-purple-500',
   INCOMPLETE: '!bg-yellow-100 !text-yellow-500',
   COMPLETE: '!bg-blue-100 !text-blue-500',

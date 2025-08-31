@@ -377,7 +377,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     status: 'Documents incomplete',
     enum: 'INCOMPLETE',
     image: './assets/images/image-3.svg',
-    index: 1,
+    index: 2,
     step: [
       {
         title: 'Invitation sent',
@@ -390,9 +390,12 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
           'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
       },
       {
-        title: 'Documents completed',
+        title: 'Documents incomplete',
         description:
-          'The user has uploaded all required documents. The broker will now review and verify them.',
+          'Some required documents are missing or incorrect. The user needs to upload the necessary files to proceed.',
+        image: './assets/images/pass-1.svg',
+        image1: './assets/images/pass-2.svg',
+        image2: './assets/images/pass-3.svg',
       },
       {
         title: 'Approved by broker',

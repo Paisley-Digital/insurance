@@ -1,0 +1,119 @@
+<div class="!p-9 w-auto h-auto">
+  <mat-card>
+    <div class="!p-9">
+      <div class="flex justify-start mb-4 mt-4">
+        <button mat-flat-button (click)="openInvitationDialog()">
+          <mat-icon svgIcon="add" />
+          <span> Add New User </span>
+        </button>
+      </div>
+      <mat-chip-listbox
+        aria-label="Employee Statuses"
+        class="my-4"
+        [formControl]="statusForm"
+      >
+        @for (status of employeeStatus; track status.value) {
+        <mat-chip-option [value]="status.value">{{
+          status.title
+        }}</mat-chip-option>
+        }
+      </mat-chip-listbox>
+      <table
+        mat-table
+        [dataSource]="dataEmployeeSource"
+        class="statement-table w-full !p-0"
+      >
+        <ng-container matColumnDef="fullName">
+          <th mat-header-cell *matHeaderCellDef>Full Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.person }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.email }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="registrationDate">
+          <th mat-header-cell *matHeaderCellDef>Registration Date</th>
+          <td mat-cell *matCellDef="let element">{{ element.date }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let element" class="py-2 px-4">
+            <span
+              [ngClass]="employeeStatusClasses(element.enum)"
+              class="px-4 py-2 rounded-full font-medium"
+            >
+              {{ element.status }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="arrow">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <button
+              mat-icon-button
+              [routerLink]="'/console/employee-management/detail/' + element.id"
+            >
+              <mat-icon svgIcon="chevron" />
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsCollection"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumnsCollection"
+        ></tr>
+      </table>
+    </div>
+  </mat-card>
+</div>
+
+<ng-template #invitationDialog>
+  <h1 mat-dialog-title class="!font-bold">Send Invitation</h1>
+  <mat-dialog-content>
+    <p>Enter the user's email to send an invitation link</p>
+    <form [formGroup]="invitationForm" class="!mt-8">
+      <mat-form-field class="w-full">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="email"
+          formControlName="email"
+          required
+          placeholder="alma.lawson@example.com"
+        />
+        <mat-error>
+          <insurance-error-message [input]="invitationForm.get('email')" />
+        </mat-error>
+        <mat-icon matSuffix svgIcon="formkit_email" />
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="start" class="!my-4">
+    <button mat-flat-button (click)="sendInvite()">Send Invite</button>
+    <button mat-stroked-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</ng-template>
+
+<ng-template #successfulInviteDialog>
+  <h1 mat-dialog-title class="!text-center !font-bold">Invitation Sent</h1>
+  <mat-dialog-content>
+    <p class="!text-center">
+      The user has received an invitation email with a registration link
+    </p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center" class="!my-4">
+    <img
+      ngSrc="./assets/images/message.gif"
+      alt="The message gif of successfully invite."
+      width="124"
+      height="94"
+    />
+  </mat-dialog-actions>
+</ng-template>

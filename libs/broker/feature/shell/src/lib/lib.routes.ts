@@ -26,6 +26,13 @@ export const shellRoutes: Route[] = [
             (m) => m.ekycManagementRoutes
           ),
       },
+      {
+        path: 'employee-management',
+        loadChildren: () =>
+          import('@insurance-broker-feature-employee-management').then(
+            (m) => m.employeeManagementRoutes
+          ),
+      },
     ],
   },
 ];

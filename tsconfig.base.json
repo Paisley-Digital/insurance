@@ -16,9 +16,6 @@
     "baseUrl": ".",
     "paths": {
       "@./assets": ["libs/shared/assets/src/index.ts"],
-      "@insurance-employee-feature-employer-management": [
-        "libs/employee/feature/employer-management/src/index.ts"
-      ],
       "@./insurance-customer": ["libs/customer/src/index.ts"],
       "@./locales": ["libs/shared/util/locales/src/index.ts"],
       "@insurance-broker-feature-auth": [
@@ -35,6 +32,9 @@
       ],
       "@insurance-broker-feature-shell": [
         "libs/broker/feature/shell/src/index.ts"
+      ],
+      "@insurance-broker-feature-employee-management": [
+        "libs/broker/feature/employee-management/src/index.ts"
       ],
       "@insurance-customer-feature-auth": [
         "libs/customer/feature/auth/src/index.ts"
@@ -56,6 +56,9 @@
       ],
       "@insurance-employee-feature-eKYC-management": [
         "libs/employee/feature/eKYC-management/src/index.ts"
+      ],
+      "@insurance-employee-feature-employer-management": [
+        "libs/employee/feature/employer-management/src/index.ts"
       ],
       "@insurance-employee-feature-shell": [
         "libs/employee/feature/shell/src/index.ts"

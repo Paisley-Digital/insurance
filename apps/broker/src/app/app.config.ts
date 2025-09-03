@@ -13,6 +13,8 @@ import { overrideLocaleData } from '@./locales';
 import { provideHttpClient } from '@angular/common/http';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideSharedUtilAppCore } from '@insurance-shared-app-core';
+import { environment } from '../../../employee/src/environments/environment';
 
 function initializeEnvironment() {
   const localeId = inject(LOCALE_ID);
@@ -34,5 +36,6 @@ export const appConfig: ApplicationConfig = {
       useValue: initializeEnvironment,
     },
     ...MAT_DEFAULT_OPTIONS_OVERRIDES,
+    provideSharedUtilAppCore(environment),
   ],
 };

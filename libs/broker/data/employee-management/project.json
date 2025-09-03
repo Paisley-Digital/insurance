@@ -1,7 +1,7 @@
 {
-  "name": "employee-management-feature",
+  "name": "employee-management",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/broker/feature/employee-management/src",
+  "sourceRoot": "libs/broker/data/employee-management/src",
   "prefix": "insurance",
   "projectType": "library",
   "tags": [],
@@ -10,7 +10,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/broker/feature/employee-management/jest.config.ts"
+        "jestConfig": "libs/broker/data/employee-management/jest.config.ts"
       }
     },
     "lint": {

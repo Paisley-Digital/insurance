@@ -93,12 +93,22 @@
           *matRowDef="let row; columns: displayedColumnsCollection"
         ></tr>
       </table>
+
+      <mat-paginator
+        class="demo-paginator mt-4"
+        disabled="true"
+        [hidePageSize]="true"
+        [pageSize]="true"
+        [showFirstLastButtons]="true"
+        aria-label="Select page"
+      >
+      </mat-paginator>
     </div>
   </mat-card>
 </div>
 
 <ng-template #invitationDialog>
-  <h1 mat-dialog-title class="!font-bold">Send Invitation</h1>
+  <h1 mat-dialog-title class="!font-bold">Invite a New User</h1>
   <mat-dialog-content>
     <p>Enter the user's email to send an invitation link</p>
     <form [formGroup]="invitationForm" class="!mt-8">
@@ -119,7 +129,20 @@
     </form>
   </mat-dialog-content>
   <mat-dialog-actions align="start" class="!my-4">
-    <button mat-flat-button (click)="sendInvite()">Send Invite</button>
+    <button mat-flat-button (click)="sendInvite()">Send Invitation</button>
+    <button mat-stroked-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</ng-template>
+
+<ng-template #deleteEmployeeDialog>
+  <h1 mat-dialog-title class="!font-bold">Delete User</h1>
+  <mat-dialog-content>
+    <p>Are you sure you want to delete this user?</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="start" class="!my-4">
+    <button mat-flat-button class="warn" (click)="confirmDeleteEmployee()">
+      Delete
+    </button>
     <button mat-stroked-button mat-dialog-close>Cancel</button>
   </mat-dialog-actions>
 </ng-template>

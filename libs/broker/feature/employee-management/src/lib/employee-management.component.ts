@@ -2,6 +2,7 @@ import {
   Component,
   inject,
   OnInit,
+  signal,
   TemplateRef,
   viewChild,
 } from '@angular/core';
@@ -34,6 +35,7 @@ import {
 import { MatSelectModule } from '@angular/material/select';
 import { RouterLink } from '@angular/router';
 import { MatChipListbox, MatChipOption } from '@angular/material/chips';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'insurance-employee-management',
@@ -56,6 +58,7 @@ import { MatChipListbox, MatChipOption } from '@angular/material/chips';
     RouterLink,
     MatChipListbox,
     MatChipOption,
+    MatPaginator,
   ],
   templateUrl: './employee-management.component.html',
   styleUrl: './employee-management.component.scss',
@@ -70,9 +73,16 @@ export class EmployeeManagementComponent implements OnInit {
     'successfulInviteDialog'
   );
 
+  deleteEmployeeDialog = viewChild<TemplateRef<unknown>>(
+    'deleteEmployeeDialog'
+  );
+
+  userId = signal<number | null>(null);
+
   collectedData = COLLECTED_DATA_EMPLOYEE;
   dataEmployeeSource = new MatTableDataSource(COLLECTED_DATA_EMPLOYEE);
   invitationDialogRef?: MatDialogRef<unknown>;
+  deleteDialogRef?: MatDialogRef<unknown>;
   displayedColumnsCollection: string[] = [
     'fullName',
     'email',
@@ -110,11 +120,19 @@ export class EmployeeManagementComponent implements OnInit {
   }
 
   deleteEmployee(id: number) {
+    this.userId.set(id);
+    this.deleteDialogRef = this.dialog.open(this.deleteEmployeeDialog()!, {
+      width: '460px',
+    });
+  }
+
+  confirmDeleteEmployee() {
     this.collectedData = this.collectedData.filter(
-      (employee) => employee.id !== id
+      (employee) => employee.id !== this.userId()
     );
 
     this.filterTableWithSelectedStatusAfterDelete();
+    this.deleteDialogRef?.close();
   }
 
   private filterTableWithSelectedStatusAfterDelete() {

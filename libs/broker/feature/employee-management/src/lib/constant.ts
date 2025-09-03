@@ -47,7 +47,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
       {
         title: 'Invitation sent',
         description:
-          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with documents submission.',
       },
       {
         title: 'Registered',
@@ -55,14 +55,14 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
           'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
       },
       {
-        title: 'Documents completed',
+        title: 'Documents submitted',
         description:
-          'The user has uploaded all required documents. The broker will now review and verify them.',
+          'The user has uploaded all required documents. The broker-insurance will now review and verify them.',
       },
       {
-        title: 'Approved by broker',
+        title: 'Approved by broker-insurance',
         description:
-          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+          'The broker-insurance has reviewed and approved the users documents. The registration process is now complete.',
       },
     ],
     type: 'edit',
@@ -80,7 +80,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
       {
         title: 'Invitation sent',
         description:
-          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with documents submission.',
       },
       {
         title: 'Registered',
@@ -96,9 +96,9 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
         image2: './assets/images/pass-3.svg',
       },
       {
-        title: 'Approved by broker',
+        title: 'Approved by broker-insurance',
         description:
-          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+          'The broker-insurance has reviewed and approved the users documents. The registration process is now complete.',
       },
     ],
     type: 'error',
@@ -116,7 +116,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
       {
         title: 'Invitation sent',
         description:
-          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with documents submission.',
       },
       {
         title: 'Registered',
@@ -124,14 +124,14 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
           'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
       },
       {
-        title: 'Documents completed',
+        title: 'Documents submitted',
         description:
-          'The user has uploaded all required documents. The broker will now review and verify them.',
+          'The user has uploaded all required documents. The broker-insurance will now review and verify them.',
       },
       {
-        title: 'Approved by broker',
+        title: 'Approved by broker-insurance',
         description:
-          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+          'The broker-insurance has reviewed and approved the users documents. The registration process is now complete.',
       },
     ],
     type: 'edit',
@@ -141,30 +141,30 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     person: 'Dianne Russell',
     email: 'kenzi.lawson@example.com',
     date: '05/30/2025',
-    status: 'Approved by broker',
+    status: 'Approved by broker-insurance',
     enum: 'APPROVED',
     image: './assets/images/image2.svg',
-    index: 3,
+    index: 2,
     step: [
       {
         title: 'Invitation sent',
         description:
-          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with documents submission.',
+      },
+      // {
+      //   title: 'Registered',
+      //   description:
+      //     'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
+      // },
+      {
+        title: 'Documents submitted',
+        description:
+          'The user has uploaded all required documents. The broker-insurance will now review and verify them.',
       },
       {
-        title: 'Registered',
+        title: 'Approved by broker-insurance',
         description:
-          'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
-      },
-      {
-        title: 'Documents completed',
-        description:
-          'The user has uploaded all required documents. The broker will now review and verify them.',
-      },
-      {
-        title: 'Approved by broker',
-        description:
-          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+          'The broker-insurance has reviewed and approved the users documents. The registration process is now complete.',
       },
     ],
     type: 'edit',
@@ -182,7 +182,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
       {
         title: 'Invitation sent',
         description:
-          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with documents submission.',
       },
       {
         title: 'Registered',
@@ -190,14 +190,14 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
           'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
       },
       {
-        title: 'Documents completed',
+        title: 'Documents submitted',
         description:
-          'The user has uploaded all required documents. The broker will now review and verify them.',
+          'The user has uploaded all required documents. The broker-insurance will now review and verify them.',
       },
       {
-        title: 'Approved by broker',
+        title: 'Approved by broker-insurance',
         description:
-          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+          'The broker-insurance has reviewed and approved the users documents. The registration process is now complete.',
       },
     ],
     type: 'edit',
@@ -207,30 +207,30 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     person: 'Dianne Russell',
     email: 'georgia.young@example.com',
     date: '05/30/2025',
-    status: 'Approved by broker',
+    status: 'Approved by broker-insurance',
     enum: 'APPROVED',
     image: './assets/images/image1.svg',
-    index: 1,
+    index: 2,
     step: [
       {
         title: 'Invitation sent',
         description:
-          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with documents submission.',
+      },
+      // {
+      //   title: 'Registered',
+      //   description:
+      //     'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
+      // },
+      {
+        title: 'Documents submitted',
+        description:
+          'The user has uploaded all required documents. The broker-insurance will now review and verify them.',
       },
       {
-        title: 'Registered',
+        title: 'Approved by broker-insurance',
         description:
-          'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
-      },
-      {
-        title: 'Documents completed',
-        description:
-          'The user has uploaded all required documents. The broker will now review and verify them.',
-      },
-      {
-        title: 'Approved by broker',
-        description:
-          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+          'The broker-insurance has reviewed and approved the users documents. The registration process is now complete.',
       },
     ],
     type: 'edit',
@@ -248,7 +248,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
       {
         title: 'Invitation sent',
         description:
-          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with documents submission.',
       },
       {
         title: 'Registered',
@@ -256,14 +256,14 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
           'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
       },
       {
-        title: 'Documents completed',
+        title: 'Documents submitted',
         description:
-          'The user has uploaded all required documents. The broker will now review and verify them.',
+          'The user has uploaded all required documents. The broker-insurance will now review and verify them.',
       },
       {
-        title: 'Approved by broker',
+        title: 'Approved by broker-insurance',
         description:
-          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+          'The broker-insurance has reviewed and approved the users documents. The registration process is now complete.',
       },
     ],
     type: 'edit',
@@ -273,7 +273,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     person: 'Devon Lane',
     email: 'bill.sanders@example.com',
     date: '03/04/2023',
-    status: 'Rejected by broker',
+    status: 'Rejected by broker-insurance',
     enum: 'REJECTED',
     image: './assets/images/image-5.svg',
     index: 3,
@@ -281,7 +281,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
       {
         title: 'Invitation sent',
         description:
-          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with documents submission.',
       },
       {
         title: 'Registered',
@@ -289,12 +289,12 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
           'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
       },
       {
-        title: 'Documents completed',
+        title: 'Documents submitted',
         description:
-          'The user has uploaded all required documents. The broker will now review and verify them.',
+          'The user has uploaded all required documents. The broker-insurance will now review and verify them.',
       },
       {
-        title: 'Rejected by broker',
+        title: 'Rejected by broker-insurance',
         description:
           'The broker has reviewed the documents and found issues. The user needs to re-upload the required files for approval.',
         image: './assets/images/pass-1.svg',
@@ -317,22 +317,22 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
       {
         title: 'Invitation sent',
         description:
-          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with documents submission.',
+      },
+      // {
+      //   title: 'Registered',
+      //   description:
+      //     'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
+      // },
+      {
+        title: 'Documents submitted',
+        description:
+          'The user has uploaded all required documents. The broker-insurance will now review and verify them.',
       },
       {
-        title: 'Registered',
+        title: 'Approved by broker-insurance',
         description:
-          'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
-      },
-      {
-        title: 'Documents completed',
-        description:
-          'The user has uploaded all required documents. The broker will now review and verify them.',
-      },
-      {
-        title: 'Approved by broker',
-        description:
-          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+          'The broker-insurance has reviewed and approved the users documents. The registration process is now complete.',
       },
     ],
     type: 'edit',
@@ -350,7 +350,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
       {
         title: 'Invitation sent',
         description:
-          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with documents submission.',
       },
       {
         title: 'Registered',
@@ -358,14 +358,14 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
           'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
       },
       {
-        title: 'Documents completed',
+        title: 'Documents submitted',
         description:
-          'The user has uploaded all required documents. The broker will now review and verify them.',
+          'The user has uploaded all required documents. The broker-insurance will now review and verify them.',
       },
       {
-        title: 'Approved by broker',
+        title: 'Approved by broker-insurance',
         description:
-          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+          'The broker-insurance has reviewed and approved the users documents. The registration process is now complete.',
       },
     ],
     type: 'edit',
@@ -383,7 +383,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
       {
         title: 'Invitation sent',
         description:
-          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with documents submission.',
       },
       {
         title: 'Registered',
@@ -399,9 +399,9 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
         image2: './assets/images/pass-3.svg',
       },
       {
-        title: 'Approved by broker',
+        title: 'Approved by broker-insurance',
         description:
-          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+          'The broker-insurance has reviewed and approved the users documents. The registration process is now complete.',
       },
     ],
     type: 'edit',
@@ -419,22 +419,22 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
       {
         title: 'Invitation sent',
         description:
-          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with documents submission.',
+      },
+      // {
+      //   title: 'Registered',
+      //   description:
+      //     'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
+      // },
+      {
+        title: 'Documents submitted',
+        description:
+          'The user has uploaded all required documents. The broker-insurance will now review and verify them.',
       },
       {
-        title: 'Registered',
+        title: 'Approved by broker-insurance',
         description:
-          'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
-      },
-      {
-        title: 'Documents completed',
-        description:
-          'The user has uploaded all required documents. The broker will now review and verify them.',
-      },
-      {
-        title: 'Approved by broker',
-        description:
-          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+          'The broker-insurance has reviewed and approved the users documents. The registration process is now complete.',
       },
     ],
     type: 'edit',
@@ -444,30 +444,30 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     person: 'Dianne Russell',
     email: 'jessica.hanson@example.com',
     date: '05/30/2025',
-    status: 'Approved by broker',
+    status: 'Approved by broker-insurance',
     enum: 'APPROVED',
     image: './assets/images/image-1.svg',
-    index: 3,
+    index: 2,
     step: [
       {
         title: 'Invitation sent',
         description:
-          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with documents submission.',
+      },
+      // {
+      //   title: 'Registered',
+      //   description:
+      //     'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
+      // },
+      {
+        title: 'Documents submitted',
+        description:
+          'The user has uploaded all required documents. The broker-insurance will now review and verify them.',
       },
       {
-        title: 'Registered',
+        title: 'Approved by broker-insurance',
         description:
-          'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
-      },
-      {
-        title: 'Documents completed',
-        description:
-          'The user has uploaded all required documents. The broker will now review and verify them.',
-      },
-      {
-        title: 'Approved by broker',
-        description:
-          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+          'The broker-insurance has reviewed and approved the users documents. The registration process is now complete.',
       },
     ],
     type: 'edit',
@@ -477,7 +477,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     person: 'Devon Lane',
     email: 'felicia.reid@example.com',
     date: '03/04/2023',
-    status: 'Rejected by broker',
+    status: 'Rejected by broker-insurance',
     enum: 'REJECTED',
     image: './assets/images/image-5.svg',
     index: 3,
@@ -485,7 +485,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
       {
         title: 'Invitation sent',
         description:
-          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with documents submission.',
       },
       {
         title: 'Registered',
@@ -493,12 +493,12 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
           'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
       },
       {
-        title: 'Documents completed',
+        title: 'Documents submitted',
         description:
-          'The user has uploaded all required documents. The broker will now review and verify them.',
+          'The user has uploaded all required documents. The broker-insurance will now review and verify them.',
       },
       {
-        title: 'Rejected by broker',
+        title: 'Rejected by broker-insurance',
         description:
           'The broker has reviewed the documents and found issues. The user needs to re-upload the required files for approval.',
         image: './assets/images/pass-1.svg',
@@ -513,7 +513,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
     person: 'Ronald Richards',
     email: 'curtis.weaver@example.com',
     date: '12/10/2023',
-    status: 'Approved by broker',
+    status: 'Approved by broker-insurance',
     enum: 'APPROVED',
     image: './assets/images/image-4.svg',
     index: 3,
@@ -521,7 +521,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
       {
         title: 'Invitation sent',
         description:
-          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with registration.',
+          'An invitation email has been sent to the user. They need to check their inbox and follow the instructions to proceed with documents submission.',
       },
       {
         title: 'Registered',
@@ -529,14 +529,14 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
           'The user has successfully created an account in the portal. Next, they need to upload the required documents.',
       },
       {
-        title: 'Documents completed',
+        title: 'Documents submitted',
         description:
-          'The user has uploaded all required documents. The broker will now review and verify them.',
+          'The user has uploaded all required documents. The broker-insurance will now review and verify them.',
       },
       {
-        title: 'Approved by broker',
+        title: 'Approved by broker-insurance',
         description:
-          'The broker has reviewed and approved the users documents. The registration process is now complete.',
+          'The broker-insurance has reviewed and approved the users documents. The registration process is now complete.',
       },
     ],
     type: 'edit',
@@ -549,8 +549,8 @@ export const employeeStatus: EmployeeStatusType[] = [
   { title: 'Registered', value: 'REGISTERED' },
   { title: 'Documents completed', value: 'COMPLETE' },
   { title: 'Documents incomplete', value: 'INCOMPLETE' },
-  { title: 'Approved by broker', value: 'APPROVED' },
-  { title: 'Rejected by broker', value: 'REJECTED' },
+  { title: 'Approved by broker-insurance', value: 'APPROVED' },
+  { title: 'Rejected by broker-insurance', value: 'REJECTED' },
 ];
 
 export const statusClasses: Record<EmployeeStatus, string> = {

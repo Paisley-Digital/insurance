@@ -29,3 +29,7 @@
 //.mat-select-panel ng-animating {
 //  visibility: hidden;
 //}
+
+.mat-mdc-paginator {
+  @apply bg-transparent;
+}

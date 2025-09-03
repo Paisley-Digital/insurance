@@ -130,7 +130,13 @@
     </form>
   </mat-dialog-content>
   <mat-dialog-actions align="start" class="!my-4">
-    <button mat-flat-button (click)="sendInvite()">Send Invitation</button>
+    <button
+      mat-flat-button
+      (click)="sendInvite()"
+      [insuranceOverlaySpinner]="invitingEmployee()"
+    >
+      Send Invitation
+    </button>
     <button mat-stroked-button mat-dialog-close>Cancel</button>
   </mat-dialog-actions>
 </ng-template>
@@ -141,7 +147,12 @@
     <p>Are you sure you want to delete this user?</p>
   </mat-dialog-content>
   <mat-dialog-actions align="start" class="!my-4">
-    <button mat-flat-button class="warn" (click)="confirmDeleteEmployee()">
+    <button
+      mat-flat-button
+      class="warn"
+      [insuranceOverlaySpinner]="deletingEmployee()"
+      (click)="confirmDeleteEmployee()"
+    >
       Delete
     </button>
     <button mat-stroked-button mat-dialog-close>Cancel</button>

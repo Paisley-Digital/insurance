@@ -42,6 +42,9 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { formatFileSize } from '@shared-util-common';
 import { AlertService } from '@shared-ui-alert';
+import { EmployeeManagementService } from '@insurance-broker-data-employee-management';
+import { finalize, noop } from 'rxjs';
+import { OverlaySpinnerDirective } from '@insurance-shared-ui-overlay-spinner';
 
 @Component({
   selector: 'insurance-employee-management',
@@ -65,6 +68,7 @@ import { AlertService } from '@shared-ui-alert';
     MatChipListbox,
     MatChipOption,
     MatPaginator,
+    OverlaySpinnerDirective,
   ],
   templateUrl: './employee-management.component.html',
   styleUrl: './employee-management.component.scss',
@@ -73,6 +77,7 @@ export class EmployeeManagementComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   readonly dialog = inject(MatDialog);
   private alert = inject(AlertService);
+  private service = inject(EmployeeManagementService);
   protected readonly employeeStatus = employeeStatus;
 
   invitationDialog = viewChild<TemplateRef<unknown>>('invitationDialog');
@@ -90,6 +95,8 @@ export class EmployeeManagementComponent implements OnInit {
   licenseFile = signal<File | null>(null);
   licenseFilePreview = signal<string | ArrayBuffer | null>(null);
   licenseFileSize = signal('');
+  deletingEmployee = signal(false);
+  invitingEmployee = signal(false);
 
   collectedData = COLLECTED_DATA_EMPLOYEE;
   dataEmployeeSource = new MatTableDataSource(COLLECTED_DATA_EMPLOYEE);
@@ -125,10 +132,19 @@ export class EmployeeManagementComponent implements OnInit {
 
   sendInvite() {
     if (this.invitationForm.invalid) return;
-    this.invitationDialogRef?.close();
-    this.dialog.open(this.successfulInviteDialog()!, {
-      width: '460px',
-    });
+    this.invitingEmployee.set(true);
+    this.service
+      .sendInviteEmail(this.invitationForm.getRawValue().email!)
+      .pipe(finalize(() => this.invitingEmployee.set(false)))
+      .subscribe({
+        next: noop,
+        error: () => {
+          this.invitationDialogRef?.close();
+          this.dialog.open(this.successfulInviteDialog()!, {
+            width: '460px',
+          });
+        },
+      });
   }
 
   deleteEmployee(id: number) {
@@ -139,12 +155,21 @@ export class EmployeeManagementComponent implements OnInit {
   }
 
   confirmDeleteEmployee() {
-    this.collectedData = this.collectedData.filter(
-      (employee) => employee.id !== this.userId()
-    );
+    this.deletingEmployee.set(true);
+    this.service
+      .removeEmployee(this.userId()!.toString())
+      .pipe(finalize(() => this.deletingEmployee.set(false)))
+      .subscribe({
+        next: noop,
+        error: () => {
+          this.collectedData = this.collectedData.filter(
+            (employee) => employee.id !== this.userId()
+          );
 
-    this.filterTableWithSelectedStatusAfterDelete();
-    this.deleteDialogRef?.close();
+          this.filterTableWithSelectedStatusAfterDelete();
+          this.deleteDialogRef?.close();
+        },
+      });
   }
 
   onFileLicenseSelected(event: Event) {

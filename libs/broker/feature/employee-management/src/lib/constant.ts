@@ -1,6 +1,7 @@
 import { StepState } from '@angular/cdk/stepper';
 
 export type EmployeeStatus =
+  | 'ALL'
   | 'SENT'
   | 'REGISTERED'
   | 'COMPLETE'
@@ -543,6 +544,7 @@ export const COLLECTED_DATA_EMPLOYEE: Employee[] = [
 ];
 
 export const employeeStatus: EmployeeStatusType[] = [
+  { title: 'All', value: 'ALL' },
   { title: 'Invitation sent', value: 'SENT' },
   { title: 'Registered', value: 'REGISTERED' },
   { title: 'Documents completed', value: 'COMPLETE' },
@@ -558,4 +560,5 @@ export const statusClasses: Record<EmployeeStatus, string> = {
   APPROVED: '!bg-green-100 !text-green-500',
   REJECTED: '!bg-red-100 !text-red-500',
   SENT: '!bg-gray-100 !text-gray-500',
+  ALL: '',
 };

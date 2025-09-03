@@ -76,11 +76,13 @@ export class EmployeeManagementComponent implements OnInit {
   displayedColumnsCollection: string[] = [
     'fullName',
     'email',
+    'requestDate',
     'registrationDate',
     'status',
+    'delete',
     'arrow',
   ];
-  statusForm = new FormControl('' as EmployeeStatus);
+  statusForm = new FormControl('ALL' as EmployeeStatus);
   invitationForm = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
   });
@@ -107,12 +109,34 @@ export class EmployeeManagementComponent implements OnInit {
     });
   }
 
+  deleteEmployee(id: number) {
+    this.collectedData = this.collectedData.filter(
+      (employee) => employee.id !== id
+    );
+
+    this.filterTableWithSelectedStatusAfterDelete();
+  }
+
+  private filterTableWithSelectedStatusAfterDelete() {
+    const status = this.statusForm.value;
+    if (status !== 'ALL') {
+      this.dataEmployeeSource.data = this.collectedData.filter(
+        (employee) => employee.enum === status
+      );
+    } else {
+      this.dataEmployeeSource.data = this.collectedData;
+    }
+  }
+
   private filterTableWithSelectedStatus() {
     this.statusForm.valueChanges.subscribe((status) => {
-      if (status) {
+      if (status !== 'ALL') {
         this.dataEmployeeSource.data = this.collectedData.filter(
           (employee) => employee.enum === status
         );
+        return;
+      } else if (status === 'ALL') {
+        this.dataEmployeeSource.data = this.collectedData;
         return;
       }
       this.dataEmployeeSource.data = this.collectedData;

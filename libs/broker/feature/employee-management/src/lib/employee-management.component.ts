@@ -34,7 +34,11 @@ import {
 } from './constant';
 import { MatSelectModule } from '@angular/material/select';
 import { RouterLink } from '@angular/router';
-import { MatChipListbox, MatChipOption } from '@angular/material/chips';
+import {
+  MatChipListbox,
+  MatChipOption,
+  MatChipRemove,
+} from '@angular/material/chips';
 import { MatPaginator } from '@angular/material/paginator';
 import { formatFileSize } from '@shared-util-common';
 import { AlertService } from '@shared-ui-alert';

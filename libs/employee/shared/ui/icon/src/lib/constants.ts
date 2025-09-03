@@ -6,6 +6,7 @@ export const svgIconNames = [
   'google-login',
   'search',
   'add-blue',
+  'download-blue',
   'mail',
   'bell',
   'pdf',

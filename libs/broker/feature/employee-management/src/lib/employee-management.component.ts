@@ -36,6 +36,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { RouterLink } from '@angular/router';
 import { MatChipListbox, MatChipOption } from '@angular/material/chips';
 import { MatPaginator } from '@angular/material/paginator';
+import { formatFileSize } from '@shared-util-common';
+import { AlertService } from '@shared-ui-alert';
 
 @Component({
   selector: 'insurance-employee-management',
@@ -66,6 +68,7 @@ import { MatPaginator } from '@angular/material/paginator';
 export class EmployeeManagementComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   readonly dialog = inject(MatDialog);
+  private alert = inject(AlertService);
   protected readonly employeeStatus = employeeStatus;
 
   invitationDialog = viewChild<TemplateRef<unknown>>('invitationDialog');
@@ -77,7 +80,12 @@ export class EmployeeManagementComponent implements OnInit {
     'deleteEmployeeDialog'
   );
 
+  bulkDialog = viewChild<TemplateRef<unknown>>('bulkDialog');
+
   userId = signal<number | null>(null);
+  licenseFile = signal<File | null>(null);
+  licenseFilePreview = signal<string | ArrayBuffer | null>(null);
+  licenseFileSize = signal('');
 
   collectedData = COLLECTED_DATA_EMPLOYEE;
   dataEmployeeSource = new MatTableDataSource(COLLECTED_DATA_EMPLOYEE);
@@ -133,6 +141,57 @@ export class EmployeeManagementComponent implements OnInit {
 
     this.filterTableWithSelectedStatusAfterDelete();
     this.deleteDialogRef?.close();
+  }
+
+  onFileLicenseSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files) return;
+    const file = input.files[0];
+    if (file && file.size <= 2 * 1024 * 1024) {
+      this.licenseFile.set(file);
+      this.licenseFileSize.set(formatFileSize(file.size));
+      this.updateFilePreview(file);
+      return;
+    }
+    this.showAlertInUploadFileMaximumSize();
+  }
+
+  onDragOverLicenseFile(event: DragEvent) {
+    event.preventDefault();
+  }
+
+  onDropLicenseFile(event: DragEvent) {
+    event.preventDefault();
+
+    const file = event.dataTransfer?.files?.[0];
+    if (file) {
+      this.licenseFile.set(file);
+      this.updateFilePreview(file);
+      this.licenseFileSize.set(formatFileSize(file.size));
+    }
+  }
+
+  removeLicenseFile() {
+    this.licenseFilePreview.set(null);
+    this.licenseFile.set(null);
+  }
+
+  openUploadBulkDialog() {
+    this.dialog.open(this.bulkDialog()!, {
+      width: '460px',
+    });
+  }
+
+  private updateFilePreview(file: File) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.licenseFilePreview.set(reader.result);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  private showAlertInUploadFileMaximumSize() {
+    this.alert.open('File size exceeds 2MB!');
   }
 
   private filterTableWithSelectedStatusAfterDelete() {

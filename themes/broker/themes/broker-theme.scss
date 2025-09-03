@@ -28,9 +28,6 @@ $theme: mat.define-theme(
   )
 );
 
-@include mat.core();
-@include mat.color-variants-backwards-compatibility($theme);
-
 .primary {
   @include mat.button-color($theme, $color-variant: primary);
 }

@@ -6,7 +6,7 @@
           <mat-icon svgIcon="add" />
           <span> Add New User </span>
         </button>
-        <button mat-stroked-button (click)="openInvitationDialog()">
+        <button mat-stroked-button (click)="openUploadBulkDialog()">
           <mat-icon svgIcon="add-blue" />
           <span> Bulk Upload </span>
         </button>
@@ -161,5 +161,86 @@
       width="124"
       height="94"
     />
+  </mat-dialog-actions>
+</ng-template>
+
+<ng-template #bulkDialog>
+  <h1 mat-dialog-title class="!font-bold">Bulk Upload Users</h1>
+  <mat-dialog-content>
+    <p>
+      Please upload a file containing the user data. You can download a sample
+      template to make sure the format is correct.
+    </p>
+    <button mat-button>
+      <mat-icon svgIcon="download-blue" />Download sample file (.xlsx)
+    </button>
+    <div
+      class="flex flex-1 flex-col border-dashed p-6 mt-3 border-gray-300 rounded-lg"
+      (dragover)="onDragOverLicenseFile($event)"
+      (drop)="onDropLicenseFile($event)"
+    >
+      @if (licenseFile()) {
+      <div class="flex flex-col !justify-center !items-center mt-4">
+        <p>Image size: {{ licenseFileSize() }}</p>
+        <img
+          [ngSrc]="licenseFilePreview()!"
+          class="!object-cover rounded-md"
+          width="210"
+          height="120"
+          alt="File preview"
+        />
+        <div class="flex justify-center">
+          <button mat-icon-button type="button" (click)="removeLicenseFile()">
+            <mat-icon svgIcon="trash-warn" />
+          </button>
+          <input
+            type="file"
+            #fileLicenseInput
+            (change)="onFileLicenseSelected($event)"
+            accept="image/png, image/jpeg, application/pdf"
+            hidden
+          />
+          <button
+            mat-icon-button
+            (click)="fileLicenseInput.click()"
+            type="button"
+          >
+            <mat-icon svgIcon="retry" />
+          </button>
+        </div>
+      </div>
+      } @else {
+
+      <div class="flex flex-col justify-center items-center gap-3">
+        <span class="!font-semibold">Drag & Drop your file here</span>
+        <span class="font-light text-gray-400 relative top-2">
+          Accepted formats: .xlsx, .csv</span
+        >
+        <span class="font-light text-gray-400">Max file size: 5MB.</span>
+      </div>
+
+      <div class="flex flex-col gap-6 justify-center items-center">
+        <input
+          type="file"
+          #fileLicenseInput
+          (change)="onFileLicenseSelected($event)"
+          accept="image/png, image/jpeg, application/pdf"
+          hidden
+        />
+        <button
+          mat-stroked-button
+          class="mt-4"
+          (click)="fileLicenseInput.click()"
+          type="button"
+        >
+          Browse
+        </button>
+      </div>
+      }
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="start" class="!my-4">
+    <button mat-flat-button mat-dialog-close>Start Upload</button>
+    <button mat-stroked-button mat-dialog-close>Cancel</button>
   </mat-dialog-actions>
 </ng-template>

@@ -30,11 +30,17 @@
       "@insurance-broker-feature-ekyc-management": [
         "libs/broker/feature/ekyc-management/src/index.ts"
       ],
+      "@insurance-broker-feature-employee-management": [
+        "libs/broker/feature/employee-management/src/index.ts"
+      ],
       "@insurance-broker-feature-header": [
         "libs/broker/feature/header/src/index.ts"
       ],
       "@insurance-broker-feature-shell": [
         "libs/broker/feature/shell/src/index.ts"
+      ],
+      "@insurance-broker-data-employee-management": [
+        "libs/broker/data/employee-management/src/index.ts"
       ],
       "@insurance-customer-feature-auth": [
         "libs/customer/feature/auth/src/index.ts"

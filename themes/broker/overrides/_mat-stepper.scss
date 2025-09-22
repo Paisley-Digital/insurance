@@ -1,0 +1,11 @@
+@use '@angular/material' as mat;
+
+// Customize the entire app. Change :root to your selector if you want to scope the styles.
+:root {
+  @include mat.stepper-overrides(
+    (
+      header-icon-background-color: #23273061,
+      header-edit-state-icon-background-color: #8aa5cf,
+    )
+  );
+}

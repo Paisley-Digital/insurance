@@ -29,7 +29,7 @@ import {
 } from '@angular/material/dialog';
 import { AnimationItem } from 'lottie-web';
 import { extractImage, formatFileSize, replaceKeys } from '@shared-util-common';
-import { finalize, switchMap } from 'rxjs';
+import { finalize, switchMap, map } from 'rxjs';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
@@ -43,6 +43,7 @@ import { MatInput } from '@angular/material/input';
 import {
   CustomerManagementService,
   CustomerDashboard,
+  CustomerBulkImportService,
 } from '@insurance/customer/data-services';
 import { Observable } from 'rxjs';
 
@@ -68,6 +69,10 @@ type FileType = 'passport' | 'emiratesIdFront' | 'emiratesIdBack' | 'residency';
     MatError,
     NgOptimizedImage,
     ReactiveFormsModule,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
   ],
   templateUrl: './insurance-customer-feature-upload.component.html',
   styleUrl: './insurance-customer-feature-upload.component.scss',
@@ -77,16 +82,161 @@ export class InsuranceCustomerFeatureUploadComponent implements OnInit {
   private alert = inject(AlertService);
   private employeeDataDashboardService = inject(EmployeeDataDashboardService);
   private customerManagementService = inject(CustomerManagementService);
+  private customerBulkImportService = inject(CustomerBulkImportService);
   private document = inject(DOCUMENT);
+  private dialog = inject(MatDialog);
 
   customerDashboard$: Observable<CustomerDashboard> | undefined;
 
-  // Rest of the component implementation...
-  // (keeping the existing implementation but adding the service usage)
+  // File signals
+  file = signal<File | null>(null);
+  filePassport = signal<File | null>(null);
+  fileEmiratesIdFront = signal<File | null>(null);
+  fileEmiratesIdBack = signal<File | null>(null);
+  
+  // File preview signals
+  filePreview = signal<string | ArrayBuffer | null>(null);
+  passportFilePreview = signal<string | ArrayBuffer | null>(null);
+  filePreviewEmiratesIdFront = signal<string | ArrayBuffer | null>(null);
+  filePreviewEmiratesIdBack = signal<string | ArrayBuffer | null>(null);
+  
+  // File size signals
+  fileSize = signal('');
+  fileSizePassport = signal('');
+  fileSizeIdFront = signal('');
+  fileSizeIdBack = signal('');
+  
+  // Loading signal
+  _loading = signal(false);
+
+  // Other properties
+  currentView: View = 'upload';
+  forms: FormsEntity[] = [];
+  displayedColumns = ['name', 'status', 'actions'];
 
   ngOnInit() {
-    this.customerDashboard$ = this.customerManagementService.getDashboard();
+    this.customerDashboard$ = this.customerManagementService.getDashboard().pipe(
+      map(response => response.data)
+    );
   }
 
-  // Add other methods as needed...
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files) return;
+    const file = input.files[0];
+    if (file && file.size <= 2 * 1024 * 1024) {
+      this.file.set(file);
+      this.fileSize.set(formatFileSize(file.size));
+      this.updateFilePreview(file, 'residency');
+      return;
+    }
+    this.showAlertInUploadFileMaximumSize();
+  }
+
+  onFileSelectedPassport(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files) return;
+    const file = input.files[0];
+    if (file && file.size <= 2 * 1024 * 1024) {
+      this.filePassport.set(file);
+      this.fileSizePassport.set(formatFileSize(file.size));
+      this.updateFilePreview(file, 'passport');
+      return;
+    }
+    this.showAlertInUploadFileMaximumSize();
+  }
+
+  onFileSelectedIdFront(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files) return;
+    const file = input.files[0];
+    if (file && file.size <= 2 * 1024 * 1024) {
+      this.fileEmiratesIdFront.set(file);
+      this.fileSizeIdFront.set(formatFileSize(file.size));
+      this.updateFilePreview(file, 'emiratesIdFront');
+      return;
+    }
+    this.showAlertInUploadFileMaximumSize();
+  }
+
+  onFileSelectedIdBack(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files) return;
+    const file = input.files[0];
+    if (file && file.size <= 2 * 1024 * 1024) {
+      this.fileEmiratesIdBack.set(file);
+      this.fileSizeIdBack.set(formatFileSize(file.size));
+      this.updateFilePreview(file, 'emiratesIdBack');
+      return;
+    }
+    this.showAlertInUploadFileMaximumSize();
+  }
+
+  removeFile() {
+    this.filePreview.set(null);
+    this.file.set(null);
+  }
+
+  removeFilePassport() {
+    this.passportFilePreview.set(null);
+    this.filePassport.set(null);
+  }
+
+  removeFileIdFront() {
+    this.filePreviewEmiratesIdFront.set(null);
+    this.fileEmiratesIdFront.set(null);
+  }
+
+  removeFileIdBack() {
+    this.filePreviewEmiratesIdBack.set(null);
+    this.fileEmiratesIdBack.set(null);
+  }
+
+  uploadFiles() {
+    this._loading.set(true);
+    
+    // Example of using the bulk import service
+    const file = this.file();
+    if (file) {
+      this.customerBulkImportService.uploadFile(file, 'Customer document upload').subscribe({
+        next: (response) => {
+          console.log('File uploaded successfully:', response);
+          this.alert.open('Files uploaded successfully!');
+          this._loading.set(false);
+        },
+        error: (error) => {
+          console.error('Error uploading file:', error);
+          this.alert.open('Error uploading files!');
+          this._loading.set(false);
+        }
+      });
+    } else {
+      this._loading.set(false);
+    }
+  }
+
+  private updateFilePreview(file: File, type: FileType) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      switch (type) {
+        case 'residency':
+          this.filePreview.set(reader.result);
+          break;
+        case 'passport':
+          this.passportFilePreview.set(reader.result);
+          break;
+        case 'emiratesIdFront':
+          this.filePreviewEmiratesIdFront.set(reader.result);
+          break;
+        case 'emiratesIdBack':
+          this.filePreviewEmiratesIdBack.set(reader.result);
+          break;
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  private showAlertInUploadFileMaximumSize() {
+    this.alert.open('File size exceeds 2MB!');
+  }
 }

@@ -41,6 +41,7 @@ import {
 import { formatFileSize } from '@shared-util-common';
 import { BrokerEkycService, EkycTemplate } from '@insurance/broker/data-services';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 type FileType = 'firstStep' | 'fund' | 'lastStepOfOne' | 'lastStepOfSecond';
 
@@ -162,7 +163,9 @@ export class BrokerFeatureEkycManagementComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.ekycTemplates$ = this.brokerEkycService.listTemplates();
+    this.ekycTemplates$ = this.brokerEkycService.listTemplates().pipe(
+      map(response => response.data)
+    );
   }
 
   get getCharacter() {

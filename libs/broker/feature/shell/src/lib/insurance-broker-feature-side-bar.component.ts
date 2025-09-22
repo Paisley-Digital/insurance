@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import {
   MatListItem,
@@ -15,7 +15,6 @@ import { MatIcon } from '@angular/material/icon';
     CommonModule,
     MatIcon,
     RouterLink,
-    NgOptimizedImage,
     MatAccordion,
     RouterLinkActive,
     MatExpansionModule,

@@ -12,9 +12,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { isHandsetScreen } from '@shared-util-common';
-import { OverlaySpinnerDirective } from '@insurance-shared-ui-overlay-spinner';
 import { AuthService } from '@shared-util-web-sdk';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'insurance-broker-feature-auth',
@@ -30,7 +28,6 @@ import { Observable } from 'rxjs';
     MatButtonModule,
     ErrorMessageComponent,
     MatCheckboxModule,
-    OverlaySpinnerDirective,
     NgOptimizedImage,
   ],
   templateUrl: './broker-feature-auth.component.html',
@@ -75,13 +72,15 @@ export class BrokerFeatureAuthComponent {
 
   generateOtp() {
     const email = this.loginForm.getRawValue().userName;
-    this.authService.generateOtp({ email }).subscribe({
-      next: (response) => {
-        console.log('OTP sent:', response);
-      },
-      error: (error) => {
-        console.error('Error sending OTP:', error);
-      }
-    });
+    if (email) {
+      this.authService.generateOtp({ email }).subscribe({
+        next: (response) => {
+          console.log('OTP sent:', response);
+        },
+        error: (error) => {
+          console.error('Error sending OTP:', error);
+        }
+      });
+    }
   }
 }

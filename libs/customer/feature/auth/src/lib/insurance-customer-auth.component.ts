@@ -77,13 +77,15 @@ export class InsuranceCustomerAuthComponent {
 
   generateOtp() {
     const email = this.loginForm.getRawValue().userName;
-    this.authService.generateOtp({ email }).subscribe({
-      next: (response) => {
-        console.log('OTP sent:', response);
-      },
-      error: (error) => {
-        console.error('Error sending OTP:', error);
-      }
-    });
+    if (email) {
+      this.authService.generateOtp({ email }).subscribe({
+        next: (response) => {
+          console.log('OTP sent:', response);
+        },
+        error: (error) => {
+          console.error('Error sending OTP:', error);
+        }
+      });
+    }
   }
 }

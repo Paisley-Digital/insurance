@@ -8,7 +8,7 @@ import { AiPayload, AiResponse, FileResponse } from './employee-data-dashboard.m
 })
   export class FileUploadService {
   private apiUrl =
-    'https://insurancebase.paisley.monster/files/api/v1/files/1/upload';
+    'https://api.paisley.codes/files/api/v1/files/1/upload';
 
   constructor(private http: HttpClient) {}
 
@@ -41,7 +41,7 @@ import { AiPayload, AiResponse, FileResponse } from './employee-data-dashboard.m
       contactNumber: string;
     }
   ): Observable<any> {
-    const apiUrl = `https://insurancebase.paisley.monster/documents/api/v1/companies/${companyId}/documents`;
+    const apiUrl = `https://api.paisley.codes/documents/api/v1/companies/${companyId}/documents`;
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ import { AiPayload, AiResponse, FileResponse } from './employee-data-dashboard.m
 
   postAiService(payload: AiPayload) {
     return this.http.post<AiResponse>(
-      'https://insurancebase.paisley.monster/api/ai_service/ocr',
+      'https://api.paisley.codes/api/ai_service/ocr',
       payload
     );
   }

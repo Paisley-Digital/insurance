@@ -11,11 +11,11 @@ export class EmployeeManagementService {
 
   removeEmployee(id: string) {
     return this.http.delete(
-      `https://localhost:8080/employers/${id}/employees/${id}`
+      `https://api.paisley.codes/employers/${id}/employees/${id}`
     );
   }
 
   sendInviteEmail(email: string) {
-    return this.http.get(`https://localhost:8080/auth/check-email/${email}`);
+    return this.http.get(`https://api.paisley.codes/auth/check-email/${email}`);
   }
 }

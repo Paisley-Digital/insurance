@@ -4,7 +4,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { employeeDataDashboardMock } from '@insurance-employee-data-dashboards';
 import { MatCard, MatCardContent } from '@angular/material/card';
-import { RouterLink } from '@angular/router';
 import { MatDivider } from '@angular/material/divider';
 import { NgxEchartsDirective } from 'ngx-echarts';
 import * as echarts from 'echarts';

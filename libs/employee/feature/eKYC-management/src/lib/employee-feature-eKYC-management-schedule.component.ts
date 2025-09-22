@@ -42,6 +42,10 @@ import { RouterLink } from '@angular/router';
 })
 export class EmployeeFeatureEKYCManagementScheduleComponent implements OnInit {
   private _formBuilder = inject(FormBuilder);
+
+  readonly keywords = signal(['']);
+  readonly formControl = new FormControl(['angular']);
+
   announcer = inject(LiveAnnouncer);
 
   firstFormGroup = this._formBuilder.group({
@@ -50,9 +54,11 @@ export class EmployeeFeatureEKYCManagementScheduleComponent implements OnInit {
   secondFormGroup = this._formBuilder.group({
     emails: this._formBuilder.array<FormControl>([]),
     notificationType: ['', Validators.required],
+    notificationTitle: ['', Validators.required],
     sendOn: ['', Validators.required],
     repeat: ['', Validators.required],
     note: ['', Validators.required],
+    phoneNumber: ['', Validators.required],
   });
   emailInput = new FormControl('', [Validators.email]);
   repeatOptions = [
@@ -73,13 +79,6 @@ export class EmployeeFeatureEKYCManagementScheduleComponent implements OnInit {
     if (this.firstFormGroup.valid) {
       stepper.next();
     }
-  }
-
-  readonly keywords = signal(['']);
-  readonly formControl = new FormControl(['angular']);
-
-  get emails() {
-    return this.secondFormGroup.get('emails') as FormArray;
   }
 
   addEmail(event: MatChipInputEvent) {
@@ -108,5 +107,8 @@ export class EmployeeFeatureEKYCManagementScheduleComponent implements OnInit {
     const removed = this.emails.at(index).value;
     this.emails.removeAt(index);
     this.announcer.announce(`removed ${removed}`);
+  }
+  get emails() {
+    return this.secondFormGroup.get('emails') as FormArray;
   }
 }

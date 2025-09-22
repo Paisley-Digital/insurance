@@ -48,8 +48,8 @@ export class EmployeeFeatureEKYCManagementHistoryComponent {
   displayedColumns: string[] = [
     'employer',
     'template',
-    'expiry',
     'submitted',
+    'expiry',
     'status',
   ];
   dataSource = [

@@ -21,6 +21,17 @@
     label="Assign to Employee"
   >
     <form [formGroup]="secondFormGroup" class="flex flex-col">
+      <div class="my-2 font-bold text-gray-600">Notification Title</div>
+      <mat-form-field class="example-form-field">
+        <mat-label>Enter notification title</mat-label>
+        <input formControlName="notificationTitle" type="text" matInput />
+        <mat-error>
+          <insurance-error-message
+            [input]="secondFormGroup.get('notificationTitle')"
+          />
+        </mat-error>
+      </mat-form-field>
+
       <div class="my-2 font-bold text-gray-600">Assign to</div>
       <mat-form-field class="example-form-field">
         <mat-label>Contact emails</mat-label>
@@ -47,6 +58,17 @@
           <insurance-error-message
             [input]="emailInput"
           ></insurance-error-message>
+        </mat-error>
+      </mat-form-field>
+
+      <div class="my-2 font-bold text-gray-600">phone Number</div>
+      <mat-form-field class="example-form-field">
+        <mat-label>Enter phone number</mat-label>
+        <input formControlName="phoneNumber" type="text" matInput />
+        <mat-error>
+          <insurance-error-message
+            [input]="secondFormGroup.get('phoneNumber')"
+          />
         </mat-error>
       </mat-form-field>
 
@@ -135,53 +157,19 @@
   </mat-step>
   <mat-step completed="false">
     <ng-template matStepLabel>Submit</ng-template>
-    <h3>Select KYC Form</h3>
+    <h3 class="!text-[#232730DE] font-medium">Select KYC Form</h3>
     <div class="flex gap-2 items-center">
       <mat-icon svgIcon="fluent-calendar" />
-      <h2>Know-Your-Customer Form- Group Policies</h2>
+      <h3 class="!text-[#363636] !font-medium">
+        Know-Your-Customer Form- Group Policies
+      </h3>
     </div>
     <div class="w-full !pb-[3rem]">
       <div class="w-full !pb-[3rem]">
-        <h2 class="text-lg font-semibold mb-4">Assigned to Employer</h2>
+        <h3 class="text-[#232730DE] ! font-semibold mb-4">
+          Assigned to Employer
+        </h3>
         <div class="flex w-full gap-4">
-          <div class="w-full">
-            <div class="grid grid-cols-5 w-full">
-              <div
-                class="col-span-3 bg-[#9098A70F] flex items-center ps-2 min-h-[48px] rounded-s-lg"
-              >
-                Notification Type
-              </div>
-              <div
-                class="col-span-2 bg-[#9098A70F] flex items-center justify-end pe-2 rounded-e-lg"
-              >
-                Email
-              </div>
-
-              <div class="col-span-3 flex items-center ps-2 min-h-[48px]">
-                When to Send
-              </div>
-              <div class="col-span-2 flex items-center justify-end pe-2">
-                One month before expiry
-              </div>
-
-              <div
-                class="col-span-3 bg-[#9098A70F] flex items-center ps-2 min-h-[48px] rounded-s-lg"
-              >
-                From Date
-              </div>
-              <div
-                class="col-span-2 bg-[#9098A70F] flex items-center justify-end pe-2 rounded-e-lg"
-              >
-                March 6, 2025
-              </div>
-              <div class="col-span-3 flex items-center ps-2 min-h-[48px]">
-                To Date
-              </div>
-              <div class="col-span-2 flex items-center justify-end pe-2">
-                December 12, 2025
-              </div>
-            </div>
-          </div>
           <div class="w-full">
             <div class="grid grid-cols-5 w-full">
               <div
@@ -196,21 +184,69 @@
               </div>
 
               <div class="col-span-3 flex items-center ps-2 min-h-[48px]">
-                Assigned Person (Name)
+                Assigned Person (Email)
               </div>
               <div class="col-span-2 flex items-center justify-end pe-2">
-                December 12, 2025
+                {{ 'Helix@gmail.com' }}
               </div>
 
               <div
                 class="col-span-3 bg-[#9098A70F] flex items-center ps-2 min-h-[48px] rounded-s-lg"
               >
-                Assigned Person (Email)
+                Notification Type:
               </div>
               <div
                 class="col-span-2 bg-[#9098A70F] flex items-center justify-end pe-2 rounded-e-lg"
               >
+                Email
+              </div>
+              <div class="col-span-3 flex items-center ps-2 min-h-[48px]">
+                From Date:
+              </div>
+              <div class="col-span-2 flex items-center justify-end pe-2">
                 March 6, 2025
+              </div>
+            </div>
+          </div>
+          <div class="w-full">
+            <div class="grid grid-cols-5 w-full">
+              <div
+                class="col-span-3 bg-[#9098A70F] flex items-center ps-2 min-h-[48px] rounded-s-lg"
+              >
+                Assigned Person (Name)
+              </div>
+              <div
+                class="col-span-2 bg-[#9098A70F] flex items-center justify-end pe-2 rounded-e-lg"
+              >
+                December 12, 2025
+              </div>
+
+              <div class="col-span-3 flex items-center ps-2 min-h-[48px]">
+                Assignee Mobile:
+              </div>
+              <div class="col-span-2 flex items-center justify-end pe-2">
+                +971 50 123 4567
+              </div>
+
+              <div
+                class="col-span-3 bg-[#9098A70F] flex items-center ps-2 min-h-[48px] rounded-s-lg"
+              >
+                Frequency of Delivery:
+              </div>
+              <div
+                class="col-span-2 bg-[#9098A70F] flex items-center justify-end pe-2 rounded-e-lg"
+              >
+                One Month Before Expiry
+              </div>
+              <div
+                class="col-span-3 bg-[#9098A70F] flex items-center ps-2 min-h-[48px] rounded-s-lg"
+              >
+                To Date:
+              </div>
+              <div
+                class="col-span-2 bg-[#9098A70F] flex items-center justify-end pe-2 rounded-e-lg"
+              >
+                December 12, 2025
               </div>
             </div>
           </div>

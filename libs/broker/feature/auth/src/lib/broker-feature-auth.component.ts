@@ -1,21 +1,20 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { isHandsetScreen } from '@shared-util-common';
-import {
-  FormBuilder,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { Router } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatAnchor, MatButtonModule } from '@angular/material/button';
-import { MatFormField } from '@angular/material/form-field';
+import { MatAnchor } from '@angular/material/button';
+import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { ErrorMessageComponent } from '@shared-ui-input-validator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { isHandsetScreen } from '@shared-util-common';
 import { OverlaySpinnerDirective } from '@insurance-shared-ui-overlay-spinner';
+import { AuthService } from '@shared-util-web-sdk';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'insurance-broker-feature-auth',
@@ -40,6 +39,7 @@ import { OverlaySpinnerDirective } from '@insurance-shared-ui-overlay-spinner';
 export class BrokerFeatureAuthComponent {
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
+  private authService = inject(AuthService);
 
   isHandsetScreen$ = isHandsetScreen();
 
@@ -71,5 +71,17 @@ export class BrokerFeatureAuthComponent {
     }
     this.loading.set(true);
     this.router.navigate(['/console']);
+  }
+
+  generateOtp() {
+    const email = this.loginForm.getRawValue().userName;
+    this.authService.generateOtp({ email }).subscribe({
+      next: (response) => {
+        console.log('OTP sent:', response);
+      },
+      error: (error) => {
+        console.error('Error sending OTP:', error);
+      }
+    });
   }
 }

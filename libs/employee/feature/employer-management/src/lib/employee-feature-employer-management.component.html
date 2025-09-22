@@ -8,65 +8,84 @@
     <ng-container [ngTemplateOutlet]="entityTemplate" />
     } @else if (_view() === 'employeeKyc') {
     <ng-container [ngTemplateOutlet]="employeeKycTemplate" />
-    } @else if (_view() === 'collectedInsurance'){
+    } @else if (_view() === 'collectedInsurance') {
     <ng-container [ngTemplateOutlet]="collectionInsuranceTemplate" />
     }
   </mat-card>
 </div>
 
 <ng-template #employeeTemplate>
-  <table mat-table [dataSource]="dataSource">
-    <ng-container matColumnDef="employer">
-      <th mat-header-cell *matHeaderCellDef>Employer</th>
-      <td mat-cell *matCellDef="let element">{{ element.employer }}</td>
-    </ng-container>
+  <div>
+    <div class="ms-20 mt-8 w-full">
+      <h3 class="text-gray-600 w-full h-auto">Employer List</h3>
+      <div class="!w-full flex gap-4">
+        <button mat-flat-button color="primary" (click)="openUploadDialog()">
+          <mat-icon svgIcon="add" class="!w-[24px] !h-[24px]" />
+          Bulk Upload
+        </button>
+        <button
+          mat-stroked-button
+          color="primary"
+          (click)="openAddEmployerDialog()"
+        >
+          <mat-icon svgIcon="add-green" class="!w-[14px] !h-[14px]"></mat-icon>
+          Add Manual
+        </button>
+      </div>
+    </div>
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="employer">
+        <th mat-header-cell *matHeaderCellDef>Employer</th>
+        <td mat-cell *matCellDef="let element">{{ element.employer }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="lastUpdate">
-      <th mat-header-cell *matHeaderCellDef>Last Update</th>
-      <td mat-cell *matCellDef="let element">{{ element.lastUpdate }}</td>
-    </ng-container>
+      <ng-container matColumnDef="lastUpdate">
+        <th mat-header-cell *matHeaderCellDef>Last Update</th>
+        <td mat-cell *matCellDef="let element">{{ element.lastUpdate }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="numberOfForms">
-      <th mat-header-cell *matHeaderCellDef>Number Of Forms</th>
-      <td mat-cell *matCellDef="let element">{{ element.numberOfForms }}</td>
-    </ng-container>
+      <ng-container matColumnDef="numberOfForms">
+        <th mat-header-cell *matHeaderCellDef>Number Of Forms</th>
+        <td mat-cell *matCellDef="let element">{{ element.numberOfForms }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="totalEmployees">
-      <th mat-header-cell *matHeaderCellDef>Total Employees</th>
-      <td mat-cell *matCellDef="let element">{{ element.totalEmployees }}</td>
-    </ng-container>
+      <ng-container matColumnDef="totalEmployees">
+        <th mat-header-cell *matHeaderCellDef>Total Employees</th>
+        <td mat-cell *matCellDef="let element">{{ element.totalEmployees }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="enrolledMembers">
-      <th mat-header-cell *matHeaderCellDef>Enrolled Members</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.enrolledMembers }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="enrolledMembers">
+        <th mat-header-cell *matHeaderCellDef>Enrolled Members</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.enrolledMembers }}
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="issues">
-      <th mat-header-cell *matHeaderCellDef>Issues</th>
-      <td mat-cell *matCellDef="let element">{{ element.issues }}</td>
-    </ng-container>
+      <ng-container matColumnDef="issues">
+        <th mat-header-cell *matHeaderCellDef>Issues</th>
+        <td mat-cell *matCellDef="let element">{{ element.issues }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="kycStatus">
-      <th mat-header-cell *matHeaderCellDef>KYC Status</th>
-      <td mat-cell *matCellDef="let element">
-        <span class="status" [ngClass]="element.kycStatus.toLowerCase()">{{
-          element.kycStatus
-        }}</span>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="kycStatus">
+        <th mat-header-cell *matHeaderCellDef>KYC Status</th>
+        <td mat-cell *matCellDef="let element">
+          <span class="status" [ngClass]="element.kycStatus.toLowerCase()">{{
+            element.kycStatus
+          }}</span>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element">
-        <mat-icon svgIcon="chevron-right" (click)="nextStep()"></mat-icon>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon svgIcon="chevron-right" (click)="nextStep()"></mat-icon>
+        </td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
   <mat-paginator [hidePageSize]="true" showFirstLastButtons></mat-paginator>
 </ng-template>
 
@@ -1189,5 +1208,176 @@
   </mat-dialog-content>
   <mat-dialog-actions align="center" class="!my-4">
     <button mat-flat-button mat-dialog-close>Open Excel File</button>
+  </mat-dialog-actions>
+</ng-template>
+
+<ng-template #uploadDialog>
+  <h2 mat-dialog-title class="!text-lg !font-semibold">
+    Bulk Upload Employers & Employees
+  </h2>
+
+  <div mat-dialog-content class="space-y-4">
+    <p class="text-gray-600 leading-6">
+      You can upload a single Excel file that contains employer and employee
+      details in separate sheets. Please make sure to use the correct format.
+    </p>
+
+    <div class="mb-4">
+      <a
+        href="https://docs.google.com/spreadsheets/d/10GPU-PW1yUspXoZjg1yNzDxTPbz4khEc2oTYTASBsFc/export?format=xlsx"
+        download
+        class="underline flex gap-2 text-[#287A6E] px-4"
+      >
+        <mat-icon svgIcon="download" class="!w-[18px] !h-[18px]" />
+        Download sample file (.xlsx)
+      </a>
+    </div>
+
+    <div
+      class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center bg-gray-50/60"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave($event)"
+      (drop)="onDrop($event)"
+      [class.border-emerald-400]="isDragging"
+      [class.bg-emerald-50]="isDragging"
+    >
+      <p class="font-medium text-gray-700">Drag & Drop your file here</p>
+      <p class="text-sm text-gray-500 mt-1">Accepted formats: .xlsx, .xls</p>
+      <p class="text-sm text-gray-500">Max file size: 5MB.</p>
+
+      <div class="mt-4">
+        <button mat-stroked-button (click)="fileInput.click()">Browse</button>
+        <input
+          #fileInput
+          type="file"
+          class="hidden"
+          [attr.accept]="ACCEPTED_ATTR"
+          (change)="onFileChange($event)"
+        />
+      </div>
+
+      <div *ngIf="file()" class="mt-4">
+        <div
+          class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white shadow"
+        >
+          <span class="text-sm font-medium text-gray-700">{{
+            file()?.name
+          }}</span>
+          <span class="text-xs text-gray-500">{{
+            humanSize(file()?.size || 0)
+          }}</span>
+        </div>
+
+        <p *ngIf="validationError()" class="text-sm text-red-600 mt-2">
+          {{ validationError() }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <mat-dialog-actions
+    align="start"
+    class="mt-4 flex items-center justify-between"
+  >
+    <button
+      mat-flat-button
+      color="primary"
+      class="px-5"
+      [disabled]="!isValid() || uploading()"
+      (click)="startUpload()"
+    >
+      {{ uploading() ? 'Uploading…' : 'Start Upload' }}
+    </button>
+    <button mat-stroked-button (click)="close()">Cancel</button>
+  </mat-dialog-actions>
+</ng-template>
+
+<ng-template #addEmployerDialog>
+  <h2 mat-dialog-title class="!font-bold !text-l">
+    Add Employer & Employee Manually
+  </h2>
+
+  <mat-dialog-content class="mt-4">
+    <mat-tab-group>
+      <mat-tab label="Employer Information">
+        <form [formGroup]="employerForm" class="flex flex-col gap-4 mt-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Employer Name</mat-label>
+            <input matInput formControlName="employerName" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Employer Email</mat-label>
+            <input matInput formControlName="employerEmail" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Country</mat-label>
+            <mat-select formControlName="country">
+              <mat-option value="uae">UAE</mat-option>
+              <mat-option value="ksa">KSA</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Industry Type</mat-label>
+            <mat-select formControlName="industryType">
+              <mat-option value="tech">Tech</mat-option>
+              <mat-option value="finance">Finance</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </form>
+      </mat-tab>
+
+      <mat-tab label="Employee Information">
+        <form [formGroup]="employeeForm" class="flex flex-col gap-4 mt-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Full Name</mat-label>
+            <input matInput formControlName="fullName" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>ID Number</mat-label>
+            <input matInput formControlName="idNumber" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Nationality</mat-label>
+            <mat-select formControlName="nationality">
+              <mat-option value="uae">UAE</mat-option>
+              <mat-option value="ksa">KSA</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div class="font-bold">Gender</div>
+          <div class="w-full !mb-4">
+            <mat-chip-listbox
+              formControlName="gender"
+              aria-label="Select Gender"
+            >
+              <mat-chip-option value="female">Female</mat-chip-option>
+              <mat-chip-option value="male">Male</mat-chip-option>
+            </mat-chip-listbox>
+          </div>
+        </form>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="start">
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="submit()"
+      [disabled]="!employerForm.valid && !employeeForm.valid"
+    >
+      Submit
+    </button>
+    <button mat-button mat-dialog-close>Cancel</button>
   </mat-dialog-actions>
 </ng-template>

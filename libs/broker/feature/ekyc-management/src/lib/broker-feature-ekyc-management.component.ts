@@ -4,6 +4,7 @@ import {
   signal,
   TemplateRef,
   ViewChild,
+  OnInit,
 } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { MatCard } from '@angular/material/card';
@@ -38,6 +39,8 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { formatFileSize } from '@shared-util-common';
+import { BrokerEkycService, EkycTemplate } from '@insurance/broker/data-services';
+import { Observable } from 'rxjs';
 
 type FileType = 'firstStep' | 'fund' | 'lastStepOfOne' | 'lastStepOfSecond';
 
@@ -67,10 +70,11 @@ type FileType = 'firstStep' | 'fund' | 'lastStepOfOne' | 'lastStepOfSecond';
   templateUrl: './broker-feature-ekyc-management.component.html',
   styleUrl: './broker-feature-ekyc-management.component.scss',
 })
-export class BrokerFeatureEkycManagementComponent {
+export class BrokerFeatureEkycManagementComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   private alert = inject(AlertService);
   private dialog = inject(MatDialog);
+  private brokerEkycService = inject(BrokerEkycService);
 
   readonly maxCharLength = 120;
   protected readonly country = country;
@@ -81,6 +85,8 @@ export class BrokerFeatureEkycManagementComponent {
   dataSource = ELEMENT_DATA;
   boardMembersList = ELEMENT_DATA_Board_Members;
   boardMembersListFour = ELEMENT_DATA_Board_Members_Four;
+
+  ekycTemplates$: Observable<EkycTemplate[]> | undefined;
 
   licenseFile = signal<File | null>(null);
   licenseFilePreview = signal<string | ArrayBuffer | null>(null);
@@ -154,6 +160,10 @@ export class BrokerFeatureEkycManagementComponent {
     companyName: ['', [Validators.required]],
     date: [Validators.required],
   });
+
+  ngOnInit() {
+    this.ekycTemplates$ = this.brokerEkycService.listTemplates();
+  }
 
   get getCharacter() {
     return `(Allowed characters: ${

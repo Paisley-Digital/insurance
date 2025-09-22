@@ -15,12 +15,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@insurance/broker/data-services": ["libs/broker/data/data-services/src/index.ts"],
+      "@insurance/customer/data-services": ["libs/customer/data/data-services/src/index.ts"],
       "@./assets": ["libs/shared/assets/src/index.ts"],
-      "@insurance-employee-feature-employer-management": [
-        "libs/employee/feature/employer-management/src/index.ts"
-      ],
       "@./insurance-customer": ["libs/customer/src/index.ts"],
       "@./locales": ["libs/shared/util/locales/src/index.ts"],
+      "@insurance-broker-data": ["broker/data/src/index.ts"],
       "@insurance-broker-feature-auth": [
         "libs/broker/feature/auth/src/index.ts"
       ],
@@ -57,6 +57,9 @@
       "@insurance-employee-feature-eKYC-management": [
         "libs/employee/feature/eKYC-management/src/index.ts"
       ],
+      "@insurance-employee-feature-employer-management": [
+        "libs/employee/feature/employer-management/src/index.ts"
+      ],
       "@insurance-employee-feature-shell": [
         "libs/employee/feature/shell/src/index.ts"
       ],
@@ -67,6 +70,9 @@
       "@insurance-shared-ui-overlay-spinner": [
         "libs/shared/ui/overlay-spinner/src/index.ts"
       ],
+      "@insurance/broker/data-access": ["broker/data-access/src/index.ts"],
+      "@insurance/customer/data-access": ["customer/data-access/src/index.ts"],
+      "@insurance/employee/data-access": ["employee/data-access/src/index.ts"],
       "@shared-ui-alert": ["libs/shared/ui/alert/src/index.ts"],
       "@shared-ui-header-desktop": [
         "libs/shared/ui/header-desktop/src/index.ts"

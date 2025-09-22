@@ -16,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { OverlaySpinnerDirective } from '@insurance-shared-ui-overlay-spinner';
+import { AuthService } from '@shared-util-web-sdk';
 
 @Component({
   selector: 'insurance-insurance-customer-auth',
@@ -40,6 +41,7 @@ import { OverlaySpinnerDirective } from '@insurance-shared-ui-overlay-spinner';
 export class InsuranceCustomerAuthComponent {
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
+  private authService = inject(AuthService);
 
   isHandsetScreen$ = isHandsetScreen();
 
@@ -65,11 +67,23 @@ export class InsuranceCustomerAuthComponent {
   navigateToProduct() {
     const userName = this.loginForm.getRawValue().userName;
     const password = this.loginForm.getRawValue().password;
-    if (userName !== 'employee1' || password !== 'testemp123') {
+    if (userName !== 'assigned1' || password !== 'testkyc123') {
       this.loginForm.get('password')?.setErrors({ notValid: true });
       return;
     }
     this.loading.set(true);
     this.router.navigate(['/console']);
+  }
+
+  generateOtp() {
+    const email = this.loginForm.getRawValue().userName;
+    this.authService.generateOtp({ email }).subscribe({
+      next: (response) => {
+        console.log('OTP sent:', response);
+      },
+      error: (error) => {
+        console.error('Error sending OTP:', error);
+      }
+    });
   }
 }

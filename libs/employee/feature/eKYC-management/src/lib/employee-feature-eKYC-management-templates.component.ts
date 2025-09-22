@@ -28,7 +28,7 @@ export class EmployeeFeatureEKYCManagementTemplatesComponent {
   favoriteSeason!: string;
   view = signal<View>('businessSelectionTemplate');
   businessSelection = [
-    { title: 'Know-Your-Customer Form- Group Policies ', tag: '2' },
+    { title: 'Know-Your-Customer Form - Group Policies', tag: '2' },
   ];
 
   selectedBusiness(tag: string) {

@@ -1,18 +1,18 @@
 import {
-  Component,
-  ViewChild,
   AfterViewInit,
+  Component,
+  computed,
+  inject,
   signal,
   TemplateRef,
   viewChild,
-  inject,
+  ViewChild,
 } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import {
   COLLECTED_DATA,
@@ -31,18 +31,22 @@ import {
   trigger,
 } from '@angular/animations';
 import { MatDivider } from '@angular/material/divider';
-import { MatRipple } from '@angular/material/core';
-import { MatChipListbox, MatChipsModule } from '@angular/material/chips';
+import { MatOption, MatRipple } from '@angular/material/core';
+import { MatChipsModule } from '@angular/material/chips';
 import {
   MatDialog,
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
+  MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInput } from '@angular/material/input';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { formatFileSize } from '@shared-util-common';
+import { MatSelect } from '@angular/material/select';
 
 interface EmployerData {
   employer: string;
@@ -53,6 +57,9 @@ interface EmployerData {
   issues: number;
   kycStatus: 'Verified' | 'unverified' | 'Pending';
 }
+
+const ACCEPTED_EXT = ['.xlsx', '.xls'];
+const MAX_SIZE_BYTES = 5 * 1024 * 1024;
 
 interface KycData {
   fullName: string;
@@ -116,7 +123,6 @@ type View =
     MatDivider,
     NgOptimizedImage,
     MatRipple,
-    MatChipListbox,
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
@@ -125,6 +131,9 @@ type View =
     MatDatepickerModule,
     MatChipsModule,
     MatInput,
+    ReactiveFormsModule,
+    MatSelect,
+    MatOption,
   ],
   animations: [
     trigger('detailExpand', [
@@ -142,6 +151,10 @@ type View =
 export class EmployeeFeatureEmployerManagementComponent
   implements AfterViewInit
 {
+  private addEmployerDialogRef?: MatDialogRef<unknown>;
+  private uploadFileRef?: MatDialogRef<unknown>;
+  private fb = inject(FormBuilder);
+
   readonly dialog = inject(MatDialog);
   data: EmployerData[] = EMPLOYER_DATA;
   dataKyc: KycData[] = EMPLOYEE_KYC_DATA;
@@ -153,10 +166,16 @@ export class EmployeeFeatureEmployerManagementComponent
   selectedTransactionExpiredId: number | null = null;
   selectedTransactionRejectedId: number | null = null;
 
+  uploadFilePreview: string | ArrayBuffer | null = null;
+
   _view = signal<View>('employee');
+  // fileUpload = signal('');
+  // fileSelected = signal<File | null>(null);
   _isExpanded = signal(true);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('uploadDialog') uploadDialog!: TemplateRef<unknown>;
+  @ViewChild('addEmployerDialog') addEmployerDialog!: TemplateRef<unknown>;
 
   downloadDialog = viewChild<TemplateRef<unknown>>('downloadDialog');
 
@@ -210,6 +229,21 @@ export class EmployeeFeatureEmployerManagementComponent
     'rejectionReason',
     'action',
   ];
+
+  employerForm = this.fb.group({
+    employerName: ['', Validators.required],
+    employerEmail: ['', [Validators.required, Validators.email]],
+    country: ['', Validators.required],
+    industryType: ['', Validators.required],
+  });
+
+  employeeForm = this.fb.group({
+    fullName: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    idNumber: ['', Validators.required],
+    nationality: ['', Validators.required],
+    gender: [''],
+  });
 
   dataSource = new MatTableDataSource<EmployerData>(this.data);
   entityDataSource = new MatTableDataSource<EntityData>(this.eneityData);
@@ -276,5 +310,90 @@ export class EmployeeFeatureEmployerManagementComponent
 
   setExpandValue() {
     this._isExpanded.update((current) => !current);
+  }
+
+  openUploadDialog() {
+    this.uploadFileRef = this.dialog.open(this.uploadDialog);
+  }
+
+  openAddEmployerDialog() {
+    this.addEmployerDialogRef = this.dialog.open(this.addEmployerDialog);
+  }
+
+  submit() {
+    if (this.employerForm.valid && this.employeeForm.valid) {
+      console.log('www');
+    }
+  }
+
+  ACCEPTED_ATTR = ACCEPTED_EXT.join(',');
+  isDragging = false;
+
+  file = signal<File | null>(null);
+  uploading = signal(false);
+  validationError = signal<string | null>(null);
+
+  close() {
+    // this.ref.close();
+    console.log('ww');
+  }
+
+  onDragOver(e: DragEvent) {
+    e.preventDefault();
+    this.isDragging = true;
+  }
+  onDragLeave(_: DragEvent) {
+    this.isDragging = false;
+  }
+  onDrop(e: DragEvent) {
+    e.preventDefault();
+    this.isDragging = false;
+    const f = e.dataTransfer?.files?.[0];
+    if (f) this.setFile(f);
+  }
+
+  onFileChange(e: Event) {
+    const input = e.target as HTMLInputElement;
+    const f = input.files?.[0];
+    if (f) this.setFile(f);
+    input.value = '';
+  }
+
+  private setFile(f: File) {
+    this.file.set(f);
+    this.validate(f);
+  }
+
+  isValid = computed(() => !this.validationError() && !!this.file());
+
+  private validate(f: File) {
+    const name = f.name.toLowerCase();
+    const extOk = ACCEPTED_EXT.some((ext) => name.endsWith(ext));
+    if (!extOk) {
+      this.validationError.set('Invalid file type. Use .xlsx or .xls');
+      return;
+    }
+
+    if (f.size > MAX_SIZE_BYTES) {
+      this.validationError.set('File size exceeds 5MB.');
+      return;
+    }
+    this.validationError.set(null);
+  }
+
+  async startUpload() {
+    if (!this.isValid()) return;
+    this.uploading.set(true);
+
+    await new Promise((r) => setTimeout(r, 1200));
+
+    this.uploading.set(false);
+  }
+
+  humanSize(n: number): string {
+    if (n < 1024) return `${n} B`;
+    const kb = n / 1024;
+    if (kb < 1024) return `${kb.toFixed(1)} KB`;
+    return `${(kb / 1024).toFixed(1)} MB`;
   }
 }
